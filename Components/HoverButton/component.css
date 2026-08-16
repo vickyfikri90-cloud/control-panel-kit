@@ -1,0 +1,32 @@
+#btn {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  border: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  height: 56px;
+  padding: 0 24px;
+  cursor: pointer;
+  overflow: hidden;
+  color: #000;
+}
+
+.hover-button .label {
+  display: block;
+  position: relative;
+  height: 1.125em;
+}
+
+.hover-button .text {
+  display: block;
+  will-change: transform;
+  white-space: nowrap;
+}
+
+.hover-button .text.is-hidden {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

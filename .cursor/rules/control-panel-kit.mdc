@@ -1,0 +1,21 @@
+---
+description: Rules for adapting the Control Panel Kit experiment tool
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# Control Panel Kit — Experiment Tool
+
+Before modifying this project or copying it to a new experiment:
+
+1. Read `AGENTS.md` — conventions, do/don't, wiring pattern
+2. Read `docs/COMPONENTS.md` — per-component API and rules
+3. Read `README.md` — quick start and architecture
+
+Key rules:
+- Single `applyAll()` loop for all panel → preview + snippet sync
+- Init functions: `window.initXxx(root, options)` returning controller object
+- Keep 241px panel, 240px fields, 24px control height
+- Sync `component.html` ↔ `components-templates.js`
+- Don't edit build outputs (`hover-button.html`) directly

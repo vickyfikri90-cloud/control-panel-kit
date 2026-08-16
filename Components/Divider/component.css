@@ -1,0 +1,15 @@
+.panel-divider {
+  width: 240px;
+  padding: 4px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-divider__line {
+  display: block;
+  width: 208px;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+}

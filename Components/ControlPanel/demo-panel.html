@@ -1,0 +1,116 @@
+<div class="field">
+  <label class="field-label" for="demo-label">Label</label>
+  <div class="row">
+    <div class="input-wrap input-wrap--label">
+      <input type="text" id="demo-label" value="Preview">
+    </div>
+  </div>
+</div>
+
+<div class="field">
+  <span class="field-label">Dimensions</span>
+  <div class="row">
+    <div class="input-wrap input-wrap--dimension" data-dimension-id="width">
+      <span class="input-icon">W</span>
+      <div class="dimension-control is-fixed">
+        <span class="dimension-mode-label">Hug (0)</span>
+        <input type="text" class="dimension-fixed-input" value="160">
+      </div>
+      <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Width mode">
+        <img src="" alt="" data-icon="chevron">
+      </span>
+      <div class="dimension-menu">
+        <button type="button" data-dimension-mode="fixed">Fixed</button>
+        <button type="button" data-dimension-mode="hug">Hug Content</button>
+      </div>
+    </div>
+    <div class="input-wrap input-wrap--dimension" data-dimension-id="height">
+      <span class="input-icon">H</span>
+      <div class="dimension-control is-fixed">
+        <span class="dimension-mode-label">Hug (0)</span>
+        <input type="text" class="dimension-fixed-input" value="80">
+      </div>
+      <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Height mode">
+        <img src="" alt="" data-icon="chevron">
+      </span>
+      <div class="dimension-menu">
+        <button type="button" data-dimension-mode="fixed">Fixed</button>
+        <button type="button" data-dimension-mode="hug">Hug Content</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field">
+  <span class="field-label">Padding</span>
+  <div class="row">
+    <div class="input-wrap">
+      <span class="input-icon">T</span>
+      <input type="text" id="demo-padding-top" value="16">
+    </div>
+    <div class="input-wrap">
+      <span class="input-icon">B</span>
+      <input type="text" id="demo-padding-bottom" value="16">
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-wrap">
+      <span class="input-icon">L</span>
+      <input type="text" id="demo-padding-left" value="24">
+    </div>
+    <div class="input-wrap">
+      <span class="input-icon">R</span>
+      <input type="text" id="demo-padding-right" value="24">
+    </div>
+  </div>
+</div>
+
+<div id="demo-bg-color">
+  <div class="field">
+    <span class="field-label">Background color</span>
+    <div class="row">
+      <div class="input-wrap color-wrap">
+        <span class="swatch" data-color-swatch></span>
+        <input type="text" data-color-hex value="F0F0F0">
+        <div class="opacity-wrap">
+          <input type="text" data-color-opacity value="100">
+          <span class="opacity-suffix">%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field">
+  <span class="field-label">Border</span>
+  <div id="demo-border-color">
+    <div class="row">
+      <div class="input-wrap color-wrap">
+        <span class="swatch" data-color-swatch></span>
+        <input type="text" data-color-hex value="CCCCCC">
+        <div class="opacity-wrap">
+          <input type="text" data-color-opacity value="100">
+          <span class="opacity-suffix">%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-wrap">
+      <span class="input-icon">W</span>
+      <input type="text" id="demo-border-width" value="0">
+    </div>
+    <div class="input-wrap">
+      <span class="input-icon">R</span>
+      <input type="text" id="demo-radius" value="8">
+    </div>
+  </div>
+</div>
+
+<div id="demo-snippet">
+  <div class="field code-field">
+    <span class="field-label">Code</span>
+    <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
+    <button type="button" class="download-btn" data-snippet-download>Download HTML</button>
+  </div>
+</div>

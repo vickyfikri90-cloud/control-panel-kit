@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Component Index</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared/base.css">
+  <link rel="stylesheet" href="DimensionControl/component.css">
+  <link rel="stylesheet" href="ColorInput/component.css">
+  <link rel="stylesheet" href="SnippetOutput/component.css">
+  <link rel="stylesheet" href="Slider/component.css">
+  <link rel="stylesheet" href="SliderTick/component.css">
+  <link rel="stylesheet" href="Divider/component.css">
+  <link rel="stylesheet" href="OptionSelector/component.css">
+  <link rel="stylesheet" href="Toggle/component.css">
+  <link rel="stylesheet" href="Checkbox/component.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      font-family: Inter, system-ui, sans-serif;
+      background: rgb(240, 240, 240);
+    }
+
+    p, h1, h2, h3, h4, h5, h6 { margin: 0; }
+
+    .component-index-page {
+      width: 100%;
+      max-width: 1680px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      background: rgb(240, 240, 240);
+    }
+
+    .component-index-main {
+      width: 100%;
+      max-width: 448px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 24px;
+    }
+
+    .component-index-title {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 16px;
+      color: rgb(0, 0, 0);
+    }
+
+    .component-card {
+      width: 400px;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 8px;
+      background: rgb(255, 255, 255);
+      border: 1px solid rgb(238, 238, 238);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .component-card__header {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 12px;
+      background: rgb(250, 250, 250);
+      border-radius: 8px;
+    }
+
+    .component-card__name,
+    .component-card__desc {
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 16px;
+      letter-spacing: 0.055px;
+      color: rgb(9, 9, 11);
+    }
+
+    .component-card__desc {
+      opacity: 0.5;
+    }
+
+    .component-card__preview {
+      min-height: 200px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgb(255, 255, 255);
+    }
+
+    .component-card__preview > * {
+      width: 240px;
+      max-width: 240px;
+      flex-shrink: 0;
+    }
+
+    .component-card__preview .field {
+      width: 240px;
+      padding: 0 16px;
+      margin-bottom: 0;
+    }
+
+    .component-card[data-component-id="option-selector"] {
+      overflow: visible;
+    }
+
+    .component-card[data-component-id="option-selector"] .component-card__preview {
+      align-items: flex-start;
+      overflow: visible;
+      min-height: 220px;
+    }
+
+    .component-error {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #b42318;
+    }
+  </style>
+</head>
+<body>
+  <div class="component-index-page">
+    <main class="component-index-main" id="component-index-main">
+      <h6 class="component-index-title">Component Index</h6>
+    </main>
+  </div>
+
+  <script src="shared/utils.js"></script>
+  <script src="shared/icons.js"></script>
+  <script src="components-templates.js"></script>
+  <script src="components-manifest.js"></script>
+  <script src="Field/component.js"></script>
+  <script src="InputWrap/component.js"></script>
+  <script src="DimensionControl/component.js"></script>
+  <script src="ColorInput/component.js"></script>
+  <script src="SnippetOutput/component.js"></script>
+  <script src="Slider/component.js"></script>
+  <script src="SliderTick/component.js"></script>
+  <script src="Divider/component.js"></script>
+  <script src="OptionSelector/component.js"></script>
+  <script src="Toggle/component.js"></script>
+  <script src="Checkbox/component.js"></script>
+  <script src="components-loader.js"></script>
+  <script src="component-index.js"></script>
+</body>
+</html>
