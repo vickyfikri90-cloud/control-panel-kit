@@ -1,7 +1,7 @@
 window.initExperiment1 = function initExperiment1() {
-  const preview = document.querySelector('[data-experiment-preview="1"]')
-    || document.querySelector('.cp-preview');
-  if (!preview || preview.dataset.experimentReady === '1') return;
+  const preview = document.querySelector('[data-experiment-preview="1"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="1"]');
+  if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
   const hoverButton = window.initHoverButton(preview, {
@@ -29,7 +29,7 @@ window.initExperiment1 = function initExperiment1() {
     onChange: applyAll,
   });
 
-  const dimensions = window.initDimensionControlGroup(document, {
+  const dimensions = window.initDimensionControlGroup(panelRoot, {
     width: {
       initialMode: 'hug',
       measure: () => Math.max(Math.round(btn.offsetWidth), 0),
@@ -56,7 +56,7 @@ window.initExperiment1 = function initExperiment1() {
     updateOnInit: false,
   });
 
-  utils.bindInputWrapInputs(document);
+  utils.bindInputWrapInputs(panelRoot);
 
   Object.values(controls).forEach((input) => {
     if (!(input instanceof HTMLInputElement)) return;

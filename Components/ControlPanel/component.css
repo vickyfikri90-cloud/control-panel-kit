@@ -13,6 +13,7 @@
   display: flex;
   min-width: 0;
   min-height: 0;
+  overflow: hidden;
 }
 
 .cp-preview-area > .cp-preview {
@@ -30,6 +31,8 @@
   align-items: center;
   justify-content: center;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
   background: #fff;
 }
 

@@ -60,12 +60,18 @@ window.ComponentUtils = {
 
     input.dataset.inputBehaviorBound = 'true';
 
-    const selectAll = () => {
-      requestAnimationFrame(() => input.select());
-    };
+    input.addEventListener('mousedown', (event) => {
+      if (document.activeElement === input) {
+        event.preventDefault();
+      }
+    });
 
-    input.addEventListener('focus', selectAll);
-    input.addEventListener('click', selectAll);
+    input.addEventListener('focus', () => {
+      requestAnimationFrame(() => {
+        if (document.activeElement !== input) return;
+        input.select();
+      });
+    });
   },
 
   bindInputWrapInputs(root = document) {

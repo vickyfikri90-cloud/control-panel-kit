@@ -25,8 +25,11 @@ window.initExperiment2 = function initExperiment2() {
     rotate: document.getElementById('exp2-rotate'),
     originY: document.getElementById('exp2-origin-y'),
     duration: document.getElementById('exp2-duration'),
-    easing: document.getElementById('exp2-easing'),
   };
+
+  const easing = window.initCubicBezierInput(document.getElementById('exp2-easing-root'), {
+    onChange: applyAll,
+  });
 
   const dimensions = window.initDimensionControlGroup(panelRoot, {
     width: {
@@ -101,7 +104,7 @@ window.initExperiment2 = function initExperiment2() {
       rotate: controls.rotate.value,
       originY: controls.originY.value,
       duration: controls.duration.value,
-      easing: controls.easing.value,
+      easing: easing.getRaw(),
       axis: axisSelector.getValue(),
       bgHex: bgColor.hexInput.value,
       bgOpacity: bgColor.opacityInput.value,
@@ -127,7 +130,7 @@ window.initExperiment2 = function initExperiment2() {
     if (data.rotate != null) controls.rotate.value = data.rotate;
     if (data.originY != null) controls.originY.value = data.originY;
     if (data.duration != null) controls.duration.value = data.duration;
-    if (data.easing != null) controls.easing.value = data.easing;
+    if (data.easing != null) easing.setRaw(data.easing, false);
 
     if (data.bgHex != null) bgColor.hexInput.value = data.bgHex;
     if (data.bgOpacity != null) bgColor.opacityInput.value = data.bgOpacity;
@@ -179,16 +182,7 @@ window.initExperiment2 = function initExperiment2() {
   }
 
   function getEasing() {
-    const raw = controls.easing.value.trim();
-    if (!raw) return 'cubic-bezier(0.7, 0, 0.25, 1)';
-    if (raw.startsWith('cubic-bezier(')) return raw;
-
-    const parts = raw.split(',').map((n) => parseFloat(n.trim()));
-    if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) {
-      return `cubic-bezier(${parts.join(', ')})`;
-    }
-
-    return raw;
+    return easing.getValue();
   }
 
   function getRotateAxis() {
@@ -241,7 +235,7 @@ window.initExperiment2 = function initExperiment2() {
       rotateAxis: config.rotateAxis,
       originOffset: config.originOffset,
       duration: config.duration,
-      easingRaw: controls.easing.value.trim() || '0.7, 0, 0.25, 1',
+      easingRaw: easing.getRaw() || '0.7, 0, 0.25, 1',
     });
     rotateButton.applyStyles({
       background: config.bg,
@@ -264,7 +258,7 @@ window.initExperiment2 = function initExperiment2() {
   function generateSnippet() {
     const config = getConfig();
     const label = utils.escapeHtml(config.label);
-    const easingRaw = controls.easing.value.trim() || '0.7, 0, 0.25, 1';
+    const easingRaw = easing.getRaw() || '0.7, 0, 0.25, 1';
     const widthCss = config.width.toLowerCase() === 'auto'
       ? 'auto'
       : `${utils.parsePx(config.width, 0)}px`;

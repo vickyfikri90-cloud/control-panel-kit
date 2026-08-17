@@ -140,6 +140,7 @@
   display: flex;
   min-width: 0;
   min-height: 0;
+  overflow: hidden;
 }
 
 .cp-preview-area > .cp-preview {
@@ -157,6 +158,8 @@
   align-items: center;
   justify-content: center;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
   background: #fff;
 }
 
@@ -571,6 +574,77 @@
   left: 0;
 }
 
+.rotate-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  overflow: hidden;
+}
+
+.rotate-carousel__stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+}
+
+.rotate-carousel__stage.is-dragging {
+  cursor: grabbing;
+}
+
+.rotate-carousel__card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: 0;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 48px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.35);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.rotate-carousel__nav {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.rotate-carousel__nav-btn {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  color: #000;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
   </style>
 </head>
 <body>
@@ -592,6 +666,16 @@
             <span class="text is-hidden">Hover here</span>
           </span>
         </button>
+      </div>
+
+      <div class="cp-preview" data-experiment-preview="3" hidden>
+        <div class="rotate-carousel" data-carousel>
+          <div class="rotate-carousel__stage"></div>
+          <div class="rotate-carousel__nav">
+            <button type="button" class="rotate-carousel__nav-btn" data-carousel-prev>Prev</button>
+            <button type="button" class="rotate-carousel__nav-btn" data-carousel-next>Next</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -736,9 +820,27 @@
             <input type="text" id="duration" value="350">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
-          <div class="input-wrap">
-            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTdlLTA3IDguMjIzNzUgOS4yMzQxN2UtMDcgOC4zMzQyNkM5LjIzNDE3ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODEgMTAgMS42Njc1OVpNNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE3ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxIDUuODMzMzQgMS42Njc1OVpNMi41IDEuNjY3NTlDMi41IDEuODg4NiAyLjQxMjIgMi4xMDA1NyAyLjI1NTkyIDIuMjU2ODVDMi4wOTk2NCAyLjQxMzEzIDEuODg3NjggMi41MDA5MiAxLjY2NjY3IDIuNTAwOTJDMS40NDU2NSAyLjUwMDkyIDEuMjMzNjkgMi40MTMxMyAxLjA3NzQxIDIuMjU2ODVDMC45MjExMzIgMi4xMDA1NyAwLjgzMzMzNCAxLjg4ODYgMC44MzMzMzQgMS42Njc1OUMwLjgzMzMzNCAxLjQ0NjU4IDAuOTIxMTMyIDEuMjM0NjIgMS4wNzM0MSAxLjA3ODM0QzEuMjMzNjkgMC45MjIwNTUgMS40NDU2NSAwLjgzNDI1NyAxLjY2NjY3IDAuODM0MjU3QzEuODg3NjggMC44MzQyNTcgMi4wOTk2NCAwLjkyMjA1NSAyLjI1NTkyIDEuMDc4MzRDMi40MTMyIDEuMjM0NjIgMi41IDEuNDQ2NTggMi41IDEuNjY3NTlaTTEwIDguMzM0MjZDMTAuMDAxMyA3LjkyODE1IDkuODU0MDQgNy41MzU1OCA5LjU4NjA2IDcuMjMwNDRDOS4zMTgwOCA2LjkyNTI5IDguOTQ3ODEgNi43Mjg2MSA4LjU0NDk0IDYuNjc3NDFDOC4xNDIwNyA2LjYyNjIgNy43MzQzNyA2LjcyNDAxIDcuMzk4NTggNi45NTI0MUM3LjA2Mjc4IDcuMTgwODIgNi44MjIwNCA3LjUyNDA4IDYuNzIxNjcgNy45MTc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OSA0LjM2Njg1IDcuOTYxNDkgNC4yODg3MSA4LjAzOTYzQzQuMjEwNTcgOC4xMTc3NyA0LjE2NjY3IDguMjIzNzUgNC4xNjY2NyA4LjMzNDI2QzQuMTY2NjcgOC40NDQ3NyA0LjIxMDU3IDguNTUwNzUgNC4yODg3MSA4LjYyODg5QzQuMzY2ODUgOC43MDcwMyA0LjQ3MjgzIDguNzUwOTMgNC41ODMzMyA4Ljc1MDkzSDYuNzIxNjdDNi44MjIwNCA5LjE0NDQ0IDcuMDYyNzggOS40ODc3IDcuMzk4NTggOS43MTYxQzcuNzM0MzcgOS45NDQ1MSA4LjE0MjA3IDEwLjA0MjMgOC41NDQ5NCA5Ljk5MTExQzguOTQ3ODEgOS45Mzk5MSA5LjMxODA4IDkuNzQzMjMgOS41ODYwNiA5LjQzODA4QzkuODU0MDQgOS4xMzI5NCAxMC4wMDEzIDguNzQwMzcgMTAgOC4zMzQyNlpNOS4xNjY2NyA4LjMzNDI2QzkuMTY2NjcgOC41NTUyNyA5LjA3ODg3IDguNzY3MjMgOC45MjI1OSA4LjkyMzUxQzguNzY2MzEgOS4wNzk3OSA4LjU1NDM1IDkuMTY3NTkgOC4zMzMzNCA5LjE2NzU5QzguMTEyMzIgOS4xNjc1OSA3LjkwMDM2IDkuMDc5NzkgNy43NDQwOCA4LjkyMzUxQzcuNTg3OCA4Ljc2NzIzIDcuNSA4LjU1NTI3IDcuNSA4LjMzNDI2QzcuNSA4LjExMzI1IDcuNTg3OCA3LjkwMTI4IDcuNzQ0MDggNy43NDVDNy45MDAzNiA3LjU4ODcyIDguMTEyMzIgNy41MDA5MyA4LjMzMzM0IDcuNTAwOTNDOC41NTQzNSA3LjUwMDkzIDguNzY2MzEgNy41ODg3MiA4LjkyMjU5IDcuNzQ1QzkuMDc4ODcgNy45MDEyOCA5LjE2NjY3IDguMTEzMjUgOS4xNjY2NyA4LjMzNDI2WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+Cjwvc3ZnPgo=" alt=""></span>
-            <input type="text" id="easing" value="0.7, 0, 0.25, 1">
+        </div>
+      </div>
+
+      <div id="easing-root">
+        <div class="field cubic-bezier-field">
+          <span class="field-label">Easing</span>
+          <div class="cubic-bezier-editor" data-bezier-editor>
+            <svg class="cubic-bezier-svg" data-bezier-svg viewBox="0 0 208 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="208" height="200" rx="5" fill="#F5F5F5"/>
+              <line class="cubic-bezier-guide" x1="29" y1="25" x2="179" y2="25"/>
+              <line class="cubic-bezier-guide" x1="29" y1="175" x2="179" y2="175"/>
+              <path class="cubic-bezier-curve" data-bezier-curve></path>
+              <line class="cubic-bezier-handle-line" data-bezier-line1></line>
+              <line class="cubic-bezier-handle-line" data-bezier-line2></line>
+              <circle class="cubic-bezier-handle" data-bezier-p1 r="6" tabindex="0" role="slider" aria-label="First control point"></circle>
+              <circle class="cubic-bezier-handle" data-bezier-p2 r="6" tabindex="0" role="slider" aria-label="Second control point"></circle>
+            </svg>
+          </div>
+          <div class="input-wrap cubic-bezier-value-input">
+            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTVlLTA3IDguMjIzNzUgOS4yMzQxNWUtMDcgOC4zMzQyNkM5LjIzNDE1ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODEgMTAgMS42Njc1OVpNNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE1ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxIDUuODMzMzQgMS42Njc1OVpNMi41IDEuNjY3NTlDMi41IDEuODg4NiAyLjQxMjIgMi4xMDA1NyAyLjI1NTkyIDIuMjU2ODVDMi4wOTk2NCAyLjQxMzEzIDEuODg3NjggMi41MDA5MiAxLjY2NjY3IDIuNTAwOTJDMS40NDU2NSAyLjUwMDkyIDEuMjMzNjkgMi40MTMxMyAxLjA3NzQxIDIuMjU2ODVDMC45MjExMzIgMi4xMDA1NyAwLjgzMzMzNCAxLjg4ODYgMC44MzMzMzQgMS42Njc1OUMwLjgzMzMzNCAxLjQ0NjU4IDAuOTIxMTMyIDEuMjM0NjIgMS4wNzc0MSAxLjA3ODM0QzEuMjMzNjkgMC45MjIwNTUgMS40NDU2NSAwLjgzNDI1NyAxLjY2NjY3IDAuODM0MjU3QzEuODg3NjggMC44MzQyNTcgMi4wOTk2NCAwLjkyMjA1NSAyLjI1NTkyIDEuMDc4MzRDMi40MTMyIDEuMjM0NjIgMi41IDEuNDQ2NTggMi41IDEuNjY3NTlaTTEwIDguMzM0MjZDMTAuMDAxMyA3LjkyODE1IDkuODU0MDQgNy41MzU1OCA5LjU4NjA2IDcuMjMwNDRDOS4zMTgwOCA2LjkyNTI5IDguOTQ3ODEgNi43Mjg2MSA4LjU0NDk0IDYuNjc3NDFDOC4xNDIwNyA2LjYyNjIgNy43MzQzNyA2LjcyNDAxIDcuMzk4NTggNi45NTI0MUM3LjA2Mjc4IDcuMTgwODIgNi44MjIwNCA3LjUyNDA4IDYuNzIxNjcgNy45MTc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OSA0LjM2Njg1IDcuOTYxNDkgNC4yODg3MSA4LjAzOTYzQzQuMjEwNTcgOC4xMTc3NyA0LjE2NjY3IDguMjIzNzUgNC4xNjY2NyA4LjMzNDI2QzQuMTY2NjcgOC40NDQ3NyA0LjIxMDU3IDguNTUwNzUgNC4yODg3MSA4LjYyODg5QzQuMzY2ODUgOC43MDcwMyA0LjQ3MjgzIDguNzUwOTMgNC41ODMzMyA4Ljc1MDkzSDYuNzIxNjdDNi44MjIwNCA5LjE0NDQ0IDcuMDYyNzggOS40ODc3IDcuMzk4NTggOS43MTYxQzcuNzM0MzcgOS45NDQ1MSA4LjE0MjA3IDEwLjA0MjMgOC41NDQ5NCA5Ljk5MTExQzguOTQ3ODEgOS45Mzk5MSA5LjMxODA4IDkuNzQzMjMgOS41ODYwNiA5LjQzODA4QzkuODU0MDQgOS4xMzI5NCAxMC4wMDEzIDguNzQwMzcgMTAgOC4zMzQyNlpNOS4xNjY2NyA4LjMzNDI2QzkuMTY2NjcgOC41NTUyNyA5LjA3ODg3IDguNzY3MjMgOC45MjI1OSA4LjkyMzUxQzguNzY2MzEgOS4wNzk3OSA4LjU1NDM1IDkuMTY3NTkgOC4zMzMzNCA5LjE2NzU5QzguMTEyMzIgOS4xNjc1OSA3LjkwMDM2IDkuMDc5NzkgNy43NDQwOCA4LjkyMzUxQzcuNTg3OCA4Ljc2NzIzIDcuNSA4LjU1NTI3IDcuNSA4LjMzNDI2QzcuNSA4LjExMzI1IDcuNTg3OCA3LjkwMTI4IDcuNzQ0MDggNy43NDVDNy45MDAzNiA3LjU4ODcyIDguMTEyMzIgNy41MDA5MyA4LjMzMzM0IDcuNTAwOTNDOC41NTQzNSA3LjUwMDkzIDguNzY2MzEgNy41ODg3MiA4LjkyMjU5IDcuNzQ1QzkuMDc4ODcgNy45MDEyOCA5LjE2NjY3IDguMTEzMjUgOS4xNjY2NyA4LjMzNDI2WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+Cjwvc3ZnPgo=" alt=""></span>
+            <input type="text" data-bezier-text value="0.7, 0, 0.25, 1" spellcheck="false" autocomplete="off">
           </div>
         </div>
       </div>
@@ -894,14 +996,229 @@
             <input type="text" id="exp2-duration" value="350">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
-          <div class="input-wrap">
-            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTdlLTA3IDguMjIzNzUgOS4yMzQxN2UtMDcgOC4zMzQyNkM5LjIzNDE3ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODEgMTAgMS42Njc1OVpNNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE3ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxIDUuODMzMzQgMS42Njc1OVpNMi41IDEuNjY3NTlDMi41IDEuODg4NiAyLjQxMjIgMi4xMDA1NyAyLjI1NTkyIDIuMjU2ODVDMi4wOTk2NCAyLjQxMzEzIDEuODg3NjggMi41MDA5MiAxLjY2NjY3IDIuNTAwOTJDMS40NDU2NSAyLjUwMDkyIDEuMjMzNjkgMi40MTMxMyAxLjA3NzQxIDIuMjU2ODVDMC45MjExMzIgMi4xMDA1NyAwLjgzMzMzNCAxLjg4ODYgMC44MzMzMzQgMS42Njc1OUMwLjgzMzMzNCAxLjQ0NjU4IDAuOTIxMTMyIDEuMjM0NjIgMS4wNzM0MSAxLjA3ODM0QzEuMjMzNjkgMC45MjIwNTUgMS40NDU2NSAwLjgzNDI1NyAxLjY2NjY3IDAuODM0MjU3QzEuODg3NjggMC44MzQyNTcgMi4wOTk2NCAwLjkyMjA1NSAyLjI1NTkyIDEuMDc4MzRDMi40MTMyIDEuMjM0NjIgMi41IDEuNDQ2NTggMi41IDEuNjY3NTlaTTEwIDguMzM0MjZDMTAuMDAxMyA3LjkyODE1IDkuODU0MDQgNy41MzU1OCA5LjU4NjA2IDcuMjMwNDRDOS4zMTgwOCA2LjkyNTI5IDguOTQ3ODEgNi43Mjg2MSA4LjU0NDk0IDYuNjc3NDFDOC4xNDIwNyA2LjYyNjIgNy43MzQzNyA2LjcyNDAxIDcuMzk4NTggNi45NTI0MUM3LjA2Mjc4IDcuMTgwODIgNi44MjIwNCA3LjUyNDA4IDYuNzIxNjcgNy45MTc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OSA0LjM2Njg1IDcuOTYxNDkgNC4yODg3MSA4LjAzOTYzQzQuMjEwNTcgOC4xMTc3NyA0LjE2NjY3IDguMjIzNzUgNC4xNjY2NyA4LjMzNDI2QzQuMTY2NjcgOC40NDQ3NyA0LjIxMDU3IDguNTUwNzUgNC4yODg3MSA4LjYyODg5QzQuMzY2ODUgOC43MDcwMyA0LjQ3MjgzIDguNzUwOTMgNC41ODMzMyA4Ljc1MDkzSDYuNzIxNjdDNi44MjIwNCA5LjE0NDQ0IDcuMDYyNzggOS40ODc3IDcuMzk4NTggOS43MTYxQzcuNzM0MzcgOS45NDQ1MSA4LjE0MjA3IDEwLjA0MjMgOC41NDQ5NCA5Ljk5MTExQzguOTQ3ODEgOS45Mzk5MSA5LjMxODA4IDkuNzQzMjMgOS41ODYwNiA5LjQzODA4QzkuODU0MDQgOS4xMzI5NCAxMC4wMDEzIDguNzQwMzcgMTAgOC4zMzQyNlpNOS4xNjY2NyA4LjMzNDI2QzkuMTY2NjcgOC41NTUyNyA5LjA3ODg3IDguNzY3MjMgOC45MjI1OSA4LjkyMzUxQzguNzY2MzEgOS4wNzk3OSA4LjU1NDM1IDkuMTY3NTkgOC4zMzMzNCA5LjE2NzU5QzguMTEyMzIgOS4xNjc1OSA3LjkwMDM2IDkuMDc5NzkgNy43NDQwOCA4LjkyMzUxQzcuNTg3OCA4Ljc2NzIzIDcuNSA4LjU1NTI3IDcuNSA4LjMzNDI2QzcuNSA4LjExMzI1IDcuNTg3OCA3LjkwMTI4IDcuNzQ0MDggNy43NDVDNy45MDAzNiA3LjU4ODcyIDguMTEyMzIgNy41MDA5MyA4LjMzMzM0IDcuNTAwOTNDOC41NTQzNSA3LjUwMDkzIDguNzY2MzEgNy41ODg3MiA4LjkyMjU5IDcuNzQ1QzkuMDc4ODcgNy45MDEyOCA5LjE2NjY3IDguMTEzMjUgOS4xNjY2NyA4LjMzNDI2WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+Cjwvc3ZnPgo=" alt=""></span>
-            <input type="text" id="exp2-easing" value="0.7, 0, 0.25, 1">
+        </div>
+      </div>
+
+      <div id="exp2-easing-root">
+        <div class="field cubic-bezier-field">
+          <span class="field-label">Easing</span>
+          <div class="cubic-bezier-editor" data-bezier-editor>
+            <svg class="cubic-bezier-svg" data-bezier-svg viewBox="0 0 208 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="208" height="200" rx="5" fill="#F5F5F5"/>
+              <line class="cubic-bezier-guide" x1="29" y1="25" x2="179" y2="25"/>
+              <line class="cubic-bezier-guide" x1="29" y1="175" x2="179" y2="175"/>
+              <path class="cubic-bezier-curve" data-bezier-curve></path>
+              <line class="cubic-bezier-handle-line" data-bezier-line1></line>
+              <line class="cubic-bezier-handle-line" data-bezier-line2></line>
+              <circle class="cubic-bezier-handle" data-bezier-p1 r="6" tabindex="0" role="slider" aria-label="First control point"></circle>
+              <circle class="cubic-bezier-handle" data-bezier-p2 r="6" tabindex="0" role="slider" aria-label="Second control point"></circle>
+            </svg>
+          </div>
+          <div class="input-wrap cubic-bezier-value-input">
+            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTVlLTA3IDguMjIzNzUgOS4yMzQxNWUtMDcgOC4zMzQyNkM5LjIzNDE1ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODEgMTAgMS42Njc1OVpNNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE1ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxIDUuODMzMzQgMS42Njc1OVpNMi41IDEuNjY3NTlDMi41IDEuODg4NiAyLjQxMjIgMi4xMDA1NyAyLjI1NTkyIDIuMjU2ODVDMi4wOTk2NCAyLjQxMzEzIDEuODg3NjggMi41MDA5MiAxLjY2NjY3IDIuNTAwOTJDMS40NDU2NSAyLjUwMDkyIDEuMjMzNjkgMi40MTMxMyAxLjA3NzQxIDIuMjU2ODVDMC45MjExMzIgMi4xMDA1NyAwLjgzMzMzNCAxLjg4ODYgMC44MzMzMzQgMS42Njc1OUMwLjgzMzMzNCAxLjQ0NjU4IDAuOTIxMTMyIDEuMjM0NjIgMS4wNzc0MSAxLjA3ODM0QzEuMjMzNjkgMC45MjIwNTUgMS40NDU2NSAwLjgzNDI1NyAxLjY2NjY3IDAuODM0MjU3QzEuODg3NjggMC44MzQyNTcgMi4wOTk2NCAwLjkyMjA1NSAyLjI1NTkyIDEuMDc4MzRDMi40MTMyIDEuMjM0NjIgMi41IDEuNDQ2NTggMi41IDEuNjY3NTlaTTEwIDguMzM0MjZDMTAuMDAxMyA3LjkyODE1IDkuODU0MDQgNy41MzU1OCA5LjU4NjA2IDcuMjMwNDRDOS4zMTgwOCA2LjkyNTI5IDguOTQ3ODEgNi43Mjg2MSA4LjU0NDk0IDYuNjc3NDFDOC4xNDIwNyA2LjYyNjIgNy43MzQzNyA2LjcyNDAxIDcuMzk4NTggNi45NTI0MUM3LjA2Mjc4IDcuMTgwODIgNi44MjIwNCA3LjUyNDA4IDYuNzIxNjcgNy45MTc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OSA0LjM2Njg1IDcuOTYxNDkgNC4yODg3MSA4LjAzOTYzQzQuMjEwNTcgOC4xMTc3NyA0LjE2NjY3IDguMjIzNzUgNC4xNjY2NyA4LjMzNDI2QzQuMTY2NjcgOC40NDQ3NyA0LjIxMDU3IDguNTUwNzUgNC4yODg3MSA4LjYyODg5QzQuMzY2ODUgOC43MDcwMyA0LjQ3MjgzIDguNzUwOTMgNC41ODMzMyA4Ljc1MDkzSDYuNzIxNjdDNi44MjIwNCA5LjE0NDQ0IDcuMDYyNzggOS40ODc3IDcuMzk4NTggOS43MTYxQzcuNzM0MzcgOS45NDQ1MSA4LjE0MjA3IDEwLjA0MjMgOC41NDQ5NCA5Ljk5MTExQzguOTQ3ODEgOS45Mzk5MSA5LjMxODA4IDkuNzQzMjMgOS41ODYwNiA5LjQzODA4QzkuODU0MDQgOS4xMzI5NCAxMC4wMDEzIDguNzQwMzcgMTAgOC4zMzQyNlpNOS4xNjY2NyA4LjMzNDI2QzkuMTY2NjcgOC41NTUyNyA5LjA3ODg3IDguNzY3MjMgOC45MjI1OSA4LjkyMzUxQzguNzY2MzEgOS4wNzk3OSA4LjU1NDM1IDkuMTY3NTkgOC4zMzMzNCA5LjE2NzU5QzguMTEyMzIgOS4xNjc1OSA3LjkwMDM2IDkuMDc5NzkgNy43NDQwOCA4LjkyMzUxQzcuNTg3OCA4Ljc2NzIzIDcuNSA4LjU1NTI3IDcuNSA4LjMzNDI2QzcuNSA4LjExMzI1IDcuNTg3OCA3LjkwMTI4IDcuNzQ0MDggNy43NDVDNy45MDAzNiA3LjU4ODcyIDguMTEyMzIgNy41MDA5MyA4LjMzMzM0IDcuNTAwOTNDOC41NTQzNSA3LjUwMDkzIDguNzY2MzEgNy41ODg3MiA4LjkyMjU5IDcuNzQ1QzkuMDc4ODcgNy45MDEyOCA5LjE2NjY3IDguMTEzMjUgOS4xNjY2NyA4LjMzNDI2WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+Cjwvc3ZnPgo=" alt=""></span>
+            <input type="text" data-bezier-text value="0.7, 0, 0.25, 1" spellcheck="false" autocomplete="off">
           </div>
         </div>
       </div>
 
       <div id="exp2-snippet-root">
+        <div class="field code-field">
+          <span class="field-label">Code</span>
+          <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
+          <button type="button" class="download-btn" data-snippet-download>Download HTML</button>
+        </div>
+      </div>
+      </div>
+
+      <div data-experiment-panel="3" hidden>
+      <div class="field">
+        <label class="field-label" for="exp3-count">Box Count</label>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp3-count" value="5">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Dimensions</span>
+        <div class="row">
+          <div class="input-wrap input-wrap--dimension" data-dimension-id="width">
+            <span class="input-icon">W</span>
+            <div class="dimension-control is-fixed">
+              <span class="dimension-mode-label">Fixed (400)</span>
+              <input type="text" class="dimension-fixed-input" value="400">
+            </div>
+            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Width mode">
+              <img src="" alt="" data-icon="chevron">
+            </span>
+            <div class="dimension-menu">
+              <button type="button" data-dimension-mode="fixed">Fixed</button>
+              <button type="button" data-dimension-mode="hug">Hug Content</button>
+            </div>
+          </div>
+          <div class="input-wrap input-wrap--dimension" data-dimension-id="height">
+            <span class="input-icon">H</span>
+            <div class="dimension-control is-fixed">
+              <span class="dimension-mode-label">Fixed (500)</span>
+              <input type="text" class="dimension-fixed-input" value="500">
+            </div>
+            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Height mode">
+              <img src="" alt="" data-icon="chevron">
+            </span>
+            <div class="dimension-menu">
+              <button type="button" data-dimension-mode="fixed">Fixed</button>
+              <button type="button" data-dimension-mode="hug">Hug Content</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Border Radius</span>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp3-radius" value="0">
+          </div>
+        </div>
+      </div>
+
+      <div id="exp3-color-1-root">
+        <div class="field">
+          <span class="field-label">Box 1 Color</span>
+          <div class="row">
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="FF6B6B">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp3-color-2-root">
+        <div class="field">
+          <span class="field-label">Box 2 Color</span>
+          <div class="row">
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="4ECDC4">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp3-color-3-root">
+        <div class="field">
+          <span class="field-label">Box 3 Color</span>
+          <div class="row">
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="FFE66D">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp3-color-4-root">
+        <div class="field">
+          <span class="field-label">Box 4 Color</span>
+          <div class="row">
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="5B8DEF">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp3-color-5-root">
+        <div class="field">
+          <span class="field-label">Box 5 Color</span>
+          <div class="row">
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="C77DFF">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Animation</span>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTI2IDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
+            <input type="text" id="exp3-rotate" value="12">
+            <div class="suffix-wrap"><span>°</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon">Y</span>
+            <input type="text" id="exp3-origin-y" value="2000">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
+            <input type="text" id="exp3-duration" value="350">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <span class="field-label" style="margin:0;width:100%;">Velocity intensity</span>
+        </div>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp3-velocity" value="1">
+          </div>
+        </div>
+      </div>
+
+      <div id="exp3-easing-root">
+        <div class="field cubic-bezier-field">
+          <span class="field-label">Easing</span>
+          <div class="cubic-bezier-editor" data-bezier-editor>
+            <svg class="cubic-bezier-svg" data-bezier-svg viewBox="0 0 208 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="208" height="200" rx="5" fill="#F5F5F5"/>
+              <line class="cubic-bezier-guide" x1="29" y1="25" x2="179" y2="25"/>
+              <line class="cubic-bezier-guide" x1="29" y1="175" x2="179" y2="175"/>
+              <path class="cubic-bezier-curve" data-bezier-curve></path>
+              <line class="cubic-bezier-handle-line" data-bezier-line1></line>
+              <line class="cubic-bezier-handle-line" data-bezier-line2></line>
+              <circle class="cubic-bezier-handle" data-bezier-p1 r="6" tabindex="0" role="slider" aria-label="First control point"></circle>
+              <circle class="cubic-bezier-handle" data-bezier-p2 r="6" tabindex="0" role="slider" aria-label="Second control point"></circle>
+            </svg>
+          </div>
+          <div class="input-wrap cubic-bezier-value-input">
+            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTVlLTA3IDguMjIzNzUgOS4yMzQxNWUtMDcgOC4zMzQyNkM5LjIzNDE1ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODEgMTAgMS42Njc1OVpNNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE1ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxIDUuODMzMzQgMS42Njc1OVpNMi41IDEuNjY3NTlDMi41IDEuODg4NiAyLjQxMjIgMi4xMDA1NyAyLjI1NTkyIDIuMjU2ODVDMi4wOTk2NCAyLjQxMzEzIDEuODg3NjggMi41MDA5MiAxLjY2NjY3IDIuNTAwOTJDMS40NDU2NSAyLjUwMDkyIDEuMjMzNjkgMi40MTMxMyAxLjA3NzQxIDIuMjU2ODVDMC45MjExMzIgMi4xMDA1NyAwLjgzMzMzNCAxLjg4ODYgMC44MzMzMzQgMS42Njc1OUMwLjgzMzMzNCAxLjQ0NjU4IDAuOTIxMTMyIDEuMjM0NjIgMS4wNzc0MSAxLjA3ODM0QzEuMjMzNjkgMC45MjIwNTUgMS40NDU2NSAwLjgzNDI1NyAxLjY2NjY3IDAuODM0MjU3QzEuODg3NjggMC44MzQyNTcgMi4wOTk2NCAwLjkyMjA1NSAyLjI1NTkyIDEuMDc4MzRDMi40MTMyIDEuMjM0NjIgMi41IDEuNDQ2NTggMi41IDEuNjY3NTlaTTEwIDguMzM0MjZDMTAuMDAxMyA3LjkyODE1IDkuODU0MDQgNy41MzU1OCA5LjU4NjA2IDcuMjMwNDRDOS4zMTgwOCA2LjkyNTI5IDguOTQ3ODEgNi43Mjg2MSA4LjU0NDk0IDYuNjc3NDFDOC4xNDIwNyA2LjYyNjIgNy43MzQzNyA2LjcyNDAxIDcuMzk4NTggNi45NTI0MUM3LjA2Mjc4IDcuMTgwODIgNi44MjIwNCA3LjUyNDA4IDYuNzIxNjcgNy45MTc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OSA0LjM2Njg1IDcuOTYxNDkgNC4yODg3MSA4LjAzOTYzQzQuMjEwNTcgOC4xMTc3NyA0LjE2NjY3IDguMjIzNzUgNC4xNjY2NyA4LjMzNDI2QzQuMTY2NjcgOC40NDQ3NyA0LjIxMDU3IDguNTUwNzUgNC4yODg3MSA4LjYyODg5QzQuMzY2ODUgOC43MDcwMyA0LjQ3MjgzIDguNzUwOTMgNC41ODMzMyA4Ljc1MDkzSDYuNzIxNjdDNi44MjIwNCA5LjE0NDQ0IDcuMDYyNzggOS40ODc3IDcuMzk4NTggOS43MTYxQzcuNzM0MzcgOS45NDQ1MSA4LjE0MjA3IDEwLjA0MjMgOC41NDQ5NCA5Ljk5MTExQzguOTQ3ODEgOS45Mzk5MSA5LjMxODA4IDkuNzQzMjMgOS41ODYwNiA5LjQzODA4QzkuODU0MDQgOS4xMzI5NCAxMC4wMDEzIDguNzQwMzcgMTAgOC4zMzQyNlpNOS4xNjY2NyA4LjMzNDI2QzkuMTY2NjcgOC41NTUyNyA5LjA3ODg3IDguNzY3MjMgOC45MjI1OSA4LjkyMzUxQzguNzY2MzEgOS4wNzk3OSA4LjU1NDM1IDkuMTY3NTkgOC4zMzMzNCA5LjE2NzU5QzguMTEyMzIgOS4xNjY3NTkgNy45MDAzNiA5LjA3OTc5IDcuNzQ0MDggOC45MjM1MUM3LjU4NzggOC43NjcyMyA3LjUgOC41NTUyNyA3LjUgOC4zMzQyNkM3LjUgOC4xMTMyNSA3LjU4NzggNy45MDEyOCA3Ljc0NDA4IDcuNzQ1QzcuOTAwMzYgNy41ODg3MiA4LjExMjMyIDcuNTAwOTMgOC4zMzMzNCA3LjUwMDkzQzguNTU0MzUgNy41MDA5MyA4Ljc2NjMxIDcuNTg4NzIgOC45MjI1OSA3Ljc0NUM5LjA3ODg3IDcuOTAxMjggOS4xNjY2NyA4LjExMzI1IDkuMTY2NjcgOC4zMzQyNloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
+            <input type="text" data-bezier-text value="0.7, 0, 0.25, 1" spellcheck="false" autocomplete="off">
+          </div>
+        </div>
+      </div>
+
+      <div id="exp3-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -981,12 +1298,18 @@ window.ComponentUtils = {
 
     input.dataset.inputBehaviorBound = 'true';
 
-    const selectAll = () => {
-      requestAnimationFrame(() => input.select());
-    };
+    input.addEventListener('mousedown', (event) => {
+      if (document.activeElement === input) {
+        event.preventDefault();
+      }
+    });
 
-    input.addEventListener('focus', selectAll);
-    input.addEventListener('click', selectAll);
+    input.addEventListener('focus', () => {
+      requestAnimationFrame(() => {
+        if (document.activeElement !== input) return;
+        input.select();
+      });
+    });
   },
 
   bindInputWrapInputs(root = document) {
@@ -2007,10 +2330,430 @@ window.initRotateXButton = function initRotateXButton(root, options = {}) {
   };
 };
 
+window.initRotateCarousel = function initRotateCarousel(root, options = {}) {
+  const carousel = root.querySelector('[data-carousel]') || root;
+  const stage = carousel.querySelector('.rotate-carousel__stage')
+    || carousel;
+  const prevBtn = carousel.querySelector('[data-carousel-prev]');
+  const nextBtn = carousel.querySelector('[data-carousel-next]');
+
+  const DEFAULT_COLORS = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#5B8DEF', '#C77DFF'];
+
+  let count = clampCount(options.count ?? 5);
+  let width = options.width ?? 400;
+  let height = options.height ?? 500;
+  let radius = options.radius ?? 0;
+  let colors = normalizeColors(options.colors ?? DEFAULT_COLORS);
+  let originY = options.originY ?? 2000;
+  let stepDeg = options.stepDeg ?? 12;
+  let duration = options.duration ?? 350;
+  let easingRaw = options.easingRaw ?? '0.7, 0, 0.25, 1';
+  let velocityIntensity = options.velocityIntensity ?? 1;
+
+  let rotation = 0;
+  let dragStartX = 0;
+  let dragStartRotation = 0;
+  let lastMoveX = 0;
+  let lastMoveTime = 0;
+  let velocityDegPerMs = 0;
+  let isDragging = false;
+  let isAnimating = false;
+  let isMomentum = false;
+  let activePointerId = null;
+  let animationFrameId = null;
+
+  function clampCount(value) {
+    return Math.min(12, Math.max(2, Math.round(Number(value) || 5)));
+  }
+
+  function normalizeColors(list) {
+    if (!Array.isArray(list) || list.length === 0) return [...DEFAULT_COLORS];
+    return list.map((color) => String(color));
+  }
+
+  function getEasing() {
+    const raw = String(easingRaw).trim();
+    if (!raw) return 'cubic-bezier(0.7, 0, 0.25, 1)';
+    if (raw.startsWith('cubic-bezier(')) return raw;
+
+    const parts = raw.split(',').map((n) => parseFloat(n.trim()));
+    if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) {
+      return `cubic-bezier(${parts.join(', ')})`;
+    }
+
+    return raw;
+  }
+
+  function getOrigin() {
+    return `50% calc(100% + ${originY}px)`;
+  }
+
+  function getDragRadius() {
+    return Math.max(originY + height / 2, 1);
+  }
+
+  function pxVelocityToDegVelocity(pxPerMs) {
+    return -(pxPerMs / getDragRadius()) * (180 / Math.PI);
+  }
+
+  function wrapAngle(angle, halfSpan) {
+    const span = halfSpan * 2;
+    if (span <= 0) return 0;
+    let wrapped = angle;
+    while (wrapped > halfSpan) wrapped -= span;
+    while (wrapped <= -halfSpan) wrapped += span;
+    return wrapped;
+  }
+
+  function getCardAngle(index) {
+    const halfSpan = (count * stepDeg) / 2;
+    return wrapAngle(index * stepDeg - rotation, halfSpan);
+  }
+
+  function getSpan() {
+    return count * stepDeg;
+  }
+
+  function getRenderAngle(index, card) {
+    const wrapped = getCardAngle(index);
+
+    if (!isAnimating) {
+      delete card.dataset.angle;
+      return wrapped;
+    }
+
+    if (card.dataset.angle == null) {
+      card.dataset.angle = String(wrapped);
+      return wrapped;
+    }
+
+    const prev = Number.parseFloat(card.dataset.angle);
+    let angle = wrapped;
+    const span = getSpan();
+
+    while (angle - prev > span / 2) angle -= span;
+    while (angle - prev < -span / 2) angle += span;
+
+    card.dataset.angle = String(angle);
+    return angle;
+  }
+
+  function cancelAnimation() {
+    if (animationFrameId != null) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+    isAnimating = false;
+    isMomentum = false;
+  }
+
+  function parseCubicBezier(raw) {
+    const trimmed = String(raw).trim();
+    if (!trimmed) return [0.7, 0, 0.25, 1];
+
+    let inner = trimmed;
+    if (trimmed.startsWith('cubic-bezier(') && trimmed.endsWith(')')) {
+      inner = trimmed.slice('cubic-bezier('.length, -1);
+    }
+
+    const parts = inner.split(',').map((n) => parseFloat(n.trim()));
+    if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) {
+      return parts;
+    }
+
+    return [0.7, 0, 0.25, 1];
+  }
+
+  function createCubicBezierEase(x1, y1, x2, y2) {
+    const cx = 3 * x1;
+    const bx = 3 * (x2 - x1) - cx;
+    const ax = 1 - cx - bx;
+    const cy = 3 * y1;
+    const by = 3 * (y2 - y1) - cy;
+    const ay = 1 - cy - by;
+
+    function sampleX(t) {
+      return ((ax * t + bx) * t + cx) * t;
+    }
+
+    function sampleY(t) {
+      return ((ay * t + by) * t + cy) * t;
+    }
+
+    function sampleDerivativeX(t) {
+      return (3 * ax * t + 2 * bx) * t + cx;
+    }
+
+    return function ease(time) {
+      if (time <= 0) return 0;
+      if (time >= 1) return 1;
+
+      let t = time;
+      for (let i = 0; i < 8; i += 1) {
+        const x = sampleX(t) - time;
+        const dx = sampleDerivativeX(t);
+        if (Math.abs(x) < 1e-5 || dx === 0) break;
+        t -= x / dx;
+      }
+
+      return sampleY(t);
+    };
+  }
+
+  function getEaseFunction() {
+    const [x1, y1, x2, y2] = parseCubicBezier(getEasing());
+    return createCubicBezierEase(x1, y1, x2, y2);
+  }
+
+  function animateRotationTo(nextRotation) {
+    if (isAnimating || nextRotation === rotation) return;
+
+    cancelAnimation();
+    isAnimating = true;
+
+    const startRotation = rotation;
+    const delta = nextRotation - startRotation;
+    const ease = getEaseFunction();
+    const startTime = performance.now();
+
+    function frame(now) {
+      const progress = Math.min((now - startTime) / duration, 1);
+      rotation = startRotation + delta * ease(progress);
+      renderCards();
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(frame);
+        return;
+      }
+
+      rotation = nextRotation;
+      animationFrameId = null;
+      isAnimating = false;
+      stage.querySelectorAll('.rotate-carousel__card').forEach((card) => {
+        delete card.dataset.angle;
+      });
+      renderCards();
+    }
+
+    animationFrameId = requestAnimationFrame(frame);
+  }
+
+  function startMomentum(initialVelocityDegPerMs) {
+    if (!initialVelocityDegPerMs) {
+      snapRotation();
+      return;
+    }
+
+    cancelAnimation();
+    isMomentum = true;
+
+    let velocity = initialVelocityDegPerMs;
+    let lastTime = performance.now();
+    const friction = 0.92;
+    const minVelocity = 0.002;
+
+    function frame(now) {
+      if (!isMomentum) return;
+
+      const dt = Math.min(now - lastTime, 32);
+      lastTime = now;
+
+      rotation += velocity * dt;
+      velocity *= friction ** (dt / 16);
+      renderCards();
+
+      if (Math.abs(velocity) > minVelocity) {
+        animationFrameId = requestAnimationFrame(frame);
+        return;
+      }
+
+      isMomentum = false;
+      animationFrameId = null;
+      snapRotation();
+    }
+
+    animationFrameId = requestAnimationFrame(frame);
+  }
+
+  function setCardTransform(card, angle) {
+    card.style.transition = 'none';
+    card.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+  }
+
+  function ensureCards() {
+    const existing = stage.querySelectorAll('.rotate-carousel__card');
+    if (existing.length === count) return;
+
+    stage.innerHTML = '';
+    for (let i = 0; i < count; i += 1) {
+      const card = document.createElement('div');
+      card.className = 'rotate-carousel__card';
+      card.dataset.index = String(i);
+      card.textContent = String(i + 1);
+      stage.appendChild(card);
+    }
+  }
+
+  function applyCardStyles() {
+    const cards = stage.querySelectorAll('.rotate-carousel__card');
+    const origin = getOrigin();
+
+    cards.forEach((card, index) => {
+      card.style.width = `${width}px`;
+      card.style.height = `${height}px`;
+      card.style.borderRadius = `${radius}px`;
+      card.style.background = colors[index % colors.length];
+      card.style.transformOrigin = origin;
+      card.textContent = String(index + 1);
+    });
+  }
+
+  function renderCards() {
+    ensureCards();
+    applyCardStyles();
+
+    const cards = stage.querySelectorAll('.rotate-carousel__card');
+    cards.forEach((card, index) => {
+      setCardTransform(card, getRenderAngle(index, card));
+    });
+  }
+
+  function snapRotation() {
+    if (stepDeg <= 0) return;
+    const snapped = Math.round(rotation / stepDeg) * stepDeg;
+    if (snapped === rotation) return;
+
+    animateRotationTo(snapped);
+  }
+
+  function stepBy(direction) {
+    if (isAnimating || isDragging || isMomentum || stepDeg <= 0) return;
+    animateRotationTo(rotation + direction * stepDeg);
+  }
+
+  function onPointerDown(event) {
+    if ((isAnimating && !isMomentum) || event.button !== 0) return;
+
+    cancelAnimation();
+
+    isDragging = true;
+    activePointerId = event.pointerId;
+    dragStartX = event.clientX;
+    dragStartRotation = rotation;
+    lastMoveX = event.clientX;
+    lastMoveTime = performance.now();
+    velocityDegPerMs = 0;
+    stage.classList.add('is-dragging');
+    stage.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  }
+
+  function onPointerMove(event) {
+    if (!isDragging || event.pointerId !== activePointerId) return;
+
+    const deltaX = event.clientX - dragStartX;
+    const dragRadius = getDragRadius();
+    const deltaDeg = -(deltaX / dragRadius) * (180 / Math.PI);
+    rotation = dragStartRotation + deltaDeg;
+
+    const now = performance.now();
+    const dt = now - lastMoveTime;
+    if (dt > 0 && lastMoveTime > 0) {
+      const instantVelocity = pxVelocityToDegVelocity((event.clientX - lastMoveX) / dt);
+      velocityDegPerMs = velocityDegPerMs * 0.75 + instantVelocity * 0.25;
+    }
+    lastMoveX = event.clientX;
+    lastMoveTime = now;
+
+    renderCards();
+    event.preventDefault();
+  }
+
+  function onPointerUp(event) {
+    if (!isDragging || event.pointerId !== activePointerId) return;
+
+    isDragging = false;
+    activePointerId = null;
+    stage.classList.remove('is-dragging');
+
+    if (stage.hasPointerCapture(event.pointerId)) {
+      stage.releasePointerCapture(event.pointerId);
+    }
+
+    const boostedVelocity = velocityDegPerMs * velocityIntensity;
+    if (Math.abs(boostedVelocity) > 0.02) {
+      startMomentum(boostedVelocity);
+      return;
+    }
+
+    snapRotation();
+  }
+
+  stage.addEventListener('pointerdown', onPointerDown);
+  stage.addEventListener('pointermove', onPointerMove);
+  stage.addEventListener('pointerup', onPointerUp);
+  stage.addEventListener('pointercancel', onPointerUp);
+
+  prevBtn?.addEventListener('click', () => stepBy(-1));
+  nextBtn?.addEventListener('click', () => stepBy(1));
+
+  function apply(config = {}) {
+    let needsRebuild = false;
+
+    if (config.count != null) {
+      const nextCount = clampCount(config.count);
+      if (nextCount !== count) {
+        count = nextCount;
+        needsRebuild = true;
+      }
+    }
+
+    if (config.width != null) width = config.width;
+    if (config.height != null) height = config.height;
+    if (config.radius != null) radius = config.radius;
+    if (config.colors != null) colors = normalizeColors(config.colors);
+    if (config.originY != null) originY = config.originY;
+    if (config.stepDeg != null) stepDeg = config.stepDeg;
+    if (config.duration != null) duration = config.duration;
+    if (config.easingRaw != null) easingRaw = config.easingRaw;
+    if (config.velocityIntensity != null) velocityIntensity = config.velocityIntensity;
+
+    if (needsRebuild) {
+      stage.innerHTML = '';
+    }
+
+    cancelAnimation();
+    stage.querySelectorAll('.rotate-carousel__card').forEach((card) => {
+      delete card.dataset.angle;
+    });
+    renderCards();
+  }
+
+  renderCards();
+
+  return {
+    element: carousel,
+    stage,
+    apply,
+    getRotation: () => rotation,
+    setRotation(value) {
+      animateRotationTo(value);
+    },
+    reset() {
+      cancelAnimation();
+      rotation = 0;
+      stage.querySelectorAll('.rotate-carousel__card').forEach((card) => {
+        delete card.dataset.angle;
+      });
+      renderCards();
+    },
+  };
+};
+
 window.initExperiment1 = function initExperiment1() {
-  const preview = document.querySelector('[data-experiment-preview="1"]')
-    || document.querySelector('.cp-preview');
-  if (!preview || preview.dataset.experimentReady === '1') return;
+  const preview = document.querySelector('[data-experiment-preview="1"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="1"]');
+  if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
   const hoverButton = window.initHoverButton(preview, {
@@ -2038,7 +2781,7 @@ window.initExperiment1 = function initExperiment1() {
     onChange: applyAll,
   });
 
-  const dimensions = window.initDimensionControlGroup(document, {
+  const dimensions = window.initDimensionControlGroup(panelRoot, {
     width: {
       initialMode: 'hug',
       measure: () => Math.max(Math.round(btn.offsetWidth), 0),
@@ -2065,7 +2808,7 @@ window.initExperiment1 = function initExperiment1() {
     updateOnInit: false,
   });
 
-  utils.bindInputWrapInputs(document);
+  utils.bindInputWrapInputs(panelRoot);
 
   Object.values(controls).forEach((input) => {
     if (!(input instanceof HTMLInputElement)) return;
@@ -2421,8 +3164,11 @@ window.initExperiment2 = function initExperiment2() {
     rotate: document.getElementById('exp2-rotate'),
     originY: document.getElementById('exp2-origin-y'),
     duration: document.getElementById('exp2-duration'),
-    easing: document.getElementById('exp2-easing'),
   };
+
+  const easing = window.initCubicBezierInput(document.getElementById('exp2-easing-root'), {
+    onChange: applyAll,
+  });
 
   const dimensions = window.initDimensionControlGroup(panelRoot, {
     width: {
@@ -2497,7 +3243,7 @@ window.initExperiment2 = function initExperiment2() {
       rotate: controls.rotate.value,
       originY: controls.originY.value,
       duration: controls.duration.value,
-      easing: controls.easing.value,
+      easing: easing.getRaw(),
       axis: axisSelector.getValue(),
       bgHex: bgColor.hexInput.value,
       bgOpacity: bgColor.opacityInput.value,
@@ -2523,7 +3269,7 @@ window.initExperiment2 = function initExperiment2() {
     if (data.rotate != null) controls.rotate.value = data.rotate;
     if (data.originY != null) controls.originY.value = data.originY;
     if (data.duration != null) controls.duration.value = data.duration;
-    if (data.easing != null) controls.easing.value = data.easing;
+    if (data.easing != null) easing.setRaw(data.easing, false);
 
     if (data.bgHex != null) bgColor.hexInput.value = data.bgHex;
     if (data.bgOpacity != null) bgColor.opacityInput.value = data.bgOpacity;
@@ -2575,16 +3321,7 @@ window.initExperiment2 = function initExperiment2() {
   }
 
   function getEasing() {
-    const raw = controls.easing.value.trim();
-    if (!raw) return 'cubic-bezier(0.7, 0, 0.25, 1)';
-    if (raw.startsWith('cubic-bezier(')) return raw;
-
-    const parts = raw.split(',').map((n) => parseFloat(n.trim()));
-    if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) {
-      return `cubic-bezier(${parts.join(', ')})`;
-    }
-
-    return raw;
+    return easing.getValue();
   }
 
   function getRotateAxis() {
@@ -2637,7 +3374,7 @@ window.initExperiment2 = function initExperiment2() {
       rotateAxis: config.rotateAxis,
       originOffset: config.originOffset,
       duration: config.duration,
-      easingRaw: controls.easing.value.trim() || '0.7, 0, 0.25, 1',
+      easingRaw: easing.getRaw() || '0.7, 0, 0.25, 1',
     });
     rotateButton.applyStyles({
       background: config.bg,
@@ -2660,7 +3397,7 @@ window.initExperiment2 = function initExperiment2() {
   function generateSnippet() {
     const config = getConfig();
     const label = utils.escapeHtml(config.label);
-    const easingRaw = controls.easing.value.trim() || '0.7, 0, 0.25, 1';
+    const easingRaw = easing.getRaw() || '0.7, 0, 0.25, 1';
     const widthCss = config.width.toLowerCase() === 'auto'
       ? 'auto'
       : `${utils.parsePx(config.width, 0)}px`;
@@ -2838,48 +3575,760 @@ window.initExperiment2 = function initExperiment2() {
   preview.dataset.experimentReady = '1';
 };
 
+window.initExperiment3 = function initExperiment3() {
+  const preview = document.querySelector('[data-experiment-preview="3"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="3"]');
+  if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
+
+  const utils = window.ComponentUtils;
+
+  const DEFAULT_COLORS = [
+    { hex: 'FF6B6B', opacity: '100' },
+    { hex: '4ECDC4', opacity: '100' },
+    { hex: 'FFE66D', opacity: '100' },
+    { hex: '5B8DEF', opacity: '100' },
+    { hex: 'C77DFF', opacity: '100' },
+  ];
+
+  const carousel = window.initRotateCarousel(preview, {
+    count: 5,
+    width: 400,
+    height: 500,
+    radius: 0,
+    colors: DEFAULT_COLORS.map((item) => utils.colorWithOpacity(item.hex, item.opacity)),
+    originY: 2000,
+    stepDeg: 12,
+    duration: 350,
+    easingRaw: '0.7, 0, 0.25, 1',
+    velocityIntensity: 1,
+  });
+
+  const controls = {
+    count: document.getElementById('exp3-count'),
+    radius: document.getElementById('exp3-radius'),
+    rotate: document.getElementById('exp3-rotate'),
+    originY: document.getElementById('exp3-origin-y'),
+    duration: document.getElementById('exp3-duration'),
+    velocity: document.getElementById('exp3-velocity'),
+  };
+
+  const easing = window.initCubicBezierInput(document.getElementById('exp3-easing-root'), {
+    onChange: applyAll,
+  });
+
+  const dimensions = window.initDimensionControlGroup(panelRoot, {
+    width: {
+      initialMode: 'fixed',
+      measure: () => 400,
+      onChange: applyAll,
+    },
+    height: {
+      initialMode: 'fixed',
+      measure: () => 500,
+      onChange: applyAll,
+    },
+  });
+
+  const colorInputs = [1, 2, 3, 4, 5].map((index) => (
+    window.initColorInput(document.getElementById(`exp3-color-${index}-root`), {
+      onChange: applyAll,
+    })
+  ));
+
+  const snippet = window.initSnippetOutput(document.getElementById('exp3-snippet-root'), {
+    filename: 'experiment-3.html',
+    getContent: generateSnippet,
+    updateOnInit: false,
+  });
+
+  utils.bindInputWrapInputs(panelRoot);
+
+  Object.values(controls).forEach((input) => {
+    if (!(input instanceof HTMLInputElement)) return;
+    input.addEventListener('input', applyAll);
+  });
+
+  [
+    controls.count,
+    controls.radius,
+    controls.rotate,
+    controls.originY,
+    controls.duration,
+    controls.velocity,
+  ].forEach((input) => {
+    utils.bindNumericArrowKey(input, applyAll);
+  });
+
+  colorInputs.forEach((colorInput) => {
+    utils.bindNumericArrowKey(colorInput.opacityInput, applyAll, { isOpacity: true });
+  });
+
+  function clampCount(value) {
+    return Math.min(12, Math.max(2, Math.round(utils.parsePx(value, 5))));
+  }
+
+  function getCount() {
+    return clampCount(controls.count.value);
+  }
+
+  function getStepDeg() {
+    return utils.parsePx(controls.rotate.value, 12);
+  }
+
+  function getOriginY() {
+    return utils.parsePx(controls.originY.value, 2000);
+  }
+
+  function getDuration() {
+    return utils.parseMs(controls.duration.value, 350);
+  }
+
+  function getVelocityIntensity() {
+    return Math.max(0, utils.parsePx(controls.velocity.value, 1));
+  }
+
+  function getEasing() {
+    return easing.getValue();
+  }
+
+  function getColors() {
+    return colorInputs.map((colorInput) => colorInput.getColor());
+  }
+
+  function getConfig() {
+    return {
+      count: getCount(),
+      width: utils.parsePx(dimensions.width.getValue(), 400),
+      height: utils.parsePx(dimensions.height.getValue(), 500),
+      radius: utils.parsePx(controls.radius.value, 0),
+      colors: getColors(),
+      colorHexes: colorInputs.map((colorInput) => colorInput.getHex()),
+      originY: getOriginY(),
+      stepDeg: getStepDeg(),
+      duration: getDuration(),
+      velocityIntensity: getVelocityIntensity(),
+      easing: getEasing(),
+      easingRaw: easing.getRaw() || '0.7, 0, 0.25, 1',
+    };
+  }
+
+  function collectSettings() {
+    return {
+      count: controls.count.value,
+      radius: controls.radius.value,
+      rotate: controls.rotate.value,
+      originY: controls.originY.value,
+      duration: controls.duration.value,
+      velocity: controls.velocity.value,
+      easing: easing.getRaw(),
+      widthMode: dimensions.width.getMode(),
+      widthValue: dimensions.width.getValue(),
+      heightMode: dimensions.height.getMode(),
+      heightValue: dimensions.height.getValue(),
+      colors: colorInputs.map((colorInput) => ({
+        hex: colorInput.hexInput.value,
+        opacity: colorInput.opacityInput.value,
+      })),
+    };
+  }
+
+  function applySettings(data) {
+    if (!data) return;
+
+    if (data.count != null) controls.count.value = data.count;
+    if (data.radius != null) controls.radius.value = data.radius;
+    if (data.rotate != null) controls.rotate.value = data.rotate;
+    if (data.originY != null) controls.originY.value = data.originY;
+    if (data.duration != null) controls.duration.value = data.duration;
+    if (data.velocity != null) controls.velocity.value = data.velocity;
+    if (data.easing != null) easing.setRaw(data.easing, false);
+
+    if (data.widthMode) {
+      dimensions.width.setMode(data.widthMode, false);
+      if (data.widthMode === 'fixed' && data.widthValue != null) {
+        dimensions.width.element.querySelector('.dimension-fixed-input').value =
+          String(data.widthValue).replace(/px$/i, '');
+      }
+    }
+
+    if (data.heightMode) {
+      dimensions.height.setMode(data.heightMode, false);
+      if (data.heightMode === 'fixed' && data.heightValue != null) {
+        dimensions.height.element.querySelector('.dimension-fixed-input').value =
+          String(data.heightValue).replace(/px$/i, '');
+      }
+    }
+
+    if (Array.isArray(data.colors)) {
+      data.colors.forEach((color, index) => {
+        const colorInput = colorInputs[index];
+        if (!colorInput || !color) return;
+        if (color.hex != null) colorInput.hexInput.value = color.hex;
+        if (color.opacity != null) colorInput.opacityInput.value = color.opacity;
+        colorInput.updateUI(false);
+      });
+    }
+  }
+
+  window.ExperimentSettings = window.ExperimentSettings || {};
+  window.ExperimentSettings['3'] = {
+    collect: collectSettings,
+    apply: applySettings,
+  };
+
+  const pending = window.__pendingExperimentDefaults?.['3'];
+  if (pending) applySettings(pending);
+
+  function applyAll() {
+    const config = getConfig();
+
+    carousel.apply({
+      count: config.count,
+      width: config.width,
+      height: config.height,
+      radius: config.radius,
+      colors: config.colors,
+      originY: config.originY,
+      stepDeg: config.stepDeg,
+      duration: config.duration,
+      velocityIntensity: config.velocityIntensity,
+      easingRaw: config.easingRaw,
+    });
+
+    dimensions.width.updateLabel();
+    dimensions.height.updateLabel();
+    snippet.update();
+  }
+
+  applyAll();
+
+  function generateSnippet() {
+    const config = getConfig();
+    const easingRaw = config.easingRaw;
+    const colorsJson = JSON.stringify(config.colors);
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotate Carousel</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    .rotate-carousel {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+      overflow: hidden;
+    }
+
+    .rotate-carousel__stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .rotate-carousel__stage.is-dragging {
+      cursor: grabbing;
+    }
+
+    .rotate-carousel__card {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      font-size: 48px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.35);
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .rotate-carousel__nav {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .rotate-carousel__nav-btn {
+      width: 50px;
+      height: 50px;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: #f0f0f0;
+      color: #000;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 9px;
+      font-weight: 500;
+      line-height: 1;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="rotate-carousel" data-carousel>
+    <div class="rotate-carousel__stage"></div>
+    <div class="rotate-carousel__nav">
+      <button type="button" class="rotate-carousel__nav-btn" data-carousel-prev>Prev</button>
+      <button type="button" class="rotate-carousel__nav-btn" data-carousel-next>Next</button>
+    </div>
+  </div>
+
+  <script>
+    const CONFIG = {
+      count: ${config.count},
+      width: ${config.width},
+      height: ${config.height},
+      radius: ${config.radius},
+      colors: ${colorsJson},
+      originY: ${config.originY},
+      stepDeg: ${config.stepDeg},
+      duration: ${config.duration},
+      velocityIntensity: ${config.velocityIntensity},
+      easingRaw: ${JSON.stringify(easingRaw)},
+    };
+
+    const stage = document.querySelector('.rotate-carousel__stage');
+    const prevBtn = document.querySelector('[data-carousel-prev]');
+    const nextBtn = document.querySelector('[data-carousel-next]');
+    let count = CONFIG.count;
+    let rotation = 0;
+    let dragStartX = 0;
+    let dragStartRotation = 0;
+    let lastMoveX = 0;
+    let lastMoveTime = 0;
+    let velocityDegPerMs = 0;
+    let isDragging = false;
+    let isAnimating = false;
+    let isMomentum = false;
+    let activePointerId = null;
+    let animationFrameId = null;
+
+    function getEasing() {
+      const raw = String(CONFIG.easingRaw).trim();
+      if (!raw) return 'cubic-bezier(0.7, 0, 0.25, 1)';
+      if (raw.startsWith('cubic-bezier(')) return raw;
+
+      const parts = raw.split(',').map((n) => parseFloat(n.trim()));
+      if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) {
+        return 'cubic-bezier(' + parts.join(', ') + ')';
+      }
+
+      return raw;
+    }
+
+    function getOrigin() {
+      return '50% calc(100% + ' + CONFIG.originY + 'px)';
+    }
+
+    function getDragRadius() {
+      return Math.max(CONFIG.originY + CONFIG.height / 2, 1);
+    }
+
+    function pxVelocityToDegVelocity(pxPerMs) {
+      return -(pxPerMs / getDragRadius()) * (180 / Math.PI);
+    }
+
+    function wrapAngle(angle, halfSpan) {
+      const span = halfSpan * 2;
+      if (span <= 0) return 0;
+      let wrapped = angle;
+      while (wrapped > halfSpan) wrapped -= span;
+      while (wrapped <= -halfSpan) wrapped += span;
+      return wrapped;
+    }
+
+    function getCardAngle(index) {
+      const halfSpan = (count * CONFIG.stepDeg) / 2;
+      return wrapAngle(index * CONFIG.stepDeg - rotation, halfSpan);
+    }
+
+    function getSpan() {
+      return count * CONFIG.stepDeg;
+    }
+
+    function getRenderAngle(index, card) {
+      const wrapped = getCardAngle(index);
+
+      if (!isAnimating) {
+        delete card.dataset.angle;
+        return wrapped;
+      }
+
+      if (card.dataset.angle == null) {
+        card.dataset.angle = String(wrapped);
+        return wrapped;
+      }
+
+      const prev = Number.parseFloat(card.dataset.angle);
+      let angle = wrapped;
+      const span = getSpan();
+
+      while (angle - prev > span / 2) angle -= span;
+      while (angle - prev < -span / 2) angle += span;
+
+      card.dataset.angle = String(angle);
+      return angle;
+    }
+
+    function setCardTransform(card, angle) {
+      card.style.transition = 'none';
+      card.style.transform = 'translate(-50%, -50%) rotate(' + angle + 'deg)';
+    }
+
+    function cancelAnimation() {
+      if (animationFrameId != null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+      isAnimating = false;
+      isMomentum = false;
+    }
+
+    function parseCubicBezier(raw) {
+      const trimmed = String(raw).trim();
+      if (!trimmed) return [0.7, 0, 0.25, 1];
+
+      let inner = trimmed;
+      if (trimmed.startsWith('cubic-bezier(') && trimmed.endsWith(')')) {
+        inner = trimmed.slice('cubic-bezier('.length, -1);
+      }
+
+      const parts = inner.split(',').map(function (n) { return parseFloat(n.trim()); });
+      if (parts.length === 4 && parts.every(function (n) { return Number.isFinite(n); })) {
+        return parts;
+      }
+
+      return [0.7, 0, 0.25, 1];
+    }
+
+    function createCubicBezierEase(x1, y1, x2, y2) {
+      const cx = 3 * x1;
+      const bx = 3 * (x2 - x1) - cx;
+      const ax = 1 - cx - bx;
+      const cy = 3 * y1;
+      const by = 3 * (y2 - y1) - cy;
+      const ay = 1 - cy - by;
+
+      function sampleX(t) {
+        return ((ax * t + bx) * t + cx) * t;
+      }
+
+      function sampleY(t) {
+        return ((ay * t + by) * t + cy) * t;
+      }
+
+      function sampleDerivativeX(t) {
+        return (3 * ax * t + 2 * bx) * t + cx;
+      }
+
+      return function ease(time) {
+        if (time <= 0) return 0;
+        if (time >= 1) return 1;
+
+        let t = time;
+        for (let i = 0; i < 8; i += 1) {
+          const x = sampleX(t) - time;
+          const dx = sampleDerivativeX(t);
+          if (Math.abs(x) < 1e-5 || dx === 0) break;
+          t -= x / dx;
+        }
+
+        return sampleY(t);
+      };
+    }
+
+    function getEaseFunction() {
+      const coords = parseCubicBezier(getEasing());
+      return createCubicBezierEase(coords[0], coords[1], coords[2], coords[3]);
+    }
+
+    function animateRotationTo(nextRotation) {
+      if (isAnimating || nextRotation === rotation) return;
+
+      cancelAnimation();
+      isAnimating = true;
+
+      const startRotation = rotation;
+      const delta = nextRotation - startRotation;
+      const ease = getEaseFunction();
+      const startTime = performance.now();
+
+      function frame(now) {
+        const progress = Math.min((now - startTime) / CONFIG.duration, 1);
+        rotation = startRotation + delta * ease(progress);
+        renderCards();
+
+        if (progress < 1) {
+          animationFrameId = requestAnimationFrame(frame);
+          return;
+        }
+
+        rotation = nextRotation;
+        animationFrameId = null;
+        isAnimating = false;
+        stage.querySelectorAll('.rotate-carousel__card').forEach(function (card) {
+          delete card.dataset.angle;
+        });
+        renderCards();
+      }
+
+      animationFrameId = requestAnimationFrame(frame);
+    }
+
+    function startMomentum(initialVelocityDegPerMs) {
+      if (!initialVelocityDegPerMs) {
+        snapRotation();
+        return;
+      }
+
+      cancelAnimation();
+      isMomentum = true;
+
+      let velocity = initialVelocityDegPerMs;
+      let lastTime = performance.now();
+      const friction = 0.92;
+      const minVelocity = 0.002;
+
+      function momentumFrame(now) {
+        if (!isMomentum) return;
+
+        const dt = Math.min(now - lastTime, 32);
+        lastTime = now;
+
+        rotation += velocity * dt;
+        velocity *= Math.pow(friction, dt / 16);
+        renderCards();
+
+        if (Math.abs(velocity) > minVelocity) {
+          animationFrameId = requestAnimationFrame(momentumFrame);
+          return;
+        }
+
+        isMomentum = false;
+        animationFrameId = null;
+        snapRotation();
+      }
+
+      animationFrameId = requestAnimationFrame(momentumFrame);
+    }
+
+    function ensureCards() {
+      const existing = stage.querySelectorAll('.rotate-carousel__card');
+      if (existing.length === count) return;
+
+      stage.innerHTML = '';
+      for (let i = 0; i < count; i += 1) {
+        const card = document.createElement('div');
+        card.className = 'rotate-carousel__card';
+        card.textContent = String(i + 1);
+        stage.appendChild(card);
+      }
+    }
+
+    function applyCardStyles() {
+      const cards = stage.querySelectorAll('.rotate-carousel__card');
+      const origin = getOrigin();
+
+      cards.forEach((card, index) => {
+        card.style.width = CONFIG.width + 'px';
+        card.style.height = CONFIG.height + 'px';
+        card.style.borderRadius = CONFIG.radius + 'px';
+        card.style.background = CONFIG.colors[index % CONFIG.colors.length];
+        card.style.transformOrigin = origin;
+        card.textContent = String(index + 1);
+      });
+    }
+
+    function renderCards() {
+      ensureCards();
+      applyCardStyles();
+
+      const cards = stage.querySelectorAll('.rotate-carousel__card');
+      cards.forEach(function (card, index) {
+        setCardTransform(card, getRenderAngle(index, card));
+      });
+    }
+
+    function snapRotation() {
+      if (CONFIG.stepDeg <= 0) return;
+      const snapped = Math.round(rotation / CONFIG.stepDeg) * CONFIG.stepDeg;
+      if (snapped === rotation) return;
+      animateRotationTo(snapped);
+    }
+
+    function stepBy(direction) {
+      if (isAnimating || isDragging || isMomentum || CONFIG.stepDeg <= 0) return;
+      animateRotationTo(rotation + direction * CONFIG.stepDeg);
+    }
+
+    stage.addEventListener('pointerdown', function (event) {
+      if ((isAnimating && !isMomentum) || event.button !== 0) return;
+
+      cancelAnimation();
+
+      isDragging = true;
+      activePointerId = event.pointerId;
+      dragStartX = event.clientX;
+      dragStartRotation = rotation;
+      lastMoveX = event.clientX;
+      lastMoveTime = performance.now();
+      velocityDegPerMs = 0;
+      stage.classList.add('is-dragging');
+      stage.setPointerCapture(event.pointerId);
+      event.preventDefault();
+    });
+
+    stage.addEventListener('pointermove', function (event) {
+      if (!isDragging || event.pointerId !== activePointerId) return;
+
+      const deltaX = event.clientX - dragStartX;
+      const deltaDeg = -(deltaX / getDragRadius()) * (180 / Math.PI);
+      rotation = dragStartRotation + deltaDeg;
+
+      const now = performance.now();
+      const dt = now - lastMoveTime;
+      if (dt > 0 && lastMoveTime > 0) {
+        const instantVelocity = pxVelocityToDegVelocity((event.clientX - lastMoveX) / dt);
+        velocityDegPerMs = velocityDegPerMs * 0.75 + instantVelocity * 0.25;
+      }
+      lastMoveX = event.clientX;
+      lastMoveTime = now;
+
+      renderCards();
+      event.preventDefault();
+    });
+
+    function endDrag(event) {
+      if (!isDragging || event.pointerId !== activePointerId) return;
+
+      isDragging = false;
+      activePointerId = null;
+      stage.classList.remove('is-dragging');
+
+      if (stage.hasPointerCapture(event.pointerId)) {
+        stage.releasePointerCapture(event.pointerId);
+      }
+
+      const boostedVelocity = velocityDegPerMs * CONFIG.velocityIntensity;
+      if (Math.abs(boostedVelocity) > 0.02) {
+        startMomentum(boostedVelocity);
+        return;
+      }
+
+      snapRotation();
+    }
+
+    stage.addEventListener('pointerup', endDrag);
+    stage.addEventListener('pointercancel', endDrag);
+
+    prevBtn?.addEventListener('click', function () { stepBy(-1); });
+    nextBtn?.addEventListener('click', function () { stepBy(1); });
+
+    renderCards();
+  <\/script>
+</body>
+</html>`;
+  }
+
+  preview.dataset.experimentReady = '1';
+};
+
 (function () {
-  const STORAGE_KEY = 'cp-kit-experiment-defaults';
+  const LEGACY_STORAGE_KEY = 'cp-kit-experiment-defaults';
+  const STORAGE_PREFIX = 'cp-kit-experiment-defaults-';
+  const ACTIVE_KEY = 'cp-kit-experiment-active';
   const DEFAULT_EXPERIMENT = '2';
+  const EXPERIMENT_IDS = ['1', '2', '3'];
 
   window.ExperimentSettings = window.ExperimentSettings || {};
 
   const experiments = {
     1: { init: () => window.initExperiment1?.() },
     2: { init: () => window.initExperiment2?.() },
+    3: { init: () => window.initExperiment3?.() },
   };
 
-  function loadDefaults() {
+  function loadExperimentDefaults(id) {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw = localStorage.getItem(`${STORAGE_PREFIX}${id}`);
       return raw ? JSON.parse(raw) : null;
     } catch {
       return null;
     }
   }
 
-  function ensureAllExperimentsInited() {
-    experiments['1'].init();
-    experiments['2'].init();
+  function saveExperimentDefaults(id, settings) {
+    localStorage.setItem(`${STORAGE_PREFIX}${id}`, JSON.stringify(settings));
   }
 
-  function saveDefaults() {
-    ensureAllExperimentsInited();
-
-    const panels = {};
-    Object.keys(window.ExperimentSettings).forEach((id) => {
-      panels[id] = window.ExperimentSettings[id].collect();
-    });
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      experiment: selector.getValue(),
-      panels,
-    }));
+  function loadActiveExperiment() {
+    return localStorage.getItem(ACTIVE_KEY) || DEFAULT_EXPERIMENT;
   }
 
-  const saved = loadDefaults();
-  window.__pendingExperimentDefaults = saved?.panels || null;
-  const startExperiment = saved?.experiment || DEFAULT_EXPERIMENT;
+  function saveActiveExperiment(id) {
+    localStorage.setItem(ACTIVE_KEY, id);
+  }
+
+  function migrateLegacyDefaults() {
+    try {
+      const raw = localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (!raw) return;
+
+      const saved = JSON.parse(raw);
+      if (saved?.panels) {
+        EXPERIMENT_IDS.forEach((id) => {
+          if (saved.panels[id] && !loadExperimentDefaults(id)) {
+            saveExperimentDefaults(id, saved.panels[id]);
+          }
+        });
+      }
+
+      if (saved?.experiment) {
+        saveActiveExperiment(saved.experiment);
+      }
+
+      localStorage.removeItem(LEGACY_STORAGE_KEY);
+    } catch {
+      // ignore invalid legacy payload
+    }
+  }
+
+  migrateLegacyDefaults();
+
+  window.__pendingExperimentDefaults = Object.fromEntries(
+    EXPERIMENT_IDS.map((id) => [id, loadExperimentDefaults(id)])
+  );
+
+  const startExperiment = loadActiveExperiment();
 
   const selector = window.initOptionSelector(document.getElementById('experiment-selector-root'), {
     label: 'Experiment',
@@ -2887,11 +4336,24 @@ window.initExperiment2 = function initExperiment2() {
     options: [
       { value: '1', label: 'Experiment 1' },
       { value: '2', label: 'Experiment 2' },
+      { value: '3', label: 'Experiment 3' },
     ],
     onChange: (value) => switchExperiment(value),
   });
 
   document.getElementById('save-default-btn')?.addEventListener('click', saveDefaults);
+
+  function saveDefaults() {
+    const id = selector.getValue();
+    experiments[id]?.init();
+
+    const settings = window.ExperimentSettings[id]?.collect?.();
+    if (!settings) return;
+
+    saveExperimentDefaults(id, settings);
+    saveActiveExperiment(id);
+    window.__pendingExperimentDefaults[id] = settings;
+  }
 
   function switchExperiment(id) {
     document.querySelectorAll('[data-experiment-preview]').forEach((node) => {
