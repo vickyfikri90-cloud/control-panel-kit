@@ -547,6 +547,59 @@ initCheckbox(el, {
 
 ---
 
+## Cubic Bézier Input
+
+**Folder:** `CubicBezierInput/` · **ID:** `cubic-bezier-input` · **Group:** primitive
+
+Text input + draggable SVG curve editor for CSS `cubic-bezier()` easing.
+
+### Init
+
+```js
+initCubicBezierInput(root, options)
+```
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `value` | `string` | from input | Initial raw value (`0.7, 0, 0.25, 1` or full `cubic-bezier(...)`) |
+| `onChange` | `(css) => void` | — | Receives computed CSS easing string |
+
+**Returns:** `{ element, textInput, getRaw(), getValue(), getValues(), setRaw(), setValues(), updateUI() }`
+
+### HTML data attributes
+
+`[data-bezier-text]`, `[data-bezier-svg]`, `[data-bezier-curve]`, `[data-bezier-line1]`, `[data-bezier-line2]`, `[data-bezier-p1]`, `[data-bezier-p2]`, `[data-bezier-start]`, `[data-bezier-end]`
+
+### CSS
+
+`.cubic-bezier-field`, `.cubic-bezier-editor`, `.cubic-bezier-svg`, `.cubic-bezier-guide`, `.cubic-bezier-curve`, `.cubic-bezier-handle-line`, `.cubic-bezier-handle-bar`, `.cubic-bezier-handle`, `.cubic-bezier-value-input`
+
+Editor: 208×200 SVG, `#F5F5F5` background, guide lines at y=25/175, handles `#4372FF` stroke r=6. Value input below editor with easing icon.
+
+### Usage
+
+```js
+const easing = initCubicBezierInput(document.getElementById('easing-root'), {
+  value: '0.7, 0, 0.25, 1',
+  onChange: applyAll,
+});
+
+element.style.transitionTimingFunction = easing.getValue();
+// easing.getRaw() → '0.7, 0, 0.25, 1'
+// easing.getValues() → [0.7, 0, 0.25, 1]
+```
+
+### Agent rules
+
+- Accepts comma-separated values or full `cubic-bezier(...)` string in text input
+- X control points clamp to 0–1 (CSS requirement); Y allows overshoot (−0.5 to 1.5 in editor)
+- Text and curve stay in sync; blur normalizes valid input
+- Arrow keys on handles nudge by 0.01 (Shift = 0.05)
+
+---
+
 ## HoverButton (experiment component)
 
 **Folder:** `HoverButton/` · **Not in manifest**

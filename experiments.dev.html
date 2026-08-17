@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Inter:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Components/shared/base.css">
+  <link rel="stylesheet" href="Components/ControlPanel/component.css">
+  <link rel="stylesheet" href="Components/DimensionControl/component.css">
+  <link rel="stylesheet" href="Components/ColorInput/component.css">
+  <link rel="stylesheet" href="Components/SnippetOutput/component.css">
+  <link rel="stylesheet" href="Components/OptionSelector/component.css">
+  <link rel="stylesheet" href="Components/HoverButton/component.css">
+  <link rel="stylesheet" href="Components/RotateXButton/component.css">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      background: #fff;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <script src="Components/control-panel-kit.js"></script>
+  <script>
+    (async () => {
+      const response = await fetch('experiments.shell.html');
+      if (!response.ok) throw new Error('Failed to load experiments.shell.html');
+      document.body.insertAdjacentHTML('afterbegin', await response.text());
+
+      await ControlPanelKit.load();
+      await ControlPanelKit.loadScript('Components/HoverButton/component.js', 'hover-button');
+      await ControlPanelKit.loadScript('Components/RotateXButton/component.js', 'rotate-x-button');
+      await ControlPanelKit.loadScript('hover-button-app.js', 'experiment-1');
+      await ControlPanelKit.loadScript('experiment-2-app.js', 'experiment-2');
+      await ControlPanelKit.loadScript('experiments-app.js', 'experiments');
+    })().catch((error) => {
+      console.error(error);
+      document.body.innerHTML = `<p style="padding:24px;font:500 14px Inter,sans-serif;">Failed to load experiments. Run a local server from the project root.<br><code>${error.message}</code></p>`;
+    });
+  </script>
+</body>
+</html>

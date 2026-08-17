@@ -68,6 +68,7 @@ window.ComponentIndex = {
       },
       toggle: { onChange() {} },
       checkbox: { onChange() {} },
+      'cubic-bezier-input': { value: '0.7, 0, 0.25, 1', onChange() {} },
     };
 
     for (const meta of components) {

@@ -8,6 +8,22 @@
   overflow: hidden;
 }
 
+.cp-preview-area {
+  flex: 1;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+}
+
+.cp-preview-area > .cp-preview {
+  flex: 1;
+  width: 100%;
+}
+
+.cp-preview-area > .cp-preview[hidden] {
+  display: none !important;
+}
+
 .cp-preview {
   flex: 1;
   display: flex;
@@ -42,4 +58,8 @@
 
 .cp-app--fullscreen .panel {
   height: 100vh;
+}
+
+.panel [data-experiment-panel][hidden] {
+  display: none !important;
 }

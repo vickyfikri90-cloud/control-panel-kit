@@ -107,6 +107,15 @@ window.CONTROL_PANEL_COMPONENTS = [
     styles: ['Checkbox/component.css'],
     group: 'primitive',
   },
+  {
+    id: 'cubic-bezier-input',
+    name: 'Cubic Bézier Input',
+    description: 'Text + draggable curve editor for cubic-bezier easing.',
+    folder: 'CubicBezierInput',
+    init: 'initCubicBezierInput',
+    styles: ['CubicBezierInput/component.css'],
+    group: 'primitive',
+  },
 ];
 
 window.COMPONENTS = window.CONTROL_PANEL_COMPONENTS;

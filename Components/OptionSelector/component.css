@@ -53,3 +53,17 @@
 .option-selector__option.is-active {
   background: rgba(245, 245, 245, 0.18);
 }
+
+.field--save-default {
+  margin-bottom: 16px;
+}
+
+.field--save-default .download-btn {
+  margin-top: 0;
+}
+
+.field > .option-selector--nested {
+  width: auto;
+  padding: 0;
+  margin-bottom: 8px;
+}

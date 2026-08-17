@@ -1,0 +1,35 @@
+.rotate-x-button {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  border: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  height: 56px;
+  padding: 0 24px;
+  cursor: pointer;
+  overflow: hidden;
+  color: #000;
+}
+
+.rotate-x-button .label {
+  display: block;
+  position: relative;
+  height: 1.125em;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.rotate-x-button .text {
+  display: block;
+  will-change: transform;
+  white-space: nowrap;
+  backface-visibility: hidden;
+}
+
+.rotate-x-button .text.is-hidden {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

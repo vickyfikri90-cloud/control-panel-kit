@@ -9,9 +9,10 @@ alwaysApply: true
 
 Before modifying this project or copying it to a new experiment:
 
-1. Read `AGENTS.md` — conventions, do/don't, wiring pattern
-2. Read `docs/COMPONENTS.md` — per-component API and rules
-3. Read `README.md` — quick start and architecture
+1. Read the **control-panel-kit** skill (`.cursor/skills/control-panel-kit/SKILL.md`)
+2. Read `AGENTS.md` — conventions, do/don't, wiring pattern
+3. Read `docs/COMPONENTS.md` — per-component API and rules
+4. Read `README.md` — quick start and architecture
 
 Key rules:
 - Single `applyAll()` loop for all panel → preview + snippet sync

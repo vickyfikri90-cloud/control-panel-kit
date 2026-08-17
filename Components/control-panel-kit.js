@@ -14,6 +14,7 @@ window.ControlPanelKit = {
     'OptionSelector/component.css',
     'Toggle/component.css',
     'Checkbox/component.css',
+    'CubicBezierInput/component.css',
   ],
 
   scripts: [
@@ -30,6 +31,7 @@ window.ControlPanelKit = {
     'OptionSelector/component.js',
     'Toggle/component.js',
     'Checkbox/component.js',
+    'CubicBezierInput/component.js',
     'ControlPanel/component.js',
   ],
 
