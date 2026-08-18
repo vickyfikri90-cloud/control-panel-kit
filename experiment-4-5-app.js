@@ -52,6 +52,15 @@ window.initExperiment4_5 = function initExperiment4_5() {
     onChange: applyAll,
   });
 
+  const inputSelector = window.initOptionSelector(document.getElementById('exp45-input-root'), {
+    value: 'drag',
+    options: [
+      { value: 'drag', label: 'Drag' },
+      { value: 'scroll', label: 'Scroll' },
+    ],
+    onChange: applyAll,
+  });
+
   const dimensions = window.initDimensionControlGroup(panelRoot, {
     width: {
       initialMode: 'fixed',
@@ -138,6 +147,10 @@ window.initExperiment4_5 = function initExperiment4_5() {
     return variantSelector.getValue();
   }
 
+  function getInputAction() {
+    return inputSelector.getValue();
+  }
+
   function getEasing() {
     return easing.getValue();
   }
@@ -161,6 +174,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       velocityIntensity: getVelocityIntensity(),
       highlightScale: getHighlightScale(),
       orientation: getOrientation(),
+      inputAction: getInputAction(),
       easing: getEasing(),
       easingRaw: easing.getRaw() || '0.7, 0, 0.25, 1',
     };
@@ -177,6 +191,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       duration: controls.duration.value,
       velocity: controls.velocity.value,
       variant: variantSelector.getValue(),
+      input: inputSelector.getValue(),
       easing: easing.getRaw(),
       widthMode: dimensions.width.getMode(),
       widthValue: dimensions.width.getValue(),
@@ -201,6 +216,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
     if (data.duration != null) controls.duration.value = data.duration;
     if (data.velocity != null) controls.velocity.value = data.velocity;
     if (data.variant != null) variantSelector.setValue(data.variant, false);
+    if (data.input != null) inputSelector.setValue(data.input, false);
     if (data.easing != null) easing.setRaw(data.easing, false);
 
     if (data.widthMode) {
@@ -255,6 +271,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       velocityIntensity: config.velocityIntensity,
       highlightScale: config.highlightScale,
       orientation: config.orientation,
+      inputAction: config.inputAction,
       easingRaw: config.easingRaw,
     });
 
@@ -313,6 +330,10 @@ window.initExperiment4_5 = function initExperiment4_5() {
 
     .rotate-x-carousel__stage.is-dragging {
       cursor: grabbing;
+    }
+
+    .rotate-x-carousel.is-scroll-input .rotate-x-carousel__stage {
+      cursor: default;
     }
 
     .rotate-x-carousel__ring {
@@ -401,6 +422,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       velocityIntensity: ${config.velocityIntensity},
       highlightScale: ${config.highlightScale},
       orientation: ${JSON.stringify(config.orientation)},
+      inputAction: ${JSON.stringify(config.inputAction)},
       easingRaw: ${JSON.stringify(easingRaw)},
     };
 
@@ -421,6 +443,9 @@ window.initExperiment4_5 = function initExperiment4_5() {
     let isMomentum = false;
     let activePointerId = null;
     let animationFrameId = null;
+    let scrollSnapTimer = null;
+    let wheelVelocityDegPerMs = 0;
+    let lastWheelTime = 0;
 
     function getEasing() {
       const raw = String(CONFIG.easingRaw).trim();
@@ -451,8 +476,46 @@ window.initExperiment4_5 = function initExperiment4_5() {
       return isHorizontal() ? -1 : 1;
     }
 
+    function isScrollInput() {
+      return String(CONFIG.inputAction).toLowerCase() === 'scroll';
+    }
+
     function pxVelocityToDegVelocity(pxPerMs) {
       return getDragDirection() * (pxPerMs / getDragRadius()) * (180 / Math.PI);
+    }
+
+    function getWheelDeltaPx(event) {
+      let delta = isHorizontal()
+        ? (Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY)
+        : event.deltaY;
+
+      if (event.deltaMode === 1) delta *= 16;
+      else if (event.deltaMode === 2) delta *= window.innerHeight;
+
+      return delta;
+    }
+
+    function clearScrollSnapTimer() {
+      if (scrollSnapTimer != null) {
+        clearTimeout(scrollSnapTimer);
+        scrollSnapTimer = null;
+      }
+    }
+
+    function scheduleScrollSnap() {
+      clearScrollSnapTimer();
+      scrollSnapTimer = setTimeout(function () {
+        scrollSnapTimer = null;
+        const boostedVelocity = wheelVelocityDegPerMs * CONFIG.velocityIntensity;
+        wheelVelocityDegPerMs = 0;
+
+        if (Math.abs(boostedVelocity) > 0.02) {
+          startMomentum(boostedVelocity);
+          return;
+        }
+
+        snapRotation();
+      }, 120);
     }
 
     function wrapAngle(angle, halfSpan) {
@@ -541,6 +604,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       }
       isAnimating = false;
       isMomentum = false;
+      clearScrollSnapTimer();
     }
 
     function parseCubicBezier(raw) {
@@ -710,6 +774,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       if (carousel) {
         carousel.classList.toggle('is-horizontal', isHorizontal());
         carousel.classList.toggle('is-vertical', !isHorizontal());
+        carousel.classList.toggle('is-scroll-input', isScrollInput());
       }
       applyStageStyles();
       ensureCards();
@@ -741,7 +806,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
     }
 
     stage.addEventListener('pointerdown', function (event) {
-      if ((isAnimating && !isMomentum) || event.button !== 0) return;
+      if (isScrollInput() || (isAnimating && !isMomentum) || event.button !== 0) return;
 
       cancelAnimation();
 
@@ -801,6 +866,29 @@ window.initExperiment4_5 = function initExperiment4_5() {
 
     stage.addEventListener('pointerup', endDrag);
     stage.addEventListener('pointercancel', endDrag);
+
+    stage.addEventListener('wheel', function (event) {
+      if (!isScrollInput()) return;
+      if (isDragging || (isAnimating && !isMomentum)) return;
+
+      event.preventDefault();
+      cancelAnimation();
+
+      const now = performance.now();
+      const deltaPx = getWheelDeltaPx(event);
+      const deltaDeg = getDragDirection() * (deltaPx / getDragRadius()) * (180 / Math.PI);
+      rotation += deltaDeg;
+
+      const dt = now - lastWheelTime;
+      if (dt > 0 && lastWheelTime > 0) {
+        const instantVelocity = pxVelocityToDegVelocity(deltaPx / dt);
+        wheelVelocityDegPerMs = wheelVelocityDegPerMs * 0.75 + instantVelocity * 0.25;
+      }
+      lastWheelTime = now;
+
+      renderCards();
+      scheduleScrollSnap();
+    }, { passive: false });
 
     prevBtn?.addEventListener('click', function () { stepBy(-1); });
     nextBtn?.addEventListener('click', function () { stepBy(1); });

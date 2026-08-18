@@ -26,6 +26,10 @@
   cursor: grabbing;
 }
 
+.rotate-x-carousel.is-scroll-input .rotate-x-carousel__stage {
+  cursor: default;
+}
+
 .rotate-x-carousel__ring {
   position: absolute;
   left: 50%;

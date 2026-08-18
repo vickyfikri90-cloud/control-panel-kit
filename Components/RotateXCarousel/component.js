@@ -25,6 +25,7 @@ window.initRotateXCarousel = function initRotateXCarousel(root, options = {}) {
   let velocityIntensity = options.velocityIntensity ?? 1;
   let highlightScale = options.highlightScale ?? 1;
   let orientation = normalizeOrientation(options.orientation ?? 'vertical');
+  let inputAction = normalizeInputAction(options.inputAction ?? 'drag');
 
   let rotation = 0;
   let dragStartPointer = 0;
@@ -37,6 +38,17 @@ window.initRotateXCarousel = function initRotateXCarousel(root, options = {}) {
   let isMomentum = false;
   let activePointerId = null;
   let animationFrameId = null;
+  let scrollSnapTimer = null;
+  let wheelVelocityDegPerMs = 0;
+  let lastWheelTime = 0;
+
+  function normalizeInputAction(value) {
+    return String(value).toLowerCase() === 'scroll' ? 'scroll' : 'drag';
+  }
+
+  function isScrollInput() {
+    return inputAction === 'scroll';
+  }
 
   function normalizeOrientation(value) {
     return String(value).toLowerCase() === 'horizontal' ? 'horizontal' : 'vertical';
@@ -82,6 +94,40 @@ window.initRotateXCarousel = function initRotateXCarousel(root, options = {}) {
 
   function pxVelocityToDegVelocity(pxPerMs) {
     return getDragDirection() * (pxPerMs / getDragRadius()) * (180 / Math.PI);
+  }
+
+  function getWheelDeltaPx(event) {
+    let delta = isHorizontal()
+      ? (Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY)
+      : event.deltaY;
+
+    if (event.deltaMode === 1) delta *= 16;
+    else if (event.deltaMode === 2) delta *= window.innerHeight;
+
+    return delta;
+  }
+
+  function clearScrollSnapTimer() {
+    if (scrollSnapTimer != null) {
+      clearTimeout(scrollSnapTimer);
+      scrollSnapTimer = null;
+    }
+  }
+
+  function scheduleScrollSnap() {
+    clearScrollSnapTimer();
+    scrollSnapTimer = setTimeout(() => {
+      scrollSnapTimer = null;
+      const boostedVelocity = wheelVelocityDegPerMs * velocityIntensity;
+      wheelVelocityDegPerMs = 0;
+
+      if (Math.abs(boostedVelocity) > 0.02) {
+        startMomentum(boostedVelocity);
+        return;
+      }
+
+      snapRotation();
+    }, 120);
   }
 
   function wrapAngle(angle, halfSpan) {
@@ -133,6 +179,7 @@ window.initRotateXCarousel = function initRotateXCarousel(root, options = {}) {
     }
     isAnimating = false;
     isMomentum = false;
+    clearScrollSnapTimer();
   }
 
   function parseCubicBezier(raw) {
@@ -337,6 +384,7 @@ window.initRotateXCarousel = function initRotateXCarousel(root, options = {}) {
   function renderCards() {
     carousel.classList.toggle('is-horizontal', isHorizontal());
     carousel.classList.toggle('is-vertical', !isHorizontal());
+    carousel.classList.toggle('is-scroll-input', isScrollInput());
     applyStageStyles();
     ensureCards();
     applyCardStyles();
@@ -367,7 +415,7 @@ window.initRotateXCarousel = function initRotateXCarousel(root, options = {}) {
   }
 
   function onPointerDown(event) {
-    if ((isAnimating && !isMomentum) || event.button !== 0) return;
+    if (isScrollInput() || (isAnimating && !isMomentum) || event.button !== 0) return;
 
     cancelAnimation();
 
@@ -426,10 +474,34 @@ window.initRotateXCarousel = function initRotateXCarousel(root, options = {}) {
     snapRotation();
   }
 
+  function onWheel(event) {
+    if (!isScrollInput()) return;
+    if (isDragging || (isAnimating && !isMomentum)) return;
+
+    event.preventDefault();
+    cancelAnimation();
+
+    const now = performance.now();
+    const deltaPx = getWheelDeltaPx(event);
+    const deltaDeg = getDragDirection() * (deltaPx / getDragRadius()) * (180 / Math.PI);
+    rotation += deltaDeg;
+
+    const dt = now - lastWheelTime;
+    if (dt > 0 && lastWheelTime > 0) {
+      const instantVelocity = pxVelocityToDegVelocity(deltaPx / dt);
+      wheelVelocityDegPerMs = wheelVelocityDegPerMs * 0.75 + instantVelocity * 0.25;
+    }
+    lastWheelTime = now;
+
+    renderCards();
+    scheduleScrollSnap();
+  }
+
   stage.addEventListener('pointerdown', onPointerDown);
   stage.addEventListener('pointermove', onPointerMove);
   stage.addEventListener('pointerup', onPointerUp);
   stage.addEventListener('pointercancel', onPointerUp);
+  stage.addEventListener('wheel', onWheel, { passive: false });
 
   prevBtn?.addEventListener('click', () => stepBy(-1));
   nextBtn?.addEventListener('click', () => stepBy(1));
@@ -457,6 +529,7 @@ window.initRotateXCarousel = function initRotateXCarousel(root, options = {}) {
     if (config.velocityIntensity != null) velocityIntensity = config.velocityIntensity;
     if (config.highlightScale != null) highlightScale = config.highlightScale;
     if (config.orientation != null) orientation = normalizeOrientation(config.orientation);
+    if (config.inputAction != null) inputAction = normalizeInputAction(config.inputAction);
 
     if (needsRebuild) {
       ring.innerHTML = '';
