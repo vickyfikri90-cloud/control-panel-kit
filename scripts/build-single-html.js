@@ -19,6 +19,7 @@ const styles = [
   'Components/HoverButton/component.css',
   'Components/RotateXButton/component.css',
   'Components/RotateCarousel/component.css',
+  'Components/RotateXCarousel/component.css',
 ].map(read).join('\n');
 
 const scripts = [
@@ -32,9 +33,12 @@ const scripts = [
   'Components/HoverButton/component.js',
   'Components/RotateXButton/component.js',
   'Components/RotateCarousel/component.js',
+  'Components/RotateXCarousel/component.js',
   'hover-button-app.js',
   'experiment-2-app.js',
   'experiment-3-app.js',
+  'experiment-4-app.js',
+  'experiment-4-5-app.js',
   'experiments-app.js',
 ].map(read).join('\n');
 

@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="Components/HoverButton/component.css">
   <link rel="stylesheet" href="Components/RotateXButton/component.css">
   <link rel="stylesheet" href="Components/RotateCarousel/component.css">
+  <link rel="stylesheet" href="Components/RotateXCarousel/component.css">
   <style>
     body {
       margin: 0;
@@ -38,9 +39,12 @@
       await ControlPanelKit.loadScript('Components/HoverButton/component.js', 'hover-button');
       await ControlPanelKit.loadScript('Components/RotateXButton/component.js', 'rotate-x-button');
       await ControlPanelKit.loadScript('Components/RotateCarousel/component.js', 'rotate-carousel');
+      await ControlPanelKit.loadScript('Components/RotateXCarousel/component.js', 'rotate-x-carousel');
       await ControlPanelKit.loadScript('hover-button-app.js', 'experiment-1');
       await ControlPanelKit.loadScript('experiment-2-app.js', 'experiment-2');
       await ControlPanelKit.loadScript('experiment-3-app.js', 'experiment-3');
+      await ControlPanelKit.loadScript('experiment-4-app.js', 'experiment-4');
+      await ControlPanelKit.loadScript('experiment-4-5-app.js', 'experiment-4-5');
       await ControlPanelKit.loadScript('experiments-app.js', 'experiments');
     })().catch((error) => {
       console.error(error);

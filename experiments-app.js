@@ -3,7 +3,7 @@
   const STORAGE_PREFIX = 'cp-kit-experiment-defaults-';
   const ACTIVE_KEY = 'cp-kit-experiment-active';
   const DEFAULT_EXPERIMENT = '2';
-  const EXPERIMENT_IDS = ['1', '2', '3'];
+  const EXPERIMENT_IDS = ['1', '2', '3', '4', '4.5'];
 
   window.ExperimentSettings = window.ExperimentSettings || {};
 
@@ -11,6 +11,8 @@
     1: { init: () => window.initExperiment1?.() },
     2: { init: () => window.initExperiment2?.() },
     3: { init: () => window.initExperiment3?.() },
+    4: { init: () => window.initExperiment4?.() },
+    '4.5': { init: () => window.initExperiment4_5?.() },
   };
 
   function loadExperimentDefaults(id) {
@@ -73,6 +75,8 @@
       { value: '1', label: 'Experiment 1' },
       { value: '2', label: 'Experiment 2' },
       { value: '3', label: 'Experiment 3' },
+      { value: '4', label: 'Experiment 4' },
+      { value: '4.5', label: 'Experiment 4.5' },
     ],
     onChange: (value) => switchExperiment(value),
   });
