@@ -20,6 +20,7 @@ const styles = [
   'Components/RotateXButton/component.css',
   'Components/RotateCarousel/component.css',
   'Components/RotateXCarousel/component.css',
+  'Components/FlipCarousel/component.css',
 ].map(read).join('\n');
 
 const scripts = [
@@ -34,15 +35,25 @@ const scripts = [
   'Components/RotateXButton/component.js',
   'Components/RotateCarousel/component.js',
   'Components/RotateXCarousel/component.js',
+  'Components/FlipCarousel/component.js',
   'hover-button-app.js',
   'experiment-2-app.js',
   'experiment-3-app.js',
   'experiment-4-app.js',
   'experiment-4-5-app.js',
+  'experiment-5-app.js',
   'experiments-app.js',
 ].map(read).join('\n');
 
+function escapeTemplate(str) {
+  return str.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
+}
+
 const body = read('experiments.shell.html');
+
+const shellEmbed = `window.EXPERIMENTS_SHELL_HTML = \`${escapeTemplate(body)}\`;\n`;
+fs.writeFileSync(path.join(root, 'experiments-shell-embed.js'), shellEmbed);
+console.log(`Built experiments-shell-embed.js (${(Buffer.byteLength(shellEmbed) / 1024).toFixed(1)} KB)`);
 
 const html = `<!DOCTYPE html>
 <html lang="en">

@@ -1,0 +1,142 @@
+.flip-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  overflow: hidden;
+}
+
+.flip-carousel__stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  transform-style: preserve-3d;
+}
+
+.flip-carousel.is-mode-fan .flip-carousel__stage {
+  overflow: hidden;
+}
+
+.flip-carousel.is-mode-horizontal .flip-carousel__stage,
+.flip-carousel.is-mode-vertical .flip-carousel__stage {
+  overflow: visible;
+}
+
+.flip-carousel__stage.is-dragging {
+  cursor: grabbing;
+}
+
+.flip-carousel.is-scroll-input .flip-carousel__stage {
+  cursor: default;
+}
+
+.flip-carousel.is-flipping .flip-carousel__stage {
+  cursor: default;
+  pointer-events: none;
+}
+
+.flip-carousel__ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+.flip-carousel__card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.flip-carousel__card-face {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 48px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.35);
+  transform-origin: center center;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.flip-carousel__nav {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.flip-carousel__nav-btn {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  color: #000;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.flip-carousel__mode-toggle {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.flip-carousel__mode-btn {
+  height: 50px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  color: #000;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.flip-carousel__mode-btn.is-active {
+  background: #09090b;
+  color: #fff;
+}
+
+.flip-carousel.is-flipping .flip-carousel__mode-toggle {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.flip-carousel.is-flipping .flip-carousel__nav {
+  pointer-events: none;
+  opacity: 0.5;
+}

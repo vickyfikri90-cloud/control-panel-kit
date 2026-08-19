@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="Components/RotateXButton/component.css">
   <link rel="stylesheet" href="Components/RotateCarousel/component.css">
   <link rel="stylesheet" href="Components/RotateXCarousel/component.css">
+  <link rel="stylesheet" href="Components/FlipCarousel/component.css">
   <style>
     body {
       margin: 0;
@@ -28,27 +29,33 @@
   </style>
 </head>
 <body>
+  <script src="experiments-shell-embed.js"></script>
+  <script src="Components/components-templates.js"></script>
   <script src="Components/control-panel-kit.js"></script>
   <script>
     (async () => {
-      const response = await fetch('experiments.shell.html');
-      if (!response.ok) throw new Error('Failed to load experiments.shell.html');
-      document.body.insertAdjacentHTML('afterbegin', await response.text());
+      const shell = window.EXPERIMENTS_SHELL_HTML;
+      if (!shell) {
+        throw new Error('Missing experiments-shell-embed.js. Run: node scripts/build-single-html.js');
+      }
+      document.body.insertAdjacentHTML('afterbegin', shell);
 
       await ControlPanelKit.load();
       await ControlPanelKit.loadScript('Components/HoverButton/component.js', 'hover-button');
       await ControlPanelKit.loadScript('Components/RotateXButton/component.js', 'rotate-x-button');
       await ControlPanelKit.loadScript('Components/RotateCarousel/component.js', 'rotate-carousel');
       await ControlPanelKit.loadScript('Components/RotateXCarousel/component.js', 'rotate-x-carousel');
+      await ControlPanelKit.loadScript('Components/FlipCarousel/component.js', 'flip-carousel');
       await ControlPanelKit.loadScript('hover-button-app.js', 'experiment-1');
       await ControlPanelKit.loadScript('experiment-2-app.js', 'experiment-2');
       await ControlPanelKit.loadScript('experiment-3-app.js', 'experiment-3');
       await ControlPanelKit.loadScript('experiment-4-app.js', 'experiment-4');
       await ControlPanelKit.loadScript('experiment-4-5-app.js', 'experiment-4-5');
+      await ControlPanelKit.loadScript('experiment-5-app.js', 'experiment-5');
       await ControlPanelKit.loadScript('experiments-app.js', 'experiments');
     })().catch((error) => {
       console.error(error);
-      document.body.innerHTML = `<p style="padding:24px;font:500 14px Inter,sans-serif;">Failed to load experiments. Run a local server from the project root.<br><code>${error.message}</code></p>`;
+      document.body.innerHTML = `<p style="padding:24px;font:500 14px Inter,sans-serif;">Failed to load experiments.<br><code>${error.message}</code></p>`;
     });
   </script>
 </body>

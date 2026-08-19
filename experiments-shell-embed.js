@@ -1,4 +1,4 @@
-  <div class="cp-app cp-app--fullscreen">
+window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
     <div class="cp-preview-area">
       <div class="cp-preview" data-experiment-preview="1" hidden>
         <button id="btn" class="hover-button" type="button">
@@ -1453,3 +1453,4 @@
       </div>
     </aside>
   </div>
+`;

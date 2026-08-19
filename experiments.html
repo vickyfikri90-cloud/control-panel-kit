@@ -738,6 +738,149 @@
   flex-shrink: 0;
 }
 
+.flip-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  overflow: hidden;
+}
+
+.flip-carousel__stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  transform-style: preserve-3d;
+}
+
+.flip-carousel.is-mode-fan .flip-carousel__stage {
+  overflow: hidden;
+}
+
+.flip-carousel.is-mode-horizontal .flip-carousel__stage,
+.flip-carousel.is-mode-vertical .flip-carousel__stage {
+  overflow: visible;
+}
+
+.flip-carousel__stage.is-dragging {
+  cursor: grabbing;
+}
+
+.flip-carousel.is-scroll-input .flip-carousel__stage {
+  cursor: default;
+}
+
+.flip-carousel.is-flipping .flip-carousel__stage {
+  cursor: default;
+  pointer-events: none;
+}
+
+.flip-carousel__ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+.flip-carousel__card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.flip-carousel__card-face {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 48px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.35);
+  transform-origin: center center;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.flip-carousel__nav {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.flip-carousel__nav-btn {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  color: #000;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.flip-carousel__mode-toggle {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.flip-carousel__mode-btn {
+  height: 50px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  color: #000;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.flip-carousel__mode-btn.is-active {
+  background: #09090b;
+  color: #fff;
+}
+
+.flip-carousel.is-flipping .flip-carousel__mode-toggle {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.flip-carousel.is-flipping .flip-carousel__nav {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
   </style>
 </head>
 <body>
@@ -791,6 +934,22 @@
           <div class="rotate-x-carousel__nav">
             <button type="button" class="rotate-x-carousel__nav-btn" data-carousel-prev>Prev</button>
             <button type="button" class="rotate-x-carousel__nav-btn" data-carousel-next>Next</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cp-preview" data-experiment-preview="5" hidden>
+        <div class="flip-carousel" data-carousel>
+          <div class="flip-carousel__stage">
+            <div class="flip-carousel__ring"></div>
+          </div>
+          <div class="flip-carousel__nav">
+            <button type="button" class="flip-carousel__nav-btn" data-carousel-prev>Prev</button>
+            <div class="flip-carousel__mode-toggle">
+              <button type="button" class="flip-carousel__mode-btn is-active" data-flip-mode="fan">Fan</button>
+              <button type="button" class="flip-carousel__mode-btn" data-flip-mode="horizontal">Horizontal</button>
+            </div>
+            <button type="button" class="flip-carousel__nav-btn" data-carousel-next>Next</button>
           </div>
         </div>
       </div>
@@ -1775,6 +1934,402 @@
       </div>
 
       <div id="exp45-snippet-root">
+        <div class="field code-field">
+          <span class="field-label">Code</span>
+          <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
+          <button type="button" class="download-btn" data-snippet-download>Download HTML</button>
+        </div>
+      </div>
+      </div>
+
+      <div data-experiment-panel="5" hidden>
+      <div class="field">
+        <label class="field-label" for="exp5-count">Box Count</label>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp5-count" value="5">
+          </div>
+        </div>
+      </div>
+
+      <div id="exp5-color-1-root">
+        <div class="field">
+          <span class="field-label">Box 1 Color</span>
+          <div class="row">
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="FF6B6B">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp5-color-2-root">
+        <div class="field">
+          <span class="field-label">Box 2 Color</span>
+          <div class="row">
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="4ECDC4">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp5-color-3-root">
+        <div class="field">
+          <span class="field-label">Box 3 Color</span>
+          <div class="row">
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="FFE66D">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp5-color-4-root">
+        <div class="field">
+          <span class="field-label">Box 4 Color</span>
+          <div class="row">
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="5B8DEF">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp5-color-5-root">
+        <div class="field">
+          <span class="field-label">Box 5 Color</span>
+          <div class="row">
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="C77DFF">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-divider">
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div id="exp5-fan-section">
+      <div class="field">
+        <span class="field-label">Fan</span>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Dimensions</span>
+        <div class="row">
+          <div class="input-wrap input-wrap--dimension" data-dimension-id="fan-width">
+            <span class="input-icon">W</span>
+            <div class="dimension-control is-fixed">
+              <span class="dimension-mode-label">Fixed (400)</span>
+              <input type="text" class="dimension-fixed-input" value="400">
+            </div>
+            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Width mode">
+              <img src="" alt="" data-icon="chevron">
+            </span>
+            <div class="dimension-menu">
+              <button type="button" data-dimension-mode="fixed">Fixed</button>
+              <button type="button" data-dimension-mode="hug">Hug Content</button>
+            </div>
+          </div>
+          <div class="input-wrap input-wrap--dimension" data-dimension-id="fan-height">
+            <span class="input-icon">H</span>
+            <div class="dimension-control is-fixed">
+              <span class="dimension-mode-label">Fixed (500)</span>
+              <input type="text" class="dimension-fixed-input" value="500">
+            </div>
+            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Height mode">
+              <img src="" alt="" data-icon="chevron">
+            </span>
+            <div class="dimension-menu">
+              <button type="button" data-dimension-mode="fixed">Fixed</button>
+              <button type="button" data-dimension-mode="hug">Hug Content</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Border Radius</span>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp5-fan-radius" value="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Animation</span>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTI2IDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
+            <input type="text" id="exp5-fan-rotate" value="12">
+            <div class="suffix-wrap"><span>°</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon">Y</span>
+            <input type="text" id="exp5-fan-origin-y" value="2000">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
+            <input type="text" id="exp5-fan-duration" value="350">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <span class="field-label" style="margin:0;width:100%;">Velocity intensity</span>
+        </div>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp5-fan-velocity" value="1">
+          </div>
+        </div>
+      </div>
+
+      <div id="exp5-fan-easing-root">
+        <div class="field cubic-bezier-field">
+          <span class="field-label">Easing</span>
+          <div class="cubic-bezier-editor" data-bezier-editor>
+            <svg class="cubic-bezier-svg" data-bezier-svg viewBox="0 0 208 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="208" height="200" rx="5" fill="#F5F5F5"/>
+              <line class="cubic-bezier-guide" x1="29" y1="25" x2="179" y2="25"/>
+              <line class="cubic-bezier-guide" x1="29" y1="175" x2="179" y2="175"/>
+              <path class="cubic-bezier-curve" data-bezier-curve></path>
+              <line class="cubic-bezier-handle-line" data-bezier-line1></line>
+              <line class="cubic-bezier-handle-line" data-bezier-line2></line>
+              <circle class="cubic-bezier-handle" data-bezier-p1 r="6" tabindex="0" role="slider" aria-label="First control point"></circle>
+              <circle class="cubic-bezier-handle" data-bezier-p2 r="6" tabindex="0" role="slider" aria-label="Second control point"></circle>
+            </svg>
+          </div>
+          <div class="input-wrap cubic-bezier-value-input">
+            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTVlLTA3IDguMjIzNzUgOS4yMzQxNWUtMDcgOC4zMzQyNkM5LjIzNDE1ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODEgMTAgMS42Njc1OVpNNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE1ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxIDUuODMzMzQgMS42Njc1OVpNMi41IDEuNjY3NTlDMi41IDEuODg4NiAyLjQxMjIgMi4xMDA1NyAyLjI1NTkyIDIuMjU2ODVDMi4wOTk2NCAyLjQxMzEzIDEuODg3NjggMi41MDA5MiAxLjY2NjY3IDIuNTAwOTJDMS40NDU2NSAyLjUwMDkyIDEuMjMzNjkgMi40MTMxMyAxLjA3NzQxIDIuMjU2ODVDMC45MjExMzIgMi4xMDA1NyAwLjgzMzMzNCAxLjg4ODYgMC44MzMzMzQgMS42Njc1OUMwLjgzMzMzNCAxLjQ0NjU4IDAuOTIxMTMyIDEuMjM0NjIgMS4wNzc0MSAxLjA3ODM0QzEuMjMzNjkgMC45MjIwNTUgMS40NDU2NSAwLjgzNDI1NyAxLjY2NjY3IDAuODM0MjU3QzEuODg3NjggMC44MzQyNTcgMi4wOTk2NCAwLjkyMjA1NSAyLjI1NTkyIDEuMDc4MzRDMi40MTMyIDEuMjM0NjIgMi41IDEuNDQ2NTggMi41IDEuNjY3NTlaTTEwIDguMzM0MjZDMTAuMDAxMyA3LjkyODE1IDkuODU0MDQgNy41MzU1OCA5LjU4NjA2IDcuMjMwNDRDOS4zMTgwOCA2LjkyNTI5IDguOTQ3ODEgNi43Mjg2MSA4LjU0NDk0IDYuNjc3NDFDOC4xNDIwNyA2LjYyNjIgNy43MzQzNyA2LjcyNDAxIDcuMzk4NTggNi45NTI0MUM3LjA2Mjc4IDcuMTgwODIgNi44MjIwNCA3LjUyNDA4IDYuNzIxNjcgNy45MTc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OSA0LjM2Njg1IDcuOTYxNDkgNC4yODg3MSA4LjAzOTYzQzQuMjEwNTcgOC4xMTc3NyA0LjE2NjY3IDguMjIzNzUgNC4xNjY2NyA4LjMzNDI2QzQuMTY2NjcgOC40NDQ3NyA0LjIxMDU3IDguNTUwNzUgNC4yODg3MSA4LjYyODg5QzQuMzY2ODUgOC43MDcwMyA0LjQ3MjgzIDguNzUwOTMgNC41ODMzMyA4Ljc1MDkzSDYuNzIxNjdDNi44MjIwNCA5LjE0NDQ0IDcuMDYyNzggOS40ODc3IDcuMzk4NTggOS43MTYxQzcuNzM0MzcgOS45NDQ1MSA4LjE0MjA3IDEwLjA0MjMgOC41NDQ5NCA5Ljk5MTExQzguOTQ3ODEgOS45Mzk5MSA5LjMxODA4IDkuNzQzMjMgOS41ODYwNiA5LjQzODA4QzkuODU0MDQgOS4xMzI5NCAxMC4wMDEzIDguNzQwMzcgMTAgOC4zMzQyNlpNOS4xNjY2NyA4LjMzNDI2QzkuMTY2NjcgOC41NTUyNyA5LjA3ODg3IDguNzY3MjMgOC45MjI1OSA4LjkyMzUxQzguNzY2MzEgOS4wNzk3OSA4LjU1NDM1IDkuMTY3NTkgOC4zMzMzNCA5LjE2NzU5QzguMTEyMzIgOS4xNjY3NTkgNy45MDAzNiA5LjA3OTc5IDcuNzQ0MDggOC45MjM1MUM3LjU4NzggOC43NjcyMyA3LjUgOC41NTUyNyA3LjUgOC4zMzQyNkM3LjUgOC4xMTMyNSA3LjU4NzggNy45MDEyOCA3Ljc0NDA4IDcuNzQ1QzcuOTAwMzYgNy41ODg3MiA4LjExMjMyIDcuNTAwOTMgOC4zMzMzNCA3LjUwMDkzQzguNTU0MzUgNy41MDA5MyA4Ljc2NjMxIDcuNTg4NzIgOC45MjI1OSA3Ljc0NUM5LjA3ODg3IDcuOTAxMjggOS4xNjY2NyA4LjExMzI1IDkuMTY2NjcgOC4zMzQyNloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
+            <input type="text" data-bezier-text value="0.7, 0, 0.25, 1" spellcheck="false" autocomplete="off">
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="panel-divider">
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div id="exp5-horiz-section">
+      <div class="field">
+        <span class="field-label">Horizontal</span>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Variant</span>
+        <div id="exp5-variant-root" class="option-selector option-selector--nested">
+          <div class="row">
+            <div class="input-wrap input-wrap--label option-selector__wrap">
+              <input type="text" class="option-selector__input" value="Horizontal" autocomplete="off" spellcheck="false">
+              <div class="option-selector__menu" role="listbox"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Input</span>
+        <div id="exp5-input-root" class="option-selector option-selector--nested">
+          <div class="row">
+            <div class="input-wrap input-wrap--label option-selector__wrap">
+              <input type="text" class="option-selector__input" value="Drag" autocomplete="off" spellcheck="false">
+              <div class="option-selector__menu" role="listbox"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Dimensions</span>
+        <div class="row">
+          <div class="input-wrap input-wrap--dimension" data-dimension-id="horiz-width">
+            <span class="input-icon">W</span>
+            <div class="dimension-control is-fixed">
+              <span class="dimension-mode-label">Fixed (600)</span>
+              <input type="text" class="dimension-fixed-input" value="600">
+            </div>
+            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Width mode">
+              <img src="" alt="" data-icon="chevron">
+            </span>
+            <div class="dimension-menu">
+              <button type="button" data-dimension-mode="fixed">Fixed</button>
+              <button type="button" data-dimension-mode="hug">Hug Content</button>
+            </div>
+          </div>
+          <div class="input-wrap input-wrap--dimension" data-dimension-id="horiz-height">
+            <span class="input-icon">H</span>
+            <div class="dimension-control is-fixed">
+              <span class="dimension-mode-label">Fixed (400)</span>
+              <input type="text" class="dimension-fixed-input" value="400">
+            </div>
+            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Height mode">
+              <img src="" alt="" data-icon="chevron">
+            </span>
+            <div class="dimension-menu">
+              <button type="button" data-dimension-mode="fixed">Fixed</button>
+              <button type="button" data-dimension-mode="hug">Hug Content</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Border Radius</span>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp5-horiz-radius" value="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Animation</span>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTI2IDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
+            <input type="text" id="exp5-horiz-rotate" value="12">
+            <div class="suffix-wrap"><span>°</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon">Z</span>
+            <input type="text" id="exp5-horiz-orbit" value="600">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon">P</span>
+            <input type="text" id="exp5-horiz-perspective" value="1200">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon">S</span>
+            <input type="text" id="exp5-horiz-scale" value="1.2">
+            <div class="suffix-wrap"><span>×</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
+            <input type="text" id="exp5-horiz-duration" value="350">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <span class="field-label" style="margin:0;width:100%;">Velocity intensity</span>
+        </div>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp5-horiz-velocity" value="1">
+          </div>
+        </div>
+      </div>
+
+      <div id="exp5-horiz-easing-root">
+        <div class="field cubic-bezier-field">
+          <span class="field-label">Easing</span>
+          <div class="cubic-bezier-editor" data-bezier-editor>
+            <svg class="cubic-bezier-svg" data-bezier-svg viewBox="0 0 208 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="208" height="200" rx="5" fill="#F5F5F5"/>
+              <line class="cubic-bezier-guide" x1="29" y1="25" x2="179" y2="25"/>
+              <line class="cubic-bezier-guide" x1="29" y1="175" x2="179" y2="175"/>
+              <path class="cubic-bezier-curve" data-bezier-curve></path>
+              <line class="cubic-bezier-handle-line" data-bezier-line1></line>
+              <line class="cubic-bezier-handle-line" data-bezier-line2></line>
+              <circle class="cubic-bezier-handle" data-bezier-p1 r="6" tabindex="0" role="slider" aria-label="First control point"></circle>
+              <circle class="cubic-bezier-handle" data-bezier-p2 r="6" tabindex="0" role="slider" aria-label="Second control point"></circle>
+            </svg>
+          </div>
+          <div class="input-wrap cubic-bezier-value-input">
+            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTVlLTA3IDguMjIzNzUgOS4yMzQxNWUtMDcgOC4zMzQyNkM5LjIzNDE1ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODExIDEwIDEuNjY3NTlWNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE1ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxMSA1LjgzMzMzNCAxLjY2NzU5Wk0yLjUgMS42Njc1OUMyLjUgMS44ODg2IDIuNDEyMiAyLjEwMDU3IDIuMjU1OTIgMi4yNTY4NUMyLjA5OTY0IDIuNDEzMTMgMS44ODc2OCAyLjUwMDkyIDEuNjY2NjcgMi41MDA5MkMxLjQ0NTY1IDIuNTAwOTIgMS4yMzM2OSAyLjQxMzEzIDEuMDc3NDEgMi4yNTY4NUMwLjkyMTEzMiAyLjEwMDU3IDAuODMzMzM0IDEuODg4NiAwLjgzMzMzNCAxLjY2NzU5QzAuODMzMzM0IDEuNDQ2NTggMC45MjExMzIgMS4yMzQ2MiAxLjA3NzQxIDEuMDc4MzRDMS4yMzM2OSAwLjkyMjA1NSAxLjQ0NTY1IDAuODM0MjU3IDEuNjY2NjcgMC44MzQyNTdDMS44ODc2OCAwLjgzNDI1NyAyLjA5OTY0IDAuOTIyMDU1IDIuMjU1OTIgMS4wNzgzNEMyLjQxMzIgMS4yMzQ2MiAyLjUgMS40NDY1OCAyLjUgMS42Njc1OVpNMTAgOC4zMzQyNkMxMC4wMDEzIDcuOTI4MTUgOS44NTQwNCA3LjUzNTU4IDkuNTg2MDYgNy4yMzA0NEM5LjMxODA4IDYuOTI1MjkgOC45NDc4MSA2LjcyODYxIDguNTQ0OTQgNi42Nzc0MUM4LjE0MjA3IDYuNjI2MiA3LjczNDM3IDYuNzI0MDEgNy4zOTg1OCA2Ljk1MjQxQzcuMDYyNzggNy4xODA4MiA2LjgyMjA0IDcuNTI0MDggNi43MjE2NyA3LjkxNzc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OTkgNC4zNjY4NSA3Ljk2MTQ5IDQuMjg4NzEgOC4wMzk2M0M0LjIxMDU3IDguMTE3NzcgNC4xNjY2NyA4LjIyMzc1IDQuMTY2NjcgOC4zMzQyNkM0LjE2NjY3IDguNDQ0NzcgNC4yMTA1NyA4LjU1MDc1IDQuMjg4NzEgOC42Mjg4OUM0LjM2Njg1IDguNzA3MDMgNC40NzI4MyA4Ljc1MDkzIDQuNTgzMzMgOC43NTA5M0g2LjcyMTY3QzYuODIyMDQgOS4xNDQ0NCA3LjA2Mjc4IDkuNDg3NyA3LjM5ODU4IDkuNzE2MUM3LjczNDM3IDkuOTQ0NTEgOC4xNDIwNyAxMC4wNDIzIDguNTQ0OTQgOS45OTExMUM4Ljk0NzgxIDkuOTM5OTEgOS4zMTgwOCA5Ljc0MzIzIDkuNTg2MDYgOS40MzgwOEM5Ljg1NDA0IDkuMTMyOTQgMTAuMDAxMyA4Ljc0MDM3IDEwIDguMzM0MjZaTTkuMTY2NjcgOC4zMzQyNkM5LjE2NjY3IDguNTU1MjcgOS4wNzg4NyA4Ljc2NzIzIDguOTIyNTkgOC45MjM1MUM4Ljc2NjMxIDkuMDc5NzkgOC41NTQzNSA5LjE2NzU5IDguMzMzMzQgOS4xNjc1OUM4LjExMjMyIDkuMTY3NTkgNy45MDAzNiA5LjA3OTc5IDcuNzQ0MDggOC45MjM1MUM3LjU4NzggOC43NjcyMyA3LjUgOC41NTUyNyA3LjUgOC4zMzQyNkM3LjUgOC4xMTMyNSA3LjU4NzggNy45MDEyOCA3Ljc0NDA4IDcuNzQ1QzcuOTAwMzYgNy41ODg3MiA4LjExMjMyIDcuNTAwOTMgOC4zMzMzNCA3LjUwMDkzQzguNTU0MzUgNy41MDA5MyA4Ljc2NjMxIDcuNTg4NzIgOC45MjI1OSA3Ljc0NUM5LjA3ODg3IDcuOTAxMjggOS4xNjY2NyA4LjExMzI1IDkuMTY2NjcgOC4zMzQyNloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
+            <input type="text" data-bezier-text value="0.7, 0, 0.25, 1" spellcheck="false" autocomplete="off">
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="panel-divider">
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div id="exp5-transition-section">
+      <div class="field">
+        <span class="field-label">Transition</span>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Animation</span>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
+            <input type="text" id="exp5-transition-duration" value="600">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp5-transition-easing-root">
+        <div class="field cubic-bezier-field">
+          <span class="field-label">Easing</span>
+          <div class="cubic-bezier-editor" data-bezier-editor>
+            <svg class="cubic-bezier-svg" data-bezier-svg viewBox="0 0 208 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="208" height="200" rx="5" fill="#F5F5F5"/>
+              <line class="cubic-bezier-guide" x1="29" y1="25" x2="179" y2="25"/>
+              <line class="cubic-bezier-guide" x1="29" y1="175" x2="179" y2="175"/>
+              <path class="cubic-bezier-curve" data-bezier-curve></path>
+              <line class="cubic-bezier-handle-line" data-bezier-line1></line>
+              <line class="cubic-bezier-handle-line" data-bezier-line2></line>
+              <circle class="cubic-bezier-handle" data-bezier-p1 r="6" tabindex="0" role="slider" aria-label="First control point"></circle>
+              <circle class="cubic-bezier-handle" data-bezier-p2 r="6" tabindex="0" role="slider" aria-label="Second control point"></circle>
+            </svg>
+          </div>
+          <div class="input-wrap cubic-bezier-value-input">
+            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTVlLTA3IDguMjIzNzUgOS4yMzQxNWUtMDcgOC4zMzQyNkM5LjIzNDE1ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODExIDEwIDEuNjY3NTlWNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE1ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxMSA1LjgzMzMzNCAxLjY2NzU5Wk0yLjUgMS42Njc1OUMyLjUgMS44ODg2IDIuNDEyMiAyLjEwMDU3IDIuMjU1OTIgMi4yNTY4NUMyLjA5OTY0IDIuNDEzMTMgMS44ODc2OCAyLjUwMDkyIDEuNjY2NjcgMi41MDA5MkMxLjQ0NTY1IDIuNTAwOTIgMS4yMzM2OSAyLjQxMzEzIDEuMDc3NDEgMi4yNTY4NUMwLjkyMTEzMiAyLjEwMDU3IDAuODMzMzM0IDEuODg4NiAwLjgzMzMzNCAxLjY2NzU5QzAuODMzMzM0IDEuNDQ2NTggMC45MjExMzIgMS4yMzQ2MiAxLjA3NzQxIDEuMDc4MzRDMS4yMzM2OSAwLjkyMjA1NSAxLjQ0NTY1IDAuODM0MjU3IDEuNjY2NjcgMC44MzQyNTdDMS44ODc2OCAwLjgzNDI1NyAyLjA5OTY0IDAuOTIyMDU1IDIuMjU1OTIgMS4wNzgzNEMyLjQxMzIgMS4yMzQ2MiAyLjUgMS40NDY1OCAyLjUgMS42Njc1OVpNMTAgOC4zMzQyNkMxMC4wMDEzIDcuOTI4MTUgOS44NTQwNCA3LjUzNTU4IDkuNTg2MDYgNy4yMzA0NEM5LjMxODA4IDYuOTI1MjkgOC45NDc4MSA2LjcyODYxIDguNTQ0OTQgNi42Nzc0MUM4LjE0MjA3IDYuNjI2MiA3LjczNDM3IDYuNzI0MDEgNy4zOTg1OCA2Ljk1MjQxQzcuMDYyNzggNy4xODA4MiA2LjgyMjA0IDcuNTI0MDggNi43MjE2NyA3LjkxNzc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OTkgNC4zNjY4NSA3Ljk2MTQ5IDQuMjg4NzEgOC4wMzk2M0M0LjIxMDU3IDguMTE3NzcgNC4xNjY2NyA4LjIyMzc1IDQuMTY2NjcgOC4zMzQyNkM0LjE2NjY3IDguNDQ0NzcgNC4yMTA1NyA4LjU1MDc1IDQuMjg4NzEgOC42Mjg4OUM0LjM2Njg1IDguNzA3MDMgNC40NzI4MyA4Ljc1MDkzIDQuNTgzMzMgOC43NTA5M0g2LjcyMTY3QzYuODIyMDQgOS4xNDQ0NCA3LjA2Mjc4IDkuNDg3NyA3LjM5ODU4IDkuNzE2MUM3LjczNDM3IDkuOTQ0NTEgOC4xNDIwNyAxMC4wNDIzIDguNTQ0OTQgOS45OTExMUM4Ljk0NzgxIDkuOTM5OTEgOS4zMTgwOCA5Ljc0MzIzIDkuNTg2MDYgOS40MzgwOEM5Ljg1NDA0IDkuMTMyOTQgMTAuMDAxMyA4Ljc0MDM3IDEwIDguMzM0MjZaTTkuMTY2NjcgOC4zMzQyNkM5LjE2NjY3IDguNTU1MjcgOS4wNzg4NyA4Ljc2NzIzIDguOTIyNTkgOC45MjM1MUM4Ljc2NjMxIDkuMDc5NzkgOC41NTQzNSA5LjE2NzU5IDguMzMzMzQgOS4xNjc1OUM4LjExMjMyIDkuMTY3NTkgNy45MDAzNiA5LjA3OTc5IDcuNzQ0MDggOC45MjM1MUM3LjU4NzggOC43NjcyMyA3LjUgOC41NTUyNyA3LjUgOC4zMzQyNkM3LjUgOC4xMTMyNSA3LjU4NzggNy45MDEyOCA3Ljc0NDA4IDcuNzQ1QzcuOTAwMzYgNy41ODg3MiA4LjExMjMyIDcuNTAwOTMgOC4zMzMzNCA3LjUwMDkzQzguNTU0MzUgNy41MDA5MyA4Ljc2NjMxIDcuNTg4NzIgOC45MjI1OSA3Ljc0NUM5LjA3ODg3IDcuOTAxMjggOS4xNjY2NyA4LjExMzI1IDkuMTY2NjcgOC4zMzQyNloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
+            <input type="text" data-bezier-text value="0.7, 0, 0.25, 1" spellcheck="false" autocomplete="off">
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div id="exp5-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -3865,6 +4420,964 @@ window.initRotateXCarousel = function initRotateXCarousel(root, options = {}) {
       cancelAnimation();
       rotation = 0;
       ring.querySelectorAll('.rotate-x-carousel__card').forEach((card) => {
+        delete card.dataset.angle;
+      });
+      renderCards();
+    },
+  };
+};
+
+window.initFlipCarousel = function initFlipCarousel(root, options = {}) {
+  const carousel = root.querySelector('[data-carousel]') || root;
+  const stage = carousel.querySelector('.flip-carousel__stage') || carousel;
+  let ring = stage.querySelector('.flip-carousel__ring');
+  if (!ring) {
+    ring = document.createElement('div');
+    ring.className = 'flip-carousel__ring';
+    stage.appendChild(ring);
+  }
+  const prevBtn = carousel.querySelector('[data-carousel-prev]');
+  const nextBtn = carousel.querySelector('[data-carousel-next]');
+
+  const DEFAULT_COLORS = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#5B8DEF', '#C77DFF'];
+
+  let mode = normalizeMode(options.mode ?? 'fan');
+  let count = clampCount(options.count ?? 5);
+  let colors = normalizeColors(options.colors ?? DEFAULT_COLORS);
+
+  let fanWidth = options.fanWidth ?? 400;
+  let fanHeight = options.fanHeight ?? 500;
+  let fanRadius = options.fanRadius ?? 0;
+  let fanOriginY = options.fanOriginY ?? 2000;
+  let fanStepDeg = options.fanStepDeg ?? 12;
+  let fanDuration = options.fanDuration ?? 350;
+  let fanEasingRaw = options.fanEasingRaw ?? '0.7, 0, 0.25, 1';
+  let fanVelocityIntensity = options.fanVelocityIntensity ?? 1;
+
+  let horizWidth = options.horizWidth ?? 600;
+  let horizHeight = options.horizHeight ?? 400;
+  let horizRadius = options.horizRadius ?? 0;
+  let horizOrbit = options.horizOrbit ?? 600;
+  let horizPerspective = options.horizPerspective ?? 1200;
+  let horizStepDeg = options.horizStepDeg ?? 12;
+  let horizDuration = options.horizDuration ?? 350;
+  let horizEasingRaw = options.horizEasingRaw ?? '0.7, 0, 0.25, 1';
+  let horizVelocityIntensity = options.horizVelocityIntensity ?? 1;
+  let horizHighlightScale = options.horizHighlightScale ?? 1.2;
+  let horizOrientation = normalizeOrientation(options.horizOrientation ?? 'horizontal');
+  let horizInputAction = normalizeInputAction(options.horizInputAction ?? 'drag');
+
+  let transitionDuration = options.transitionDuration ?? 600;
+  let transitionEasingRaw = options.transitionEasingRaw ?? '0.7, 0, 0.25, 1';
+
+  let rotation = 0;
+  let dragStartPointer = 0;
+  let dragStartRotation = 0;
+  let lastMovePointer = 0;
+  let lastMoveTime = 0;
+  let velocityDegPerMs = 0;
+  let isDragging = false;
+  let isAnimating = false;
+  let isMomentum = false;
+  let isFlipping = false;
+  let flipAnimationFrameId = null;
+  let activePointerId = null;
+  let animationFrameId = null;
+  let scrollSnapTimer = null;
+  let wheelVelocityDegPerMs = 0;
+  let lastWheelTime = 0;
+
+  function normalizeMode(value) {
+    return String(value).toLowerCase() === 'horizontal' ? 'horizontal' : 'fan';
+  }
+
+  function normalizeOrientation(value) {
+    return String(value).toLowerCase() === 'horizontal' ? 'horizontal' : 'vertical';
+  }
+
+  function normalizeInputAction(value) {
+    return String(value).toLowerCase() === 'scroll' ? 'scroll' : 'drag';
+  }
+
+  function isFanMode() {
+    return mode === 'fan';
+  }
+
+  function isHorizontal3D() {
+    return !isFanMode() && horizOrientation === 'horizontal';
+  }
+
+  function isScrollInput() {
+    return !isFanMode() && horizInputAction === 'scroll';
+  }
+
+  function getActiveStepDeg() {
+    return isFanMode() ? fanStepDeg : horizStepDeg;
+  }
+
+  function getActiveDuration() {
+    return isFanMode() ? fanDuration : horizDuration;
+  }
+
+  function getActiveEasingRaw() {
+    return isFanMode() ? fanEasingRaw : horizEasingRaw;
+  }
+
+  function getActiveVelocityIntensity() {
+    return isFanMode() ? fanVelocityIntensity : horizVelocityIntensity;
+  }
+
+  function getPointerCoord(event) {
+    if (isFanMode()) return event.clientX;
+    return isHorizontal3D() ? event.clientX : event.clientY;
+  }
+
+  function getDragDirection() {
+    if (isFanMode()) return -1;
+    return isHorizontal3D() ? -1 : 1;
+  }
+
+  function clampCount(value) {
+    return Math.min(12, Math.max(2, Math.round(Number(value) || 5)));
+  }
+
+  function normalizeColors(list) {
+    if (!Array.isArray(list) || list.length === 0) return [...DEFAULT_COLORS];
+    return list.map((color) => String(color));
+  }
+
+  function isFanModeFor(m) {
+    return normalizeMode(m) === 'fan';
+  }
+
+  function isHorizontal3DFor(m) {
+    return !isFanModeFor(m) && horizOrientation === 'horizontal';
+  }
+
+  function getStepDegFor(m) {
+    return isFanModeFor(m) ? fanStepDeg : horizStepDeg;
+  }
+
+  function getCardAngleFor(index, m) {
+    const stepDeg = getStepDegFor(m);
+    const halfSpan = (count * stepDeg) / 2;
+    return wrapAngle(index * stepDeg - rotation, halfSpan);
+  }
+
+  function getCardScaleForAngle(angle) {
+    const scaleValue = getHighlightScale();
+    const stepDeg = horizStepDeg;
+    if (scaleValue === 1 || stepDeg <= 0) return 1;
+
+    const falloff = stepDeg / 2;
+    const proximity = Math.max(0, 1 - Math.abs(angle) / falloff);
+    return 1 + (scaleValue - 1) * proximity;
+  }
+
+  function getLayoutState(m) {
+    const fan = isFanModeFor(m);
+    return {
+      perspective: fan ? 100000 : horizPerspective,
+      ringZ: fan ? 0 : -horizOrbit,
+      borderRadius: fan ? fanRadius : horizRadius,
+      isFan: fan,
+    };
+  }
+
+  function getCardState(index, m) {
+    const fan = isFanModeFor(m);
+    const angle = getCardAngleFor(index, m);
+    return {
+      angle,
+      width: fan ? fanWidth : horizWidth,
+      height: fan ? fanHeight : horizHeight,
+      scale: fan ? 1 : getCardScaleForAngle(angle),
+      fanOriginY: fan ? fanOriginY : 0,
+      orbit: fan ? 0 : horizOrbit,
+      isFan: fan,
+      useRotateY: !fan && isHorizontal3DFor(m),
+      useRotateX: !fan && !isHorizontal3DFor(m),
+    };
+  }
+
+  function getCards() {
+    return Array.from(carousel.querySelectorAll('.flip-carousel__card'))
+      .sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  const DEG = Math.PI / 180;
+
+  function spreadFromAngle(angleDeg, radius) {
+    if (radius <= 0 || !Number.isFinite(angleDeg)) return 0;
+    return Math.sin(angleDeg * DEG) * radius;
+  }
+
+  function angleFromSpread(spread, radius, sign) {
+    if (radius <= 0.001) return 0;
+    const s = Math.min(1, Math.abs(spread) / radius);
+    return (Math.asin(s) / DEG) * (sign >= 0 ? 1 : -1);
+  }
+
+  function getSpreadPresence(fromIsFan, t) {
+    return {
+      fanPresence: fromIsFan ? 1 - t : t,
+      horizPresence: fromIsFan ? t : 1 - t,
+    };
+  }
+
+  function applyFlipFrame(t, fromMode, toMode, fromLayout, toLayout, fromCards, toCards, cards) {
+    const fromIsFan = fromLayout.isFan;
+    const { fanPresence, horizPresence } = getSpreadPresence(fromIsFan, t);
+    const layoutBlend = fromIsFan ? t : fanPresence;
+    const perspective = lerp(fromLayout.perspective, toLayout.perspective, layoutBlend);
+    const ringZ = lerp(fromLayout.ringZ, toLayout.ringZ, layoutBlend);
+    const activeMode = t < 0.5 ? fromMode : toMode;
+
+    if (perspective >= 99999) {
+      stage.style.perspective = '';
+    } else {
+      stage.style.perspective = `${perspective}px`;
+    }
+    stage.style.perspectiveOrigin = '50% 50%';
+    ring.style.transform = `translate(-50%, -50%) translateZ(${ringZ}px)`;
+
+    carousel.classList.toggle('is-mode-fan', isFanModeFor(activeMode));
+    carousel.classList.toggle(
+      'is-mode-horizontal',
+      !isFanModeFor(activeMode) && isHorizontal3DFor(activeMode),
+    );
+    carousel.classList.toggle(
+      'is-mode-vertical',
+      !isFanModeFor(activeMode) && !isHorizontal3DFor(activeMode),
+    );
+
+    cards.forEach((card, index) => {
+      const from = fromCards[index];
+      const to = toCards[index];
+      const face = card.querySelector('.flip-carousel__card-face');
+
+      const width = lerp(from.width, to.width, t);
+      const height = lerp(from.height, to.height, t);
+      const borderRadius = lerp(
+        fromLayout.borderRadius,
+        toLayout.borderRadius,
+        t,
+      );
+
+      const fanOriginFull = fromIsFan ? from.fanOriginY : to.fanOriginY;
+      const fanHeightFull = fromIsFan ? from.height : to.height;
+      const fanAngleFull = fromIsFan ? from.angle : to.angle;
+      const fanRadiusFull = fanOriginFull + fanHeightFull / 2;
+
+      const horizAngleFull = fromIsFan ? to.angle : from.angle;
+      const horizOrbitFull = fromIsFan ? to.orbit : from.orbit;
+      const fromOrbitVal = from.isFan ? 0 : from.orbit;
+      const toOrbitVal = to.isFan ? 0 : to.orbit;
+      const orbitPresence = fromIsFan ? horizPresence : fanPresence;
+      const blendedOrbit = lerp(fromOrbitVal, toOrbitVal, orbitPresence);
+
+      let fanRot = 0;
+      let horizRot = 0;
+      let orbitZ = 0;
+      let originY = 0;
+      let applyFanRotate = false;
+
+      if (fanPresence > 0.001 && fanRadiusFull > 0.001) {
+        if (Math.abs(fanAngleFull) > 0.001) {
+          const fullFanSpread = spreadFromAngle(fanAngleFull, fanRadiusFull);
+          const targetFanSpread = fullFanSpread * fanPresence;
+          fanRot = angleFromSpread(targetFanSpread, fanRadiusFull, fanAngleFull);
+          originY = fanOriginFull * fanPresence;
+          applyFanRotate = true;
+        } else {
+          fanRot = 0;
+          originY = fanOriginFull * fanPresence;
+          applyFanRotate = fanPresence > 0.001;
+        }
+      }
+
+      if (horizPresence > 0.001 && horizOrbitFull > 0.001) {
+        if (Math.abs(horizAngleFull) <= 0.001) {
+          horizRot = 0;
+          orbitZ = blendedOrbit;
+        } else {
+          const fullHorizSpread = spreadFromAngle(horizAngleFull, horizOrbitFull);
+          const targetHorizSpread = fullHorizSpread * horizPresence;
+          horizRot = horizAngleFull;
+          const sinA = Math.sin(horizAngleFull * DEG);
+          orbitZ = sinA > 0.001
+            ? targetHorizSpread / sinA
+            : blendedOrbit;
+        }
+      }
+
+      const fromScale = from.scale;
+      const toScale = to.scale;
+      const scalePresence = horizPresence;
+      const scale = lerp(fromScale, toScale, scalePresence);
+
+      card.style.width = `${width}px`;
+      card.style.height = `${height}px`;
+      card.style.transition = 'none';
+      card.style.transformOrigin = originY > 0.5
+        ? `50% calc(100% + ${originY}px)`
+        : 'center center';
+
+      const useRotateY = horizPresence > 0.001 && (
+        fromIsFan
+          ? isHorizontal3DFor(toMode)
+          : isHorizontal3DFor(fromMode)
+      );
+      const useRotateX = horizPresence > 0.001 && (
+        fromIsFan
+          ? !isHorizontal3DFor(toMode) && !isFanModeFor(toMode)
+          : !isHorizontal3DFor(fromMode) && !isFanModeFor(fromMode)
+      );
+
+      let transform = 'translate(-50%, -50%)';
+      if (applyFanRotate) transform += ` rotate(${fanRot}deg)`;
+      if (useRotateY && Math.abs(horizRot) > 0.001) {
+        transform += ` rotateY(${horizRot}deg)`;
+      } else if (useRotateX && Math.abs(horizRot) > 0.001) {
+        transform += ` rotateX(${horizRot}deg)`;
+      }
+      if (orbitZ > 0.001) transform += ` translateZ(${orbitZ}px)`;
+      card.style.transform = transform;
+
+      if (face) {
+        face.style.borderRadius = `${borderRadius}px`;
+        face.style.background = colors[index % colors.length];
+        face.style.transition = 'none';
+        if (scale > 1.001) {
+          face.style.transform = `scale(${scale})`;
+        } else if (fromScale > 1.001 && scalePresence > 0.001) {
+          face.style.transform = `scale(${scale})`;
+        } else {
+          face.style.transform = '';
+        }
+      }
+
+      card.classList.toggle('is-highlighted', scale > 1.001);
+    });
+  }
+
+  function getEasingFromRaw(raw) {
+    const trimmed = String(raw).trim();
+    if (!trimmed) return 'cubic-bezier(0.7, 0, 0.25, 1)';
+    if (trimmed.startsWith('cubic-bezier(')) return trimmed;
+
+    const parts = trimmed.split(',').map((n) => parseFloat(n.trim()));
+    if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) {
+      return `cubic-bezier(${parts.join(', ')})`;
+    }
+
+    return trimmed;
+  }
+
+  function getFanOrigin() {
+    return `50% calc(100% + ${fanOriginY}px)`;
+  }
+
+  function getFanDragRadius() {
+    return Math.max(fanOriginY + fanHeight / 2, 1);
+  }
+
+  function getHorizDragRadius() {
+    return Math.max(horizOrbit, 1);
+  }
+
+  function getDragRadius() {
+    return isFanMode() ? getFanDragRadius() : getHorizDragRadius();
+  }
+
+  function pxVelocityToDegVelocity(pxPerMs) {
+    return getDragDirection() * (pxPerMs / getDragRadius()) * (180 / Math.PI);
+  }
+
+  function getWheelDeltaPx(event) {
+    let delta = isHorizontal3D()
+      ? (Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY)
+      : event.deltaY;
+
+    if (event.deltaMode === 1) delta *= 16;
+    else if (event.deltaMode === 2) delta *= window.innerHeight;
+
+    return delta;
+  }
+
+  function clearScrollSnapTimer() {
+    if (scrollSnapTimer != null) {
+      clearTimeout(scrollSnapTimer);
+      scrollSnapTimer = null;
+    }
+  }
+
+  function scheduleScrollSnap() {
+    clearScrollSnapTimer();
+    scrollSnapTimer = setTimeout(() => {
+      scrollSnapTimer = null;
+      const boostedVelocity = wheelVelocityDegPerMs * getActiveVelocityIntensity();
+      wheelVelocityDegPerMs = 0;
+
+      if (Math.abs(boostedVelocity) > 0.02) {
+        startMomentum(boostedVelocity);
+        return;
+      }
+
+      snapRotation();
+    }, 120);
+  }
+
+  function wrapAngle(angle, halfSpan) {
+    const span = halfSpan * 2;
+    if (span <= 0) return 0;
+    let wrapped = angle;
+    while (wrapped > halfSpan) wrapped -= span;
+    while (wrapped <= -halfSpan) wrapped += span;
+    return wrapped;
+  }
+
+  function getCardAngle(index) {
+    const stepDeg = getActiveStepDeg();
+    const halfSpan = (count * stepDeg) / 2;
+    return wrapAngle(index * stepDeg - rotation, halfSpan);
+  }
+
+  function getSpan() {
+    return count * getActiveStepDeg();
+  }
+
+  function getRenderAngle(index, card) {
+    const wrapped = getCardAngle(index);
+
+    if (!isAnimating) {
+      delete card.dataset.angle;
+      return wrapped;
+    }
+
+    if (card.dataset.angle == null) {
+      card.dataset.angle = String(wrapped);
+      return wrapped;
+    }
+
+    const prev = Number.parseFloat(card.dataset.angle);
+    let angle = wrapped;
+    const span = getSpan();
+
+    while (angle - prev > span / 2) angle -= span;
+    while (angle - prev < -span / 2) angle += span;
+
+    card.dataset.angle = String(angle);
+    return angle;
+  }
+
+  function cancelFlipAnimation() {
+    if (flipAnimationFrameId != null) {
+      cancelAnimationFrame(flipAnimationFrameId);
+      flipAnimationFrameId = null;
+    }
+  }
+
+  function cancelAnimation() {
+    cancelFlipAnimation();
+    if (animationFrameId != null) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+    isAnimating = false;
+    isMomentum = false;
+    clearScrollSnapTimer();
+  }
+
+  function parseCubicBezier(raw) {
+    const trimmed = String(raw).trim();
+    if (!trimmed) return [0.7, 0, 0.25, 1];
+
+    let inner = trimmed;
+    if (trimmed.startsWith('cubic-bezier(') && trimmed.endsWith(')')) {
+      inner = trimmed.slice('cubic-bezier('.length, -1);
+    }
+
+    const parts = inner.split(',').map((n) => parseFloat(n.trim()));
+    if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) {
+      return parts;
+    }
+
+    return [0.7, 0, 0.25, 1];
+  }
+
+  function createCubicBezierEase(x1, y1, x2, y2) {
+    const cx = 3 * x1;
+    const bx = 3 * (x2 - x1) - cx;
+    const ax = 1 - cx - bx;
+    const cy = 3 * y1;
+    const by = 3 * (y2 - y1) - cy;
+    const ay = 1 - cy - by;
+
+    function sampleX(t) {
+      return ((ax * t + bx) * t + cx) * t;
+    }
+
+    function sampleY(t) {
+      return ((ay * t + by) * t + cy) * t;
+    }
+
+    function sampleDerivativeX(t) {
+      return (3 * ax * t + 2 * bx) * t + cx;
+    }
+
+    return function ease(time) {
+      if (time <= 0) return 0;
+      if (time >= 1) return 1;
+
+      let t = time;
+      for (let i = 0; i < 8; i += 1) {
+        const x = sampleX(t) - time;
+        const dx = sampleDerivativeX(t);
+        if (Math.abs(x) < 1e-5 || dx === 0) break;
+        t -= x / dx;
+      }
+
+      return sampleY(t);
+    };
+  }
+
+  function getEaseFunction(raw) {
+    const [x1, y1, x2, y2] = parseCubicBezier(getEasingFromRaw(raw));
+    return createCubicBezierEase(x1, y1, x2, y2);
+  }
+
+  function animateRotationTo(nextRotation) {
+    if (isFlipping || isAnimating || nextRotation === rotation) return;
+
+    cancelAnimation();
+    isAnimating = true;
+
+    const startRotation = rotation;
+    const delta = nextRotation - startRotation;
+    const ease = getEaseFunction(getActiveEasingRaw());
+    const duration = getActiveDuration();
+    const startTime = performance.now();
+
+    function frame(now) {
+      const progress = Math.min((now - startTime) / duration, 1);
+      rotation = startRotation + delta * ease(progress);
+      renderCards();
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(frame);
+        return;
+      }
+
+      rotation = nextRotation;
+      animationFrameId = null;
+      isAnimating = false;
+      getCards().forEach((card) => {
+        delete card.dataset.angle;
+      });
+      renderCards();
+    }
+
+    animationFrameId = requestAnimationFrame(frame);
+  }
+
+  function startMomentum(initialVelocityDegPerMs) {
+    if (!initialVelocityDegPerMs) {
+      snapRotation();
+      return;
+    }
+
+    cancelAnimation();
+    isMomentum = true;
+
+    let velocity = initialVelocityDegPerMs;
+    let lastTime = performance.now();
+    const friction = 0.92;
+    const minVelocity = 0.002;
+
+    function frame(now) {
+      if (!isMomentum) return;
+
+      const dt = Math.min(now - lastTime, 32);
+      lastTime = now;
+
+      rotation += velocity * dt;
+      velocity *= friction ** (dt / 16);
+      renderCards();
+
+      if (Math.abs(velocity) > minVelocity) {
+        animationFrameId = requestAnimationFrame(frame);
+        return;
+      }
+
+      isMomentum = false;
+      animationFrameId = null;
+      snapRotation();
+    }
+
+    animationFrameId = requestAnimationFrame(frame);
+  }
+
+  function getHighlightScale() {
+    const value = Number(horizHighlightScale);
+    return Number.isFinite(value) && value > 0 ? value : 1;
+  }
+
+  function getCardScaleFromAngle(angle) {
+    const scaleValue = getHighlightScale();
+    const stepDeg = horizStepDeg;
+    if (scaleValue === 1 || stepDeg <= 0) return 1;
+
+    const falloff = stepDeg / 2;
+    const proximity = Math.max(0, 1 - Math.abs(angle) / falloff);
+    return 1 + (scaleValue - 1) * proximity;
+  }
+
+  function applyStageStyles() {
+    if (isFanMode()) {
+      stage.style.perspective = '';
+      stage.style.perspectiveOrigin = '';
+      ring.style.transform = 'translate(-50%, -50%)';
+      return;
+    }
+
+    stage.style.perspective = `${horizPerspective}px`;
+    stage.style.perspectiveOrigin = '50% 50%';
+    ring.style.transform = `translate(-50%, -50%) translateZ(${-horizOrbit}px)`;
+  }
+
+  function setFanCardTransform(card, angle) {
+    card.style.transition = 'none';
+    card.style.transformOrigin = getFanOrigin();
+    card.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+  }
+
+  function setHorizCardTransform(card, angle) {
+    card.style.transition = 'none';
+    card.style.transformOrigin = '';
+    const rotate = isHorizontal3D() ? `rotateY(${angle}deg)` : `rotateX(${angle}deg)`;
+    card.style.transform = `translate(-50%, -50%) ${rotate} translateZ(${horizOrbit}px)`;
+  }
+
+  function setCardScale(card, scale) {
+    const face = card.querySelector('.flip-carousel__card-face');
+    if (!face) return;
+
+    face.style.transition = 'none';
+    face.style.transform = scale === 1 ? '' : `scale(${scale})`;
+  }
+
+  function ensureCards() {
+    const existing = getCards();
+    const hasValidStructure = existing.length === count
+      && (count === 0 || existing[0].querySelector('.flip-carousel__card-face'));
+
+    if (hasValidStructure) return;
+
+    ring.innerHTML = '';
+    for (let i = 0; i < count; i += 1) {
+      const card = document.createElement('div');
+      card.className = 'flip-carousel__card';
+      card.dataset.index = String(i);
+
+      const face = document.createElement('div');
+      face.className = 'flip-carousel__card-face';
+      face.textContent = String(i + 1);
+      card.appendChild(face);
+      ring.appendChild(card);
+    }
+  }
+
+  function applyCardStyles() {
+    const cards = getCards();
+    const width = isFanMode() ? fanWidth : horizWidth;
+    const height = isFanMode() ? fanHeight : horizHeight;
+    const borderRadius = isFanMode() ? fanRadius : horizRadius;
+
+    cards.forEach((card, index) => {
+      const face = card.querySelector('.flip-carousel__card-face');
+      card.style.width = `${width}px`;
+      card.style.height = `${height}px`;
+      if (!face) return;
+
+      face.style.borderRadius = `${borderRadius}px`;
+      face.style.background = colors[index % colors.length];
+      face.textContent = String(index + 1);
+    });
+  }
+
+  function updateModeClasses() {
+    carousel.classList.toggle('is-mode-fan', isFanMode());
+    carousel.classList.toggle('is-mode-horizontal', !isFanMode() && isHorizontal3D());
+    carousel.classList.toggle('is-mode-vertical', !isFanMode() && !isHorizontal3D());
+    carousel.classList.toggle('is-scroll-input', isScrollInput());
+  }
+
+  function renderCards(options = {}) {
+    if (isFlipping && !options.duringFlip) return;
+
+    updateModeClasses();
+    applyStageStyles();
+    ensureCards();
+    applyCardStyles();
+
+    const cards = getCards();
+    cards.forEach((card, index) => {
+      const angle = getRenderAngle(index, card);
+
+      if (isFanMode()) {
+        setFanCardTransform(card, angle);
+        setCardScale(card, 1);
+        card.classList.remove('is-highlighted');
+        return;
+      }
+
+      const scale = getCardScaleFromAngle(angle);
+      setHorizCardTransform(card, angle);
+      setCardScale(card, scale);
+      card.classList.toggle('is-highlighted', scale > 1.001);
+    });
+  }
+
+  function flipTo(targetMode, config = {}) {
+    const toMode = normalizeMode(targetMode);
+    if (isFlipping) return Promise.resolve(false);
+    if (toMode === mode) return Promise.resolve(true);
+
+    if (config.transitionDuration != null) transitionDuration = config.transitionDuration;
+    if (config.transitionEasingRaw != null) transitionEasingRaw = config.transitionEasingRaw;
+
+    const fromMode = mode;
+    cancelAnimation();
+    ensureCards();
+
+    const cards = getCards();
+    const fromLayout = getLayoutState(fromMode);
+    const toLayout = getLayoutState(toMode);
+    const fromCards = cards.map((_, index) => getCardState(index, fromMode));
+    const toCards = cards.map((_, index) => getCardState(index, toMode));
+
+    isFlipping = true;
+    carousel.classList.add('is-flipping');
+    mode = toMode;
+
+    const ease = getEaseFunction(transitionEasingRaw);
+    const duration = transitionDuration;
+    const startTime = performance.now();
+
+    applyFlipFrame(0, fromMode, toMode, fromLayout, toLayout, fromCards, toCards, cards);
+
+    return new Promise((resolve) => {
+      function frame(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const t = ease(progress);
+
+        applyFlipFrame(t, fromMode, toMode, fromLayout, toLayout, fromCards, toCards, cards);
+
+        if (progress < 1) {
+          flipAnimationFrameId = requestAnimationFrame(frame);
+          return;
+        }
+
+        applyFlipFrame(1, fromMode, toMode, fromLayout, toLayout, fromCards, toCards, cards);
+        flipAnimationFrameId = null;
+        isFlipping = false;
+        carousel.classList.remove('is-flipping');
+        cards.forEach((card) => {
+          delete card.dataset.angle;
+        });
+        renderCards();
+        resolve(true);
+      }
+
+      flipAnimationFrameId = requestAnimationFrame(frame);
+    });
+  }
+
+  function snapRotation() {
+    const stepDeg = getActiveStepDeg();
+    if (stepDeg <= 0) return;
+    const snapped = Math.round(rotation / stepDeg) * stepDeg;
+    if (snapped === rotation) return;
+
+    animateRotationTo(snapped);
+  }
+
+  function stepBy(direction) {
+    if (isFlipping || isAnimating || isDragging || isMomentum || getActiveStepDeg() <= 0) return;
+    animateRotationTo(rotation + direction * getActiveStepDeg());
+  }
+
+  function onPointerDown(event) {
+    if (isFlipping || isScrollInput() || (isAnimating && !isMomentum) || event.button !== 0) return;
+
+    cancelAnimation();
+
+    isDragging = true;
+    activePointerId = event.pointerId;
+    dragStartPointer = getPointerCoord(event);
+    dragStartRotation = rotation;
+    lastMovePointer = getPointerCoord(event);
+    lastMoveTime = performance.now();
+    velocityDegPerMs = 0;
+    stage.classList.add('is-dragging');
+    stage.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  }
+
+  function onPointerMove(event) {
+    if (!isDragging || event.pointerId !== activePointerId) return;
+
+    const delta = getPointerCoord(event) - dragStartPointer;
+    const deltaDeg = getDragDirection() * (delta / getDragRadius()) * (180 / Math.PI);
+    rotation = dragStartRotation + deltaDeg;
+
+    const now = performance.now();
+    const dt = now - lastMoveTime;
+    if (dt > 0 && lastMoveTime > 0) {
+      const instantVelocity = pxVelocityToDegVelocity(
+        (getPointerCoord(event) - lastMovePointer) / dt,
+      );
+      velocityDegPerMs = velocityDegPerMs * 0.75 + instantVelocity * 0.25;
+    }
+    lastMovePointer = getPointerCoord(event);
+    lastMoveTime = now;
+
+    renderCards();
+    event.preventDefault();
+  }
+
+  function onPointerUp(event) {
+    if (!isDragging || event.pointerId !== activePointerId) return;
+
+    isDragging = false;
+    activePointerId = null;
+    stage.classList.remove('is-dragging');
+
+    if (stage.hasPointerCapture(event.pointerId)) {
+      stage.releasePointerCapture(event.pointerId);
+    }
+
+    const boostedVelocity = velocityDegPerMs * getActiveVelocityIntensity();
+    if (Math.abs(boostedVelocity) > 0.02) {
+      startMomentum(boostedVelocity);
+      return;
+    }
+
+    snapRotation();
+  }
+
+  function onWheel(event) {
+    if (isFlipping || !isScrollInput()) return;
+    if (isDragging || (isAnimating && !isMomentum)) return;
+
+    event.preventDefault();
+    cancelAnimation();
+
+    const now = performance.now();
+    const deltaPx = getWheelDeltaPx(event);
+    const deltaDeg = getDragDirection() * (deltaPx / getDragRadius()) * (180 / Math.PI);
+    rotation += deltaDeg;
+
+    const dt = now - lastWheelTime;
+    if (dt > 0 && lastWheelTime > 0) {
+      const instantVelocity = pxVelocityToDegVelocity(deltaPx / dt);
+      wheelVelocityDegPerMs = wheelVelocityDegPerMs * 0.75 + instantVelocity * 0.25;
+    }
+    lastWheelTime = now;
+
+    renderCards();
+    scheduleScrollSnap();
+  }
+
+  stage.addEventListener('pointerdown', onPointerDown);
+  stage.addEventListener('pointermove', onPointerMove);
+  stage.addEventListener('pointerup', onPointerUp);
+  stage.addEventListener('pointercancel', onPointerUp);
+  stage.addEventListener('wheel', onWheel, { passive: false });
+
+  prevBtn?.addEventListener('click', () => stepBy(-1));
+  nextBtn?.addEventListener('click', () => stepBy(1));
+
+  function apply(config = {}) {
+    let needsRebuild = false;
+
+    if (config.count != null) {
+      const nextCount = clampCount(config.count);
+      if (nextCount !== count) {
+        count = nextCount;
+        needsRebuild = true;
+      }
+    }
+
+    if (config.colors != null) colors = normalizeColors(config.colors);
+
+    if (config.fanWidth != null) fanWidth = config.fanWidth;
+    if (config.fanHeight != null) fanHeight = config.fanHeight;
+    if (config.fanRadius != null) fanRadius = config.fanRadius;
+    if (config.fanOriginY != null) fanOriginY = config.fanOriginY;
+    if (config.fanStepDeg != null) fanStepDeg = config.fanStepDeg;
+    if (config.fanDuration != null) fanDuration = config.fanDuration;
+    if (config.fanEasingRaw != null) fanEasingRaw = config.fanEasingRaw;
+    if (config.fanVelocityIntensity != null) fanVelocityIntensity = config.fanVelocityIntensity;
+
+    if (config.horizWidth != null) horizWidth = config.horizWidth;
+    if (config.horizHeight != null) horizHeight = config.horizHeight;
+    if (config.horizRadius != null) horizRadius = config.horizRadius;
+    if (config.horizOrbit != null) horizOrbit = config.horizOrbit;
+    if (config.horizPerspective != null) horizPerspective = config.horizPerspective;
+    if (config.horizStepDeg != null) horizStepDeg = config.horizStepDeg;
+    if (config.horizDuration != null) horizDuration = config.horizDuration;
+    if (config.horizEasingRaw != null) horizEasingRaw = config.horizEasingRaw;
+    if (config.horizVelocityIntensity != null) {
+      horizVelocityIntensity = config.horizVelocityIntensity;
+    }
+    if (config.horizHighlightScale != null) horizHighlightScale = config.horizHighlightScale;
+    if (config.horizOrientation != null) {
+      horizOrientation = normalizeOrientation(config.horizOrientation);
+    }
+    if (config.horizInputAction != null) {
+      horizInputAction = normalizeInputAction(config.horizInputAction);
+    }
+
+    if (config.transitionDuration != null) transitionDuration = config.transitionDuration;
+    if (config.transitionEasingRaw != null) transitionEasingRaw = config.transitionEasingRaw;
+
+    if (needsRebuild) {
+      ring.innerHTML = '';
+    }
+
+    if (!isFlipping) {
+      cancelAnimation();
+      getCards().forEach((card) => {
+        delete card.dataset.angle;
+      });
+      renderCards();
+    }
+  }
+
+  renderCards();
+
+  return {
+    element: carousel,
+    stage,
+    ring,
+    apply,
+    flipTo,
+    getMode: () => mode,
+    getRotation: () => rotation,
+    isFlipping: () => isFlipping,
+    setRotation(value) {
+      animateRotationTo(value);
+    },
+    reset() {
+      cancelAnimation();
+      rotation = 0;
+      getCards().forEach((card) => {
         delete card.dataset.angle;
       });
       renderCards();
@@ -7003,12 +8516,593 @@ window.initExperiment4_5 = function initExperiment4_5() {
   preview.dataset.experimentReady = '1';
 };
 
+window.initExperiment5 = function initExperiment5() {
+  const preview = document.querySelector('[data-experiment-preview="5"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="5"]');
+  if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
+
+  const utils = window.ComponentUtils;
+
+  const DEFAULT_COLORS = [
+    { hex: 'FF6B6B', opacity: '100' },
+    { hex: '4ECDC4', opacity: '100' },
+    { hex: 'FFE66D', opacity: '100' },
+    { hex: '5B8DEF', opacity: '100' },
+    { hex: 'C77DFF', opacity: '100' },
+  ];
+
+  const carousel = window.initFlipCarousel(preview, {
+    mode: 'fan',
+    count: 5,
+    colors: DEFAULT_COLORS.map((item) => utils.colorWithOpacity(item.hex, item.opacity)),
+    fanWidth: 400,
+    fanHeight: 500,
+    fanRadius: 0,
+    fanOriginY: 2000,
+    fanStepDeg: 12,
+    fanDuration: 350,
+    fanEasingRaw: '0.7, 0, 0.25, 1',
+    fanVelocityIntensity: 1,
+    horizWidth: 600,
+    horizHeight: 400,
+    horizRadius: 0,
+    horizOrbit: 600,
+    horizPerspective: 1200,
+    horizStepDeg: 12,
+    horizDuration: 350,
+    horizEasingRaw: '0.7, 0, 0.25, 1',
+    horizVelocityIntensity: 1,
+    horizHighlightScale: 1.2,
+    horizOrientation: 'horizontal',
+    horizInputAction: 'drag',
+    transitionDuration: 600,
+    transitionEasingRaw: '0.7, 0, 0.25, 1',
+  });
+
+  const controls = {
+    count: document.getElementById('exp5-count'),
+    fanRadius: document.getElementById('exp5-fan-radius'),
+    fanRotate: document.getElementById('exp5-fan-rotate'),
+    fanOriginY: document.getElementById('exp5-fan-origin-y'),
+    fanDuration: document.getElementById('exp5-fan-duration'),
+    fanVelocity: document.getElementById('exp5-fan-velocity'),
+    horizRadius: document.getElementById('exp5-horiz-radius'),
+    horizRotate: document.getElementById('exp5-horiz-rotate'),
+    horizOrbit: document.getElementById('exp5-horiz-orbit'),
+    horizPerspective: document.getElementById('exp5-horiz-perspective'),
+    horizScale: document.getElementById('exp5-horiz-scale'),
+    horizDuration: document.getElementById('exp5-horiz-duration'),
+    horizVelocity: document.getElementById('exp5-horiz-velocity'),
+    transitionDuration: document.getElementById('exp5-transition-duration'),
+  };
+
+  const fanEasing = window.initCubicBezierInput(document.getElementById('exp5-fan-easing-root'), {
+    onChange: applyAll,
+  });
+
+  const horizEasing = window.initCubicBezierInput(document.getElementById('exp5-horiz-easing-root'), {
+    onChange: applyAll,
+  });
+
+  const transitionEasing = window.initCubicBezierInput(
+    document.getElementById('exp5-transition-easing-root'),
+    { onChange: applyAll },
+  );
+
+  const modeButtons = preview.querySelectorAll('[data-flip-mode]');
+
+  const variantSelector = window.initOptionSelector(document.getElementById('exp5-variant-root'), {
+    value: 'horizontal',
+    options: [
+      { value: 'vertical', label: 'Vertical' },
+      { value: 'horizontal', label: 'Horizontal' },
+    ],
+    onChange: applyAll,
+  });
+
+  const inputSelector = window.initOptionSelector(document.getElementById('exp5-input-root'), {
+    value: 'drag',
+    options: [
+      { value: 'drag', label: 'Drag' },
+      { value: 'scroll', label: 'Scroll' },
+    ],
+    onChange: applyAll,
+  });
+
+  const fanDimensions = window.initDimensionControlGroup(
+    document.getElementById('exp5-fan-section'),
+    {
+      'fan-width': {
+        initialMode: 'fixed',
+        measure: () => 400,
+        onChange: applyAll,
+      },
+      'fan-height': {
+        initialMode: 'fixed',
+        measure: () => 500,
+        onChange: applyAll,
+      },
+    },
+  );
+
+  const horizDimensions = window.initDimensionControlGroup(
+    document.getElementById('exp5-horiz-section'),
+    {
+      'horiz-width': {
+        initialMode: 'fixed',
+        measure: () => 600,
+        onChange: applyAll,
+      },
+      'horiz-height': {
+        initialMode: 'fixed',
+        measure: () => 400,
+        onChange: applyAll,
+      },
+    },
+  );
+
+  const colorInputs = [1, 2, 3, 4, 5].map((index) => (
+    window.initColorInput(document.getElementById(`exp5-color-${index}-root`), {
+      onChange: applyAll,
+    })
+  ));
+
+  const snippet = window.initSnippetOutput(document.getElementById('exp5-snippet-root'), {
+    filename: 'experiment-5.html',
+    getContent: generateSnippet,
+    updateOnInit: false,
+  });
+
+  utils.bindInputWrapInputs(panelRoot);
+
+  Object.values(controls).forEach((input) => {
+    if (!(input instanceof HTMLInputElement)) return;
+    input.addEventListener('input', applyAll);
+  });
+
+  [
+    controls.count,
+    controls.fanRadius,
+    controls.fanRotate,
+    controls.fanOriginY,
+    controls.fanDuration,
+    controls.fanVelocity,
+    controls.horizRadius,
+    controls.horizRotate,
+    controls.horizOrbit,
+    controls.horizPerspective,
+    controls.horizScale,
+    controls.horizDuration,
+    controls.horizVelocity,
+    controls.transitionDuration,
+  ].forEach((input) => {
+    utils.bindNumericArrowKey(input, applyAll);
+  });
+
+  colorInputs.forEach((colorInput) => {
+    utils.bindNumericArrowKey(colorInput.opacityInput, applyAll, { isOpacity: true });
+  });
+
+  function clampCount(value) {
+    return Math.min(12, Math.max(2, Math.round(utils.parsePx(value, 5))));
+  }
+
+  function getCount() {
+    return clampCount(controls.count.value);
+  }
+
+  function getHighlightScale() {
+    const value = parseFloat(controls.horizScale.value);
+    return Number.isFinite(value) && value > 0 ? value : 1.2;
+  }
+
+  function getColors() {
+    return colorInputs.map((colorInput) => colorInput.getColor());
+  }
+
+  function getCarouselConfig() {
+    return {
+      count: getCount(),
+      colors: getColors(),
+      fanWidth: utils.parsePx(fanDimensions['fan-width'].getValue(), 400),
+      fanHeight: utils.parsePx(fanDimensions['fan-height'].getValue(), 500),
+      fanRadius: utils.parsePx(controls.fanRadius.value, 0),
+      fanOriginY: utils.parsePx(controls.fanOriginY.value, 2000),
+      fanStepDeg: utils.parsePx(controls.fanRotate.value, 12),
+      fanDuration: utils.parseMs(controls.fanDuration.value, 350),
+      fanEasingRaw: fanEasing.getRaw() || '0.7, 0, 0.25, 1',
+      fanVelocityIntensity: Math.max(0, utils.parsePx(controls.fanVelocity.value, 1)),
+      horizWidth: utils.parsePx(horizDimensions['horiz-width'].getValue(), 600),
+      horizHeight: utils.parsePx(horizDimensions['horiz-height'].getValue(), 400),
+      horizRadius: utils.parsePx(controls.horizRadius.value, 0),
+      horizOrbit: utils.parsePx(controls.horizOrbit.value, 600),
+      horizPerspective: utils.parsePx(controls.horizPerspective.value, 1200),
+      horizStepDeg: utils.parsePx(controls.horizRotate.value, 12),
+      horizDuration: utils.parseMs(controls.horizDuration.value, 350),
+      horizEasingRaw: horizEasing.getRaw() || '0.7, 0, 0.25, 1',
+      horizVelocityIntensity: Math.max(0, utils.parsePx(controls.horizVelocity.value, 1)),
+      horizHighlightScale: getHighlightScale(),
+      horizOrientation: variantSelector.getValue(),
+      horizInputAction: inputSelector.getValue(),
+      transitionDuration: utils.parseMs(controls.transitionDuration.value, 600),
+      transitionEasingRaw: transitionEasing.getRaw() || '0.7, 0, 0.25, 1',
+    };
+  }
+
+  function updateDimensionLabels() {
+    fanDimensions['fan-width'].updateLabel();
+    fanDimensions['fan-height'].updateLabel();
+    horizDimensions['horiz-width'].updateLabel();
+    horizDimensions['horiz-height'].updateLabel();
+  }
+
+  function getMode() {
+    return carousel.getMode();
+  }
+
+  function updateModeButtons() {
+    const activeMode = getMode();
+    modeButtons.forEach((button) => {
+      button.classList.toggle('is-active', button.dataset.flipMode === activeMode);
+    });
+  }
+
+  function applyModeChange(targetMode) {
+    const config = getCarouselConfig();
+    carousel.apply(config);
+
+    if (targetMode === carousel.getMode()) {
+      updateModeButtons();
+      updateDimensionLabels();
+      snippet.update();
+      return;
+    }
+
+    carousel.flipTo(targetMode, {
+      transitionDuration: config.transitionDuration,
+      transitionEasingRaw: config.transitionEasingRaw,
+    }).then(() => {
+      updateModeButtons();
+      updateDimensionLabels();
+      snippet.update();
+    });
+  }
+
+  modeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      applyModeChange(button.dataset.flipMode);
+    });
+  });
+
+  function applyAll() {
+    carousel.apply(getCarouselConfig());
+    updateModeButtons();
+    updateDimensionLabels();
+    snippet.update();
+  }
+
+  function collectSettings() {
+    return {
+      mode: getMode(),
+      count: controls.count.value,
+      fanRadius: controls.fanRadius.value,
+      fanRotate: controls.fanRotate.value,
+      fanOriginY: controls.fanOriginY.value,
+      fanDuration: controls.fanDuration.value,
+      fanVelocity: controls.fanVelocity.value,
+      fanEasing: fanEasing.getRaw(),
+      fanWidthMode: fanDimensions['fan-width'].getMode(),
+      fanWidthValue: fanDimensions['fan-width'].getValue(),
+      fanHeightMode: fanDimensions['fan-height'].getMode(),
+      fanHeightValue: fanDimensions['fan-height'].getValue(),
+      horizRadius: controls.horizRadius.value,
+      horizRotate: controls.horizRotate.value,
+      horizOrbit: controls.horizOrbit.value,
+      horizPerspective: controls.horizPerspective.value,
+      horizScale: controls.horizScale.value,
+      horizDuration: controls.horizDuration.value,
+      horizVelocity: controls.horizVelocity.value,
+      horizEasing: horizEasing.getRaw(),
+      variant: variantSelector.getValue(),
+      input: inputSelector.getValue(),
+      horizWidthMode: horizDimensions['horiz-width'].getMode(),
+      horizWidthValue: horizDimensions['horiz-width'].getValue(),
+      horizHeightMode: horizDimensions['horiz-height'].getMode(),
+      horizHeightValue: horizDimensions['horiz-height'].getValue(),
+      transitionDuration: controls.transitionDuration.value,
+      transitionEasing: transitionEasing.getRaw(),
+      colors: colorInputs.map((colorInput) => ({
+        hex: colorInput.hexInput.value,
+        opacity: colorInput.opacityInput.value,
+      })),
+    };
+  }
+
+  function applyDimensionSetting(dimension, dataModeKey, dataValueKey, data) {
+    if (!dimension) return;
+    if (data[dataModeKey]) {
+      dimension.setMode(data[dataModeKey], false);
+      if (data[dataModeKey] === 'fixed' && data[dataValueKey] != null) {
+        dimension.element.querySelector('.dimension-fixed-input').value =
+          String(data[dataValueKey]).replace(/px$/i, '');
+      }
+    }
+  }
+
+  function applySettings(data) {
+    if (!data) return;
+
+    if (data.count != null) controls.count.value = data.count;
+    if (data.fanRadius != null) controls.fanRadius.value = data.fanRadius;
+    if (data.fanRotate != null) controls.fanRotate.value = data.fanRotate;
+    if (data.fanOriginY != null) controls.fanOriginY.value = data.fanOriginY;
+    if (data.fanDuration != null) controls.fanDuration.value = data.fanDuration;
+    if (data.fanVelocity != null) controls.fanVelocity.value = data.fanVelocity;
+    if (data.fanEasing != null) fanEasing.setRaw(data.fanEasing, false);
+
+    if (data.horizRadius != null) controls.horizRadius.value = data.horizRadius;
+    if (data.horizRotate != null) controls.horizRotate.value = data.horizRotate;
+    if (data.horizOrbit != null) controls.horizOrbit.value = data.horizOrbit;
+    if (data.horizPerspective != null) controls.horizPerspective.value = data.horizPerspective;
+    if (data.horizScale != null) controls.horizScale.value = data.horizScale;
+    if (data.horizDuration != null) controls.horizDuration.value = data.horizDuration;
+    if (data.horizVelocity != null) controls.horizVelocity.value = data.horizVelocity;
+    if (data.horizEasing != null) horizEasing.setRaw(data.horizEasing, false);
+
+    if (data.variant != null) variantSelector.setValue(data.variant, false);
+    if (data.input != null) inputSelector.setValue(data.input, false);
+
+    if (data.transitionDuration != null) {
+      controls.transitionDuration.value = data.transitionDuration;
+    }
+    if (data.transitionEasing != null) transitionEasing.setRaw(data.transitionEasing, false);
+
+    applyDimensionSetting(fanDimensions['fan-width'], 'fanWidthMode', 'fanWidthValue', data);
+    applyDimensionSetting(fanDimensions['fan-height'], 'fanHeightMode', 'fanHeightValue', data);
+    applyDimensionSetting(horizDimensions['horiz-width'], 'horizWidthMode', 'horizWidthValue', data);
+    applyDimensionSetting(horizDimensions['horiz-height'], 'horizHeightMode', 'horizHeightValue', data);
+
+    if (Array.isArray(data.colors)) {
+      data.colors.forEach((color, index) => {
+        const colorInput = colorInputs[index];
+        if (!colorInput || !color) return;
+        if (color.hex != null) colorInput.hexInput.value = color.hex;
+        if (color.opacity != null) colorInput.opacityInput.value = color.opacity;
+        colorInput.updateUI(false);
+      });
+    }
+
+    if (data.mode != null) {
+      carousel.apply(getCarouselConfig());
+      if (data.mode !== carousel.getMode()) {
+        carousel.flipTo(data.mode, {
+          transitionDuration: utils.parseMs(controls.transitionDuration.value, 600),
+          transitionEasingRaw: transitionEasing.getRaw() || '0.7, 0, 0.25, 1',
+        }).then(() => {
+          updateModeButtons();
+          updateDimensionLabels();
+          snippet.update();
+        });
+        return;
+      }
+      updateModeButtons();
+    }
+
+    applyAll();
+  }
+
+  window.ExperimentSettings = window.ExperimentSettings || {};
+  window.ExperimentSettings['5'] = {
+    collect: collectSettings,
+    apply: applySettings,
+  };
+
+  const pending = window.__pendingExperimentDefaults?.['5'];
+  if (pending) applySettings(pending);
+  else applyAll();
+
+  function generateSnippet() {
+    const config = getCarouselConfig();
+    const colorsJson = JSON.stringify(config.colors);
+    const mode = getMode();
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fan ↔ Horizontal FLIP Carousel</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    .flip-carousel {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+      overflow: hidden;
+    }
+
+    .flip-carousel__stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+      transform-style: preserve-3d;
+    }
+
+    .flip-carousel.is-mode-horizontal .flip-carousel__stage,
+    .flip-carousel.is-mode-vertical .flip-carousel__stage {
+      overflow: visible;
+    }
+
+    .flip-carousel__stage.is-dragging { cursor: grabbing; }
+
+    .flip-carousel__ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
+    }
+
+    .flip-carousel__card {
+      position: absolute;
+      left: 0;
+      top: 0;
+      box-sizing: border-box;
+      will-change: transform;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .flip-carousel__card-face {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      font-size: 48px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.35);
+      transform-origin: center center;
+      backface-visibility: hidden;
+    }
+
+    .flip-carousel__nav {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .flip-carousel__nav-btn {
+      width: 50px;
+      height: 50px;
+      border: none;
+      background: #f0f0f0;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 9px;
+      cursor: pointer;
+    }
+
+    .flip-carousel__mode-toggle {
+      display: flex;
+      gap: 4px;
+    }
+
+    .flip-carousel__mode-btn {
+      height: 50px;
+      padding: 0 12px;
+      border: none;
+      background: #f0f0f0;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 9px;
+      cursor: pointer;
+    }
+
+    .flip-carousel__mode-btn.is-active {
+      background: #09090b;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="flip-carousel" data-carousel>
+    <div class="flip-carousel__stage">
+      <div class="flip-carousel__ring"></div>
+    </div>
+    <div class="flip-carousel__nav">
+      <button type="button" class="flip-carousel__nav-btn" data-carousel-prev>Prev</button>
+      <div class="flip-carousel__mode-toggle">
+        <button type="button" class="flip-carousel__mode-btn${mode === 'fan' ? ' is-active' : ''}" data-flip-mode="fan">Fan</button>
+        <button type="button" class="flip-carousel__mode-btn${mode === 'horizontal' ? ' is-active' : ''}" data-flip-mode="horizontal">Horizontal</button>
+      </div>
+      <button type="button" class="flip-carousel__nav-btn" data-carousel-next>Next</button>
+    </div>
+  </div>
+
+  <script src="Components/FlipCarousel/component.js"><\/script>
+  <script>
+    const CONFIG = {
+      mode: ${JSON.stringify(mode)},
+      count: ${config.count},
+      colors: ${colorsJson},
+      fanWidth: ${config.fanWidth},
+      fanHeight: ${config.fanHeight},
+      fanRadius: ${config.fanRadius},
+      fanOriginY: ${config.fanOriginY},
+      fanStepDeg: ${config.fanStepDeg},
+      fanDuration: ${config.fanDuration},
+      fanEasingRaw: ${JSON.stringify(config.fanEasingRaw)},
+      fanVelocityIntensity: ${config.fanVelocityIntensity},
+      horizWidth: ${config.horizWidth},
+      horizHeight: ${config.horizHeight},
+      horizRadius: ${config.horizRadius},
+      horizOrbit: ${config.horizOrbit},
+      horizPerspective: ${config.horizPerspective},
+      horizStepDeg: ${config.horizStepDeg},
+      horizDuration: ${config.horizDuration},
+      horizEasingRaw: ${JSON.stringify(config.horizEasingRaw)},
+      horizVelocityIntensity: ${config.horizVelocityIntensity},
+      horizHighlightScale: ${config.horizHighlightScale},
+      horizOrientation: ${JSON.stringify(config.horizOrientation)},
+      horizInputAction: ${JSON.stringify(config.horizInputAction)},
+      transitionDuration: ${config.transitionDuration},
+      transitionEasingRaw: ${JSON.stringify(config.transitionEasingRaw)},
+    };
+
+    const preview = document.querySelector('.flip-carousel').parentElement;
+    const carousel = initFlipCarousel(preview, CONFIG);
+
+    document.querySelectorAll('[data-flip-mode]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const targetMode = button.dataset.flipMode;
+        document.querySelectorAll('[data-flip-mode]').forEach((node) => {
+          node.classList.toggle('is-active', node === button);
+        });
+        carousel.apply(CONFIG);
+        carousel.flipTo(targetMode, {
+          transitionDuration: CONFIG.transitionDuration,
+          transitionEasingRaw: CONFIG.transitionEasingRaw,
+        });
+      });
+    });
+  <\/script>
+</body>
+</html>`;
+  }
+
+  preview.dataset.experimentReady = '1';
+};
+
 (function () {
   const LEGACY_STORAGE_KEY = 'cp-kit-experiment-defaults';
   const STORAGE_PREFIX = 'cp-kit-experiment-defaults-';
   const ACTIVE_KEY = 'cp-kit-experiment-active';
   const DEFAULT_EXPERIMENT = '2';
-  const EXPERIMENT_IDS = ['1', '2', '3', '4', '4.5'];
+  const EXPERIMENT_IDS = ['1', '2', '3', '4', '4.5', '5'];
 
   window.ExperimentSettings = window.ExperimentSettings || {};
 
@@ -7018,6 +9112,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
     3: { init: () => window.initExperiment3?.() },
     4: { init: () => window.initExperiment4?.() },
     '4.5': { init: () => window.initExperiment4_5?.() },
+    5: { init: () => window.initExperiment5?.() },
   };
 
   function loadExperimentDefaults(id) {
@@ -7082,6 +9177,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       { value: '3', label: 'Experiment 3' },
       { value: '4', label: 'Experiment 4' },
       { value: '4.5', label: 'Experiment 4.5' },
+      { value: '5', label: 'Experiment 5' },
     ],
     onChange: (value) => switchExperiment(value),
   });
