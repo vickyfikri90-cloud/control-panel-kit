@@ -13,11 +13,8 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
 
   let currentChars = [];
   let incomingChars = [];
-  let animations = [];
-  let runId = 0;
   let pointerHover = false;
   let focusEngaged = false;
-  let mode = 'rest';
 
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -65,16 +62,28 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
     return index * step;
   }
 
-  function renderLine(layer, text) {
+  // Each glyph is a small state machine that only ever moves upward:
+  // below → center → above, then jumps (hidden) back to below. Changing the
+  // hover state mid-animation never reverses a glyph; one in flight finishes
+  // its move and then continues to wherever it needs to be.
+  function renderLine(layer, text, isRest) {
     layer.replaceChildren();
-    splitChars(text).forEach((char) => {
-      const span = document.createElement('span');
-      span.className = 'stagger-char';
-      span.textContent = displayChar(char);
-      span.setAttribute('aria-hidden', 'true');
-      layer.appendChild(span);
+    return splitChars(text).map((char, index, all) => {
+      const el = document.createElement('span');
+      el.className = 'stagger-char';
+      el.textContent = displayChar(char);
+      el.setAttribute('aria-hidden', 'true');
+      layer.appendChild(el);
+      return {
+        el,
+        index,
+        total: all.length,
+        isRest,
+        pos: 'below',
+        anim: null,
+        delay: 0,
+      };
     });
-    return [...layer.querySelectorAll('.stagger-char')];
   }
 
   function renderLayers() {
@@ -87,11 +96,15 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
     incomingLayer.className = 'text text--incoming';
     incomingLayer.setAttribute('aria-hidden', 'true');
 
-    currentChars = renderLine(currentLayer, restLabel);
-    incomingChars = renderLine(incomingLayer, hoverLabel);
+    currentChars = renderLine(currentLayer, restLabel, true);
+    incomingChars = renderLine(incomingLayer, hoverLabel, false);
 
     label.appendChild(currentLayer);
     label.appendChild(incomingLayer);
+  }
+
+  function allGlyphs() {
+    return currentChars.concat(incomingChars);
   }
 
   function measureTravel() {
@@ -102,176 +115,104 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
     return Math.max(em, Math.ceil((box + em) / 2));
   }
 
-  function pose(chars, y) {
-    chars.forEach((el) => {
-      el.style.transform = \`translateY(\${y}px)\`;
-    });
+  function offsetFor(pos, travel) {
+    if (pos === 'center') return 0;
+    if (pos === 'above') return -travel;
+    return travel;
   }
 
-  function clearEffects() {
-    animations.forEach((anim) => anim.cancel());
-    animations = [];
+  function place(glyph, pos, travel = measureTravel()) {
+    glyph.pos = pos;
+    glyph.el.style.transform = \`translateY(\${offsetFor(pos, travel)}px)\`;
   }
 
-  function settleRest() {
-    clearEffects();
+  function wantsCenter(glyph) {
+    return isEngaged() ? !glyph.isRest : glyph.isRest;
+  }
+
+  function isWaiting(glyph) {
+    if (!glyph.anim) return false;
+    const time = Number(glyph.anim.currentTime) || 0;
+    return time < glyph.delay;
+  }
+
+  function stop(glyph) {
+    if (!glyph.anim) return;
+    const anim = glyph.anim;
+    glyph.anim = null;
+    anim.cancel();
+  }
+
+  function move(glyph, to, delay) {
     const travel = measureTravel();
-    pose(currentChars, 0);
-    pose(incomingChars, travel);
-    btn.setAttribute('aria-label', restLabel);
-    mode = 'rest';
-  }
+    const from = offsetFor(glyph.pos, travel);
+    const target = offsetFor(to, travel);
 
-  function settleEntered() {
-    clearEffects();
-    const travel = measureTravel();
-    pose(currentChars, -travel);
-    pose(incomingChars, 0);
-    btn.setAttribute('aria-label', hoverLabel);
-    mode = 'entered';
-  }
+    if (prefersReducedMotion() || duration <= 0) {
+      place(glyph, to, travel);
+      advance(glyph, 0);
+      return;
+    }
 
-  // Each char moves straight from → to; only the delay differs per char, so
-  // center-out mode keeps the middle chars ahead and the wave reads as a chevron.
-  function runLayer(chars, from, to) {
-    const total = chars.length;
-    const animDuration = prefersReducedMotion() ? 0 : Math.max(0, duration);
-    return chars.map((el, index) => {
-      return el.animate([
-        { transform: \`translateY(\${from}px)\` },
-        { transform: \`translateY(\${to}px)\` },
-      ], {
-        duration: animDuration,
-        delay: charDelay(index, total),
-        easing: getEasing(),
-        fill: 'forwards',
-      });
+    const anim = glyph.el.animate([
+      { transform: \`translateY(\${from}px)\` },
+      { transform: \`translateY(\${target}px)\` },
+    ], {
+      duration,
+      delay,
+      easing: getEasing(),
+      fill: 'forwards',
     });
+
+    glyph.anim = anim;
+    glyph.delay = delay;
+    anim.finished.then(() => {
+      if (glyph.anim !== anim) return;
+      glyph.anim = null;
+      place(glyph, to, travel);
+      anim.cancel();
+      advance(glyph, 0);
+    }).catch(() => {});
   }
 
-  function watch(id, onDone) {
-    if (prefersReducedMotion()) {
-      onDone();
-      return;
-    }
-    Promise.all(animations.map((anim) => anim.finished.catch(() => {}))).then(() => {
-      if (id !== runId) return;
-      onDone();
-    });
-  }
+  function advance(glyph, delay) {
+    if (glyph.anim) return;
 
-  function finish(doneMode) {
-    if (doneMode === 'entered') {
-      if (!isEngaged()) {
-        playLeave();
-        return;
-      }
-      settleEntered();
-      return;
-    }
+    if (glyph.pos === 'above') place(glyph, 'below');
 
-    if (isEngaged()) {
-      playEnter();
-      return;
+    if (wantsCenter(glyph)) {
+      if (glyph.pos === 'below') move(glyph, 'center', delay);
+    } else if (glyph.pos === 'center') {
+      move(glyph, 'above', delay);
     }
-
-    settleRest();
-  }
-
-  function playEnter() {
-    const id = ++runId;
-    clearEffects();
-    if (prefersReducedMotion()) {
-      settleEntered();
-      return;
-    }
-    const travel = measureTravel();
-    pose(currentChars, 0);
-    pose(incomingChars, travel);
-    animations = [
-      ...runLayer(currentChars, 0, -travel),
-      ...runLayer(incomingChars, travel, 0),
-    ];
-    mode = 'entering';
-    watch(id, () => finish('entered'));
-  }
-
-  function playLeave() {
-    const id = ++runId;
-    clearEffects();
-    if (prefersReducedMotion()) {
-      settleRest();
-      return;
-    }
-    const travel = measureTravel();
-    pose(currentChars, travel);
-    pose(incomingChars, 0);
-    animations = [
-      ...runLayer(currentChars, travel, 0),
-      ...runLayer(incomingChars, 0, -travel),
-    ];
-    mode = 'leaving';
-    watch(id, () => finish('rest'));
-  }
-
-  function playForward(doneMode) {
-    const id = ++runId;
-    mode = doneMode === 'rest' ? 'leaving' : 'entering';
-    animations.forEach((anim) => {
-      anim.playbackRate = 1;
-      anim.play();
-    });
-    watch(id, () => finish(doneMode));
-  }
-
-  function reverseCurrent(doneMode) {
-    const id = ++runId;
-    mode = doneMode === 'rest' ? 'reversing-enter' : 'reversing-leave';
-    animations.forEach((anim) => {
-      anim.playbackRate = -1;
-      anim.play();
-    });
-    watch(id, () => finish(doneMode));
-  }
-
-  function onEngage() {
-    if (mode === 'leaving') {
-      reverseCurrent('entered');
-      return;
-    }
-    if (mode === 'reversing-enter') {
-      playForward('entered');
-      return;
-    }
-    if (mode === 'entering' || mode === 'entered' || mode === 'reversing-leave') return;
-    playEnter();
-  }
-
-  function onDisengage() {
-    if (mode === 'entering') {
-      reverseCurrent('rest');
-      return;
-    }
-    if (mode === 'reversing-enter') return;
-    if (mode === 'reversing-leave') {
-      playForward('rest');
-      return;
-    }
-    if (mode === 'rest' || mode === 'leaving') return;
-    playLeave();
   }
 
   function syncEngagement() {
-    if (isEngaged()) onEngage();
-    else onDisengage();
+    btn.setAttribute('aria-label', isEngaged() ? hoverLabel : restLabel);
+    allGlyphs().forEach((glyph) => {
+      // Not started yet: drop the pending move so the glyph can re-plan.
+      if (isWaiting(glyph)) stop(glyph);
+      advance(glyph, charDelay(glyph.index, glyph.total));
+    });
+  }
+
+  function isIdle() {
+    return allGlyphs().every((glyph) => !glyph.anim);
+  }
+
+  function settle() {
+    const travel = measureTravel();
+    allGlyphs().forEach((glyph) => {
+      stop(glyph);
+      place(glyph, wantsCenter(glyph) ? 'center' : 'below', travel);
+    });
+    btn.setAttribute('aria-label', isEngaged() ? hoverLabel : restLabel);
   }
 
   function rebuild() {
-    runId += 1;
-    clearEffects();
+    allGlyphs().forEach(stop);
     renderLayers();
-    if (isEngaged()) settleEntered();
-    else settleRest();
+    settle();
   }
 
   btn.addEventListener('mouseenter', () => {
@@ -297,10 +238,7 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
     syncEngagement();
   });
 
-  motionQuery.addEventListener('change', () => {
-    if (isEngaged()) settleEntered();
-    else settleRest();
-  });
+  motionQuery.addEventListener('change', settle);
 
   rebuild();
 
@@ -329,7 +267,7 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
       if (styles.width != null) btn.style.width = styles.width;
       if (styles.padding != null) btn.style.padding = styles.padding;
       if (styles.fontSize != null) btn.style.fontSize = styles.fontSize;
-      if (mode === 'rest' || mode === 'entered') rebuild();
+      if (isIdle()) rebuild();
     },
   };
 };
