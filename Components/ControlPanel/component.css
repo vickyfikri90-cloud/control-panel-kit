@@ -73,3 +73,37 @@
   display: none !important;
 }
 
+
+/* Mobile: preview on top (40% of the screen), panel scrolls below. */
+@media (max-width: 768px) {
+  .cp-app {
+    flex-direction: column;
+  }
+
+  .cp-app--fullscreen {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+  }
+
+  .cp-preview-area {
+    flex: 0 0 40vh;
+    flex-basis: 40dvh;
+  }
+
+  .panel,
+  .cp-app--fullscreen .panel {
+    width: 100%;
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    border-left: none;
+    border-top: 1px solid #eee;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .panel .field {
+    width: 100%;
+  }
+}

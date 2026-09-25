@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <title>Hover Button</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -205,6 +205,40 @@
   display: none !important;
 }
 
+
+/* Mobile: preview on top (40% of the screen), panel scrolls below. */
+@media (max-width: 768px) {
+  .cp-app {
+    flex-direction: column;
+  }
+
+  .cp-app--fullscreen {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+  }
+
+  .cp-preview-area {
+    flex: 0 0 40vh;
+    flex-basis: 40dvh;
+  }
+
+  .panel,
+  .cp-app--fullscreen .panel {
+    width: 100%;
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    border-left: none;
+    border-top: 1px solid #eee;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .panel .field {
+    width: 100%;
+  }
+}
 
 .chevron-wrap {
   width: 21px;
@@ -857,8 +891,6 @@ window.initDimensionControl = function initDimensionControl(root, options = {}) 
       if (previousMode === 'hug') {
         fixedInput.value = String(Math.max(Math.round(measure()), 0));
       }
-      fixedInput.focus();
-      fixedInput.select();
     } else {
       updateLabel();
     }
@@ -885,6 +917,12 @@ window.initDimensionControl = function initDimensionControl(root, options = {}) 
       event.preventDefault();
       setMode(button.dataset.dimensionMode);
       closeMenu();
+      // Focus only when the user picks Fixed, not on init/restore (it would
+      // pop the keyboard on mobile).
+      if (mode === 'fixed') {
+        fixedInput.focus();
+        fixedInput.select();
+      }
     });
   });
 

@@ -38,8 +38,6 @@ window.initDimensionControl = function initDimensionControl(root, options = {}) 
       if (previousMode === 'hug') {
         fixedInput.value = String(Math.max(Math.round(measure()), 0));
       }
-      fixedInput.focus();
-      fixedInput.select();
     } else {
       updateLabel();
     }
@@ -66,6 +64,12 @@ window.initDimensionControl = function initDimensionControl(root, options = {}) 
       event.preventDefault();
       setMode(button.dataset.dimensionMode);
       closeMenu();
+      // Focus only when the user picks Fixed, not on init/restore (it would
+      // pop the keyboard on mobile).
+      if (mode === 'fixed') {
+        fixedInput.focus();
+        fixedInput.select();
+      }
     });
   });
 
