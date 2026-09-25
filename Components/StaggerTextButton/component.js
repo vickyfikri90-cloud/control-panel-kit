@@ -109,8 +109,10 @@ window.initStaggerTextButton = function initStaggerTextButton(root, options = {}
   }
 
   function measureTravel() {
-    const line = label.getBoundingClientRect().height;
-    const buttonHeight = btn.getBoundingClientRect().height;
+    // Layout sizes (not getBoundingClientRect) so CSS zoom/transforms on the
+    // preview don't shrink the travel distance.
+    const line = label.offsetHeight;
+    const buttonHeight = btn.offsetHeight;
     const em = line > 0 ? line : 16;
     const box = buttonHeight > 0 ? buttonHeight : em;
     return Math.max(em, Math.ceil((box + em) / 2));

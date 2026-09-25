@@ -216,11 +216,19 @@
     height: 100vh;
     height: 100dvh;
     min-height: 0;
+    /* Keep content clear of Safari's blurred top bar. */
+    padding-top: 32px;
   }
 
   .cp-preview-area {
     flex: 0 0 40vh;
     flex-basis: 40dvh;
+  }
+
+  /* Previews use real sizes; render them at 80% so they fit a phone.
+     zoom (not transform) keeps full-bleed previews filling the area. */
+  .cp-preview-area > .cp-preview {
+    zoom: 0.8;
   }
 
   .panel,
@@ -8193,8 +8201,10 @@ window.initStaggerTextButton = function initStaggerTextButton(root, options = {}
   }
 
   function measureTravel() {
-    const line = label.getBoundingClientRect().height;
-    const buttonHeight = btn.getBoundingClientRect().height;
+    // Layout sizes (not getBoundingClientRect) so CSS zoom/transforms on the
+    // preview don't shrink the travel distance.
+    const line = label.offsetHeight;
+    const buttonHeight = btn.offsetHeight;
     const em = line > 0 ? line : 16;
     const box = buttonHeight > 0 ? buttonHeight : em;
     return Math.max(em, Math.ceil((box + em) / 2));
@@ -12992,8 +13002,10 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
   }
 
   function measureTravel() {
-    const line = label.getBoundingClientRect().height;
-    const buttonHeight = btn.getBoundingClientRect().height;
+    // Layout sizes (not getBoundingClientRect) so CSS zoom/transforms on the
+    // preview don't shrink the travel distance.
+    const line = label.offsetHeight;
+    const buttonHeight = btn.offsetHeight;
     const em = line > 0 ? line : 16;
     const box = buttonHeight > 0 ? buttonHeight : em;
     return Math.max(em, Math.ceil((box + em) / 2));

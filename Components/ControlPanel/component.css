@@ -84,11 +84,19 @@
     height: 100vh;
     height: 100dvh;
     min-height: 0;
+    /* Keep content clear of Safari's blurred top bar. */
+    padding-top: 32px;
   }
 
   .cp-preview-area {
     flex: 0 0 40vh;
     flex-basis: 40dvh;
+  }
+
+  /* Previews use real sizes; render them at 80% so they fit a phone.
+     zoom (not transform) keeps full-bleed previews filling the area. */
+  .cp-preview-area > .cp-preview {
+    zoom: 0.8;
   }
 
   .panel,
