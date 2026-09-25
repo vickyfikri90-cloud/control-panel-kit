@@ -1,11 +1,131 @@
-// Arc Scroll Transition — vanilla port of Osmo's resource
+window.ArcScrollTransitionSnippet = {
+  css: `.cp-preview[data-experiment-preview="6"] {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0;
+  background: #000;
+}
+
+.cp-preview[data-experiment-preview="6"] .arc-scroll {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+}
+
+.arc-scroll {
+  --arc-heading-size: 96px;
+  --arc-solid-color: #cecece;
+  --arc-image-opacity: 0.8;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  container-type: size;
+  background: #000;
+}
+
+.arc-scroll__scroller {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.arc-scroll__scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.arc-scroll__section {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100cqh;
+  overflow: hidden;
+  color: #f2f2f2;
+}
+
+.arc-scroll__section.is--solid {
+  color: #0a0a0a;
+  background-color: var(--arc-solid-color);
+}
+
+.arc-scroll__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: #000;
+}
+
+.arc-scroll__bg-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: var(--arc-image-opacity);
+  user-select: none;
+}
+
+.arc-scroll__content {
+  position: relative;
+  z-index: 1;
+}
+
+.arc-scroll__h {
+  max-width: 8em;
+  margin: 0;
+  font-family: "Haffer XH", Inter, Arial, sans-serif;
+  font-size: var(--arc-heading-size);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+
+/* Osmo drops the heading to 3.5em (from 6em) below 768px. */
+@container (max-width: 767px) {
+  .arc-scroll__h {
+    font-size: calc(var(--arc-heading-size) * 3.5 / 6);
+  }
+}
+
+.arc-scroll__transition {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 10;
+  pointer-events: none;
+  color: var(--arc-solid-color);
+}
+
+.arc-scroll__transition.is--top {
+  inset: 0 0 auto;
+}
+
+.arc-scroll__transition svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.arc-scroll__transition path {
+  fill: currentColor;
+}
+`,
+  js: `// Arc Scroll Transition — vanilla port of Osmo's resource
 // (https://www.osmo.supply/preview?resource=arc-scroll-transition).
 //
 // Sections scroll inside the preview. Each [data-arc-transition] holds a
 // square SVG anchored to the bottom (cover) or top (reveal) of its section;
 // a quadratic arc fills it as the section scrolls, bulging most at the middle
 // of the transition (depth * sin(progress * PI)). Wheel input is smoothed
-// (Lenis-like lerp) and progress trails scroll by `scrub` seconds
+// (Lenis-like lerp) and progress trails scroll by \`scrub\` seconds
 // (ScrollTrigger scrub).
 window.initArcScrollTransition = function initArcScrollTransition(root, options = {}) {
   const VIEWBOX = 100;
@@ -22,7 +142,7 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
     bgImage2: 'Components/ArcScrollTransition/assets/bg-2.png',
   };
 
-  // Mirrors the Osmo demo page. `transitions` index into config.curves.
+  // Mirrors the Osmo demo page. \`transitions\` index into config.curves.
   const SECTIONS = [
     { image: 1, title: 'Arc<br>Scroll<br>Transition', bottom: { mode: 'cover', curve: 0 } },
     { solid: true, title: 'Also works as reveal instead of cover effect' },
@@ -81,7 +201,7 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
     wrapper.setAttribute('data-arc-transition', spec.mode);
 
     const svg = document.createElementNS(SVG_NS, 'svg');
-    svg.setAttribute('viewBox', `0 0 ${VIEWBOX} ${VIEWBOX}`);
+    svg.setAttribute('viewBox', \`0 0 \${VIEWBOX} \${VIEWBOX}\`);
     svg.setAttribute('preserveAspectRatio', 'none');
     svg.setAttribute('aria-hidden', 'true');
     const path = document.createElementNS(SVG_NS, 'path');
@@ -138,7 +258,7 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
   }
 
   function applyStyles() {
-    container.style.setProperty('--arc-heading-size', `${config.headingSize}px`);
+    container.style.setProperty('--arc-heading-size', \`\${config.headingSize}px\`);
     container.style.setProperty('--arc-solid-color', config.solidColor);
     container.style.setProperty('--arc-image-opacity', String(config.imageOpacity / 100));
     scroller.querySelectorAll('[data-arc-image]').forEach((img) => {
@@ -174,13 +294,13 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
     if (instance.mode === 'cover') {
       const edge = round(VIEWBOX - VIEWBOX * fill);
       const control = round(edge - curve * 2);
-      instance.path.setAttribute('d', `M0 ${VIEWBOX} L0 ${edge} Q${VIEWBOX / 2} ${control} ${VIEWBOX} ${edge} L${VIEWBOX} ${VIEWBOX} Z`);
+      instance.path.setAttribute('d', \`M0 \${VIEWBOX} L0 \${edge} Q\${VIEWBOX / 2} \${control} \${VIEWBOX} \${edge} L\${VIEWBOX} \${VIEWBOX} Z\`);
       return;
     }
 
     const edge = round(VIEWBOX * fill);
     const control = round(edge + curve * 2);
-    instance.path.setAttribute('d', `M0 0 L0 ${edge} Q${VIEWBOX / 2} ${control} ${VIEWBOX} ${edge} L${VIEWBOX} 0 Z`);
+    instance.path.setAttribute('d', \`M0 0 L0 \${edge} Q\${VIEWBOX / 2} \${control} \${VIEWBOX} \${edge} L\${VIEWBOX} 0 Z\`);
   }
 
   function maxScroll() {
@@ -206,7 +326,7 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
       }
     }
 
-    // Scrub: progress eases toward the scroll position over ~`scrub` seconds.
+    // Scrub: progress eases toward the scroll position over ~\`scrub\` seconds.
     const k = config.scrub > 0 ? 1 - Math.exp(-dt / (config.scrub / 3)) : 1;
     instances.forEach((instance) => {
       const target = scrollProgress(instance);
@@ -278,4 +398,6 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
       container.remove();
     },
   };
+};
+`,
 };

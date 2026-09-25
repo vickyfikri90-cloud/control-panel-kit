@@ -1111,107 +1111,107 @@
 }
 
 .arc-scroll {
+  --arc-heading-size: 96px;
+  --arc-solid-color: #cecece;
+  --arc-image-opacity: 0.8;
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  touch-action: none;
-  user-select: none;
+  container-type: size;
+  background: #000;
 }
 
-.arc-scroll__svg {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
-.arc-scroll__viewport {
-  position: relative;
+.arc-scroll__scroller {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
-.arc-scroll__track {
-  will-change: transform;
-}
-
-.arc-scroll__layer {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.arc-scroll__layer--overlay {
-  z-index: 2;
-  clip-path: url(#arc-scroll-clip);
-  will-change: clip-path;
-}
-
-.arc-scroll__overlay-inner {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  will-change: transform;
+.arc-scroll__scroller::-webkit-scrollbar {
+  display: none;
 }
 
 .arc-scroll__section {
   position: relative;
-  width: 100%;
   display: flex;
-  align-items: center;
+  flex-flow: column;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100cqh;
   overflow: hidden;
-  flex-shrink: 0;
+  color: #f2f2f2;
 }
 
-.arc-scroll__section--image {
-  background-color: rgb(52, 43, 22);
+.arc-scroll__section.is--solid {
+  color: #0a0a0a;
+  background-color: var(--arc-solid-color);
 }
 
-.arc-scroll__section--solid {
-  background-color: rgb(130, 127, 103);
-}
-
-.arc-scroll__media {
+.arc-scroll__bg {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  overflow: hidden;
+  inset: 0;
+  z-index: 0;
+  background-color: #000;
 }
 
-.arc-scroll__media img {
+.arc-scroll__bg-img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: var(--arc-image-opacity);
+  user-select: none;
 }
 
-.arc-scroll__shade {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(52, 43, 22, 0.17);
-  pointer-events: none;
-}
-
-.arc-scroll__title {
+.arc-scroll__content {
   position: relative;
   z-index: 1;
+}
+
+.arc-scroll__h {
+  max-width: 8em;
   margin: 0;
-  max-width: min(90%, 694px);
-  font-family: "Inter Display", Inter, system-ui, sans-serif;
-  font-weight: 500;
-  font-size: clamp(32px, 6vw, 88px);
-  line-height: 0.92;
-  letter-spacing: 0;
+  font-family: "Haffer XH", Inter, Arial, sans-serif;
+  font-size: var(--arc-heading-size);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
   text-align: center;
-  color: #fff;
-  white-space: pre-wrap;
+}
+
+/* Osmo drops the heading to 3.5em (from 6em) below 768px. */
+@container (max-width: 767px) {
+  .arc-scroll__h {
+    font-size: calc(var(--arc-heading-size) * 3.5 / 6);
+  }
+}
+
+.arc-scroll__transition {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 10;
+  pointer-events: none;
+  color: var(--arc-solid-color);
+}
+
+.arc-scroll__transition.is--top {
+  inset: 0 0 auto;
+}
+
+.arc-scroll__transition svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.arc-scroll__transition path {
+  fill: currentColor;
 }
 
 .cp-preview[data-experiment-preview="7"] {
@@ -2847,131 +2847,99 @@
 
       <div data-experiment-panel="6" hidden>
       <div class="field">
-        <label class="field-label" for="exp6-section-height">Section Height</label>
+        <label class="field-label" for="exp6-curve-1">Transition 1 Curve (Cover)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-section-height" value="150">
-            <div class="suffix-wrap"><span>vh</span></div>
+            <input type="text" id="exp6-curve-1" value="12">
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-bg-image-height">Background Image Height</label>
+        <label class="field-label" for="exp6-curve-2">Transition 2 Curve (Reveal)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-bg-image-height" value="100">
-            <div class="suffix-wrap"><span>%</span></div>
+            <input type="text" id="exp6-curve-2" value="10">
           </div>
         </div>
       </div>
 
-      <div id="exp6-position-mode-root">
-        <div class="field option-selector">
-          <span class="field-label">Position Mode</span>
+      <div class="field">
+        <label class="field-label" for="exp6-curve-3">Transition 3 Curve (Cover)</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-curve-3" value="25">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp6-curve-4">Transition 4 Curve (Reveal)</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-curve-4" value="5">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-divider">
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp6-scrub">Scrub</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-scrub" value="0.3" data-arrow-step="0.1">
+            <div class="suffix-wrap"><span>s</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp6-smoothing">Smooth Scroll (Lerp)</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-smoothing" value="0.1" data-arrow-step="0.01">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-divider">
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp6-heading-size">Heading Size</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-heading-size" value="96">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp6-solid-color-root">
+        <div class="field">
+          <span class="field-label">Solid Color</span>
           <div class="row">
-            <div class="input-wrap input-wrap--label option-selector__wrap">
-              <input type="text" class="option-selector__input" value="Burst Origin" autocomplete="off" spellcheck="false">
-              <div class="option-selector__menu" role="listbox"></div>
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="CECECE">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="panel-divider" data-exp6-burst-group>
-        <span class="panel-divider__line" role="separator"></span>
-      </div>
-
-      <div class="field" data-exp6-burst-group>
-        <span class="field-label">Burst Origin</span>
-      </div>
-
-      <div class="field" data-exp6-burst-group>
-        <label class="field-label" for="exp6-burst-origin-x">X</label>
+      <div class="field">
+        <label class="field-label" for="exp6-image-opacity">Image Opacity</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-burst-origin-x" value="50">
-            <div class="suffix-wrap"><span>%</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field" data-exp6-burst-group>
-        <label class="field-label" for="exp6-burst-origin-y">Y</label>
-        <div class="row">
-          <div class="input-wrap">
-            <input type="text" id="exp6-burst-origin-y" value="100">
-            <div class="suffix-wrap"><span>%</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field" data-exp6-burst-group>
-        <label class="field-label" for="exp6-burst-size">Burst Size</label>
-        <div class="row">
-          <div class="input-wrap">
-            <input type="text" id="exp6-burst-size" value="100">
-            <div class="suffix-wrap"><span>%</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field" data-exp6-burst-group>
-        <label class="field-label" for="exp6-burst-scale">Burst Scale</label>
-        <div class="row">
-          <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp6-burst-scale" value="1">
-          </div>
-        </div>
-      </div>
-
-      <div class="panel-divider" data-exp6-pos-group hidden>
-        <span class="panel-divider__line" role="separator"></span>
-      </div>
-
-      <div class="field" data-exp6-pos-group hidden>
-        <span class="field-label">Front Section Position</span>
-      </div>
-
-      <div class="field" data-exp6-pos-x data-exp6-pos-group hidden>
-        <label class="field-label" for="exp6-front-x">X</label>
-        <div class="row">
-          <div class="input-wrap">
-            <input type="text" id="exp6-front-x" value="50">
-            <div class="suffix-wrap"><span>%</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field" data-exp6-pos-group hidden>
-        <label class="field-label" for="exp6-front-y">Y</label>
-        <div class="row">
-          <div class="input-wrap">
-            <input type="text" id="exp6-front-y" value="100">
-            <div class="suffix-wrap"><span>%</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field" data-exp6-pos-group hidden>
-        <span class="field-label">Next Section Position</span>
-      </div>
-
-      <div class="field" data-exp6-pos-x data-exp6-pos-group hidden>
-        <label class="field-label" for="exp6-next-x">X</label>
-        <div class="row">
-          <div class="input-wrap">
-            <input type="text" id="exp6-next-x" value="50">
-            <div class="suffix-wrap"><span>%</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field" data-exp6-pos-group hidden>
-        <label class="field-label" for="exp6-next-y">Y</label>
-        <div class="row">
-          <div class="input-wrap">
-            <input type="text" id="exp6-next-y" value="0">
+            <input type="text" id="exp6-image-opacity" value="80">
             <div class="suffix-wrap"><span>%</span></div>
           </div>
         </div>
@@ -6772,387 +6740,285 @@ window.initFlipCarousel = function initFlipCarousel(root, options = {}) {
   };
 };
 
+// Arc Scroll Transition — vanilla port of Osmo's resource
+// (https://www.osmo.supply/preview?resource=arc-scroll-transition).
+//
+// Sections scroll inside the preview. Each [data-arc-transition] holds a
+// square SVG anchored to the bottom (cover) or top (reveal) of its section;
+// a quadratic arc fills it as the section scrolls, bulging most at the middle
+// of the transition (depth * sin(progress * PI)). Wheel input is smoothed
+// (Lenis-like lerp) and progress trails scroll by `scrub` seconds
+// (ScrollTrigger scrub).
 window.initArcScrollTransition = function initArcScrollTransition(root, options = {}) {
-  const SECTION_COUNT = 4;
-  const IMAGE_TITLES = 'Arc\nScroll\nTransition';
-  const SOLID_TITLE = 'One System\nMany Possibilities';
-  const SOLID_COLOR = 'rgb(130, 127, 103)';
+  const VIEWBOX = 100;
+  const SVG_NS = 'http://www.w3.org/2000/svg';
 
-  let container = root.querySelector('[data-arc-scroll]');
-  if (!container) {
-    root.innerHTML = '';
-    const template = document.createElement('div');
-    template.innerHTML = (
-      '<div class="arc-scroll" data-arc-scroll>'
-      + '<svg class="arc-scroll__svg" aria-hidden="true" width="0" height="0">'
-      + '<defs><clipPath id="arc-scroll-clip" clipPathUnits="objectBoundingBox">'
-      + '<path data-arc-clip-path></path>'
-      + '</clipPath></defs></svg>'
-      + '<div class="arc-scroll__viewport">'
-      + '<div class="arc-scroll__track" data-arc-track></div>'
-      + '<div class="arc-scroll__layer arc-scroll__layer--overlay" data-arc-overlay>'
-      + '<div class="arc-scroll__overlay-inner" data-arc-overlay-inner></div>'
-      + '</div></div></div>'
-    );
-    container = template.firstElementChild;
-    root.appendChild(container);
-  }
+  const DEFAULTS = {
+    curves: [12, 10, 25, 5],
+    scrub: 0.3,
+    smoothing: 0.1,
+    headingSize: 96,
+    solidColor: '#cecece',
+    imageOpacity: 80,
+    bgImage1: 'Components/ArcScrollTransition/assets/bg-1.png',
+    bgImage2: 'Components/ArcScrollTransition/assets/bg-2.png',
+  };
 
-  const clipPathEl = container.querySelector('[data-arc-clip-path]');
-  const track = container.querySelector('[data-arc-track]');
-  const overlayLayer = container.querySelector('[data-arc-overlay]');
-  const overlayInner = container.querySelector('[data-arc-overlay-inner]');
+  // Mirrors the Osmo demo page. `transitions` index into config.curves.
+  const SECTIONS = [
+    { image: 1, title: 'Arc<br>Scroll<br>Transition', bottom: { mode: 'cover', curve: 0 } },
+    { solid: true, title: 'Also works as reveal instead of cover effect' },
+    {
+      image: 2,
+      title: 'Easily adapt how steep the curve is',
+      top: { mode: 'reveal', curve: 1 },
+      bottom: { mode: 'cover', curve: 2 },
+    },
+    { solid: true, title: 'One system, many possibilities' },
+    { image: 1, title: 'Arc<br>Scroll<br>Transition', top: { mode: 'reveal', curve: 3 } },
+  ];
 
-  if (!clipPathEl || !track || !overlayLayer || !overlayInner) {
-    throw new Error('initArcScrollTransition: missing required elements');
-  }
+  let config = normalize(options);
+  let instances = [];
+  let frameId = null;
+  let lastTime = 0;
+  let targetScroll = 0;
+  let wheelActive = false;
 
-  const clipId = `arc-scroll-clip-${Math.random().toString(36).slice(2, 9)}`;
-  const clipPathRoot = container.querySelector('#arc-scroll-clip') || container.querySelector('clipPath');
-  if (clipPathRoot) {
-    clipPathRoot.id = clipId;
-    overlayLayer.style.clipPath = `url(#${clipId})`;
-  }
+  const container = document.createElement('div');
+  container.className = 'arc-scroll';
+  container.setAttribute('data-arc-scroll', '');
+  const scroller = document.createElement('div');
+  scroller.className = 'arc-scroll__scroller';
+  container.appendChild(scroller);
+  root.replaceChildren(container);
 
-  let config = normalizeConfig(options);
-  let progress = clampProgress(options.progress ?? 0);
-  let scrollVelocity = 0;
-  let smoothedVelocity = 0;
-  let lastWheelTime = 0;
-  let animationFrameId = null;
-  let isDragging = false;
-  let dragStartY = 0;
-  let dragStartProgress = 0;
-  let activePointerId = null;
-  let viewportHeight = 0;
-
-  function normalizeConfig(raw) {
+  function normalize(raw) {
+    const curves = Array.isArray(raw.curves) ? raw.curves : DEFAULTS.curves;
     return {
-      sectionHeightVh: clampNumber(raw.sectionHeightVh ?? 150, 40, 300),
-      bgImageHeightPercent: clampNumber(raw.bgImageHeightPercent ?? 100, 20, 200),
-      positionMode: normalizeMode(raw.positionMode ?? 'burst-origin'),
-      frontX: clampNumber(raw.frontX ?? 50, 0, 100),
-      frontY: clampNumber(raw.frontY ?? 100, 0, 100),
-      nextX: clampNumber(raw.nextX ?? 50, 0, 100),
-      nextY: clampNumber(raw.nextY ?? 0, 0, 100),
-      burstOriginX: clampNumber(raw.burstOriginX ?? 50, 0, 100),
-      burstOriginY: clampNumber(raw.burstOriginY ?? 100, 0, 100),
-      burstSize: clampNumber(raw.burstSize ?? 100, 10, 200),
-      burstScale: clampNumber(raw.burstScale ?? 1, 0.1, 3),
-      bgImage1: raw.bgImage1 ?? 'Components/ArcScrollTransition/assets/bg-1.png',
-      bgImage2: raw.bgImage2 ?? 'Components/ArcScrollTransition/assets/bg-2.png',
-      velocityIntensity: clampNumber(raw.velocityIntensity ?? 1, 0, 3),
-      scrollSensitivity: clampNumber(raw.scrollSensitivity ?? 0.0009, 0.0002, 0.003),
+      curves: DEFAULTS.curves.map((fallback, i) => finite(curves[i], fallback)),
+      scrub: Math.max(0, finite(raw.scrub, DEFAULTS.scrub)),
+      smoothing: Math.min(1, Math.max(0.01, finite(raw.smoothing, DEFAULTS.smoothing))),
+      headingSize: Math.max(8, finite(raw.headingSize, DEFAULTS.headingSize)),
+      solidColor: raw.solidColor || DEFAULTS.solidColor,
+      imageOpacity: Math.min(100, Math.max(0, finite(raw.imageOpacity, DEFAULTS.imageOpacity))),
+      bgImage1: raw.bgImage1 || DEFAULTS.bgImage1,
+      bgImage2: raw.bgImage2 || DEFAULTS.bgImage2,
     };
   }
 
-  function normalizeMode(value) {
-    const mode = String(value).toLowerCase();
-    if (mode === 'peak-xy' || mode === 'seam-y') return mode;
-    return 'burst-origin';
+  function finite(value, fallback) {
+    const n = parseFloat(value);
+    return Number.isFinite(n) ? n : fallback;
   }
 
-  function clampNumber(value, min, max) {
-    const n = Number(value);
-    if (!Number.isFinite(n)) return min;
-    return Math.min(max, Math.max(min, n));
+  function round(value) {
+    return Math.round(value * 100) / 100;
   }
 
-  function clampProgress(value) {
-    let p = Number(value);
-    if (!Number.isFinite(p)) p = 0;
-    while (p < 0) p += SECTION_COUNT;
-    while (p >= SECTION_COUNT) p -= SECTION_COUNT;
-    return p;
-  }
+  function buildTransition(section, spec) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'arc-scroll__transition';
+    if (spec.mode === 'reveal') wrapper.classList.add('is--top');
+    wrapper.setAttribute('data-arc-transition', spec.mode);
 
-  function wrapProgress(value) {
-    let p = value;
-    while (p < 0) p += SECTION_COUNT;
-    while (p >= SECTION_COUNT) p -= SECTION_COUNT;
-    return p;
-  }
+    const svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${VIEWBOX} ${VIEWBOX}`);
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.setAttribute('aria-hidden', 'true');
+    const path = document.createElementNS(SVG_NS, 'path');
+    svg.appendChild(path);
+    wrapper.appendChild(svg);
+    section.appendChild(wrapper);
 
-  function lerp(a, b, t) {
-    return a + (b - a) * t;
-  }
-
-  function getSectionMeta(index) {
-    const i = ((index % SECTION_COUNT) + SECTION_COUNT) % SECTION_COUNT;
-    const isImage = i === 0 || i === 2;
     return {
-      index: i,
-      type: isImage ? 'image' : 'solid',
-      imageSrc: i === 0 ? config.bgImage1 : config.bgImage2,
-      title: isImage ? IMAGE_TITLES : SOLID_TITLE,
+      section,
+      path,
+      mode: spec.mode,
+      curveIndex: spec.curve,
+      depth: 0,
+      progress: -1,
+      shown: -1,
     };
   }
 
-  function getSectionPixelHeight() {
-    const measured = container.clientHeight || root.clientHeight || window.innerHeight;
-    viewportHeight = Math.max(measured, 1);
-    return (config.sectionHeightVh / 100) * viewportHeight;
-  }
+  function build() {
+    scroller.replaceChildren();
+    instances = [];
 
-  function buildSectionElement(meta) {
-    const section = document.createElement('div');
-    section.className = `arc-scroll__section arc-scroll__section--${meta.type}`;
-    section.dataset.sectionIndex = String(meta.index);
-    const sectionPx = getSectionPixelHeight();
-    section.style.height = `${sectionPx}px`;
+    SECTIONS.forEach((meta) => {
+      const section = document.createElement('section');
+      section.className = 'arc-scroll__section';
+      if (meta.solid) section.classList.add('is--solid');
 
-    if (meta.type === 'image') {
-      const media = document.createElement('div');
-      media.className = 'arc-scroll__media';
-      media.style.height = `${config.bgImageHeightPercent}%`;
+      if (meta.top) instances.push(buildTransition(section, meta.top));
 
-      const img = document.createElement('img');
-      img.src = meta.imageSrc;
-      img.alt = '';
-      img.draggable = false;
+      if (meta.image) {
+        const bg = document.createElement('div');
+        bg.className = 'arc-scroll__bg';
+        const img = document.createElement('img');
+        img.className = 'arc-scroll__bg-img';
+        img.alt = '';
+        img.draggable = false;
+        img.dataset.arcImage = String(meta.image);
+        bg.appendChild(img);
+        section.appendChild(bg);
+      }
 
-      const shade = document.createElement('div');
-      shade.className = 'arc-scroll__shade';
+      const content = document.createElement('div');
+      content.className = 'arc-scroll__content';
+      const heading = document.createElement('h2');
+      heading.className = 'arc-scroll__h';
+      heading.innerHTML = meta.title;
+      content.appendChild(heading);
+      section.appendChild(content);
 
-      media.appendChild(img);
-      media.appendChild(shade);
-      section.appendChild(media);
-    } else {
-      section.style.backgroundColor = SOLID_COLOR;
-    }
+      if (meta.bottom) instances.push(buildTransition(section, meta.bottom));
 
-    const title = document.createElement('h1');
-    title.className = 'arc-scroll__title';
-    title.textContent = meta.title;
-    section.appendChild(title);
-
-    return section;
-  }
-
-  function buildTrack() {
-    track.innerHTML = '';
-    for (let i = 0; i <= SECTION_COUNT; i += 1) {
-      track.appendChild(buildSectionElement(getSectionMeta(i)));
-    }
-  }
-
-  function getTransitionState() {
-    const baseIndex = Math.floor(progress) % SECTION_COUNT;
-    const overlayIndex = (baseIndex + 1) % SECTION_COUNT;
-    const t = progress - Math.floor(progress);
-    return { baseIndex, overlayIndex, t };
-  }
-
-  function getInterpolatedPoint(t) {
-    return {
-      x: lerp(config.frontX, config.nextX, t) / 100,
-      y: lerp(config.frontY, config.nextY, t) / 100,
-    };
-  }
-
-  function getVelocityBulge() {
-    const v = Math.abs(smoothedVelocity) * config.velocityIntensity;
-    return Math.min(0.45, v * 0.08);
-  }
-
-  function buildPeakClipPath(t, point, bulge) {
-    if (t <= 0.0001) return 'M 0 0 L 0 0 Z';
-    if (t >= 0.9999) return 'M 0 0 L 1 0 L 1 1 L 0 1 Z';
-
-    const peakX = config.positionMode === 'seam-y' ? 0.5 : point.x;
-    const seamY = 1 - t;
-    const peakY = Math.min(point.y, seamY - 0.02) - bulge;
-    const archDepth = Math.max(0.04, seamY - peakY);
-    const cp1x = Math.min(0.98, peakX + 0.356);
-    const cp2x = Math.max(0.02, peakX - 0.356);
-    const cpY = peakY + archDepth * 0.72;
-
-    return [
-      'M 0 1',
-      'L 1 1',
-      `L 1 ${seamY.toFixed(4)}`,
-      `C ${cp1x.toFixed(4)} ${cpY.toFixed(4)} ${(peakX + 0.02).toFixed(4)} ${peakY.toFixed(4)} ${peakX.toFixed(4)} ${peakY.toFixed(4)}`,
-      `C ${(peakX - 0.02).toFixed(4)} ${peakY.toFixed(4)} ${cp2x.toFixed(4)} ${cpY.toFixed(4)} 0 ${seamY.toFixed(4)}`,
-      'Z',
-    ].join(' ');
-  }
-
-  function buildBurstClipPath(t, bulge) {
-    if (t <= 0.0001) return 'M 0 0 L 0 0 Z';
-    if (t >= 0.9999) return 'M 0 0 L 1 0 L 1 1 L 0 1 Z';
-
-    const cx = config.burstOriginX / 100;
-    const cy = config.burstOriginY / 100;
-    const sizeNorm = (config.burstSize / 100) * config.burstScale;
-    const radius = Math.min(2.2, t * sizeNorm * 1.35 + bulge * config.burstScale);
-    const steps = 40;
-    const points = [];
-
-    for (let i = 0; i <= steps; i += 1) {
-      const angle = Math.PI + (i / steps) * Math.PI;
-      const x = cx + Math.cos(angle) * radius;
-      const y = cy + Math.sin(angle) * radius;
-      points.push(`${x.toFixed(4)} ${y.toFixed(4)}`);
-    }
-
-    return `M 0 1 L ${points.join(' L ')} L 1 1 Z`;
-  }
-
-  function updateClipPath(t, point, bulge) {
-    let d = '';
-
-    if (config.positionMode === 'burst-origin') {
-      d = buildBurstClipPath(t, bulge);
-    } else {
-      d = buildPeakClipPath(t, point, bulge);
-    }
-
-    clipPathEl.setAttribute('d', d);
-  }
-
-  function mountOverlaySection(meta) {
-    overlayInner.innerHTML = '';
-    overlayInner.appendChild(buildSectionElement(meta));
-  }
-
-  function render() {
-    const sectionPx = getSectionPixelHeight();
-
-    track.style.transform = `translate3d(0, ${(-progress * sectionPx).toFixed(2)}px, 0)`;
-
-    const { baseIndex, overlayIndex, t } = getTransitionState();
-    const point = getInterpolatedPoint(t);
-    const bulge = getVelocityBulge();
-
-    if (t > 0.0001 && t < 0.9999) {
-      mountOverlaySection(getSectionMeta(overlayIndex));
-      const nextSectionTop = ((baseIndex + 1) * sectionPx) - (progress * sectionPx);
-      overlayInner.style.transform = `translate3d(0, ${nextSectionTop.toFixed(2)}px, 0)`;
-      overlayLayer.style.visibility = 'visible';
-      updateClipPath(t, point, bulge);
-    } else {
-      overlayLayer.style.visibility = 'hidden';
-      clipPathEl.setAttribute('d', t >= 0.9999 ? 'M 0 0 L 1 0 L 1 1 L 0 1 Z' : 'M 0 0 L 0 0 Z');
-    }
-  }
-
-  function tick(now) {
-    tick.lastNow = now;
-
-    smoothedVelocity = lerp(smoothedVelocity, scrollVelocity, 0.18);
-    scrollVelocity *= 0.9;
-
-    if (Math.abs(smoothedVelocity) > 0.0001 || Math.abs(scrollVelocity) > 0.0001) {
-      render();
-    }
-
-    animationFrameId = requestAnimationFrame(tick);
-  }
-
-  function addProgress(delta, velocitySample) {
-    progress = wrapProgress(progress + delta);
-    scrollVelocity = velocitySample;
-    render();
-  }
-
-  function onWheel(event) {
-    event.preventDefault();
-    const now = performance.now();
-    const dt = Math.max(now - lastWheelTime, 1);
-    lastWheelTime = now;
-
-    const delta = event.deltaY * config.scrollSensitivity;
-    const velocitySample = (event.deltaY / dt) * config.scrollSensitivity * 16;
-    addProgress(delta, velocitySample);
-  }
-
-  function onPointerDown(event) {
-    if (event.pointerType === 'mouse' && event.button !== 0) return;
-    isDragging = true;
-    activePointerId = event.pointerId;
-    dragStartY = event.clientY;
-    dragStartProgress = progress;
-    container.setPointerCapture(event.pointerId);
-  }
-
-  function onPointerMove(event) {
-    if (!isDragging || event.pointerId !== activePointerId) return;
-    const deltaY = event.clientY - dragStartY;
-    const sectionPx = getSectionPixelHeight();
-    const delta = (-deltaY / Math.max(sectionPx, 1)) * (config.scrollSensitivity / 0.0009) * 0.25;
-    const velocitySample = delta * 0.06;
-    progress = wrapProgress(dragStartProgress + delta);
-    scrollVelocity = velocitySample;
-    render();
-  }
-
-  function onPointerUp(event) {
-    if (event.pointerId !== activePointerId) return;
-    isDragging = false;
-    activePointerId = null;
-    try {
-      container.releasePointerCapture(event.pointerId);
-    } catch {
-      // ignore
-    }
-  }
-
-  function bindEvents() {
-    container.addEventListener('wheel', onWheel, { passive: false });
-    container.addEventListener('pointerdown', onPointerDown);
-    container.addEventListener('pointermove', onPointerMove);
-    container.addEventListener('pointerup', onPointerUp);
-    container.addEventListener('pointercancel', onPointerUp);
-  }
-
-  function unbindEvents() {
-    container.removeEventListener('wheel', onWheel);
-    container.removeEventListener('pointerdown', onPointerDown);
-    container.removeEventListener('pointermove', onPointerMove);
-    container.removeEventListener('pointerup', onPointerUp);
-    container.removeEventListener('pointercancel', onPointerUp);
-  }
-
-  function apply(nextOptions = {}) {
-    config = normalizeConfig({ ...config, ...nextOptions });
-    if (nextOptions.progress !== undefined) {
-      progress = clampProgress(nextOptions.progress);
-    }
-    scheduleRender();
-  }
-
-  function destroy() {
-    if (animationFrameId) cancelAnimationFrame(animationFrameId);
-    resizeObserver?.disconnect();
-    unbindEvents();
-  }
-
-  function scheduleRender() {
-    requestAnimationFrame(() => {
-      buildTrack();
-      render();
+      scroller.appendChild(section);
     });
   }
 
-  const resizeObserver = typeof ResizeObserver !== 'undefined'
-    ? new ResizeObserver(() => scheduleRender())
-    : null;
-  resizeObserver?.observe(container);
+  function applyStyles() {
+    container.style.setProperty('--arc-heading-size', `${config.headingSize}px`);
+    container.style.setProperty('--arc-solid-color', config.solidColor);
+    container.style.setProperty('--arc-image-opacity', String(config.imageOpacity / 100));
+    scroller.querySelectorAll('[data-arc-image]').forEach((img) => {
+      const src = img.dataset.arcImage === '2' ? config.bgImage2 : config.bgImage1;
+      if (img.getAttribute('src') !== src) img.src = src;
+    });
+  }
 
-  bindEvents();
-  scheduleRender();
-  animationFrameId = requestAnimationFrame(tick);
+  function measure() {
+    instances.forEach((instance) => {
+      const { offsetWidth: w, offsetHeight: h } = instance.section;
+      const aspect = h ? w / h : 1;
+      instance.depth = config.curves[instance.curveIndex] * aspect;
+      instance.shown = -1;
+    });
+  }
+
+  // ScrollTrigger ranges, relative to the scroller:
+  //   cover:  "bottom bottom" → "bottom top"
+  //   reveal: "top bottom"    → "top top"
+  function scrollProgress(instance) {
+    const vh = scroller.clientHeight || 1;
+    const { offsetTop, offsetHeight } = instance.section;
+    const anchor = instance.mode === 'cover' ? offsetTop + offsetHeight : offsetTop;
+    const start = anchor - vh;
+    return Math.min(1, Math.max(0, (scroller.scrollTop - start) / vh));
+  }
+
+  function draw(instance, progress) {
+    const fill = instance.mode === 'cover' ? progress : 1 - progress;
+    const curve = instance.depth * Math.sin(fill * Math.PI);
+
+    if (instance.mode === 'cover') {
+      const edge = round(VIEWBOX - VIEWBOX * fill);
+      const control = round(edge - curve * 2);
+      instance.path.setAttribute('d', `M0 ${VIEWBOX} L0 ${edge} Q${VIEWBOX / 2} ${control} ${VIEWBOX} ${edge} L${VIEWBOX} ${VIEWBOX} Z`);
+      return;
+    }
+
+    const edge = round(VIEWBOX * fill);
+    const control = round(edge + curve * 2);
+    instance.path.setAttribute('d', `M0 0 L0 ${edge} Q${VIEWBOX / 2} ${control} ${VIEWBOX} ${edge} L${VIEWBOX} 0 Z`);
+  }
+
+  function maxScroll() {
+    return Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+  }
+
+  function tick(now) {
+    frameId = null;
+    const dt = lastTime ? Math.min(0.1, (now - lastTime) / 1000) : 1 / 60;
+    lastTime = now;
+    let busy = false;
+
+    if (wheelActive) {
+      // Lenis-style lerp, normalised to 60fps.
+      const k = 1 - Math.pow(1 - config.smoothing, dt * 60);
+      const next = scroller.scrollTop + (targetScroll - scroller.scrollTop) * k;
+      if (Math.abs(targetScroll - next) < 0.5) {
+        scroller.scrollTop = targetScroll;
+        wheelActive = false;
+      } else {
+        scroller.scrollTop = next;
+        busy = true;
+      }
+    }
+
+    // Scrub: progress eases toward the scroll position over ~`scrub` seconds.
+    const k = config.scrub > 0 ? 1 - Math.exp(-dt / (config.scrub / 3)) : 1;
+    instances.forEach((instance) => {
+      const target = scrollProgress(instance);
+      if (instance.progress < 0) instance.progress = target;
+      instance.progress += (target - instance.progress) * k;
+      if (Math.abs(target - instance.progress) < 0.0005) instance.progress = target;
+      else busy = true;
+
+      if (instance.shown !== instance.progress) {
+        instance.shown = instance.progress;
+        draw(instance, instance.progress);
+      }
+    });
+
+    if (busy) schedule();
+    else lastTime = 0;
+  }
+
+  function schedule() {
+    if (frameId == null) frameId = requestAnimationFrame(tick);
+  }
+
+  function onWheel(event) {
+    if (event.ctrlKey) return;
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? scroller.clientHeight : 1;
+    if (!wheelActive) targetScroll = scroller.scrollTop;
+    targetScroll = Math.min(maxScroll(), Math.max(0, targetScroll + event.deltaY * unit));
+    wheelActive = true;
+    schedule();
+  }
+
+  function onScroll() {
+    // Native scroll (touch, scrollbar, keyboard) takes over from the wheel lerp.
+    if (!wheelActive) targetScroll = scroller.scrollTop;
+    schedule();
+  }
+
+  const resizeObserver = new ResizeObserver(() => {
+    measure();
+    schedule();
+  });
+
+  scroller.addEventListener('wheel', onWheel, { passive: false });
+  scroller.addEventListener('scroll', onScroll, { passive: true });
+  resizeObserver.observe(scroller);
+
+  build();
+  applyStyles();
+  measure();
+  schedule();
 
   return {
     element: container,
-    apply,
-    destroy,
-    getProgress: () => progress,
-    setProgress: (value) => {
-      progress = clampProgress(value);
-      render();
+    apply(nextOptions = {}) {
+      config = normalize({ ...config, ...nextOptions });
+      applyStyles();
+      measure();
+      schedule();
     },
-    getConfig: () => ({ ...config }),
+    getConfig() {
+      return { ...config, curves: [...config.curves] };
+    },
+    destroy() {
+      if (frameId != null) cancelAnimationFrame(frameId);
+      resizeObserver.disconnect();
+      scroller.removeEventListener('wheel', onWheel);
+      scroller.removeEventListener('scroll', onScroll);
+      container.remove();
+    },
   };
 };
 
@@ -11453,10 +11319,414 @@ window.initExperiment5 = function initExperiment5() {
   preview.dataset.experimentReady = '1';
 };
 
+window.ArcScrollTransitionSnippet = {
+  css: `.cp-preview[data-experiment-preview="6"] {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0;
+  background: #000;
+}
+
+.cp-preview[data-experiment-preview="6"] .arc-scroll {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+}
+
+.arc-scroll {
+  --arc-heading-size: 96px;
+  --arc-solid-color: #cecece;
+  --arc-image-opacity: 0.8;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  container-type: size;
+  background: #000;
+}
+
+.arc-scroll__scroller {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.arc-scroll__scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.arc-scroll__section {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100cqh;
+  overflow: hidden;
+  color: #f2f2f2;
+}
+
+.arc-scroll__section.is--solid {
+  color: #0a0a0a;
+  background-color: var(--arc-solid-color);
+}
+
+.arc-scroll__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: #000;
+}
+
+.arc-scroll__bg-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: var(--arc-image-opacity);
+  user-select: none;
+}
+
+.arc-scroll__content {
+  position: relative;
+  z-index: 1;
+}
+
+.arc-scroll__h {
+  max-width: 8em;
+  margin: 0;
+  font-family: "Haffer XH", Inter, Arial, sans-serif;
+  font-size: var(--arc-heading-size);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+
+/* Osmo drops the heading to 3.5em (from 6em) below 768px. */
+@container (max-width: 767px) {
+  .arc-scroll__h {
+    font-size: calc(var(--arc-heading-size) * 3.5 / 6);
+  }
+}
+
+.arc-scroll__transition {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 10;
+  pointer-events: none;
+  color: var(--arc-solid-color);
+}
+
+.arc-scroll__transition.is--top {
+  inset: 0 0 auto;
+}
+
+.arc-scroll__transition svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.arc-scroll__transition path {
+  fill: currentColor;
+}
+`,
+  js: `// Arc Scroll Transition — vanilla port of Osmo's resource
+// (https://www.osmo.supply/preview?resource=arc-scroll-transition).
+//
+// Sections scroll inside the preview. Each [data-arc-transition] holds a
+// square SVG anchored to the bottom (cover) or top (reveal) of its section;
+// a quadratic arc fills it as the section scrolls, bulging most at the middle
+// of the transition (depth * sin(progress * PI)). Wheel input is smoothed
+// (Lenis-like lerp) and progress trails scroll by \`scrub\` seconds
+// (ScrollTrigger scrub).
+window.initArcScrollTransition = function initArcScrollTransition(root, options = {}) {
+  const VIEWBOX = 100;
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+
+  const DEFAULTS = {
+    curves: [12, 10, 25, 5],
+    scrub: 0.3,
+    smoothing: 0.1,
+    headingSize: 96,
+    solidColor: '#cecece',
+    imageOpacity: 80,
+    bgImage1: 'Components/ArcScrollTransition/assets/bg-1.png',
+    bgImage2: 'Components/ArcScrollTransition/assets/bg-2.png',
+  };
+
+  // Mirrors the Osmo demo page. \`transitions\` index into config.curves.
+  const SECTIONS = [
+    { image: 1, title: 'Arc<br>Scroll<br>Transition', bottom: { mode: 'cover', curve: 0 } },
+    { solid: true, title: 'Also works as reveal instead of cover effect' },
+    {
+      image: 2,
+      title: 'Easily adapt how steep the curve is',
+      top: { mode: 'reveal', curve: 1 },
+      bottom: { mode: 'cover', curve: 2 },
+    },
+    { solid: true, title: 'One system, many possibilities' },
+    { image: 1, title: 'Arc<br>Scroll<br>Transition', top: { mode: 'reveal', curve: 3 } },
+  ];
+
+  let config = normalize(options);
+  let instances = [];
+  let frameId = null;
+  let lastTime = 0;
+  let targetScroll = 0;
+  let wheelActive = false;
+
+  const container = document.createElement('div');
+  container.className = 'arc-scroll';
+  container.setAttribute('data-arc-scroll', '');
+  const scroller = document.createElement('div');
+  scroller.className = 'arc-scroll__scroller';
+  container.appendChild(scroller);
+  root.replaceChildren(container);
+
+  function normalize(raw) {
+    const curves = Array.isArray(raw.curves) ? raw.curves : DEFAULTS.curves;
+    return {
+      curves: DEFAULTS.curves.map((fallback, i) => finite(curves[i], fallback)),
+      scrub: Math.max(0, finite(raw.scrub, DEFAULTS.scrub)),
+      smoothing: Math.min(1, Math.max(0.01, finite(raw.smoothing, DEFAULTS.smoothing))),
+      headingSize: Math.max(8, finite(raw.headingSize, DEFAULTS.headingSize)),
+      solidColor: raw.solidColor || DEFAULTS.solidColor,
+      imageOpacity: Math.min(100, Math.max(0, finite(raw.imageOpacity, DEFAULTS.imageOpacity))),
+      bgImage1: raw.bgImage1 || DEFAULTS.bgImage1,
+      bgImage2: raw.bgImage2 || DEFAULTS.bgImage2,
+    };
+  }
+
+  function finite(value, fallback) {
+    const n = parseFloat(value);
+    return Number.isFinite(n) ? n : fallback;
+  }
+
+  function round(value) {
+    return Math.round(value * 100) / 100;
+  }
+
+  function buildTransition(section, spec) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'arc-scroll__transition';
+    if (spec.mode === 'reveal') wrapper.classList.add('is--top');
+    wrapper.setAttribute('data-arc-transition', spec.mode);
+
+    const svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('viewBox', \`0 0 \${VIEWBOX} \${VIEWBOX}\`);
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.setAttribute('aria-hidden', 'true');
+    const path = document.createElementNS(SVG_NS, 'path');
+    svg.appendChild(path);
+    wrapper.appendChild(svg);
+    section.appendChild(wrapper);
+
+    return {
+      section,
+      path,
+      mode: spec.mode,
+      curveIndex: spec.curve,
+      depth: 0,
+      progress: -1,
+      shown: -1,
+    };
+  }
+
+  function build() {
+    scroller.replaceChildren();
+    instances = [];
+
+    SECTIONS.forEach((meta) => {
+      const section = document.createElement('section');
+      section.className = 'arc-scroll__section';
+      if (meta.solid) section.classList.add('is--solid');
+
+      if (meta.top) instances.push(buildTransition(section, meta.top));
+
+      if (meta.image) {
+        const bg = document.createElement('div');
+        bg.className = 'arc-scroll__bg';
+        const img = document.createElement('img');
+        img.className = 'arc-scroll__bg-img';
+        img.alt = '';
+        img.draggable = false;
+        img.dataset.arcImage = String(meta.image);
+        bg.appendChild(img);
+        section.appendChild(bg);
+      }
+
+      const content = document.createElement('div');
+      content.className = 'arc-scroll__content';
+      const heading = document.createElement('h2');
+      heading.className = 'arc-scroll__h';
+      heading.innerHTML = meta.title;
+      content.appendChild(heading);
+      section.appendChild(content);
+
+      if (meta.bottom) instances.push(buildTransition(section, meta.bottom));
+
+      scroller.appendChild(section);
+    });
+  }
+
+  function applyStyles() {
+    container.style.setProperty('--arc-heading-size', \`\${config.headingSize}px\`);
+    container.style.setProperty('--arc-solid-color', config.solidColor);
+    container.style.setProperty('--arc-image-opacity', String(config.imageOpacity / 100));
+    scroller.querySelectorAll('[data-arc-image]').forEach((img) => {
+      const src = img.dataset.arcImage === '2' ? config.bgImage2 : config.bgImage1;
+      if (img.getAttribute('src') !== src) img.src = src;
+    });
+  }
+
+  function measure() {
+    instances.forEach((instance) => {
+      const { offsetWidth: w, offsetHeight: h } = instance.section;
+      const aspect = h ? w / h : 1;
+      instance.depth = config.curves[instance.curveIndex] * aspect;
+      instance.shown = -1;
+    });
+  }
+
+  // ScrollTrigger ranges, relative to the scroller:
+  //   cover:  "bottom bottom" → "bottom top"
+  //   reveal: "top bottom"    → "top top"
+  function scrollProgress(instance) {
+    const vh = scroller.clientHeight || 1;
+    const { offsetTop, offsetHeight } = instance.section;
+    const anchor = instance.mode === 'cover' ? offsetTop + offsetHeight : offsetTop;
+    const start = anchor - vh;
+    return Math.min(1, Math.max(0, (scroller.scrollTop - start) / vh));
+  }
+
+  function draw(instance, progress) {
+    const fill = instance.mode === 'cover' ? progress : 1 - progress;
+    const curve = instance.depth * Math.sin(fill * Math.PI);
+
+    if (instance.mode === 'cover') {
+      const edge = round(VIEWBOX - VIEWBOX * fill);
+      const control = round(edge - curve * 2);
+      instance.path.setAttribute('d', \`M0 \${VIEWBOX} L0 \${edge} Q\${VIEWBOX / 2} \${control} \${VIEWBOX} \${edge} L\${VIEWBOX} \${VIEWBOX} Z\`);
+      return;
+    }
+
+    const edge = round(VIEWBOX * fill);
+    const control = round(edge + curve * 2);
+    instance.path.setAttribute('d', \`M0 0 L0 \${edge} Q\${VIEWBOX / 2} \${control} \${VIEWBOX} \${edge} L\${VIEWBOX} 0 Z\`);
+  }
+
+  function maxScroll() {
+    return Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+  }
+
+  function tick(now) {
+    frameId = null;
+    const dt = lastTime ? Math.min(0.1, (now - lastTime) / 1000) : 1 / 60;
+    lastTime = now;
+    let busy = false;
+
+    if (wheelActive) {
+      // Lenis-style lerp, normalised to 60fps.
+      const k = 1 - Math.pow(1 - config.smoothing, dt * 60);
+      const next = scroller.scrollTop + (targetScroll - scroller.scrollTop) * k;
+      if (Math.abs(targetScroll - next) < 0.5) {
+        scroller.scrollTop = targetScroll;
+        wheelActive = false;
+      } else {
+        scroller.scrollTop = next;
+        busy = true;
+      }
+    }
+
+    // Scrub: progress eases toward the scroll position over ~\`scrub\` seconds.
+    const k = config.scrub > 0 ? 1 - Math.exp(-dt / (config.scrub / 3)) : 1;
+    instances.forEach((instance) => {
+      const target = scrollProgress(instance);
+      if (instance.progress < 0) instance.progress = target;
+      instance.progress += (target - instance.progress) * k;
+      if (Math.abs(target - instance.progress) < 0.0005) instance.progress = target;
+      else busy = true;
+
+      if (instance.shown !== instance.progress) {
+        instance.shown = instance.progress;
+        draw(instance, instance.progress);
+      }
+    });
+
+    if (busy) schedule();
+    else lastTime = 0;
+  }
+
+  function schedule() {
+    if (frameId == null) frameId = requestAnimationFrame(tick);
+  }
+
+  function onWheel(event) {
+    if (event.ctrlKey) return;
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? scroller.clientHeight : 1;
+    if (!wheelActive) targetScroll = scroller.scrollTop;
+    targetScroll = Math.min(maxScroll(), Math.max(0, targetScroll + event.deltaY * unit));
+    wheelActive = true;
+    schedule();
+  }
+
+  function onScroll() {
+    // Native scroll (touch, scrollbar, keyboard) takes over from the wheel lerp.
+    if (!wheelActive) targetScroll = scroller.scrollTop;
+    schedule();
+  }
+
+  const resizeObserver = new ResizeObserver(() => {
+    measure();
+    schedule();
+  });
+
+  scroller.addEventListener('wheel', onWheel, { passive: false });
+  scroller.addEventListener('scroll', onScroll, { passive: true });
+  resizeObserver.observe(scroller);
+
+  build();
+  applyStyles();
+  measure();
+  schedule();
+
+  return {
+    element: container,
+    apply(nextOptions = {}) {
+      config = normalize({ ...config, ...nextOptions });
+      applyStyles();
+      measure();
+      schedule();
+    },
+    getConfig() {
+      return { ...config, curves: [...config.curves] };
+    },
+    destroy() {
+      if (frameId != null) cancelAnimationFrame(frameId);
+      resizeObserver.disconnect();
+      scroller.removeEventListener('wheel', onWheel);
+      scroller.removeEventListener('scroll', onScroll);
+      container.remove();
+    },
+  };
+};
+`,
+};
+
 window.initExperiment6 = function initExperiment6() {
   const preview = document.querySelector('[data-experiment-preview="6"]');
   const panelRoot = document.querySelector('[data-experiment-panel="6"]');
-  if (!preview || !panelRoot) return;
+  if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
 
@@ -11465,192 +11735,101 @@ window.initExperiment6 = function initExperiment6() {
     return;
   }
 
+  const DEFAULT_CURVES = [12, 10, 25, 5];
+
   const controls = {
-    sectionHeight: document.getElementById('exp6-section-height'),
-    bgImageHeight: document.getElementById('exp6-bg-image-height'),
-    frontX: document.getElementById('exp6-front-x'),
-    frontY: document.getElementById('exp6-front-y'),
-    nextX: document.getElementById('exp6-next-x'),
-    nextY: document.getElementById('exp6-next-y'),
-    burstOriginX: document.getElementById('exp6-burst-origin-x'),
-    burstOriginY: document.getElementById('exp6-burst-origin-y'),
-    burstSize: document.getElementById('exp6-burst-size'),
-    burstScale: document.getElementById('exp6-burst-scale'),
+    curves: [1, 2, 3, 4].map((n) => document.getElementById(`exp6-curve-${n}`)),
+    scrub: document.getElementById('exp6-scrub'),
+    smoothing: document.getElementById('exp6-smoothing'),
+    headingSize: document.getElementById('exp6-heading-size'),
+    imageOpacity: document.getElementById('exp6-image-opacity'),
   };
 
-  let arcScroll = preview.__arcScrollController;
-  let positionModeSelector = preview.__exp6PositionMode;
-  let snippet = preview.__exp6Snippet;
+  const numericInputs = [
+    ...controls.curves,
+    controls.scrub,
+    controls.smoothing,
+    controls.headingSize,
+    controls.imageOpacity,
+  ];
 
-  if (!arcScroll) {
-    arcScroll = window.initArcScrollTransition(preview, {
-      sectionHeightVh: 150,
-      bgImageHeightPercent: 100,
-      positionMode: 'burst-origin',
-      frontX: 50,
-      frontY: 100,
-      nextX: 50,
-      nextY: 0,
-      burstOriginX: 50,
-      burstOriginY: 100,
-      burstSize: 100,
-      burstScale: 1,
-    });
-    preview.__arcScrollController = arcScroll;
-  }
+  const arcScroll = window.initArcScrollTransition(preview, {});
 
-  if (!positionModeSelector) {
-    const modeRoot = document.getElementById('exp6-position-mode-root');
-    if (!modeRoot) {
-      console.error('Experiment 6: missing #exp6-position-mode-root');
-      return;
-    }
+  const solidColor = window.initColorInput(document.getElementById('exp6-solid-color-root'), {
+    onChange: applyAll,
+  });
 
-    positionModeSelector = window.initOptionSelector(modeRoot, {
-      value: 'burst-origin',
-      options: [
-        { value: 'peak-xy', label: 'Peak X/Y' },
-        { value: 'seam-y', label: 'Seam Y' },
-        { value: 'burst-origin', label: 'Burst Origin' },
-      ],
-      onChange: () => {
-        updatePanelVisibility();
-        applyAll();
-      },
-    });
-    preview.__exp6PositionMode = positionModeSelector;
-  }
+  const snippet = window.initSnippetOutput(document.getElementById('exp6-snippet-root'), {
+    filename: 'experiment-6.html',
+    getContent: generateSnippet,
+    updateOnInit: false,
+  });
 
-  if (!snippet) {
-    const snippetRoot = document.getElementById('exp6-snippet-root');
-    if (!snippetRoot) {
-      console.error('Experiment 6: missing #exp6-snippet-root');
-      return;
-    }
+  utils.bindInputWrapInputs(panelRoot);
 
-    snippet = window.initSnippetOutput(snippetRoot, {
-      filename: 'experiment-6.html',
-      getContent: generateSnippet,
-      updateOnInit: true,
-    });
-    preview.__exp6Snippet = snippet;
-  }
-
-  if (preview.dataset.experimentReady !== '1') {
-    utils.bindInputWrapInputs(panelRoot);
-
-    Object.values(controls).forEach((input) => {
-      if (!(input instanceof HTMLInputElement)) return;
-      input.addEventListener('input', applyAll);
-    });
-
-    Object.values(controls).forEach((input) => {
-      utils.bindNumericArrowKey(input, applyAll);
-    });
-
-    preview.dataset.experimentReady = '1';
-  }
-
-  function controlValue(input, fallback) {
-    if (!(input instanceof HTMLInputElement)) return String(fallback);
-    return input.value;
-  }
-
-  function clampPercent(value, fallback) {
-    return Math.min(100, Math.max(0, utils.parsePx(value, fallback)));
-  }
+  numericInputs.forEach((input) => {
+    input.addEventListener('input', applyAll);
+    utils.bindNumericArrowKey(input, applyAll);
+  });
+  utils.bindNumericArrowKey(solidColor.opacityInput, applyAll, { isOpacity: true });
 
   function getConfig() {
     return {
-      sectionHeightVh: utils.parsePx(controlValue(controls.sectionHeight, 150), 150),
-      bgImageHeightPercent: utils.parsePx(controlValue(controls.bgImageHeight, 100), 100),
-      positionMode: positionModeSelector.getValue(),
-      frontX: clampPercent(controlValue(controls.frontX, 50), 50),
-      frontY: clampPercent(controlValue(controls.frontY, 100), 100),
-      nextX: clampPercent(controlValue(controls.nextX, 50), 50),
-      nextY: clampPercent(controlValue(controls.nextY, 0), 0),
-      burstOriginX: clampPercent(controlValue(controls.burstOriginX, 50), 50),
-      burstOriginY: clampPercent(controlValue(controls.burstOriginY, 100), 100),
-      burstSize: Math.max(10, utils.parsePx(controlValue(controls.burstSize, 100), 100)),
-      burstScale: Math.max(0.1, parseFloat(controlValue(controls.burstScale, 1)) || 1),
+      curves: controls.curves.map((input, i) => utils.parsePx(input.value, DEFAULT_CURVES[i])),
+      scrub: Math.max(0, utils.parsePx(controls.scrub.value, 0.3)),
+      smoothing: Math.min(1, Math.max(0.01, utils.parsePx(controls.smoothing.value, 0.1))),
+      headingSize: Math.max(8, utils.parsePx(controls.headingSize.value, 96)),
+      solidColor: solidColor.getColor(),
+      imageOpacity: Math.min(100, Math.max(0, utils.parsePx(controls.imageOpacity.value, 80))),
     };
-  }
-
-  function updatePanelVisibility() {
-    const mode = positionModeSelector.getValue();
-    const isBurst = mode === 'burst-origin';
-    const hideX = mode === 'seam-y';
-
-    panelRoot.querySelectorAll('[data-exp6-pos-group]').forEach((node) => {
-      node.hidden = isBurst;
-    });
-
-    panelRoot.querySelectorAll('[data-exp6-burst-group]').forEach((node) => {
-      node.hidden = !isBurst;
-    });
-
-    panelRoot.querySelectorAll('[data-exp6-pos-x]').forEach((node) => {
-      node.hidden = isBurst || hideX;
-    });
   }
 
   function applyAll() {
     arcScroll.apply(getConfig());
-    updatePanelVisibility();
     snippet.update();
-    requestAnimationFrame(() => arcScroll.apply(getConfig()));
   }
 
   function collectSettings() {
     return {
-      sectionHeight: controlValue(controls.sectionHeight, 150),
-      bgImageHeight: controlValue(controls.bgImageHeight, 100),
-      positionMode: positionModeSelector.getValue(),
-      frontX: controlValue(controls.frontX, 50),
-      frontY: controlValue(controls.frontY, 100),
-      nextX: controlValue(controls.nextX, 50),
-      nextY: controlValue(controls.nextY, 0),
-      burstOriginX: controlValue(controls.burstOriginX, 50),
-      burstOriginY: controlValue(controls.burstOriginY, 100),
-      burstSize: controlValue(controls.burstSize, 100),
-      burstScale: controlValue(controls.burstScale, 1),
+      curves: controls.curves.map((input) => input.value),
+      scrub: controls.scrub.value,
+      smoothing: controls.smoothing.value,
+      headingSize: controls.headingSize.value,
+      imageOpacity: controls.imageOpacity.value,
+      solidHex: solidColor.hexInput.value,
+      solidOpacity: solidColor.opacityInput.value,
     };
   }
 
   function applySettings(data) {
     if (!data) return;
 
-    if (data.sectionHeight != null && controls.sectionHeight) {
-      controls.sectionHeight.value = data.sectionHeight;
+    if (Array.isArray(data.curves)) {
+      data.curves.forEach((value, i) => {
+        if (value != null && controls.curves[i]) controls.curves[i].value = value;
+      });
     }
-    if (data.bgImageHeight != null && controls.bgImageHeight) {
-      controls.bgImageHeight.value = data.bgImageHeight;
-    }
-    if (data.positionMode != null) positionModeSelector.setValue(data.positionMode, false);
-    if (data.frontX != null && controls.frontX) controls.frontX.value = data.frontX;
-    if (data.frontY != null && controls.frontY) controls.frontY.value = data.frontY;
-    if (data.nextX != null && controls.nextX) controls.nextX.value = data.nextX;
-    if (data.nextY != null && controls.nextY) controls.nextY.value = data.nextY;
-    if (data.burstOriginX != null && controls.burstOriginX) {
-      controls.burstOriginX.value = data.burstOriginX;
-    }
-    if (data.burstOriginY != null && controls.burstOriginY) {
-      controls.burstOriginY.value = data.burstOriginY;
-    }
-    if (data.burstSize != null && controls.burstSize) controls.burstSize.value = data.burstSize;
-    if (data.burstScale != null && controls.burstScale) controls.burstScale.value = data.burstScale;
-
-    applyAll();
+    if (data.scrub != null) controls.scrub.value = data.scrub;
+    if (data.smoothing != null) controls.smoothing.value = data.smoothing;
+    if (data.headingSize != null) controls.headingSize.value = data.headingSize;
+    if (data.imageOpacity != null) controls.imageOpacity.value = data.imageOpacity;
+    if (data.solidHex != null) solidColor.hexInput.value = data.solidHex;
+    if (data.solidOpacity != null) solidColor.opacityInput.value = data.solidOpacity;
+    solidColor.updateUI(false);
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
   window.ExperimentSettings['6'] = {
     collect: collectSettings,
-    apply: applySettings,
+    apply(data) {
+      applySettings(data);
+      applyAll();
+    },
   };
 
   function generateSnippet() {
     const config = getConfig();
+    const embed = window.ArcScrollTransitionSnippet || { css: '', js: '' };
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -11658,33 +11837,29 @@ window.initExperiment6 = function initExperiment6() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Arc Scroll Transition</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Display:wght@100..900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="Components/ArcScrollTransition/component.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
-    html, body { margin: 0; height: 100%; overflow: hidden; }
-    .arc-scroll-root { width: 100vw; height: 100vh; }
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #000; }
+    .arc-scroll-root { width: 100vw; height: 100vh; height: 100svh; }
+
+${embed.css}
   </style>
 </head>
 <body>
   <div class="arc-scroll-root"></div>
 
-  <script src="Components/ArcScrollTransition/component.js"><\/script>
   <script>
-    initArcScrollTransition(document.querySelector('.arc-scroll-root'), {
-      sectionHeightVh: ${config.sectionHeightVh},
-      bgImageHeightPercent: ${config.bgImageHeightPercent},
-      positionMode: ${JSON.stringify(config.positionMode)},
-      frontX: ${config.frontX},
-      frontY: ${config.frontY},
-      nextX: ${config.nextX},
-      nextY: ${config.nextY},
-      burstOriginX: ${config.burstOriginX},
-      burstOriginY: ${config.burstOriginY},
-      burstSize: ${config.burstSize},
-      burstScale: ${config.burstScale},
+${embed.js}
+    // Image paths are relative to this file; point them at your own images.
+    window.initArcScrollTransition(document.querySelector('.arc-scroll-root'), {
+      curves: ${JSON.stringify(config.curves)},
+      scrub: ${config.scrub},
+      smoothing: ${config.smoothing},
+      headingSize: ${config.headingSize},
+      solidColor: ${JSON.stringify(config.solidColor)},
+      imageOpacity: ${config.imageOpacity},
+      bgImage1: 'Components/ArcScrollTransition/assets/bg-1.png',
+      bgImage2: 'Components/ArcScrollTransition/assets/bg-2.png',
     });
   <\/script>
 </body>
@@ -11693,7 +11868,9 @@ window.initExperiment6 = function initExperiment6() {
 
   const pending = window.__pendingExperimentDefaults?.['6'];
   if (pending) applySettings(pending);
-  else applyAll();
+  applyAll();
+
+  preview.dataset.experimentReady = '1';
 };
 
 window.InfiniteCarouselSnippet = {

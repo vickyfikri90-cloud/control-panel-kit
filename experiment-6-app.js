@@ -1,7 +1,7 @@
 window.initExperiment6 = function initExperiment6() {
   const preview = document.querySelector('[data-experiment-preview="6"]');
   const panelRoot = document.querySelector('[data-experiment-panel="6"]');
-  if (!preview || !panelRoot) return;
+  if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
 
@@ -10,192 +10,101 @@ window.initExperiment6 = function initExperiment6() {
     return;
   }
 
+  const DEFAULT_CURVES = [12, 10, 25, 5];
+
   const controls = {
-    sectionHeight: document.getElementById('exp6-section-height'),
-    bgImageHeight: document.getElementById('exp6-bg-image-height'),
-    frontX: document.getElementById('exp6-front-x'),
-    frontY: document.getElementById('exp6-front-y'),
-    nextX: document.getElementById('exp6-next-x'),
-    nextY: document.getElementById('exp6-next-y'),
-    burstOriginX: document.getElementById('exp6-burst-origin-x'),
-    burstOriginY: document.getElementById('exp6-burst-origin-y'),
-    burstSize: document.getElementById('exp6-burst-size'),
-    burstScale: document.getElementById('exp6-burst-scale'),
+    curves: [1, 2, 3, 4].map((n) => document.getElementById(`exp6-curve-${n}`)),
+    scrub: document.getElementById('exp6-scrub'),
+    smoothing: document.getElementById('exp6-smoothing'),
+    headingSize: document.getElementById('exp6-heading-size'),
+    imageOpacity: document.getElementById('exp6-image-opacity'),
   };
 
-  let arcScroll = preview.__arcScrollController;
-  let positionModeSelector = preview.__exp6PositionMode;
-  let snippet = preview.__exp6Snippet;
+  const numericInputs = [
+    ...controls.curves,
+    controls.scrub,
+    controls.smoothing,
+    controls.headingSize,
+    controls.imageOpacity,
+  ];
 
-  if (!arcScroll) {
-    arcScroll = window.initArcScrollTransition(preview, {
-      sectionHeightVh: 150,
-      bgImageHeightPercent: 100,
-      positionMode: 'burst-origin',
-      frontX: 50,
-      frontY: 100,
-      nextX: 50,
-      nextY: 0,
-      burstOriginX: 50,
-      burstOriginY: 100,
-      burstSize: 100,
-      burstScale: 1,
-    });
-    preview.__arcScrollController = arcScroll;
-  }
+  const arcScroll = window.initArcScrollTransition(preview, {});
 
-  if (!positionModeSelector) {
-    const modeRoot = document.getElementById('exp6-position-mode-root');
-    if (!modeRoot) {
-      console.error('Experiment 6: missing #exp6-position-mode-root');
-      return;
-    }
+  const solidColor = window.initColorInput(document.getElementById('exp6-solid-color-root'), {
+    onChange: applyAll,
+  });
 
-    positionModeSelector = window.initOptionSelector(modeRoot, {
-      value: 'burst-origin',
-      options: [
-        { value: 'peak-xy', label: 'Peak X/Y' },
-        { value: 'seam-y', label: 'Seam Y' },
-        { value: 'burst-origin', label: 'Burst Origin' },
-      ],
-      onChange: () => {
-        updatePanelVisibility();
-        applyAll();
-      },
-    });
-    preview.__exp6PositionMode = positionModeSelector;
-  }
+  const snippet = window.initSnippetOutput(document.getElementById('exp6-snippet-root'), {
+    filename: 'experiment-6.html',
+    getContent: generateSnippet,
+    updateOnInit: false,
+  });
 
-  if (!snippet) {
-    const snippetRoot = document.getElementById('exp6-snippet-root');
-    if (!snippetRoot) {
-      console.error('Experiment 6: missing #exp6-snippet-root');
-      return;
-    }
+  utils.bindInputWrapInputs(panelRoot);
 
-    snippet = window.initSnippetOutput(snippetRoot, {
-      filename: 'experiment-6.html',
-      getContent: generateSnippet,
-      updateOnInit: true,
-    });
-    preview.__exp6Snippet = snippet;
-  }
-
-  if (preview.dataset.experimentReady !== '1') {
-    utils.bindInputWrapInputs(panelRoot);
-
-    Object.values(controls).forEach((input) => {
-      if (!(input instanceof HTMLInputElement)) return;
-      input.addEventListener('input', applyAll);
-    });
-
-    Object.values(controls).forEach((input) => {
-      utils.bindNumericArrowKey(input, applyAll);
-    });
-
-    preview.dataset.experimentReady = '1';
-  }
-
-  function controlValue(input, fallback) {
-    if (!(input instanceof HTMLInputElement)) return String(fallback);
-    return input.value;
-  }
-
-  function clampPercent(value, fallback) {
-    return Math.min(100, Math.max(0, utils.parsePx(value, fallback)));
-  }
+  numericInputs.forEach((input) => {
+    input.addEventListener('input', applyAll);
+    utils.bindNumericArrowKey(input, applyAll);
+  });
+  utils.bindNumericArrowKey(solidColor.opacityInput, applyAll, { isOpacity: true });
 
   function getConfig() {
     return {
-      sectionHeightVh: utils.parsePx(controlValue(controls.sectionHeight, 150), 150),
-      bgImageHeightPercent: utils.parsePx(controlValue(controls.bgImageHeight, 100), 100),
-      positionMode: positionModeSelector.getValue(),
-      frontX: clampPercent(controlValue(controls.frontX, 50), 50),
-      frontY: clampPercent(controlValue(controls.frontY, 100), 100),
-      nextX: clampPercent(controlValue(controls.nextX, 50), 50),
-      nextY: clampPercent(controlValue(controls.nextY, 0), 0),
-      burstOriginX: clampPercent(controlValue(controls.burstOriginX, 50), 50),
-      burstOriginY: clampPercent(controlValue(controls.burstOriginY, 100), 100),
-      burstSize: Math.max(10, utils.parsePx(controlValue(controls.burstSize, 100), 100)),
-      burstScale: Math.max(0.1, parseFloat(controlValue(controls.burstScale, 1)) || 1),
+      curves: controls.curves.map((input, i) => utils.parsePx(input.value, DEFAULT_CURVES[i])),
+      scrub: Math.max(0, utils.parsePx(controls.scrub.value, 0.3)),
+      smoothing: Math.min(1, Math.max(0.01, utils.parsePx(controls.smoothing.value, 0.1))),
+      headingSize: Math.max(8, utils.parsePx(controls.headingSize.value, 96)),
+      solidColor: solidColor.getColor(),
+      imageOpacity: Math.min(100, Math.max(0, utils.parsePx(controls.imageOpacity.value, 80))),
     };
-  }
-
-  function updatePanelVisibility() {
-    const mode = positionModeSelector.getValue();
-    const isBurst = mode === 'burst-origin';
-    const hideX = mode === 'seam-y';
-
-    panelRoot.querySelectorAll('[data-exp6-pos-group]').forEach((node) => {
-      node.hidden = isBurst;
-    });
-
-    panelRoot.querySelectorAll('[data-exp6-burst-group]').forEach((node) => {
-      node.hidden = !isBurst;
-    });
-
-    panelRoot.querySelectorAll('[data-exp6-pos-x]').forEach((node) => {
-      node.hidden = isBurst || hideX;
-    });
   }
 
   function applyAll() {
     arcScroll.apply(getConfig());
-    updatePanelVisibility();
     snippet.update();
-    requestAnimationFrame(() => arcScroll.apply(getConfig()));
   }
 
   function collectSettings() {
     return {
-      sectionHeight: controlValue(controls.sectionHeight, 150),
-      bgImageHeight: controlValue(controls.bgImageHeight, 100),
-      positionMode: positionModeSelector.getValue(),
-      frontX: controlValue(controls.frontX, 50),
-      frontY: controlValue(controls.frontY, 100),
-      nextX: controlValue(controls.nextX, 50),
-      nextY: controlValue(controls.nextY, 0),
-      burstOriginX: controlValue(controls.burstOriginX, 50),
-      burstOriginY: controlValue(controls.burstOriginY, 100),
-      burstSize: controlValue(controls.burstSize, 100),
-      burstScale: controlValue(controls.burstScale, 1),
+      curves: controls.curves.map((input) => input.value),
+      scrub: controls.scrub.value,
+      smoothing: controls.smoothing.value,
+      headingSize: controls.headingSize.value,
+      imageOpacity: controls.imageOpacity.value,
+      solidHex: solidColor.hexInput.value,
+      solidOpacity: solidColor.opacityInput.value,
     };
   }
 
   function applySettings(data) {
     if (!data) return;
 
-    if (data.sectionHeight != null && controls.sectionHeight) {
-      controls.sectionHeight.value = data.sectionHeight;
+    if (Array.isArray(data.curves)) {
+      data.curves.forEach((value, i) => {
+        if (value != null && controls.curves[i]) controls.curves[i].value = value;
+      });
     }
-    if (data.bgImageHeight != null && controls.bgImageHeight) {
-      controls.bgImageHeight.value = data.bgImageHeight;
-    }
-    if (data.positionMode != null) positionModeSelector.setValue(data.positionMode, false);
-    if (data.frontX != null && controls.frontX) controls.frontX.value = data.frontX;
-    if (data.frontY != null && controls.frontY) controls.frontY.value = data.frontY;
-    if (data.nextX != null && controls.nextX) controls.nextX.value = data.nextX;
-    if (data.nextY != null && controls.nextY) controls.nextY.value = data.nextY;
-    if (data.burstOriginX != null && controls.burstOriginX) {
-      controls.burstOriginX.value = data.burstOriginX;
-    }
-    if (data.burstOriginY != null && controls.burstOriginY) {
-      controls.burstOriginY.value = data.burstOriginY;
-    }
-    if (data.burstSize != null && controls.burstSize) controls.burstSize.value = data.burstSize;
-    if (data.burstScale != null && controls.burstScale) controls.burstScale.value = data.burstScale;
-
-    applyAll();
+    if (data.scrub != null) controls.scrub.value = data.scrub;
+    if (data.smoothing != null) controls.smoothing.value = data.smoothing;
+    if (data.headingSize != null) controls.headingSize.value = data.headingSize;
+    if (data.imageOpacity != null) controls.imageOpacity.value = data.imageOpacity;
+    if (data.solidHex != null) solidColor.hexInput.value = data.solidHex;
+    if (data.solidOpacity != null) solidColor.opacityInput.value = data.solidOpacity;
+    solidColor.updateUI(false);
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
   window.ExperimentSettings['6'] = {
     collect: collectSettings,
-    apply: applySettings,
+    apply(data) {
+      applySettings(data);
+      applyAll();
+    },
   };
 
   function generateSnippet() {
     const config = getConfig();
+    const embed = window.ArcScrollTransitionSnippet || { css: '', js: '' };
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -203,33 +112,29 @@ window.initExperiment6 = function initExperiment6() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Arc Scroll Transition</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Display:wght@100..900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="Components/ArcScrollTransition/component.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
-    html, body { margin: 0; height: 100%; overflow: hidden; }
-    .arc-scroll-root { width: 100vw; height: 100vh; }
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #000; }
+    .arc-scroll-root { width: 100vw; height: 100vh; height: 100svh; }
+
+${embed.css}
   </style>
 </head>
 <body>
   <div class="arc-scroll-root"></div>
 
-  <script src="Components/ArcScrollTransition/component.js"><\/script>
   <script>
-    initArcScrollTransition(document.querySelector('.arc-scroll-root'), {
-      sectionHeightVh: ${config.sectionHeightVh},
-      bgImageHeightPercent: ${config.bgImageHeightPercent},
-      positionMode: ${JSON.stringify(config.positionMode)},
-      frontX: ${config.frontX},
-      frontY: ${config.frontY},
-      nextX: ${config.nextX},
-      nextY: ${config.nextY},
-      burstOriginX: ${config.burstOriginX},
-      burstOriginY: ${config.burstOriginY},
-      burstSize: ${config.burstSize},
-      burstScale: ${config.burstScale},
+${embed.js}
+    // Image paths are relative to this file; point them at your own images.
+    window.initArcScrollTransition(document.querySelector('.arc-scroll-root'), {
+      curves: ${JSON.stringify(config.curves)},
+      scrub: ${config.scrub},
+      smoothing: ${config.smoothing},
+      headingSize: ${config.headingSize},
+      solidColor: ${JSON.stringify(config.solidColor)},
+      imageOpacity: ${config.imageOpacity},
+      bgImage1: 'Components/ArcScrollTransition/assets/bg-1.png',
+      bgImage2: 'Components/ArcScrollTransition/assets/bg-2.png',
     });
   <\/script>
 </body>
@@ -238,5 +143,7 @@ window.initExperiment6 = function initExperiment6() {
 
   const pending = window.__pendingExperimentDefaults?.['6'];
   if (pending) applySettings(pending);
-  else applyAll();
+  applyAll();
+
+  preview.dataset.experimentReady = '1';
 };

@@ -14,105 +14,105 @@
 }
 
 .arc-scroll {
+  --arc-heading-size: 96px;
+  --arc-solid-color: #cecece;
+  --arc-image-opacity: 0.8;
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  touch-action: none;
-  user-select: none;
+  container-type: size;
+  background: #000;
 }
 
-.arc-scroll__svg {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
-.arc-scroll__viewport {
-  position: relative;
+.arc-scroll__scroller {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
-.arc-scroll__track {
-  will-change: transform;
-}
-
-.arc-scroll__layer {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.arc-scroll__layer--overlay {
-  z-index: 2;
-  clip-path: url(#arc-scroll-clip);
-  will-change: clip-path;
-}
-
-.arc-scroll__overlay-inner {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  will-change: transform;
+.arc-scroll__scroller::-webkit-scrollbar {
+  display: none;
 }
 
 .arc-scroll__section {
   position: relative;
-  width: 100%;
   display: flex;
-  align-items: center;
+  flex-flow: column;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100cqh;
   overflow: hidden;
-  flex-shrink: 0;
+  color: #f2f2f2;
 }
 
-.arc-scroll__section--image {
-  background-color: rgb(52, 43, 22);
+.arc-scroll__section.is--solid {
+  color: #0a0a0a;
+  background-color: var(--arc-solid-color);
 }
 
-.arc-scroll__section--solid {
-  background-color: rgb(130, 127, 103);
-}
-
-.arc-scroll__media {
+.arc-scroll__bg {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  overflow: hidden;
+  inset: 0;
+  z-index: 0;
+  background-color: #000;
 }
 
-.arc-scroll__media img {
+.arc-scroll__bg-img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: var(--arc-image-opacity);
+  user-select: none;
 }
 
-.arc-scroll__shade {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(52, 43, 22, 0.17);
-  pointer-events: none;
-}
-
-.arc-scroll__title {
+.arc-scroll__content {
   position: relative;
   z-index: 1;
+}
+
+.arc-scroll__h {
+  max-width: 8em;
   margin: 0;
-  max-width: min(90%, 694px);
-  font-family: "Inter Display", Inter, system-ui, sans-serif;
-  font-weight: 500;
-  font-size: clamp(32px, 6vw, 88px);
-  line-height: 0.92;
-  letter-spacing: 0;
+  font-family: "Haffer XH", Inter, Arial, sans-serif;
+  font-size: var(--arc-heading-size);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
   text-align: center;
-  color: #fff;
-  white-space: pre-wrap;
+}
+
+/* Osmo drops the heading to 3.5em (from 6em) below 768px. */
+@container (max-width: 767px) {
+  .arc-scroll__h {
+    font-size: calc(var(--arc-heading-size) * 3.5 / 6);
+  }
+}
+
+.arc-scroll__transition {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 10;
+  pointer-events: none;
+  color: var(--arc-solid-color);
+}
+
+.arc-scroll__transition.is--top {
+  inset: 0 0 auto;
+}
+
+.arc-scroll__transition svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.arc-scroll__transition path {
+  fill: currentColor;
 }

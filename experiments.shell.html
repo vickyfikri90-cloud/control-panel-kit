@@ -1267,131 +1267,99 @@
 
       <div data-experiment-panel="6" hidden>
       <div class="field">
-        <label class="field-label" for="exp6-section-height">Section Height</label>
+        <label class="field-label" for="exp6-curve-1">Transition 1 Curve (Cover)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-section-height" value="150">
-            <div class="suffix-wrap"><span>vh</span></div>
+            <input type="text" id="exp6-curve-1" value="12">
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-bg-image-height">Background Image Height</label>
+        <label class="field-label" for="exp6-curve-2">Transition 2 Curve (Reveal)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-bg-image-height" value="100">
-            <div class="suffix-wrap"><span>%</span></div>
+            <input type="text" id="exp6-curve-2" value="10">
           </div>
         </div>
       </div>
 
-      <div id="exp6-position-mode-root">
-        <div class="field option-selector">
-          <span class="field-label">Position Mode</span>
+      <div class="field">
+        <label class="field-label" for="exp6-curve-3">Transition 3 Curve (Cover)</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-curve-3" value="25">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp6-curve-4">Transition 4 Curve (Reveal)</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-curve-4" value="5">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-divider">
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp6-scrub">Scrub</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-scrub" value="0.3" data-arrow-step="0.1">
+            <div class="suffix-wrap"><span>s</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp6-smoothing">Smooth Scroll (Lerp)</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-smoothing" value="0.1" data-arrow-step="0.01">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-divider">
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp6-heading-size">Heading Size</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-heading-size" value="96">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp6-solid-color-root">
+        <div class="field">
+          <span class="field-label">Solid Color</span>
           <div class="row">
-            <div class="input-wrap input-wrap--label option-selector__wrap">
-              <input type="text" class="option-selector__input" value="Burst Origin" autocomplete="off" spellcheck="false">
-              <div class="option-selector__menu" role="listbox"></div>
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="CECECE">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="panel-divider" data-exp6-burst-group>
-        <span class="panel-divider__line" role="separator"></span>
-      </div>
-
-      <div class="field" data-exp6-burst-group>
-        <span class="field-label">Burst Origin</span>
-      </div>
-
-      <div class="field" data-exp6-burst-group>
-        <label class="field-label" for="exp6-burst-origin-x">X</label>
+      <div class="field">
+        <label class="field-label" for="exp6-image-opacity">Image Opacity</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-burst-origin-x" value="50">
-            <div class="suffix-wrap"><span>%</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field" data-exp6-burst-group>
-        <label class="field-label" for="exp6-burst-origin-y">Y</label>
-        <div class="row">
-          <div class="input-wrap">
-            <input type="text" id="exp6-burst-origin-y" value="100">
-            <div class="suffix-wrap"><span>%</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field" data-exp6-burst-group>
-        <label class="field-label" for="exp6-burst-size">Burst Size</label>
-        <div class="row">
-          <div class="input-wrap">
-            <input type="text" id="exp6-burst-size" value="100">
-            <div class="suffix-wrap"><span>%</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field" data-exp6-burst-group>
-        <label class="field-label" for="exp6-burst-scale">Burst Scale</label>
-        <div class="row">
-          <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp6-burst-scale" value="1">
-          </div>
-        </div>
-      </div>
-
-      <div class="panel-divider" data-exp6-pos-group hidden>
-        <span class="panel-divider__line" role="separator"></span>
-      </div>
-
-      <div class="field" data-exp6-pos-group hidden>
-        <span class="field-label">Front Section Position</span>
-      </div>
-
-      <div class="field" data-exp6-pos-x data-exp6-pos-group hidden>
-        <label class="field-label" for="exp6-front-x">X</label>
-        <div class="row">
-          <div class="input-wrap">
-            <input type="text" id="exp6-front-x" value="50">
-            <div class="suffix-wrap"><span>%</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field" data-exp6-pos-group hidden>
-        <label class="field-label" for="exp6-front-y">Y</label>
-        <div class="row">
-          <div class="input-wrap">
-            <input type="text" id="exp6-front-y" value="100">
-            <div class="suffix-wrap"><span>%</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field" data-exp6-pos-group hidden>
-        <span class="field-label">Next Section Position</span>
-      </div>
-
-      <div class="field" data-exp6-pos-x data-exp6-pos-group hidden>
-        <label class="field-label" for="exp6-next-x">X</label>
-        <div class="row">
-          <div class="input-wrap">
-            <input type="text" id="exp6-next-x" value="50">
-            <div class="suffix-wrap"><span>%</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field" data-exp6-pos-group hidden>
-        <label class="field-label" for="exp6-next-y">Y</label>
-        <div class="row">
-          <div class="input-wrap">
-            <input type="text" id="exp6-next-y" value="0">
+            <input type="text" id="exp6-image-opacity" value="80">
             <div class="suffix-wrap"><span>%</span></div>
           </div>
         </div>

@@ -37,6 +37,15 @@ const staggerSnippetEmbed = `window.StaggerTextButtonSnippetJs = \`${escapeTempl
 fs.writeFileSync(path.join(root, 'experiment-9-snippet-embed.js'), staggerSnippetEmbed);
 console.log(`Built experiment-9-snippet-embed.js (${(Buffer.byteLength(staggerSnippetEmbed) / 1024).toFixed(1)} KB)`);
 
+const arcSnippetCss = read('Components/ArcScrollTransition/component.css');
+const arcSnippetJs = escapeForInlineScript(read('Components/ArcScrollTransition/component.js'));
+const arcSnippetEmbed = `window.ArcScrollTransitionSnippet = {
+  css: \`${escapeTemplate(arcSnippetCss)}\`,
+  js: \`${escapeTemplate(arcSnippetJs)}\`,
+};\n`;
+fs.writeFileSync(path.join(root, 'experiment-6-snippet-embed.js'), arcSnippetEmbed);
+console.log(`Built experiment-6-snippet-embed.js (${(Buffer.byteLength(arcSnippetEmbed) / 1024).toFixed(1)} KB)`);
+
 const styles = [
   'Components/shared/base.css',
   'Components/ControlPanel/component.css',
@@ -82,6 +91,7 @@ const scripts = [
   'experiment-3-app.js',
   'experiment-4-5-app.js',
   'experiment-5-app.js',
+  'experiment-6-snippet-embed.js',
   'experiment-6-app.js',
   'experiment-7-snippet-embed.js',
   'experiment-7-app.js',
