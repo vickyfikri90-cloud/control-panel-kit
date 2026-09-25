@@ -1,0 +1,38 @@
+.stagger-text-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  border: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  height: 56px;
+  padding: 0 24px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  color: #000;
+  user-select: none;
+}
+
+.stagger-text-button .label {
+  display: grid;
+  position: relative;
+  line-height: 1;
+}
+
+.stagger-text-button .text {
+  grid-area: 1 / 1;
+  display: block;
+  white-space: nowrap;
+}
+
+.stagger-text-button .stagger-char {
+  display: inline-block;
+  white-space: pre;
+  will-change: transform;
+}

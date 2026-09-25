@@ -142,6 +142,27 @@ When editing `{Folder}/component.html`, also update the matching key in `compone
 - Component API, options, CSS, examples → [docs/COMPONENTS.md](./docs/COMPONENTS.md)
 - User-facing overview → [README.md](./README.md)
 
+## Experiment registry
+
+When the user or another agent says "Experiment N", use this mapping — **selector label ≠ internal id** for Experiment 4.
+
+| User says | Selector label | Internal id | App file | Init function | Notes |
+|-----------|----------------|-------------|----------|---------------|-------|
+| Experiment 1 | Experiment 1 | `1` | `hover-button-app.js` | `initExperiment1` | Hover button slide animation |
+| Experiment 2 | Experiment 2 | `2` | `experiment-2-app.js` | `initExperiment2` | Rotate carousel |
+| Experiment 3 | Experiment 3 | `3` | `experiment-3-app.js` | `initExperiment3` | Rotate X button |
+| Experiment 4 | Experiment 4 | `4.5` | `experiment-4-5-app.js` | `initExperiment4_5` | 3D carousel — Variant (V/H), Input (Drag/Scroll), Reverse Scroll Direction toggle (scroll only), Highlight Scale. DOM ids use `exp45-*`. Snippet: `experiment-4-5.html`. |
+| Experiment 5 | Experiment 5 | `5` | `experiment-5-app.js` | `initExperiment5` | Flip carousel |
+| Experiment 6 | Experiment 6 | `6` | `experiment-6-app.js` | `initExperiment6` | Arc scroll transition — infinite loop, velocity-reactive arc/burst between image and solid sections. Position modes: Peak X/Y, Seam Y, Burst Origin. DOM ids use `exp6-*`. Snippet: `experiment-6.html`. |
+| Experiment 7 | Experiment 7 | `7` | `experiment-7-app.js` | `initExperiment7` | Infinite height carousel — drag / horizontal swipe, 10 boxes, slot structure C-B-A-ACTIVE-A-B-C. Heights, duration, easing, velocity. DOM ids use `exp7-*`. Snippet: `experiment-7.html`. |
+| Experiment 8 | Experiment 8 | `8` | `experiment-8-app.js` | `initExperiment8` | Horizontal parallax — 5 cards, infinite loop, single image at 120% in frame; position shifts left/center/right by slot (before/middle/after). Card width/height, gap, duration, easing, velocity. DOM ids use `exp8-*`. Snippet: `experiment-8.html`. |
+| Experiment 9 | Experiment 9 | `9` | `experiment-9-app.js` | `initExperiment9` | Staggered vertical text swap button — fixed-width per-char slots (current/incoming), stagger Sequential or Center out (`abs(i-mid)*step`), scatter, focus-visible = hover, prefers-reduced-motion instant swap, mid-wave reverse. DOM ids use `exp9-*`. Snippet: `experiment-9.html`. |
+
+### Changelog
+
+- **2026-08:** Basic Experiment 4 (`experiment-4-app.js`, internal id `4`) removed. "Experiment 4" in the UI now maps to internal id `4.5`. Code and DOM still use `4.5` / `exp45-*` — do not rename unless explicitly requested.
+- **2026-09:** Experiment 9 added. Staggered vertical text-swap hover button (`experiment-9-app.js`, `Components/StaggerTextButton/`).
+
 ## Example: Hover Button experiment
 
 Reference implementation:

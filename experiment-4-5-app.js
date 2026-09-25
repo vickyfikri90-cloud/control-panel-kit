@@ -61,6 +61,13 @@ window.initExperiment4_5 = function initExperiment4_5() {
     onChange: applyAll,
   });
 
+  const reverseScrollRoot = document.getElementById('exp45-reverse-scroll-root');
+  const reverseScrollToggle = window.initToggle(reverseScrollRoot, {
+    rowLabel: 'Reverse Scroll Direction',
+    checked: false,
+    onChange: applyAll,
+  });
+
   const dimensions = window.initDimensionControlGroup(panelRoot, {
     width: {
       initialMode: 'fixed',
@@ -151,6 +158,14 @@ window.initExperiment4_5 = function initExperiment4_5() {
     return inputSelector.getValue();
   }
 
+  function getReverseScroll() {
+    return reverseScrollToggle.getChecked();
+  }
+
+  function syncReverseScrollVisibility() {
+    reverseScrollRoot.hidden = getInputAction() !== 'scroll';
+  }
+
   function getEasing() {
     return easing.getValue();
   }
@@ -175,6 +190,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       highlightScale: getHighlightScale(),
       orientation: getOrientation(),
       inputAction: getInputAction(),
+      reverseScroll: getReverseScroll(),
       easing: getEasing(),
       easingRaw: easing.getRaw() || '0.7, 0, 0.25, 1',
     };
@@ -192,6 +208,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       velocity: controls.velocity.value,
       variant: variantSelector.getValue(),
       input: inputSelector.getValue(),
+      reverseScroll: reverseScrollToggle.getChecked(),
       easing: easing.getRaw(),
       widthMode: dimensions.width.getMode(),
       widthValue: dimensions.width.getValue(),
@@ -217,6 +234,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
     if (data.velocity != null) controls.velocity.value = data.velocity;
     if (data.variant != null) variantSelector.setValue(data.variant, false);
     if (data.input != null) inputSelector.setValue(data.input, false);
+    if (data.reverseScroll != null) reverseScrollToggle.setChecked(data.reverseScroll, false);
     if (data.easing != null) easing.setRaw(data.easing, false);
 
     if (data.widthMode) {
@@ -272,9 +290,11 @@ window.initExperiment4_5 = function initExperiment4_5() {
       highlightScale: config.highlightScale,
       orientation: config.orientation,
       inputAction: config.inputAction,
+      reverseScroll: config.reverseScroll,
       easingRaw: config.easingRaw,
     });
 
+    syncReverseScrollVisibility();
     dimensions.width.updateLabel();
     dimensions.height.updateLabel();
     snippet.update();
@@ -423,6 +443,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       highlightScale: ${config.highlightScale},
       orientation: ${JSON.stringify(config.orientation)},
       inputAction: ${JSON.stringify(config.inputAction)},
+      reverseScroll: ${config.reverseScroll ? 'true' : 'false'},
       easingRaw: ${JSON.stringify(easingRaw)},
     };
 
@@ -492,7 +513,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       if (event.deltaMode === 1) delta *= 16;
       else if (event.deltaMode === 2) delta *= window.innerHeight;
 
-      return delta;
+      return CONFIG.reverseScroll ? -delta : delta;
     }
 
     function clearScrollSnapTimer() {

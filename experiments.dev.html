@@ -18,6 +18,11 @@
   <link rel="stylesheet" href="Components/RotateCarousel/component.css">
   <link rel="stylesheet" href="Components/RotateXCarousel/component.css">
   <link rel="stylesheet" href="Components/FlipCarousel/component.css">
+  <link rel="stylesheet" href="Components/ArcScrollTransition/component.css">
+  <link rel="stylesheet" href="Components/InfiniteCarousel/component.css">
+  <link rel="stylesheet" href="Components/HorizontalParallax/component.css">
+  <link rel="stylesheet" href="Components/StaggerTextButton/component.css">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Satoshi:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -41,18 +46,27 @@
       document.body.insertAdjacentHTML('afterbegin', shell);
 
       await ControlPanelKit.load();
-      await ControlPanelKit.loadScript('Components/HoverButton/component.js', 'hover-button');
-      await ControlPanelKit.loadScript('Components/RotateXButton/component.js', 'rotate-x-button');
-      await ControlPanelKit.loadScript('Components/RotateCarousel/component.js', 'rotate-carousel');
-      await ControlPanelKit.loadScript('Components/RotateXCarousel/component.js', 'rotate-x-carousel');
-      await ControlPanelKit.loadScript('Components/FlipCarousel/component.js', 'flip-carousel');
-      await ControlPanelKit.loadScript('hover-button-app.js', 'experiment-1');
-      await ControlPanelKit.loadScript('experiment-2-app.js', 'experiment-2');
-      await ControlPanelKit.loadScript('experiment-3-app.js', 'experiment-3');
-      await ControlPanelKit.loadScript('experiment-4-app.js', 'experiment-4');
-      await ControlPanelKit.loadScript('experiment-4-5-app.js', 'experiment-4-5');
-      await ControlPanelKit.loadScript('experiment-5-app.js', 'experiment-5');
-      await ControlPanelKit.loadScript('experiments-app.js', 'experiments');
+      await ControlPanelKit.loadScript('HoverButton/component.js', 'hover-button');
+      await ControlPanelKit.loadScript('RotateXButton/component.js', 'rotate-x-button');
+      await ControlPanelKit.loadScript('RotateCarousel/component.js', 'rotate-carousel');
+      await ControlPanelKit.loadScript('RotateXCarousel/component.js', 'rotate-x-carousel');
+      await ControlPanelKit.loadScript('FlipCarousel/component.js', 'flip-carousel');
+      await ControlPanelKit.loadScript('ArcScrollTransition/component.js', 'arc-scroll-transition');
+      await ControlPanelKit.loadScript('InfiniteCarousel/component.js', 'infinite-carousel');
+      await ControlPanelKit.loadScript('HorizontalParallax/component.js', 'horizontal-parallax');
+      await ControlPanelKit.loadScript('StaggerTextButton/component.js', 'stagger-text-button');
+      await ControlPanelKit.loadScript('../hover-button-app.js', 'experiment-1');
+      await ControlPanelKit.loadScript('../experiment-2-app.js', 'experiment-2');
+      await ControlPanelKit.loadScript('../experiment-3-app.js', 'experiment-3');
+      await ControlPanelKit.loadScript('../experiment-4-5-app.js', 'experiment-4-5');
+      await ControlPanelKit.loadScript('../experiment-5-app.js', 'experiment-5');
+      await ControlPanelKit.loadScript('../experiment-6-app.js', 'experiment-6');
+      await ControlPanelKit.loadScript('../experiment-7-snippet-embed.js', 'experiment-7-snippet-embed');
+      await ControlPanelKit.loadScript('../experiment-7-app.js', 'experiment-7');
+      await ControlPanelKit.loadScript('../experiment-8-app.js', 'experiment-8');
+      await ControlPanelKit.loadScript('../experiment-9-snippet-embed.js', 'experiment-9-snippet-embed');
+      await ControlPanelKit.loadScript('../experiment-9-app.js', 'experiment-9');
+      await ControlPanelKit.loadScript('../experiments-app.js', 'experiments');
     })().catch((error) => {
       console.error(error);
       document.body.innerHTML = `<p style="padding:24px;font:500 14px Inter,sans-serif;">Failed to load experiments.<br><code>${error.message}</code></p>`;

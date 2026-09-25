@@ -8,19 +8,54 @@ function read(rel) {
   return fs.readFileSync(path.join(root, rel), 'utf8');
 }
 
+function escapeTemplate(str) {
+  return str.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
+}
+
+function escapeForInlineScript(str) {
+  return str.replace(/<\/script/gi, '<\\/script');
+}
+
+function svgToDataUri(svg) {
+  return `data:image/svg+xml,${encodeURIComponent(svg.trim())}`;
+}
+
+const snippetCss = read('Components/InfiniteCarousel/component.css');
+const snippetJs = escapeForInlineScript(read('Components/InfiniteCarousel/component.js'));
+const snippetHeadingSrc = svgToDataUri(read('Components/InfiniteCarousel/assets/heading.svg'));
+
+const snippetEmbed = `window.InfiniteCarouselSnippet = {
+  css: \`${escapeTemplate(snippetCss)}\`,
+  js: \`${escapeTemplate(snippetJs)}\`,
+  headingSrc: ${JSON.stringify(snippetHeadingSrc)},
+};\n`;
+fs.writeFileSync(path.join(root, 'experiment-7-snippet-embed.js'), snippetEmbed);
+console.log(`Built experiment-7-snippet-embed.js (${(Buffer.byteLength(snippetEmbed) / 1024).toFixed(1)} KB)`);
+
+const staggerSnippetJs = escapeForInlineScript(read('Components/StaggerTextButton/component.js'));
+const staggerSnippetEmbed = `window.StaggerTextButtonSnippetJs = \`${escapeTemplate(staggerSnippetJs)}\`;\n`;
+fs.writeFileSync(path.join(root, 'experiment-9-snippet-embed.js'), staggerSnippetEmbed);
+console.log(`Built experiment-9-snippet-embed.js (${(Buffer.byteLength(staggerSnippetEmbed) / 1024).toFixed(1)} KB)`);
+
 const styles = [
   'Components/shared/base.css',
   'Components/ControlPanel/component.css',
   'Components/DimensionControl/component.css',
   'Components/ColorInput/component.css',
   'Components/CubicBezierInput/component.css',
+  'Components/Slider/component.css',
   'Components/SnippetOutput/component.css',
   'Components/OptionSelector/component.css',
+  'Components/Toggle/component.css',
   'Components/HoverButton/component.css',
   'Components/RotateXButton/component.css',
   'Components/RotateCarousel/component.css',
   'Components/RotateXCarousel/component.css',
   'Components/FlipCarousel/component.css',
+  'Components/ArcScrollTransition/component.css',
+  'Components/InfiniteCarousel/component.css',
+  'Components/HorizontalParallax/component.css',
+  'Components/StaggerTextButton/component.css',
 ].map(read).join('\n');
 
 const scripts = [
@@ -29,25 +64,32 @@ const scripts = [
   'Components/DimensionControl/component.js',
   'Components/ColorInput/component.js',
   'Components/CubicBezierInput/component.js',
+  'Components/Slider/component.js',
   'Components/SnippetOutput/component.js',
   'Components/OptionSelector/component.js',
+  'Components/Toggle/component.js',
   'Components/HoverButton/component.js',
   'Components/RotateXButton/component.js',
   'Components/RotateCarousel/component.js',
   'Components/RotateXCarousel/component.js',
   'Components/FlipCarousel/component.js',
+  'Components/ArcScrollTransition/component.js',
+  'Components/InfiniteCarousel/component.js',
+  'Components/HorizontalParallax/component.js',
+  'Components/StaggerTextButton/component.js',
   'hover-button-app.js',
   'experiment-2-app.js',
   'experiment-3-app.js',
-  'experiment-4-app.js',
   'experiment-4-5-app.js',
   'experiment-5-app.js',
+  'experiment-6-app.js',
+  'experiment-7-snippet-embed.js',
+  'experiment-7-app.js',
+  'experiment-8-app.js',
+  'experiment-9-snippet-embed.js',
+  'experiment-9-app.js',
   'experiments-app.js',
 ].map(read).join('\n');
-
-function escapeTemplate(str) {
-  return str.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
-}
 
 const body = read('experiments.shell.html');
 

@@ -26,6 +26,7 @@ window.initRotateXCarousel = function initRotateXCarousel(root, options = {}) {
   let highlightScale = options.highlightScale ?? 1;
   let orientation = normalizeOrientation(options.orientation ?? 'vertical');
   let inputAction = normalizeInputAction(options.inputAction ?? 'drag');
+  let reverseScroll = Boolean(options.reverseScroll);
 
   let rotation = 0;
   let dragStartPointer = 0;
@@ -104,7 +105,7 @@ window.initRotateXCarousel = function initRotateXCarousel(root, options = {}) {
     if (event.deltaMode === 1) delta *= 16;
     else if (event.deltaMode === 2) delta *= window.innerHeight;
 
-    return delta;
+    return reverseScroll ? -delta : delta;
   }
 
   function clearScrollSnapTimer() {
@@ -530,6 +531,7 @@ window.initRotateXCarousel = function initRotateXCarousel(root, options = {}) {
     if (config.highlightScale != null) highlightScale = config.highlightScale;
     if (config.orientation != null) orientation = normalizeOrientation(config.orientation);
     if (config.inputAction != null) inputAction = normalizeInputAction(config.inputAction);
+    if (config.reverseScroll != null) reverseScroll = Boolean(config.reverseScroll);
 
     if (needsRebuild) {
       ring.innerHTML = '';

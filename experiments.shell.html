@@ -28,18 +28,6 @@
         </div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="4" hidden>
-        <div class="rotate-x-carousel" data-carousel>
-          <div class="rotate-x-carousel__stage">
-            <div class="rotate-x-carousel__ring"></div>
-          </div>
-          <div class="rotate-x-carousel__nav">
-            <button type="button" class="rotate-x-carousel__nav-btn" data-carousel-prev>Prev</button>
-            <button type="button" class="rotate-x-carousel__nav-btn" data-carousel-next>Next</button>
-          </div>
-        </div>
-      </div>
-
       <div class="cp-preview" data-experiment-preview="4.5" hidden>
         <div class="rotate-x-carousel" data-carousel>
           <div class="rotate-x-carousel__stage">
@@ -66,6 +54,24 @@
             <button type="button" class="flip-carousel__nav-btn" data-carousel-next>Next</button>
           </div>
         </div>
+      </div>
+
+      <div class="cp-preview" data-experiment-preview="6" hidden>
+        <div class="arc-scroll-root"></div>
+      </div>
+
+      <div class="cp-preview" data-experiment-preview="7" hidden>
+        <div class="infinite-carousel" data-carousel></div>
+      </div>
+
+      <div class="cp-preview" data-experiment-preview="8" hidden>
+        <div class="horizontal-parallax" data-horizontal-parallax></div>
+      </div>
+
+      <div class="cp-preview" data-experiment-preview="9" hidden>
+        <button id="exp9-btn" class="stagger-text-button" type="button" aria-label="Hover here">
+          <span class="label"></span>
+        </button>
       </div>
     </div>
 
@@ -617,210 +623,6 @@
       </div>
       </div>
 
-      <div data-experiment-panel="4" hidden>
-      <div class="field">
-        <label class="field-label" for="exp4-count">Box Count</label>
-        <div class="row">
-          <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp4-count" value="5">
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <span class="field-label">Dimensions</span>
-        <div class="row">
-          <div class="input-wrap input-wrap--dimension" data-dimension-id="width">
-            <span class="input-icon">W</span>
-            <div class="dimension-control is-fixed">
-              <span class="dimension-mode-label">Fixed (600)</span>
-              <input type="text" class="dimension-fixed-input" value="600">
-            </div>
-            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Width mode">
-              <img src="" alt="" data-icon="chevron">
-            </span>
-            <div class="dimension-menu">
-              <button type="button" data-dimension-mode="fixed">Fixed</button>
-              <button type="button" data-dimension-mode="hug">Hug Content</button>
-            </div>
-          </div>
-          <div class="input-wrap input-wrap--dimension" data-dimension-id="height">
-            <span class="input-icon">H</span>
-            <div class="dimension-control is-fixed">
-              <span class="dimension-mode-label">Fixed (400)</span>
-              <input type="text" class="dimension-fixed-input" value="400">
-            </div>
-            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Height mode">
-              <img src="" alt="" data-icon="chevron">
-            </span>
-            <div class="dimension-menu">
-              <button type="button" data-dimension-mode="fixed">Fixed</button>
-              <button type="button" data-dimension-mode="hug">Hug Content</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <span class="field-label">Border Radius</span>
-        <div class="row">
-          <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp4-radius" value="0">
-          </div>
-        </div>
-      </div>
-
-      <div id="exp4-color-1-root">
-        <div class="field">
-          <span class="field-label">Box 1 Color</span>
-          <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="FF6B6B">
-              <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
-                <span class="opacity-suffix">%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="exp4-color-2-root">
-        <div class="field">
-          <span class="field-label">Box 2 Color</span>
-          <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="4ECDC4">
-              <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
-                <span class="opacity-suffix">%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="exp4-color-3-root">
-        <div class="field">
-          <span class="field-label">Box 3 Color</span>
-          <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="FFE66D">
-              <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
-                <span class="opacity-suffix">%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="exp4-color-4-root">
-        <div class="field">
-          <span class="field-label">Box 4 Color</span>
-          <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="5B8DEF">
-              <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
-                <span class="opacity-suffix">%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="exp4-color-5-root">
-        <div class="field">
-          <span class="field-label">Box 5 Color</span>
-          <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="C77DFF">
-              <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
-                <span class="opacity-suffix">%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <span class="field-label">Animation</span>
-        <div class="row">
-          <div class="input-wrap">
-            <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTI2IDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp4-rotate" value="12">
-            <div class="suffix-wrap"><span>°</span></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-wrap">
-            <span class="input-icon">Z</span>
-            <input type="text" id="exp4-orbit" value="600">
-            <div class="suffix-wrap"><span>px</span></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-wrap">
-            <span class="input-icon">P</span>
-            <input type="text" id="exp4-perspective" value="1200">
-            <div class="suffix-wrap"><span>px</span></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-wrap">
-            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp4-duration" value="350">
-            <div class="suffix-wrap"><span>ms</span></div>
-          </div>
-        </div>
-        <div class="row">
-          <span class="field-label" style="margin:0;width:100%;">Velocity intensity</span>
-        </div>
-        <div class="row">
-          <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp4-velocity" value="1">
-          </div>
-        </div>
-      </div>
-
-      <div id="exp4-easing-root">
-        <div class="field cubic-bezier-field">
-          <span class="field-label">Easing</span>
-          <div class="cubic-bezier-editor" data-bezier-editor>
-            <svg class="cubic-bezier-svg" data-bezier-svg viewBox="0 0 208 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect width="208" height="200" rx="5" fill="#F5F5F5"/>
-              <line class="cubic-bezier-guide" x1="29" y1="25" x2="179" y2="25"/>
-              <line class="cubic-bezier-guide" x1="29" y1="175" x2="179" y2="175"/>
-              <path class="cubic-bezier-curve" data-bezier-curve></path>
-              <line class="cubic-bezier-handle-line" data-bezier-line1></line>
-              <line class="cubic-bezier-handle-line" data-bezier-line2></line>
-              <circle class="cubic-bezier-handle" data-bezier-p1 r="6" tabindex="0" role="slider" aria-label="First control point"></circle>
-              <circle class="cubic-bezier-handle" data-bezier-p2 r="6" tabindex="0" role="slider" aria-label="Second control point"></circle>
-            </svg>
-          </div>
-          <div class="input-wrap cubic-bezier-value-input">
-            <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTVlLTA3IDguMjIzNzUgOS4yMzQxNWUtMDcgOC4zMzQyNkM5LjIzNDE1ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODEgMTAgMS42Njc1OVpNNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE1ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxIDUuODMzMzQgMS42Njc1OVpNMi41IDEuNjY3NTlDMi41IDEuODg4NiAyLjQxMjIgMi4xMDA1NyAyLjI1NTkyIDIuMjU2ODVDMi4wOTk2NCAyLjQxMzEzIDEuODg3NjggMi41MDA5MiAxLjY2NjY3IDIuNTAwOTJDMS40NDU2NSAyLjUwMDkyIDEuMjMzNjkgMi40MTMxMyAxLjA3NzQxIDIuMjU2ODVDMC45MjExMzIgMi4xMDA1NyAwLjgzMzMzNCAxLjg4ODYgMC44MzMzMzQgMS42Njc1OUMwLjgzMzMzNCAxLjQ0NjU4IDAuOTIxMTMyIDEuMjM0NjIgMS4wNzc0MSAxLjA3ODM0QzEuMjMzNjkgMC45MjIwNTUgMS40NDU2NSAwLjgzNDI1NyAxLjY2NjY3IDAuODM0MjU3QzEuODg3NjggMC44MzQyNTcgMi4wOTk2NCAwLjkyMjA1NSAyLjI1NTkyIDEuMDc4MzRDMi40MTMyIDEuMjM0NjIgMi41IDEuNDQ2NTggMi41IDEuNjY3NTlaTTEwIDguMzM0MjZDMTAuMDAxMyA3LjkyODE1IDkuODU0MDQgNy41MzU1OCA5LjU4NjA2IDcuMjMwNDRDOS4zMTgwOCA2LjkyNTI5IDguOTQ3ODEgNi43Mjg2MSA4LjU0NDk0IDYuNjc3NDFDOC4xNDIwNyA2LjYyNjIgNy43MzQzNyA2LjcyNDAxIDcuMzk4NTggNi45NTI0MUM3LjA2Mjc4IDcuMTgwODIgNi44MjIwNCA3LjUyNDA4IDYuNzIxNjcgNy45MTc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OSA0LjM2Njg1IDcuOTYxNDkgNC4yODg3MSA4LjAzOTYzQzQuMjEwNTcgOC4xMTc3NyA0LjE2NjY3IDguMjIzNzUgNC4xNjY2NyA4LjMzNDI2QzQuMTY2NjcgOC40NDQ3NyA0LjIxMDU3IDguNTUwNzUgNC4yODg3MSA4LjYyODg5QzQuMzY2ODUgOC43MDcwMyA0LjQ3MjgzIDguNzUwOTMgNC41ODMzMyA4Ljc1MDkzSDYuNzIxNjdDNi44MjIwNCA5LjE0NDQ0IDcuMDYyNzggOS40ODc3IDcuMzk4NTggOS43MTYxQzcuNzM0MzcgOS45NDQ1MSA4LjE0MjA3IDEwLjA0MjMgOC41NDQ5NCA5Ljk5MTExQzguOTQ3ODEgOS45Mzk5MSA5LjMxODA4IDkuNzQzMjMgOS41ODYwNiA5LjQzODA4QzkuODU0MDQgOS4xMzI5NCAxMC4wMDEzIDguNzQwMzcgMTAgOC4zMzQyNlpNOS4xNjY2NyA4LjMzNDI2QzkuMTY2NjcgOC41NTUyNyA5LjA3ODg3IDguNzY3MjMgOC45MjI1OSA4LjkyMzUxQzguNzY2MzEgOS4wNzk3OSA4LjU1NDM1IDkuMTY3NTkgOC4zMzMzNCA5LjE2NzU5QzguMTEyMzIgOS4xNjY3NTkgNy45MDAzNiA5LjA3OTc5IDcuNzQ0MDggOC45MjM1MUM3LjU4NzggOC43NjcyMyA3LjUgOC41NTUyNyA3LjUgOC4zMzQyNkM3LjUgOC4xMTMyNSA3LjU4NzggNy45MDEyOCA3Ljc0NDA4IDcuNzQ1QzcuOTAwMzYgNy41ODg3MiA4LjExMjMyIDcuNTAwOTMgOC4zMzMzNCA3LjUwMDkzQzguNTU0MzUgNy41MDA5MyA4Ljc2NjMxIDcuNTg4NzIgOC45MjI1OSA3Ljc0NUM5LjA3ODg3IDcuOTAxMjggOS4xNjY2NyA4LjExMzI1IDkuMTY2NjcgOC4zMzQyNloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" data-bezier-text value="0.7, 0, 0.25, 1" spellcheck="false" autocomplete="off">
-          </div>
-        </div>
-      </div>
-
-      <div id="exp4-snippet-root">
-        <div class="field code-field">
-          <span class="field-label">Code</span>
-          <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
-          <button type="button" class="download-btn" data-snippet-download>Download HTML</button>
-        </div>
-      </div>
-      </div>
-
       <div data-experiment-panel="4.5" hidden>
       <div class="field">
         <label class="field-label" for="exp45-count">Box Count</label>
@@ -852,6 +654,17 @@
               <div class="option-selector__menu" role="listbox"></div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div id="exp45-reverse-scroll-root" class="field toggle-field" hidden>
+        <div class="toggle-stack">
+          <button type="button" class="toggle-row" role="switch" aria-checked="false">
+            <span class="toggle-switch" aria-hidden="true">
+              <span class="toggle-switch__knob"></span>
+            </span>
+            <span class="toggle-row__label">Reverse Scroll Direction</span>
+          </button>
         </div>
       </div>
 
@@ -1444,6 +1257,612 @@
       </div>
 
       <div id="exp5-snippet-root">
+        <div class="field code-field">
+          <span class="field-label">Code</span>
+          <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
+          <button type="button" class="download-btn" data-snippet-download>Download HTML</button>
+        </div>
+      </div>
+      </div>
+
+      <div data-experiment-panel="6" hidden>
+      <div class="field">
+        <label class="field-label" for="exp6-section-height">Section Height</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-section-height" value="150">
+            <div class="suffix-wrap"><span>vh</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp6-bg-image-height">Background Image Height</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-bg-image-height" value="100">
+            <div class="suffix-wrap"><span>%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp6-position-mode-root">
+        <div class="field option-selector">
+          <span class="field-label">Position Mode</span>
+          <div class="row">
+            <div class="input-wrap input-wrap--label option-selector__wrap">
+              <input type="text" class="option-selector__input" value="Burst Origin" autocomplete="off" spellcheck="false">
+              <div class="option-selector__menu" role="listbox"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-divider" data-exp6-burst-group>
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div class="field" data-exp6-burst-group>
+        <span class="field-label">Burst Origin</span>
+      </div>
+
+      <div class="field" data-exp6-burst-group>
+        <label class="field-label" for="exp6-burst-origin-x">X</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-burst-origin-x" value="50">
+            <div class="suffix-wrap"><span>%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" data-exp6-burst-group>
+        <label class="field-label" for="exp6-burst-origin-y">Y</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-burst-origin-y" value="100">
+            <div class="suffix-wrap"><span>%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" data-exp6-burst-group>
+        <label class="field-label" for="exp6-burst-size">Burst Size</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-burst-size" value="100">
+            <div class="suffix-wrap"><span>%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" data-exp6-burst-group>
+        <label class="field-label" for="exp6-burst-scale">Burst Scale</label>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp6-burst-scale" value="1">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-divider" data-exp6-pos-group hidden>
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div class="field" data-exp6-pos-group hidden>
+        <span class="field-label">Front Section Position</span>
+      </div>
+
+      <div class="field" data-exp6-pos-x data-exp6-pos-group hidden>
+        <label class="field-label" for="exp6-front-x">X</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-front-x" value="50">
+            <div class="suffix-wrap"><span>%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" data-exp6-pos-group hidden>
+        <label class="field-label" for="exp6-front-y">Y</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-front-y" value="100">
+            <div class="suffix-wrap"><span>%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" data-exp6-pos-group hidden>
+        <span class="field-label">Next Section Position</span>
+      </div>
+
+      <div class="field" data-exp6-pos-x data-exp6-pos-group hidden>
+        <label class="field-label" for="exp6-next-x">X</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-next-x" value="50">
+            <div class="suffix-wrap"><span>%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" data-exp6-pos-group hidden>
+        <label class="field-label" for="exp6-next-y">Y</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-next-y" value="0">
+            <div class="suffix-wrap"><span>%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp6-snippet-root">
+        <div class="field code-field">
+          <span class="field-label">Code</span>
+          <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
+          <button type="button" class="download-btn" data-snippet-download>Download HTML</button>
+        </div>
+      </div>
+      </div>
+
+      <div data-experiment-panel="7" hidden>
+      <div class="field">
+        <span class="field-label">Heights</span>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp7-height-active">Active</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp7-height-active" value="400">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp7-height-a">A</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp7-height-a" value="320">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp7-height-b">B</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp7-height-b" value="240">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp7-height-c">C</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp7-height-c" value="360">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-divider">
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Animation</span>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp7-duration" value="450">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <span class="field-label" style="margin:0;width:100%;">Velocity intensity</span>
+        </div>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp7-velocity" value="1">
+          </div>
+        </div>
+        <div class="row">
+          <span class="field-label" style="margin:0;width:100%;">Auto swipe interval</span>
+        </div>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp7-autoplay-interval" value="4000">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp7-easing-root">
+      <div class="field cubic-bezier-field">
+        <span class="field-label">Easing</span>
+        <div class="cubic-bezier-editor" data-bezier-editor>
+          <svg class="cubic-bezier-svg" data-bezier-svg viewBox="0 0 208 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="208" height="200" rx="5" fill="#F5F5F5"/>
+            <line class="cubic-bezier-guide" x1="29" y1="25" x2="179" y2="25"/>
+            <line class="cubic-bezier-guide" x1="29" y1="175" x2="179" y2="175"/>
+            <path class="cubic-bezier-curve" data-bezier-curve></path>
+            <line class="cubic-bezier-handle-line" data-bezier-line1></line>
+            <line class="cubic-bezier-handle-line" data-bezier-line2></line>
+            <circle class="cubic-bezier-handle" data-bezier-p1 r="6" tabindex="0" role="slider" aria-label="First control point"></circle>
+            <circle class="cubic-bezier-handle" data-bezier-p2 r="6" tabindex="0" role="slider" aria-label="Second control point"></circle>
+          </svg>
+        </div>
+        <div class="input-wrap cubic-bezier-value-input">
+          <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTVlLTA3IDguMjIzNzUgOS4yMzQxNWUtMDcgOC4zMzQyNkM5LjIzNDE1ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODEgMTAgMS42Njc1OVpNNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE1ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxIDUuODMzMzQgMS42Njc1OVpNMi41IDEuNjY3NTlDMi41IDEuODg4NiAyLjQxMjIgMi4xMDA1NyAyLjI1NTkyIDIuMjU2ODVDMi4wOTk2NCAyLjQxMzEzIDEuODg3NjggMi41MDA5MiAxLjY2NjY3IDIuNTAwOTJDMS40NDU2NSAyLjUwMDkyIDEuMjMzNjkgMi40MTMxMyAxLjA3NzQxIDIuMjU2ODVDMC45MjExMzIgMi4xMDA1NyAwLjgzMzMzNCAxLjg4ODYgMC44MzMzMzQgMS42Njc1OUMwLjgzMzMzNCAxLjQ0NjU4IDAuOTIxMTMyIDEuMjM0NjIgMS4wNzc0MSAxLjA3ODM0QzEuMjMzNjkgMC45MjIwNTUgMS40NDU2NSAwLjgzNDI1NyAxLjY2NjY3IDAuODM0MjU3QzEuODg3NjggMC44MzQyNTcgMi4wOTk2NCAwLjkyMjA1NSAyLjI1NTkyIDEuMDc4MzRDMi40MTMyIDEuMjM0NjIgMi41IDEuNDQ2NTggMi41IDEuNjY3NTlaTTEwIDguMzM0MjZDMTAuMDAxMyA3LjkyODE1IDkuODU0MDQgNy41MzU1OCA5LjU4NjA2IDcuMjMwNDRDOS4zMTgwOCA2LjkyNTI5IDguOTQ3ODEgNi43Mjg2MSA4LjU0NDk0IDYuNjc3NDFDOC4xNDIwNyA2LjYyNjIgNy43MzQzNyA2LjcyNDAxIDcuMzk4NTggNi45NTI0MUM3LjA2Mjc4IDcuMTgwODIgNi44MjIwNCA3LjUyNDA4IDYuNzIxNjcgNy45MTc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OSA0LjM2Njg1IDcuOTYxNDkgNC4yODg3MSA4LjAzOTYzQzQuMjEwNTcgOC4xMTc3NyA0LjE2NjY3IDguMjIzNzUgNC4xNjY2NyA4LjMzNDI2QzQuMTY2NjcgOC40NDQ3NyA0LjIxMDU3IDguNTUwNzUgNC4yODg3MSA4LjYyODg5QzQuMzY2ODUgOC43MDcwMyA0LjQ3MjgzIDguNzUwOTMgNC41ODMzMyA4Ljc1MDkzSDYuNzIxNjdDNi44MjIwNCA5LjE0NDQ0IDcuMDYyNzggOS40ODc3IDcuMzk4NTggOS43MTYxQzcuNzM0MzcgOS45NDQ1MSA4LjE0MjA3IDEwLjA0MjMgOC41NDQ5NCA5Ljk5MTExQzguOTQ3ODEgOS45Mzk5MSA5LjMxODA4IDkuNzQzMjMgOS41ODYwNiA5LjQzODA4QzkuODU0MDQgOS4xMzI5NCAxMC4wMDEzIDguNzQwMzcgMTAgOC4zMzQyNlpNOS4xNjY2NyA4LjMzNDI2QzkuMTY2NjcgOC41NTUyNyA5LjA3ODg3IDguNzY3MjMgOC45MjI1OSA4LjkyMzUxQzguNzY2MzEgOS4wNzk3OSA4LjU1NDM1IDkuMTY3NTkgOC4zMzMzNCA5LjE2NzU5QzguMTEyMzIgOS4xNjc1OSA3LjkwMDM2IDkuMDc5NzkgNy43NDQwOCA4LjkyMzUxQzcuNTg3OCA4Ljc2NzIzIDcuNSA4LjU1NTI3IDcuNSA4LjMzNDI2QzcuNSA4LjExMzI1IDcuNTg3OCA3LjkwMTI4IDcuNzQ0MDggNy43NDVDNy45MDAzNiA3LjU4ODcyIDguMTEyMzIgNy41MDA5MyA4LjMzMzM0IDcuNTAwOTNDOC41NTQzNSA3LjUwMDkzIDguNzY2MzEgNy41ODg3MiA4LjkyMjU5IDcuNzQ1QzkuMDc4ODcgNy45MDEyOCA5LjE2NjY3IDguMTEzMjUgOS4xNjY2NyA4LjMzNDI2WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+Cjwvc3ZnPgo=" alt=""></span>
+          <input type="text" data-bezier-text value="0.7, 0, 0.25, 1" spellcheck="false" autocomplete="off">
+        </div>
+      </div>
+      </div>
+
+      <div id="exp7-snippet-root">
+        <div class="field code-field">
+          <span class="field-label">Code</span>
+          <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
+          <button type="button" class="download-btn" data-snippet-download>Download HTML</button>
+        </div>
+      </div>
+      </div>
+
+      <div data-experiment-panel="8" hidden>
+      <div class="field">
+        <span class="field-label">Card size</span>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp8-width">Width</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp8-width" value="393">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp8-height">Height</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp8-height" value="263">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp8-gap">Gap</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp8-gap" value="16">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Layout</span>
+        <div id="exp8-layout-root" class="option-selector option-selector--nested">
+          <div class="row">
+            <div class="input-wrap input-wrap--label option-selector__wrap">
+              <input type="text" class="option-selector__input" value="Horizontal" autocomplete="off" spellcheck="false">
+              <div class="option-selector__menu" role="listbox"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp8-image-scale-root" class="slider-field">
+        <span class="slider-field__label">Image size (%)</span>
+        <div class="slider-field__row">
+          <div class="slider-value-wrap">
+            <input type="text" class="slider-value-input" value="120" inputmode="numeric">
+          </div>
+          <div class="slider-track-wrap">
+            <div class="slider-track">
+              <div class="slider-fill"></div>
+              <button type="button" class="slider-thumb" aria-label="Image size"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-divider">
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Images</span>
+      </div>
+
+      <div class="field exp8-image-field">
+        <label class="field-label" for="exp8-image-1-file">Card 1</label>
+        <div class="row exp8-image-row">
+          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-1-btn">Upload</button>
+          <span class="exp8-image-name" id="exp8-image-1-name">Default</span>
+          <input type="file" id="exp8-image-1-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+        </div>
+      </div>
+
+      <div class="field exp8-image-field">
+        <label class="field-label" for="exp8-image-2-file">Card 2</label>
+        <div class="row exp8-image-row">
+          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-2-btn">Upload</button>
+          <span class="exp8-image-name" id="exp8-image-2-name">Default</span>
+          <input type="file" id="exp8-image-2-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+        </div>
+      </div>
+
+      <div class="field exp8-image-field">
+        <label class="field-label" for="exp8-image-3-file">Card 3</label>
+        <div class="row exp8-image-row">
+          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-3-btn">Upload</button>
+          <span class="exp8-image-name" id="exp8-image-3-name">Default</span>
+          <input type="file" id="exp8-image-3-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+        </div>
+      </div>
+
+      <div class="field exp8-image-field">
+        <label class="field-label" for="exp8-image-4-file">Card 4</label>
+        <div class="row exp8-image-row">
+          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-4-btn">Upload</button>
+          <span class="exp8-image-name" id="exp8-image-4-name">Default</span>
+          <input type="file" id="exp8-image-4-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+        </div>
+      </div>
+
+      <div class="field exp8-image-field">
+        <label class="field-label" for="exp8-image-5-file">Card 5</label>
+        <div class="row exp8-image-row">
+          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-5-btn">Upload</button>
+          <span class="exp8-image-name" id="exp8-image-5-name">Default</span>
+          <input type="file" id="exp8-image-5-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+        </div>
+      </div>
+
+      <div class="panel-divider">
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Animation</span>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp8-duration" value="450">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+        <div class="row">
+          <span class="field-label" style="margin:0;width:100%;">Velocity intensity</span>
+        </div>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp8-velocity" value="1">
+          </div>
+        </div>
+      </div>
+
+      <div id="exp8-easing-root">
+      <div class="field cubic-bezier-field">
+        <span class="field-label">Easing</span>
+        <div class="cubic-bezier-editor" data-bezier-editor>
+          <svg class="cubic-bezier-svg" data-bezier-svg viewBox="0 0 208 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="208" height="200" rx="5" fill="#F5F5F5"/>
+            <line class="cubic-bezier-guide" x1="29" y1="25" x2="179" y2="25"/>
+            <line class="cubic-bezier-guide" x1="29" y1="175" x2="179" y2="175"/>
+            <path class="cubic-bezier-curve" data-bezier-curve></path>
+            <line class="cubic-bezier-handle-line" data-bezier-line1></line>
+            <line class="cubic-bezier-handle-line" data-bezier-line2></line>
+            <circle class="cubic-bezier-handle" data-bezier-p1 r="6" tabindex="0" role="slider" aria-label="First control point"></circle>
+            <circle class="cubic-bezier-handle" data-bezier-p2 r="6" tabindex="0" role="slider" aria-label="Second control point"></circle>
+          </svg>
+        </div>
+        <div class="input-wrap cubic-bezier-value-input">
+          <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTVlLTA3IDguMjIzNzUgOS4yMzQxNWUtMDcgOC4zMzQyNkM5LjIzNDE1ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODEgMTAgMS42Njc1OVpNNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE1ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxIDUuODMzMzQgMS42Njc1OVpNMi41IDEuNjY3NTlDMi41IDEuODg4NiAyLjQxMjIgMi4xMDA1NyAyLjI1NTkyIDIuMjU2ODVDMi4wOTk2NCAyLjQxMzEzIDEuODg3NjggMi41MDA5MiAxLjY2NjY3IDIuNTAwOTJDMS40NDU2NSAyLjUwMDkyIDEuMjMzNjkgMi40MTMxMyAxLjA3NzQxIDIuMjU2ODVDMC45MjExMzIgMi4xMDA1NyAwLjgzMzMzNCAxLjg4ODYgMC44MzMzMzQgMS42Njc1OUMwLjgzMzMzNCAxLjQ0NjU4IDAuOTIxMTMyIDEuMjM0NjIgMS4wNzc0MSAxLjA3ODM0QzEuMjMzNjkgMC45MjIwNTUgMS40NDU2NSAwLjgzNDI1NyAxLjY2NjY3IDAuODM0MjU3QzEuODg3NjggMC44MzQyNTcgMi4wOTk2NCAwLjkyMjA1NSAyLjI1NTkyIDEuMDc4MzRDMi40MTMyIDEuMjM0NjIgMi41IDEuNDQ2NTggMi41IDEuNjY3NTlaTTEwIDguMzM0MjZDMTAuMDAxMyA3LjkyODE1IDkuODU0MDQgNy41MzU1OCA5LjU4NjA2IDcuMjMwNDRDOS4zMTgwOCA2LjkyNTI5IDguOTQ3ODEgNi43Mjg2MSA4LjU0NDk0IDYuNjc3NDFDOC4xNDIwNyA2LjYyNjIgNy43MzQzNyA2LjcyNDAxIDcuMzk4NTggNi45NTI0MUM3LjA2Mjc4IDcuMTgwODIgNi44MjIwNCA3LjUyNDA4IDYuNzIxNjcgNy45MTc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OSA0LjM2Njg1IDcuOTYxNDkgNC4yODg3MSA4LjAzOTYzQzQuMjEwNTcgOC4xMTc3NyA0LjE2NjY3IDguMjIzNzUgNC4xNjY2NyA4LjMzNDI2QzQuMTY2NjcgOC40NDQ3NyA0LjIxMDU3IDguNTUwNzUgNC4yODg3MSA4LjYyODg5QzQuMzY2ODUgOC43MDcwMyA0LjQ3MjgzIDguNzUwOTMgNC41ODMzMyA4Ljc1MDkzSDYuNzIxNjdDNi44MjIwNCA5LjE0NDQ0IDcuMDYyNzggOS40ODc3IDcuMzk4NTggOS43MTYxQzcuNzM0MzcgOS45NDQ1MSA4LjE0MjA3IDEwLjA0MjMgOC41NDQ5NCA5Ljk5MTExQzguOTQ3ODEgOS45Mzk5MSA5LjMxODA4IDkuNzQzMjMgOS41ODYwNiA5LjQzODA4QzkuODU0MDQgOS4xMzI5NCAxMC4wMDEzIDguNzQwMzcgMTAgOC4zMzQyNlpNOS4xNjY2NyA4LjMzNDI2QzkuMTY2NjcgOC41NTUyNyA5LjA3ODg3IDguNzY3MjMgOC45MjI1OSA4LjkyMzUxQzguNzY2MzEgOS4wNzk3OSA4LjU1NDM1IDkuMTY3NTkgOC4zMzMzNCA5LjE2NzU5QzguMTEyMzIgOS4xNjc1OSA3LjkwMDM2IDkuMDc5NzkgNy43NDQwOCA4LjkyMzUxQzcuNTg3OCA4Ljc2NzIzIDcuNSA4LjU1NTI3IDcuNSA4LjMzNDI2QzcuNSA4LjExMzI1IDcuNTg3OCA3LjkwMTI4IDcuNzQ0MDggNy43NDVDNy45MDAzNiA3LjU4ODcyIDguMTEyMzIgNy41MDA5MyA4LjMzMzM0IDcuNTAwOTNDOC41NTQzNSA3LjUwMDkzIDguNzY2MzEgNy41ODg3MiA4LjkyMjU5IDcuNzQ1QzkuMDc4ODcgNy45MDEyOCA5LjE2NjY3IDguMTEzMjUgOS4xNjY2NyA4LjMzNDI2WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+Cjwvc3ZnPgo=" alt=""></span>
+          <input type="text" data-bezier-text value="0.7, 0, 0.25, 1" spellcheck="false" autocomplete="off">
+        </div>
+      </div>
+      </div>
+
+      <div id="exp8-snippet-root">
+        <div class="field code-field">
+          <span class="field-label">Code</span>
+          <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
+          <button type="button" class="download-btn" data-snippet-download>Download HTML</button>
+        </div>
+      </div>
+      </div>
+
+      <div data-experiment-panel="9" hidden>
+      <div class="field">
+        <label class="field-label" for="exp9-label-text">Text</label>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp9-label-text" value="Hover here">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp9-hover-text">Hover text</label>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp9-hover-text" value="Click me">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Dimensions</span>
+        <div class="row">
+          <div class="input-wrap input-wrap--dimension" data-dimension-id="width">
+            <span class="input-icon">W</span>
+            <div class="dimension-control">
+              <span class="dimension-mode-label">Hug (0)</span>
+              <input type="text" class="dimension-fixed-input" value="160">
+            </div>
+            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Width mode">
+              <img src="" alt="" data-icon="chevron">
+            </span>
+            <div class="dimension-menu">
+              <button type="button" data-dimension-mode="fixed">Fixed</button>
+              <button type="button" data-dimension-mode="hug">Hug Content</button>
+            </div>
+          </div>
+          <div class="input-wrap input-wrap--dimension" data-dimension-id="height">
+            <span class="input-icon">H</span>
+            <div class="dimension-control is-fixed">
+              <span class="dimension-mode-label">Hug (0)</span>
+              <input type="text" class="dimension-fixed-input" value="56">
+            </div>
+            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Height mode">
+              <img src="" alt="" data-icon="chevron">
+            </span>
+            <div class="dimension-menu">
+              <button type="button" data-dimension-mode="fixed">Fixed</button>
+              <button type="button" data-dimension-mode="hug">Hug Content</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Padding</span>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon">T</span>
+            <input type="text" id="exp9-padding-top" value="0">
+          </div>
+          <div class="input-wrap">
+            <span class="input-icon">B</span>
+            <input type="text" id="exp9-padding-bottom" value="0">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon">L</span>
+            <input type="text" id="exp9-padding-left" value="24">
+          </div>
+          <div class="input-wrap">
+            <span class="input-icon">R</span>
+            <input type="text" id="exp9-padding-right" value="24">
+          </div>
+        </div>
+      </div>
+
+      <div id="exp9-bg-color-root">
+        <div class="field">
+          <span class="field-label">Background color</span>
+          <div class="row">
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="F0F0F0">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Border</span>
+        <div class="field-stack">
+        <div id="exp9-border-color-root">
+          <div class="row">
+            <div class="input-wrap color-wrap">
+              <span class="swatch" data-color-swatch></span>
+              <input type="text" data-color-hex value="CCCCCC">
+              <div class="opacity-wrap">
+                <input type="text" data-color-opacity value="100">
+                <span class="opacity-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp9-border" value="0">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+          <div class="input-wrap">
+            <input type="text" id="exp9-radius" value="0">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp9-duration">Duration</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp9-duration" value="600">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Stagger</span>
+        <div id="exp9-stagger-mode-root" class="option-selector option-selector--nested">
+          <div class="row">
+            <div class="input-wrap input-wrap--label option-selector__wrap">
+              <input type="text" class="option-selector__input" value="Center out" autocomplete="off" spellcheck="false">
+              <div class="option-selector__menu" role="listbox"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp9-stagger" value="30">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp9-scatter">Scatter</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp9-scatter" value="150">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp9-easing-root">
+      <div class="field cubic-bezier-field">
+        <span class="field-label">Easing</span>
+        <div class="cubic-bezier-editor" data-bezier-editor>
+          <svg class="cubic-bezier-svg" data-bezier-svg viewBox="0 0 208 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="208" height="200" rx="5" fill="#F5F5F5"/>
+            <line class="cubic-bezier-guide" x1="29" y1="25" x2="179" y2="25"/>
+            <line class="cubic-bezier-guide" x1="29" y1="175" x2="179" y2="175"/>
+            <path class="cubic-bezier-curve" data-bezier-curve></path>
+            <line class="cubic-bezier-handle-line" data-bezier-line1></line>
+            <line class="cubic-bezier-handle-line" data-bezier-line2></line>
+            <circle class="cubic-bezier-handle" data-bezier-p1 r="6" tabindex="0" role="slider" aria-label="First control point"></circle>
+            <circle class="cubic-bezier-handle" data-bezier-p2 r="6" tabindex="0" role="slider" aria-label="Second control point"></circle>
+          </svg>
+        </div>
+        <div class="input-wrap cubic-bezier-value-input">
+          <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTVlLTA3IDguMjIzNzUgOS4yMzQxNWUtMDcgOC4zMzQyNkM5LjIzNDE1ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODEgMTAgMS42Njc1OVpNNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE1ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxIDUuODMzMzQgMS42Njc1OVpNMi41IDEuNjY3NTlDMi41IDEuODg4NiAyLjQxMjIgMi4xMDA1NyAyLjI1NTkyIDIuMjU2ODVDMi4wOTk2NCAyLjQxMzEzIDEuODg3NjggMi41MDA5MiAxLjY2NjY3IDIuNTAwOTJDMS40NDU2NSAyLjUwMDkyIDEuMjMzNjkgMi40MTMxMyAxLjA3NzQxIDIuMjU2ODVDMC45MjExMzIgMi4xMDA1NyAwLjgzMzMzNCAxLjg4ODYgMC44MzMzMzQgMS42Njc1OUMwLjgzMzMzNCAxLjQ0NjU4IDAuOTIxMTMyIDEuMjM0NjIgMS4wNzc0MSAxLjA3ODM0QzEuMjMzNjkgMC45MjIwNTUgMS40NDU2NSAwLjgzNDI1NyAxLjY2NjY3IDAuODM0MjU3QzEuODg3NjggMC44MzQyNTcgMi4wOTk2NCAwLjkyMjA1NSAyLjI1NTkyIDEuMDc4MzRDMi40MTMyIDEuMjM0NjIgMi41IDEuNDQ2NTggMi41IDEuNjY3NTlaTTEwIDguMzM0MjZDMTAuMDAxMyA3LjkyODE1IDkuODU0MDQgNy41MzU1OCA5LjU4NjA2IDcuMjMwNDRDOS4zMTgwOCA2LjkyNTI5IDguOTQ3ODEgNi43Mjg2MSA4LjU0NDk0IDYuNjc3NDFDOC4xNDIwNyA2LjYyNjIgNy43MzQzNyA2LjcyNDAxIDcuMzk4NTggNi45NTI0MUM3LjA2Mjc4IDcuMTgwODIgNi44MjIwNCA3LjUyNDA4IDYuNzIxNjcgNy45MTc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OSA0LjM2Njg1IDcuOTYxNDkgNC4yODg3MSA4LjAzOTYzQzQuMjEwNTcgOC4xMTc3NyA0LjE2NjY3IDguMjIzNzUgNC4xNjY2NyA4LjMzNDI2QzQuMTY2NjcgOC40NDQ3NyA0LjIxMDU3IDguNTUwNzUgNC4yODg3MSA4LjYyODg5QzQuMzY2ODUgOC43MDcwMyA0LjQ3MjgzIDguNzUwOTMgNC41ODMzMyA4Ljc1MDkzSDYuNzIxNjdDNi44MjIwNCA5LjE0NDQ0IDcuMDYyNzggOS40ODc3IDcuMzk4NTggOS43MTYxQzcuNzM0MzcgOS45NDQ1MSA4LjE0MjA3IDEwLjA0MjMgOC41NDQ5NCA5Ljk5MTExQzguOTQ3ODEgOS45Mzk5MSA5LjMxODA4IDkuNzQzMjMgOS41ODYwNiA5LjQzODA4QzkuODU0MDQgOS4xMzI5NCAxMC4wMDEzIDguNzQwMzcgMTAgOC4zMzQyNlpNOS4xNjY2NyA4LjMzNDI2QzkuMTY2NjcgOC41NTUyNyA5LjA3ODg3IDguNzY3MjMgOC45MjI1OSA4LjkyMzUxQzguNzY2MzEgOS4wNzk3OSA4LjU1NDM1IDkuMTY3NTkgOC4zMzMzNCA5LjE2NzU5QzguMTEyMzIgOS4xNjc1OSA3LjkwMDM2IDkuMDc5NzkgNy43NDQwOCA4LjkyMzUxQzcuNTg3OCA4Ljc2NzIzIDcuNSA4LjU1NTI3IDcuNSA4LjMzNDI2QzcuNSA4LjExMzI1IDcuNTg3OCA3LjkwMTI4IDcuNzQ0MDggNy43NDVDNy45MDAzNiA3LjU4ODcyIDguMTEyMzIgNy41MDA5MyA4LjMzMzM0IDcuNTAwOTNDOC41NTQzNSA3LjUwMDkzIDguNzY2MzEgNy41ODg3MiA4LjkyMjU5IDcuNzQ1QzkuMDc4ODcgNy45MDEyOCA5LjE2NjY3IDguMTEzMjUgOS4xNjY2NyA4LjMzNDI2WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+Cjwvc3ZnPgo=" alt=""></span>
+          <input type="text" data-bezier-text value="0.16, 1, 0.3, 1" spellcheck="false" autocomplete="off">
+        </div>
+      </div>
+      </div>
+
+      <div id="exp9-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
