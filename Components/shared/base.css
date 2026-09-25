@@ -93,6 +93,11 @@
   outline: none;
 }
 
+/* No leading icon: inset the text like .input-wrap--label does. */
+.input-wrap:not(.input-wrap--label) > input:first-child {
+  padding-left: 7px;
+}
+
 .suffix-wrap {
   width: 30px;
   flex-shrink: 0;
