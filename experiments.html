@@ -2847,6 +2847,50 @@
 
       <div data-experiment-panel="6" hidden>
       <div class="field">
+        <label class="field-label" for="exp6-section-height-1">Section 1 Height</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-section-height-1" value="100">
+            <div class="suffix-wrap"><span>vh</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp6-section-height-2">Section 2 Height</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-section-height-2" value="100">
+            <div class="suffix-wrap"><span>vh</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp6-section-height-3">Section 3 Height</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-section-height-3" value="100">
+            <div class="suffix-wrap"><span>vh</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp6-section-height-4">Section 4 Height</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp6-section-height-4" value="100">
+            <div class="suffix-wrap"><span>vh</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-divider">
+        <span class="panel-divider__line" role="separator"></span>
+      </div>
+
+      <div class="field">
         <label class="field-label" for="exp6-curve-1">Transition 1 Curve (Cover)</label>
         <div class="row">
           <div class="input-wrap">
@@ -6755,6 +6799,8 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
 
   const DEFAULTS = {
     curves: [12, 10, 25, 5],
+    // Section heights in vh of the scroller (sections 1-4; section 5 stays 100).
+    sectionHeights: [100, 100, 100, 100],
     scrub: 0.3,
     smoothing: 0.1,
     headingSize: 96,
@@ -6795,8 +6841,10 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
 
   function normalize(raw) {
     const curves = Array.isArray(raw.curves) ? raw.curves : DEFAULTS.curves;
+    const heights = Array.isArray(raw.sectionHeights) ? raw.sectionHeights : DEFAULTS.sectionHeights;
     return {
       curves: DEFAULTS.curves.map((fallback, i) => finite(curves[i], fallback)),
+      sectionHeights: DEFAULTS.sectionHeights.map((fallback, i) => Math.max(10, finite(heights[i], fallback))),
       scrub: Math.max(0, finite(raw.scrub, DEFAULTS.scrub)),
       smoothing: Math.min(1, Math.max(0.01, finite(raw.smoothing, DEFAULTS.smoothing))),
       headingSize: Math.max(8, finite(raw.headingSize, DEFAULTS.headingSize)),
@@ -6883,6 +6931,10 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
     container.style.setProperty('--arc-heading-size', `${config.headingSize}px`);
     container.style.setProperty('--arc-solid-color', config.solidColor);
     container.style.setProperty('--arc-image-opacity', String(config.imageOpacity / 100));
+    scroller.querySelectorAll('.arc-scroll__section').forEach((section, i) => {
+      const vh = config.sectionHeights[i];
+      section.style.minHeight = vh == null ? '' : `${vh}cqh`;
+    });
     scroller.querySelectorAll('[data-arc-image]').forEach((img) => {
       const src = img.dataset.arcImage === '2' ? config.bgImage2 : config.bgImage1;
       if (img.getAttribute('src') !== src) img.src = src;
@@ -7010,7 +7062,7 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
       schedule();
     },
     getConfig() {
-      return { ...config, curves: [...config.curves] };
+      return { ...config, curves: [...config.curves], sectionHeights: [...config.sectionHeights] };
     },
     destroy() {
       if (frameId != null) cancelAnimationFrame(frameId);
@@ -11454,6 +11506,8 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
 
   const DEFAULTS = {
     curves: [12, 10, 25, 5],
+    // Section heights in vh of the scroller (sections 1-4; section 5 stays 100).
+    sectionHeights: [100, 100, 100, 100],
     scrub: 0.3,
     smoothing: 0.1,
     headingSize: 96,
@@ -11494,8 +11548,10 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
 
   function normalize(raw) {
     const curves = Array.isArray(raw.curves) ? raw.curves : DEFAULTS.curves;
+    const heights = Array.isArray(raw.sectionHeights) ? raw.sectionHeights : DEFAULTS.sectionHeights;
     return {
       curves: DEFAULTS.curves.map((fallback, i) => finite(curves[i], fallback)),
+      sectionHeights: DEFAULTS.sectionHeights.map((fallback, i) => Math.max(10, finite(heights[i], fallback))),
       scrub: Math.max(0, finite(raw.scrub, DEFAULTS.scrub)),
       smoothing: Math.min(1, Math.max(0.01, finite(raw.smoothing, DEFAULTS.smoothing))),
       headingSize: Math.max(8, finite(raw.headingSize, DEFAULTS.headingSize)),
@@ -11582,6 +11638,10 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
     container.style.setProperty('--arc-heading-size', \`\${config.headingSize}px\`);
     container.style.setProperty('--arc-solid-color', config.solidColor);
     container.style.setProperty('--arc-image-opacity', String(config.imageOpacity / 100));
+    scroller.querySelectorAll('.arc-scroll__section').forEach((section, i) => {
+      const vh = config.sectionHeights[i];
+      section.style.minHeight = vh == null ? '' : \`\${vh}cqh\`;
+    });
     scroller.querySelectorAll('[data-arc-image]').forEach((img) => {
       const src = img.dataset.arcImage === '2' ? config.bgImage2 : config.bgImage1;
       if (img.getAttribute('src') !== src) img.src = src;
@@ -11709,7 +11769,7 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
       schedule();
     },
     getConfig() {
-      return { ...config, curves: [...config.curves] };
+      return { ...config, curves: [...config.curves], sectionHeights: [...config.sectionHeights] };
     },
     destroy() {
       if (frameId != null) cancelAnimationFrame(frameId);
@@ -11736,8 +11796,10 @@ window.initExperiment6 = function initExperiment6() {
   }
 
   const DEFAULT_CURVES = [12, 10, 25, 5];
+  const DEFAULT_HEIGHTS = [100, 100, 100, 100];
 
   const controls = {
+    sectionHeights: [1, 2, 3, 4].map((n) => document.getElementById(`exp6-section-height-${n}`)),
     curves: [1, 2, 3, 4].map((n) => document.getElementById(`exp6-curve-${n}`)),
     scrub: document.getElementById('exp6-scrub'),
     smoothing: document.getElementById('exp6-smoothing'),
@@ -11746,6 +11808,7 @@ window.initExperiment6 = function initExperiment6() {
   };
 
   const numericInputs = [
+    ...controls.sectionHeights,
     ...controls.curves,
     controls.scrub,
     controls.smoothing,
@@ -11775,6 +11838,9 @@ window.initExperiment6 = function initExperiment6() {
 
   function getConfig() {
     return {
+      sectionHeights: controls.sectionHeights.map((input, i) => (
+        Math.max(10, utils.parsePx(input.value, DEFAULT_HEIGHTS[i]))
+      )),
       curves: controls.curves.map((input, i) => utils.parsePx(input.value, DEFAULT_CURVES[i])),
       scrub: Math.max(0, utils.parsePx(controls.scrub.value, 0.3)),
       smoothing: Math.min(1, Math.max(0.01, utils.parsePx(controls.smoothing.value, 0.1))),
@@ -11791,6 +11857,7 @@ window.initExperiment6 = function initExperiment6() {
 
   function collectSettings() {
     return {
+      sectionHeights: controls.sectionHeights.map((input) => input.value),
       curves: controls.curves.map((input) => input.value),
       scrub: controls.scrub.value,
       smoothing: controls.smoothing.value,
@@ -11804,6 +11871,11 @@ window.initExperiment6 = function initExperiment6() {
   function applySettings(data) {
     if (!data) return;
 
+    if (Array.isArray(data.sectionHeights)) {
+      data.sectionHeights.forEach((value, i) => {
+        if (value != null && controls.sectionHeights[i]) controls.sectionHeights[i].value = value;
+      });
+    }
     if (Array.isArray(data.curves)) {
       data.curves.forEach((value, i) => {
         if (value != null && controls.curves[i]) controls.curves[i].value = value;
@@ -11852,6 +11924,7 @@ ${embed.css}
 ${embed.js}
     // Image paths are relative to this file; point them at your own images.
     window.initArcScrollTransition(document.querySelector('.arc-scroll-root'), {
+      sectionHeights: ${JSON.stringify(config.sectionHeights)},
       curves: ${JSON.stringify(config.curves)},
       scrub: ${config.scrub},
       smoothing: ${config.smoothing},

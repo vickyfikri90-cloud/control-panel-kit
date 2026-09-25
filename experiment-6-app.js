@@ -11,8 +11,10 @@ window.initExperiment6 = function initExperiment6() {
   }
 
   const DEFAULT_CURVES = [12, 10, 25, 5];
+  const DEFAULT_HEIGHTS = [100, 100, 100, 100];
 
   const controls = {
+    sectionHeights: [1, 2, 3, 4].map((n) => document.getElementById(`exp6-section-height-${n}`)),
     curves: [1, 2, 3, 4].map((n) => document.getElementById(`exp6-curve-${n}`)),
     scrub: document.getElementById('exp6-scrub'),
     smoothing: document.getElementById('exp6-smoothing'),
@@ -21,6 +23,7 @@ window.initExperiment6 = function initExperiment6() {
   };
 
   const numericInputs = [
+    ...controls.sectionHeights,
     ...controls.curves,
     controls.scrub,
     controls.smoothing,
@@ -50,6 +53,9 @@ window.initExperiment6 = function initExperiment6() {
 
   function getConfig() {
     return {
+      sectionHeights: controls.sectionHeights.map((input, i) => (
+        Math.max(10, utils.parsePx(input.value, DEFAULT_HEIGHTS[i]))
+      )),
       curves: controls.curves.map((input, i) => utils.parsePx(input.value, DEFAULT_CURVES[i])),
       scrub: Math.max(0, utils.parsePx(controls.scrub.value, 0.3)),
       smoothing: Math.min(1, Math.max(0.01, utils.parsePx(controls.smoothing.value, 0.1))),
@@ -66,6 +72,7 @@ window.initExperiment6 = function initExperiment6() {
 
   function collectSettings() {
     return {
+      sectionHeights: controls.sectionHeights.map((input) => input.value),
       curves: controls.curves.map((input) => input.value),
       scrub: controls.scrub.value,
       smoothing: controls.smoothing.value,
@@ -79,6 +86,11 @@ window.initExperiment6 = function initExperiment6() {
   function applySettings(data) {
     if (!data) return;
 
+    if (Array.isArray(data.sectionHeights)) {
+      data.sectionHeights.forEach((value, i) => {
+        if (value != null && controls.sectionHeights[i]) controls.sectionHeights[i].value = value;
+      });
+    }
     if (Array.isArray(data.curves)) {
       data.curves.forEach((value, i) => {
         if (value != null && controls.curves[i]) controls.curves[i].value = value;
@@ -127,6 +139,7 @@ ${embed.css}
 ${embed.js}
     // Image paths are relative to this file; point them at your own images.
     window.initArcScrollTransition(document.querySelector('.arc-scroll-root'), {
+      sectionHeights: ${JSON.stringify(config.sectionHeights)},
       curves: ${JSON.stringify(config.curves)},
       scrub: ${config.scrub},
       smoothing: ${config.smoothing},

@@ -133,6 +133,8 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
 
   const DEFAULTS = {
     curves: [12, 10, 25, 5],
+    // Section heights in vh of the scroller (sections 1-4; section 5 stays 100).
+    sectionHeights: [100, 100, 100, 100],
     scrub: 0.3,
     smoothing: 0.1,
     headingSize: 96,
@@ -173,8 +175,10 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
 
   function normalize(raw) {
     const curves = Array.isArray(raw.curves) ? raw.curves : DEFAULTS.curves;
+    const heights = Array.isArray(raw.sectionHeights) ? raw.sectionHeights : DEFAULTS.sectionHeights;
     return {
       curves: DEFAULTS.curves.map((fallback, i) => finite(curves[i], fallback)),
+      sectionHeights: DEFAULTS.sectionHeights.map((fallback, i) => Math.max(10, finite(heights[i], fallback))),
       scrub: Math.max(0, finite(raw.scrub, DEFAULTS.scrub)),
       smoothing: Math.min(1, Math.max(0.01, finite(raw.smoothing, DEFAULTS.smoothing))),
       headingSize: Math.max(8, finite(raw.headingSize, DEFAULTS.headingSize)),
@@ -261,6 +265,10 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
     container.style.setProperty('--arc-heading-size', \`\${config.headingSize}px\`);
     container.style.setProperty('--arc-solid-color', config.solidColor);
     container.style.setProperty('--arc-image-opacity', String(config.imageOpacity / 100));
+    scroller.querySelectorAll('.arc-scroll__section').forEach((section, i) => {
+      const vh = config.sectionHeights[i];
+      section.style.minHeight = vh == null ? '' : \`\${vh}cqh\`;
+    });
     scroller.querySelectorAll('[data-arc-image]').forEach((img) => {
       const src = img.dataset.arcImage === '2' ? config.bgImage2 : config.bgImage1;
       if (img.getAttribute('src') !== src) img.src = src;
@@ -388,7 +396,7 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
       schedule();
     },
     getConfig() {
-      return { ...config, curves: [...config.curves] };
+      return { ...config, curves: [...config.curves], sectionHeights: [...config.sectionHeights] };
     },
     destroy() {
       if (frameId != null) cancelAnimationFrame(frameId);
