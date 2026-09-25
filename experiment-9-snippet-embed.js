@@ -7,10 +7,9 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
   let restLabel = options.restLabel ?? btn.getAttribute('aria-label') ?? 'Hover here';
   let hoverLabel = options.hoverLabel ?? restLabel;
   let duration = options.duration ?? 600;
-  let stagger = options.stagger ?? 30;
-  let scatterRange = options.scatter ?? 150;
+  let stagger = options.stagger ?? 40;
   let staggerMode = options.staggerMode ?? 'center-out';
-  let easingRaw = options.easingRaw ?? '0.16, 1, 0.3, 1';
+  let easingRaw = options.easingRaw ?? '0.65, 0, 0.35, 1';
 
   let currentChars = [];
   let incomingChars = [];
@@ -32,7 +31,7 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
 
   function getEasing() {
     const raw = String(easingRaw).trim();
-    if (!raw) return 'cubic-bezier(0.16, 1, 0.3, 1)';
+    if (!raw) return 'cubic-bezier(0.65, 0, 0.35, 1)';
     if (raw.startsWith('cubic-bezier(')) return raw;
 
     const parts = raw.split(',').map((n) => parseFloat(n.trim()));
@@ -103,13 +102,6 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
     return Math.max(em, Math.ceil((box + em) / 2));
   }
 
-  function scatterFor(index, salt) {
-    if (prefersReducedMotion()) return 0;
-    const n = Math.sin((index + 1) * 12.9898 + salt) * 43758.5453;
-    const frac = n - Math.floor(n);
-    return (frac * 2 - 1) * scatterRange;
-  }
-
   function pose(chars, y) {
     chars.forEach((el) => {
       el.style.transform = \`translateY(\${y}px)\`;
@@ -139,16 +131,15 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
     mode = 'entered';
   }
 
-  function runLayer(chars, from, to, salt) {
+  // Each char moves straight from → to; only the delay differs per char, so
+  // center-out mode keeps the middle chars ahead and the wave reads as a chevron.
+  function runLayer(chars, from, to) {
     const total = chars.length;
     const animDuration = prefersReducedMotion() ? 0 : Math.max(0, duration);
     return chars.map((el, index) => {
-      const scatter = scatterFor(index, salt);
-      const mid = (from + to) / 2 + scatter;
       return el.animate([
-        { transform: \`translateY(\${from}px)\`, offset: 0 },
-        { transform: \`translateY(\${mid}px)\`, offset: 0.5 },
-        { transform: \`translateY(\${to}px)\`, offset: 1 },
+        { transform: \`translateY(\${from}px)\` },
+        { transform: \`translateY(\${to}px)\` },
       ], {
         duration: animDuration,
         delay: charDelay(index, total),
@@ -198,8 +189,8 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
     pose(currentChars, 0);
     pose(incomingChars, travel);
     animations = [
-      ...runLayer(currentChars, 0, -travel, 1.7),
-      ...runLayer(incomingChars, travel, 0, 4.2),
+      ...runLayer(currentChars, 0, -travel),
+      ...runLayer(incomingChars, travel, 0),
     ];
     mode = 'entering';
     watch(id, () => finish('entered'));
@@ -216,8 +207,8 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
     pose(currentChars, travel);
     pose(incomingChars, 0);
     animations = [
-      ...runLayer(currentChars, travel, 0, 1.7),
-      ...runLayer(incomingChars, 0, -travel, 4.2),
+      ...runLayer(currentChars, travel, 0),
+      ...runLayer(incomingChars, 0, -travel),
     ];
     mode = 'leaving';
     watch(id, () => finish('rest'));
@@ -324,10 +315,9 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
       if (!labelsChanged && currentChars.length) return;
       rebuild();
     },
-    setAnimation({ duration: ms, stagger: step, scatter, staggerMode: modeValue, easingRaw: easing } = {}) {
+    setAnimation({ duration: ms, stagger: step, staggerMode: modeValue, easingRaw: easing } = {}) {
       if (ms != null) duration = ms;
       if (step != null) stagger = step;
-      if (scatter != null) scatterRange = scatter;
       if (modeValue != null) staggerMode = modeValue;
       if (easing != null) easingRaw = easing;
     },

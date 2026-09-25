@@ -8,9 +8,8 @@ window.initExperiment9 = function initExperiment9() {
     restLabel: 'Hover here',
     hoverLabel: 'Click me',
     duration: 600,
-    stagger: 30,
-    scatter: 150,
-    easingRaw: '0.16, 1, 0.3, 1',
+    stagger: 40,
+    easingRaw: '0.65, 0, 0.35, 1',
     staggerMode: 'center-out',
   });
 
@@ -27,7 +26,6 @@ window.initExperiment9 = function initExperiment9() {
     radius: document.getElementById('exp9-radius'),
     duration: document.getElementById('exp9-duration'),
     stagger: document.getElementById('exp9-stagger'),
-    scatter: document.getElementById('exp9-scatter'),
   };
 
   const staggerModeSelector = window.initOptionSelector(document.getElementById('exp9-stagger-mode-root'), {
@@ -86,7 +84,6 @@ window.initExperiment9 = function initExperiment9() {
     controls.radius,
     controls.duration,
     controls.stagger,
-    controls.scatter,
   ].forEach((input) => {
     utils.bindNumericArrowKey(input, applyAll);
   });
@@ -106,7 +103,6 @@ window.initExperiment9 = function initExperiment9() {
       radius: controls.radius.value,
       duration: controls.duration.value,
       stagger: controls.stagger.value,
-      scatter: controls.scatter.value,
       staggerMode: staggerModeSelector.getValue(),
       easing: easing.getRaw(),
       bgHex: bgColor.hexInput.value,
@@ -133,7 +129,6 @@ window.initExperiment9 = function initExperiment9() {
     if (data.radius != null) controls.radius.value = data.radius;
     if (data.duration != null) controls.duration.value = data.duration;
     if (data.stagger != null) controls.stagger.value = data.stagger;
-    if (data.scatter != null) controls.scatter.value = data.scatter;
     if (data.staggerMode != null) staggerModeSelector.setValue(data.staggerMode, false);
     if (data.easing != null) easing.setRaw(data.easing, false);
 
@@ -177,11 +172,7 @@ window.initExperiment9 = function initExperiment9() {
   }
 
   function getStagger() {
-    return Math.max(0, utils.parseMs(controls.stagger.value, 30));
-  }
-
-  function getScatter() {
-    return Math.max(0, utils.parsePx(controls.scatter.value, 150));
+    return Math.max(0, utils.parseMs(controls.stagger.value, 40));
   }
 
   function getConfig() {
@@ -195,7 +186,6 @@ window.initExperiment9 = function initExperiment9() {
       width: dimensions.width.getValue(),
       duration: getDuration(),
       stagger: getStagger(),
-      scatter: getScatter(),
       staggerMode: staggerModeSelector.getValue(),
       easing: easing.getValue(),
       bg: bgColor.getColor(),
@@ -222,9 +212,8 @@ window.initExperiment9 = function initExperiment9() {
     staggerButton.setAnimation({
       duration: config.duration,
       stagger: config.stagger,
-      scatter: config.scatter,
       staggerMode: config.staggerMode,
-      easingRaw: easing.getRaw() || '0.16, 1, 0.3, 1',
+      easingRaw: easing.getRaw() || '0.65, 0, 0.35, 1',
     });
     staggerButton.applyStyles({
       background: config.bg,
@@ -248,7 +237,7 @@ window.initExperiment9 = function initExperiment9() {
     const config = getConfig();
     const label = utils.escapeHtml(config.label);
     const hoverLabel = utils.escapeHtml(config.hoverLabel || config.label);
-    const easingRaw = easing.getRaw() || '0.16, 1, 0.3, 1';
+    const easingRaw = easing.getRaw() || '0.65, 0, 0.35, 1';
     const widthCss = config.width.toLowerCase() === 'auto'
       ? 'auto'
       : `${utils.parsePx(config.width, 0)}px`;
@@ -324,7 +313,6 @@ ${window.StaggerTextButtonSnippetJs || ''}
       hoverLabel: ${JSON.stringify(config.hoverLabel || config.label)},
       duration: ${config.duration},
       stagger: ${config.stagger},
-      scatter: ${config.scatter},
       staggerMode: ${JSON.stringify(config.staggerMode || 'center-out')},
       easingRaw: ${JSON.stringify(easingRaw)},
     });

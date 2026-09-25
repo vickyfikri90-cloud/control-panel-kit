@@ -156,7 +156,7 @@ When the user or another agent says "Experiment N", use this mapping — **selec
 | Experiment 6 | Experiment 6 | `6` | `experiment-6-app.js` | `initExperiment6` | Arc scroll transition — infinite loop, velocity-reactive arc/burst between image and solid sections. Position modes: Peak X/Y, Seam Y, Burst Origin. DOM ids use `exp6-*`. Snippet: `experiment-6.html`. |
 | Experiment 7 | Experiment 7 | `7` | `experiment-7-app.js` | `initExperiment7` | Infinite height carousel — drag / horizontal swipe, 10 boxes, slot structure C-B-A-ACTIVE-A-B-C. Heights, duration, easing, velocity. DOM ids use `exp7-*`. Snippet: `experiment-7.html`. |
 | Experiment 8 | Experiment 8 | `8` | `experiment-8-app.js` | `initExperiment8` | Horizontal parallax — 5 cards, infinite loop, single image at 120% in frame; position shifts left/center/right by slot (before/middle/after). Card width/height, gap, duration, easing, velocity. DOM ids use `exp8-*`. Snippet: `experiment-8.html`. |
-| Experiment 9 | Experiment 9 | `9` | `experiment-9-app.js` | `initExperiment9` | Staggered vertical text swap button — fixed-width per-char slots (current/incoming), stagger Sequential or Center out (`abs(i-mid)*step`), scatter, focus-visible = hover, prefers-reduced-motion instant swap, mid-wave reverse. DOM ids use `exp9-*`. Snippet: `experiment-9.html`. |
+| Experiment 9 | Experiment 9 | `9` | `experiment-9-app.js` | `initExperiment9` | Staggered vertical text swap button — fixed-width per-char slots (current/incoming), stagger Sequential or Center out (`abs(i-mid)*step`, forms a chevron-up wave), focus-visible = hover, prefers-reduced-motion instant swap, mid-wave reverse. DOM ids use `exp9-*`. Snippet: `experiment-9.html`. |
 
 ### Changelog
 
