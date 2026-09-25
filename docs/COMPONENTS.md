@@ -19,7 +19,7 @@ Per-component API, CSS, dependencies, usage, and agent rules.
 | `escapeHtml(value)` | Safe HTML for snippets |
 | `bindInputBehavior(input)` | Select-all on focus/click |
 | `bindInputWrapInputs(root)` | Apply to all `.input-wrap input` |
-| `bindNumericArrowKey(input, onChange, { isOpacity })` | ↑↓ step (Shift = ±8) |
+| `bindNumericArrowKey(input, onChange, { isOpacity, step })` | ↑↓ step (Shift = ±8). Safe to call more than once per input — one step per key press, every `onChange` runs. Fractional fields: `step` option or `data-arrow-step="0.1"` (Shift = 10×). |
 | `loadStylesheet(href, id)` / `loadScript(src, id)` | Deduped injectors |
 
 ### `ComponentIcons` (`shared/icons.js`)

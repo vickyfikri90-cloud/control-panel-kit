@@ -80,14 +80,31 @@ window.ComponentUtils = {
     });
   },
 
+  // Binding the same input more than once (e.g. by a component and again by
+  // the experiment app) shares one keydown handler, so each key press steps
+  // once and every registered onChange still runs.
+  // Step is 1 (Shift: 8) by default; set `options.step` or `data-arrow-step`
+  // for fine-grained fields (e.g. 0.1 for scale, Shift steps 10×).
   bindNumericArrowKey(input, onChange, options = {}) {
-    const { isOpacity = false } = options;
+    if (!input) return;
+
+    let binding = input.__numericArrowKey;
+    if (binding) {
+      if (onChange) binding.handlers.push(onChange);
+      if (options.isOpacity) binding.isOpacity = true;
+      if (options.step != null) binding.step = options.step;
+      return;
+    }
+
+    binding = {
+      handlers: onChange ? [onChange] : [],
+      isOpacity: !!options.isOpacity,
+      step: options.step,
+    };
+    input.__numericArrowKey = binding;
 
     input.addEventListener('keydown', (event) => {
       if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
-
-      const step = event.shiftKey ? 8 : 1;
-      const delta = event.key === 'ArrowUp' ? step : -step;
 
       event.preventDefault();
 
@@ -95,16 +112,19 @@ window.ComponentUtils = {
       const match = raw.match(/^(-?\d*\.?\d+)(.*)$/);
       if (!match) return;
 
-      let next = parseFloat(match[1]) + delta;
+      const base = Number(binding.step ?? input.dataset.arrowStep) || 1;
+      const step = event.shiftKey ? (base === 1 ? 8 : base * 10) : base;
+      const delta = event.key === 'ArrowUp' ? step : -step;
+
+      let next = Math.round((parseFloat(match[1]) + delta) * 1e6) / 1e6;
       const suffix = match[2];
 
-      if (isOpacity) {
+      if (binding.isOpacity) {
         next = Math.min(100, Math.max(0, next));
       }
 
-      const formatted = Number.isInteger(next) ? String(Math.round(next)) : String(next);
-      input.value = `${formatted}${suffix}`;
-      onChange?.();
+      input.value = `${next}${suffix}`;
+      binding.handlers.forEach((handler) => handler());
     });
   },
 
