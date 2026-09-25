@@ -82,6 +82,7 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
         pos: 'below',
         anim: null,
         delay: 0,
+        to: null,
       };
     });
   }
@@ -143,29 +144,20 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
     anim.cancel();
   }
 
-  function move(glyph, to, delay) {
-    const travel = measureTravel();
-    const from = offsetFor(glyph.pos, travel);
-    const target = offsetFor(to, travel);
-
-    if (prefersReducedMotion() || duration <= 0) {
-      place(glyph, to, travel);
-      advance(glyph, 0);
-      return;
-    }
-
+  function animateGlyph(glyph, to, { from, target, ms, delay, easing, travel }) {
     const anim = glyph.el.animate([
       { transform: \`translateY(\${from}px)\` },
       { transform: \`translateY(\${target}px)\` },
     ], {
-      duration,
+      duration: ms,
       delay,
-      easing: getEasing(),
+      easing,
       fill: 'forwards',
     });
 
     glyph.anim = anim;
     glyph.delay = delay;
+    glyph.to = to;
     anim.finished.then(() => {
       if (glyph.anim !== anim) return;
       glyph.anim = null;
@@ -173,6 +165,79 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
       anim.cancel();
       advance(glyph, 0);
     }).catch(() => {});
+  }
+
+  function move(glyph, to, delay) {
+    const travel = measureTravel();
+
+    if (prefersReducedMotion() || duration <= 0) {
+      place(glyph, to, travel);
+      advance(glyph, 0);
+      return;
+    }
+
+    animateGlyph(glyph, to, {
+      from: offsetFor(glyph.pos, travel),
+      target: offsetFor(to, travel),
+      ms: duration,
+      delay,
+      easing: getEasing(),
+      travel,
+    });
+  }
+
+  function readY(el) {
+    const value = getComputedStyle(el).transform;
+    if (!value || value === 'none') return 0;
+    return new DOMMatrixReadOnly(value).m42;
+  }
+
+  function easingTail() {
+    const match = getEasing().match(/^cubic-bezier\\(([^)]+)\\)$/);
+    if (match) {
+      const parts = match[1].split(',').map((n) => parseFloat(n));
+      if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) return parts.slice(2);
+    }
+    return [0.35, 1];
+  }
+
+  // A glyph rising into the center that should now leave keeps rising: its
+  // move is extended straight through to the top, starting at its current
+  // speed so there's no stop or stutter at the center line.
+  function passThrough(glyph) {
+    const anim = glyph.anim;
+    const travel = measureTravel();
+    const target = -travel;
+    const time = Number(anim.currentTime) || 0;
+    const sample = 16;
+
+    const y0 = readY(glyph.el);
+    anim.currentTime = time + sample;
+    const y1 = readY(glyph.el);
+    anim.currentTime = time;
+
+    const velocity = Math.min(0, (y1 - y0) / sample);
+    const distance = target - y0;
+    if (distance >= 0) return;
+
+    const ms = Math.max(duration * 0.4, duration * (Math.abs(distance) / (travel * 2)) * 1.5);
+    const slope = (velocity * ms) / distance;
+    const x1 = 0.3;
+    const y1c = Math.min(Math.max(slope * x1, 0), 1);
+    const [x2, y2] = easingTail();
+
+    glyph.anim = null;
+    anim.cancel();
+    animateGlyph(glyph, 'above', {
+      from: y0,
+      target,
+      ms,
+      delay: 0,
+      easing: \`cubic-bezier(\${x1}, \${y1c.toFixed(3)}, \${x2}, \${y2})\`,
+      travel,
+    });
+    // Start on this frame instead of the next so the hand-off doesn't hold a frame.
+    glyph.anim.startTime = document.timeline.currentTime - sample / 2;
   }
 
   function advance(glyph, delay) {
@@ -192,6 +257,10 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
     allGlyphs().forEach((glyph) => {
       // Not started yet: drop the pending move so the glyph can re-plan.
       if (isWaiting(glyph)) stop(glyph);
+      if (glyph.anim && glyph.to === 'center' && !wantsCenter(glyph)) {
+        passThrough(glyph);
+        return;
+      }
       advance(glyph, charDelay(glyph.index, glyph.total));
     });
   }
