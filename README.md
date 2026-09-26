@@ -1,4 +1,4 @@
-# Control Panel Kit — Experiment Tool
+# Experiment Tool
 
 Vanilla JS toolkit for UI experiments: **live preview** on the left, **Figma-style control panel** on the right, plus **HTML snippet export**.
 
@@ -29,16 +29,16 @@ open Components/component-index.html
 4. Load the kit:
 
 ```html
-<script src="Components/control-panel-kit.js"></script>
+<script src="Components/experiment-tool.js"></script>
 <script>
   (async () => {
-    await ControlPanelKit.load();
-    const shell = ControlPanelKit.createShell('#app', {
+    await ExperimentTool.load();
+    const shell = ExperimentTool.createShell('#app', {
       previewHTML: '<div class="my-preview">...</div>',
     });
     // Panel HTML inline in shell file, or:
-    // await ControlPanelKit.mountPanel(shell.panel, 'MyExperiment/panel.html');
-    await ControlPanelKit.loadScript('my-experiment-app.js', 'app');
+    // await ExperimentTool.mountPanel(shell.panel, 'MyExperiment/panel.html');
+    await ExperimentTool.loadScript('my-experiment-app.js', 'app');
   })();
 </script>
 ```
@@ -51,8 +51,8 @@ See **[AGENTS.md](./AGENTS.md)** for full agent adaptation rules and **[docs/COM
 
 ```
 Experiment Tool/
-├── Components/                  # Reusable control panel kit
-│   ├── control-panel-kit.js     # Bulk loader + shell helpers
+├── Components/                  # Reusable Experiment Tool components
+│   ├── experiment-tool.js     # Bulk loader + shell helpers
 │   ├── components-manifest.js   # Component registry
 │   ├── components-templates.js  # Embedded HTML (single-file builds)
 │   ├── components-loader.js     # Lazy-load one component

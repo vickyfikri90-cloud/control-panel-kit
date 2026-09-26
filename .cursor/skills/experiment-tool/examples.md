@@ -145,16 +145,16 @@ Example: `card-hover` experiment.
 </head>
 <body>
   <div id="app"></div>
-  <script src="Components/control-panel-kit.js"></script>
+  <script src="Components/experiment-tool.js"></script>
   <script src="Components/CardHover/component.js"></script>
   <script>
     (async () => {
-      await ControlPanelKit.load();
-      await ControlPanelKit.loadScript('Components/CardHover/component.css', 'card-hover-css');
+      await ExperimentTool.load();
+      await ExperimentTool.loadScript('Components/CardHover/component.css', 'card-hover-css');
       const res = await fetch('card-hover.shell.html');
       const shellHTML = await res.text();
       document.getElementById('app').innerHTML = shellHTML;
-      await ControlPanelKit.loadScript('card-hover-app.js', 'app');
+      await ExperimentTool.loadScript('card-hover-app.js', 'app');
     })();
   </script>
 </body>

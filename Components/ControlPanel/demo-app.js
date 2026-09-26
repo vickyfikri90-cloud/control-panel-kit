@@ -1,5 +1,5 @@
 window.initControlPanelDemo = function initControlPanelDemo(shell) {
-  const kit = window.ControlPanelKit;
+  const kit = window.ExperimentTool;
   const utils = window.ComponentUtils;
   const previewBox = document.createElement('div');
   previewBox.className = 'cp-preview-box';

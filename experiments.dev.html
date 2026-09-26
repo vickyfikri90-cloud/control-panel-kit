@@ -37,7 +37,7 @@
 <body>
   <script src="experiments-shell-embed.js"></script>
   <script src="Components/components-templates.js"></script>
-  <script src="Components/control-panel-kit.js"></script>
+  <script src="Components/experiment-tool.js"></script>
   <script>
     (async () => {
       const shell = window.EXPERIMENTS_SHELL_HTML;
@@ -46,32 +46,32 @@
       }
       document.body.insertAdjacentHTML('afterbegin', shell);
 
-      await ControlPanelKit.load();
-      await ControlPanelKit.loadScript('HoverButton/component.js', 'hover-button');
-      await ControlPanelKit.loadScript('RotateXButton/component.js', 'button-rotate-x');
-      await ControlPanelKit.loadScript('RotateCarousel/component.js', 'rotate-carousel');
-      await ControlPanelKit.loadScript('RotateXCarousel/component.js', 'rotate-x-carousel');
-      await ControlPanelKit.loadScript('FlipCarousel/component.js', 'flip-carousel');
-      await ControlPanelKit.loadScript('ArcScrollTransition/component.js', 'arc-scroll-transition');
-      await ControlPanelKit.loadScript('InfiniteCarousel/component.js', 'infinite-carousel');
-      await ControlPanelKit.loadScript('HorizontalParallax/component.js', 'horizontal-parallax');
-      await ControlPanelKit.loadScript('StaggerTextButton/component.js', 'button-stagger-text');
-      await ControlPanelKit.loadScript('HeadingEntrance/component.js', 'heading-entrance');
-      await ControlPanelKit.loadScript('../button-hover-app.js', 'button-hover');
-      await ControlPanelKit.loadScript('../button-rotate-x-app.js', 'button-rotate-x');
-      await ControlPanelKit.loadScript('../carousel-rotate-app.js', 'carousel-rotate');
-      await ControlPanelKit.loadScript('../carousel-rotate-x-app.js', 'carousel-rotate-x');
-      await ControlPanelKit.loadScript('../carousel-flip-app.js', 'carousel-flip');
-      await ControlPanelKit.loadScript('../transition-arc-scroll-snippet-embed.js', 'transition-arc-scroll-snippet-embed');
-      await ControlPanelKit.loadScript('../transition-arc-scroll-app.js', 'transition-arc-scroll');
-      await ControlPanelKit.loadScript('../carousel-infinite-snippet-embed.js', 'carousel-infinite-snippet-embed');
-      await ControlPanelKit.loadScript('../carousel-infinite-app.js', 'carousel-infinite');
-      await ControlPanelKit.loadScript('../parallax-horizontal-app.js', 'parallax-horizontal');
-      await ControlPanelKit.loadScript('../button-stagger-text-snippet-embed.js', 'button-stagger-text-snippet-embed');
-      await ControlPanelKit.loadScript('../button-stagger-text-app.js', 'button-stagger-text');
-      await ControlPanelKit.loadScript('../heading-entrance-snippet-embed.js', 'heading-entrance-snippet-embed');
-      await ControlPanelKit.loadScript('../heading-entrance-app.js', 'heading-entrance');
-      await ControlPanelKit.loadScript('../experiments-app.js', 'experiments');
+      await ExperimentTool.load();
+      await ExperimentTool.loadScript('HoverButton/component.js', 'hover-button');
+      await ExperimentTool.loadScript('RotateXButton/component.js', 'button-rotate-x');
+      await ExperimentTool.loadScript('RotateCarousel/component.js', 'rotate-carousel');
+      await ExperimentTool.loadScript('RotateXCarousel/component.js', 'rotate-x-carousel');
+      await ExperimentTool.loadScript('FlipCarousel/component.js', 'flip-carousel');
+      await ExperimentTool.loadScript('ArcScrollTransition/component.js', 'arc-scroll-transition');
+      await ExperimentTool.loadScript('InfiniteCarousel/component.js', 'infinite-carousel');
+      await ExperimentTool.loadScript('HorizontalParallax/component.js', 'horizontal-parallax');
+      await ExperimentTool.loadScript('StaggerTextButton/component.js', 'button-stagger-text');
+      await ExperimentTool.loadScript('HeadingEntrance/component.js', 'heading-entrance');
+      await ExperimentTool.loadScript('../button-hover-app.js', 'button-hover');
+      await ExperimentTool.loadScript('../button-rotate-x-app.js', 'button-rotate-x');
+      await ExperimentTool.loadScript('../carousel-rotate-app.js', 'carousel-rotate');
+      await ExperimentTool.loadScript('../carousel-rotate-x-app.js', 'carousel-rotate-x');
+      await ExperimentTool.loadScript('../carousel-flip-app.js', 'carousel-flip');
+      await ExperimentTool.loadScript('../transition-arc-scroll-snippet-embed.js', 'transition-arc-scroll-snippet-embed');
+      await ExperimentTool.loadScript('../transition-arc-scroll-app.js', 'transition-arc-scroll');
+      await ExperimentTool.loadScript('../carousel-infinite-snippet-embed.js', 'carousel-infinite-snippet-embed');
+      await ExperimentTool.loadScript('../carousel-infinite-app.js', 'carousel-infinite');
+      await ExperimentTool.loadScript('../parallax-horizontal-app.js', 'parallax-horizontal');
+      await ExperimentTool.loadScript('../button-stagger-text-snippet-embed.js', 'button-stagger-text-snippet-embed');
+      await ExperimentTool.loadScript('../button-stagger-text-app.js', 'button-stagger-text');
+      await ExperimentTool.loadScript('../heading-entrance-snippet-embed.js', 'heading-entrance-snippet-embed');
+      await ExperimentTool.loadScript('../heading-entrance-app.js', 'heading-entrance');
+      await ExperimentTool.loadScript('../experiments-app.js', 'experiments');
     })().catch((error) => {
       console.error(error);
       document.body.innerHTML = `<p style="padding:24px;font:500 14px Inter,sans-serif;">Failed to load experiments.<br><code>${error.message}</code></p>`;

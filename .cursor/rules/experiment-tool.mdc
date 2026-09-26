@@ -1,15 +1,15 @@
 ---
-description: Rules for adapting the Control Panel Kit experiment tool
+description: Rules for adapting the Experiment Tool
 globs:
   - "**/*"
 alwaysApply: true
 ---
 
-# Control Panel Kit — Experiment Tool
+# Experiment Tool
 
 Before modifying this project or copying it to a new experiment:
 
-1. Read the **control-panel-kit** skill (`.cursor/skills/control-panel-kit/SKILL.md`)
+1. Read the **experiment-tool** skill (`.cursor/skills/experiment-tool/SKILL.md`)
 2. Read `AGENTS.md` — conventions, do/don't, wiring pattern
 3. Read `docs/COMPONENTS.md` — per-component API and rules
 4. Read `README.md` — quick start and architecture

@@ -1,10 +1,10 @@
-# Agent Instructions — Control Panel Kit
+# Agent Instructions — Experiment Tool
 
 **Read this file first** when adapting this experiment tool to a new project or adding components.
 
 ## Project purpose
 
-This is a **reusable vanilla JS control panel kit** for interactive UI experiments. The user tweaks parameters in a Figma-style sidebar and sees live preview + exportable HTML snippet.
+This is the **Experiment Tool**, a reusable vanilla JS kit for interactive UI experiments. The user tweaks parameters in a Figma-style sidebar and sees live preview + exportable HTML snippet.
 
 Target use: copy `Components/` into future vibe-code / prototype projects (buttons, cards, animations, etc.).
 
@@ -65,7 +65,7 @@ Every experiment app must follow this loop:
 
 ### Script load order
 
-In `control-panel-kit.js`, order matters:
+In `experiment-tool.js`, order matters:
 
 ```
 shared/utils.js → shared/icons.js → primitives → ControlPanel/component.js
@@ -86,7 +86,7 @@ When editing `{Folder}/component.html`, also update the matching key in `compone
 - Call **`snippet.update()`** inside `applyAll`
 - Use **`ComponentUtils.escapeHtml()`** for user text in generated snippets
 - Register reusable controls in **`components-manifest.js`**
-- Add new kit CSS/JS to **`control-panel-kit.js`** arrays
+- Add new kit CSS/JS to **`experiment-tool.js`** arrays
 - Use **`data-*` attributes** for JS queries
 - Respect global menu close events: `dimension-menu:close-all`, `option-selector:close-all`
 
@@ -107,7 +107,7 @@ When editing `{Folder}/component.html`, also update the matching key in `compone
 2. Implement `window.initMyControl(root, options)`
 3. Register in `components-manifest.js`
 4. Add HTML to `components-templates.js`
-5. Add to `control-panel-kit.js` `styles[]` and `scripts[]` (correct order)
+5. Add to `experiment-tool.js` `styles[]` and `scripts[]` (correct order)
 6. Add demo entry in `component-index.js` → `demoOptions`
 7. Document in `docs/COMPONENTS.md`
 
@@ -115,7 +115,7 @@ When editing `{Folder}/component.html`, also update the matching key in `compone
 
 1. Create `{name}.shell.html` — `.cp-app` layout with preview + panel markup
 2. Create `{name}-app.js` — IIFE wiring all controls
-3. Entry HTML loads `control-panel-kit.js`, calls `load()` + `createShell()`
+3. Entry HTML loads `experiment-tool.js`, calls `load()` + `createShell()`
 4. Load experiment-specific components separately (e.g. `HoverButton/component.js`)
 5. Optional: extend `scripts/build-single-html.js` for single-file export
 
@@ -123,14 +123,14 @@ When editing `{Folder}/component.html`, also update the matching key in `compone
 
 | System | File | When to use |
 |--------|------|-------------|
-| **ControlPanelKit** | `control-panel-kit.js` | Full experiment apps — loads everything |
+| **ExperimentTool** | `experiment-tool.js` | Full experiment apps — loads everything |
 | **ComponentLoader** | `components-loader.js` | Load one component by manifest ID |
 
 ## Key globals
 
 | Global | Source | Purpose |
 |--------|--------|---------|
-| `ControlPanelKit` | `control-panel-kit.js` | Load, shell, mount panel |
+| `ExperimentTool` | `experiment-tool.js` | Load, shell, mount panel |
 | `ComponentUtils` | `shared/utils.js` | parsePx, escapeHtml, bindInputBehavior |
 | `ComponentIcons` | `shared/icons.js` | Base64 SVG icons |
 | `COMPONENTS` | `components-manifest.js` | Registry array |

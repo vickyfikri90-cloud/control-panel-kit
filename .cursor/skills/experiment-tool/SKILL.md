@@ -1,5 +1,5 @@
 ---
-name: control-panel-kit
+name: experiment-tool
 description: >-
   Build Figma-style vanilla JS control panel experiments — live preview left,
   tweakable sidebar right, HTML snippet export. Use when creating UI experiments,
@@ -7,7 +7,7 @@ description: >-
   mentions control panel, experiment tool, Components/, applyAll, or snippet export.
 ---
 
-# Control Panel Kit
+# Experiment Tool
 
 Vanilla JS toolkit for UI experiments. **No React/Vue.** Copy `Components/` into new projects or work in this repo.
 
@@ -125,7 +125,7 @@ Every experiment app is an IIFE with this loop:
 ```
 - [ ] Create {name}.shell.html — .cp-app with .cp-preview + .panel markup
 - [ ] Create {name}-app.js — IIFE, applyAll loop, all controls wired
-- [ ] Entry HTML loads control-panel-kit.js, calls load() + createShell()
+- [ ] Entry HTML loads experiment-tool.js, calls load() + createShell()
 - [ ] Load experiment-specific preview component separately
 - [ ] Optional: extend scripts/build-single-html.js for single-file export
 ```
@@ -147,14 +147,14 @@ Every experiment app is an IIFE with this loop:
 ### Entry bootstrap
 
 ```html
-<script src="Components/control-panel-kit.js"></script>
+<script src="Components/experiment-tool.js"></script>
 <script>
   (async () => {
-    await ControlPanelKit.load();
-    const shell = ControlPanelKit.createShell('#app', {
+    await ExperimentTool.load();
+    const shell = ExperimentTool.createShell('#app', {
       previewHTML: '<div class="cp-preview">...</div>',
     });
-    await ControlPanelKit.loadScript('my-experiment-app.js', 'app');
+    await ExperimentTool.loadScript('my-experiment-app.js', 'app');
   })();
 </script>
 ```
@@ -166,12 +166,12 @@ Every experiment app is an IIFE with this loop:
 - [ ] Implement window.initMyControl(root, options)
 - [ ] Register in components-manifest.js
 - [ ] Sync HTML to components-templates.js
-- [ ] Add to control-panel-kit.js styles[] and scripts[] (correct order)
+- [ ] Add to experiment-tool.js styles[] and scripts[] (correct order)
 - [ ] Add demo entry in component-index.js → demoOptions
 - [ ] Document in docs/COMPONENTS.md
 ```
 
-**Script load order in control-panel-kit.js:**
+**Script load order in experiment-tool.js:**
 ```
 shared/utils.js → shared/icons.js → primitives → ControlPanel/component.js
 ```
@@ -210,14 +210,14 @@ Only one dropdown open at a time. Respect:
 
 | System | File | When |
 |--------|------|------|
-| ControlPanelKit | `control-panel-kit.js` | Full experiment apps |
+| ExperimentTool | `experiment-tool.js` | Full experiment apps |
 | ComponentLoader | `components-loader.js` | Load one component by manifest ID |
 
 ## Key globals
 
 | Global | Purpose |
 |--------|---------|
-| `ControlPanelKit` | Load, shell, mount panel |
+| `ExperimentTool` | Load, shell, mount panel |
 | `ComponentUtils` | parsePx, escapeHtml, bindInputBehavior, bindNumericArrowKey |
 | `ComponentIcons` | Base64 SVG icons for chevron, check |
 | `COMPONENTS` | Registry from components-manifest.js |

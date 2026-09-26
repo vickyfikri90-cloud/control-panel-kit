@@ -64,9 +64,9 @@ initControlPanel(root)
 ### Usage
 
 ```js
-await ControlPanelKit.load();
-const shell = ControlPanelKit.createShell('#app', { previewHTML: '<div>...</div>' });
-await ControlPanelKit.mountPanel(shell.panel, 'ControlPanel/demo-panel.html');
+await ExperimentTool.load();
+const shell = ExperimentTool.createShell('#app', { previewHTML: '<div>...</div>' });
+await ExperimentTool.mountPanel(shell.panel, 'ControlPanel/demo-panel.html');
 initControlPanel(shell.panel);
 ```
 
@@ -651,7 +651,7 @@ btn.applyStyles({ background: '#f0f0f0', padding: '0 24px' });
 
 ### Agent rules
 
-- Load manually: `ControlPanelKit.loadScript('HoverButton/component.js')`
+- Load manually: `ExperimentTool.loadScript('HoverButton/component.js')`
 - Do not break two-text-node structure
 - Reference wiring: `button-hover-app.js`
 

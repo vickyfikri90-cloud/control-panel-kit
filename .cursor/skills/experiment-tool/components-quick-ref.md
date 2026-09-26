@@ -167,9 +167,9 @@ Always `escapeHtml` user text in generated snippets.
 ## Control Panel Shell
 
 ```js
-await ControlPanelKit.load();
-const shell = ControlPanelKit.createShell('#app', { previewHTML: '...' });
-await ControlPanelKit.mountPanel(shell.panel, 'path/to/panel.html');
+await ExperimentTool.load();
+const shell = ExperimentTool.createShell('#app', { previewHTML: '...' });
+await ExperimentTool.mountPanel(shell.panel, 'path/to/panel.html');
 initControlPanel(shell.panel);
 // Returns: { element, append(node), setHTML(html) }
 ```

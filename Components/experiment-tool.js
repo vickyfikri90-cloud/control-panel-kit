@@ -1,4 +1,4 @@
-window.ControlPanelKit = {
+window.ExperimentTool = {
   _basePath: null,
   _loaded: false,
 
@@ -38,10 +38,10 @@ window.ControlPanelKit = {
   getBasePath() {
     if (this._basePath) return this._basePath;
 
-    const script = document.querySelector('script[src*="control-panel-kit.js"]');
+    const script = document.querySelector('script[src*="experiment-tool.js"]');
     if (script) {
       const src = script.getAttribute('src') || '';
-      const dir = src.replace(/control-panel-kit\.js(\?.*)?$/, '');
+      const dir = src.replace(/experiment-tool\.js(\?.*)?$/, '');
       this._basePath = dir || '.';
       return this._basePath;
     }
@@ -100,7 +100,7 @@ window.ControlPanelKit = {
       ? document.querySelector(container)
       : container;
 
-    if (!root) throw new Error('ControlPanelKit.createShell: container not found');
+    if (!root) throw new Error('ExperimentTool.createShell: container not found');
 
     const previewHTML = options.previewHTML ?? '';
     root.innerHTML = `
