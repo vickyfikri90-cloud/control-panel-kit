@@ -29,13 +29,13 @@ const snippetEmbed = `window.InfiniteCarouselSnippet = {
   js: \`${escapeTemplate(snippetJs)}\`,
   headingSrc: ${JSON.stringify(snippetHeadingSrc)},
 };\n`;
-fs.writeFileSync(path.join(root, 'experiment-7-snippet-embed.js'), snippetEmbed);
-console.log(`Built experiment-7-snippet-embed.js (${(Buffer.byteLength(snippetEmbed) / 1024).toFixed(1)} KB)`);
+fs.writeFileSync(path.join(root, 'carousel-infinite-snippet-embed.js'), snippetEmbed);
+console.log(`Built carousel-infinite-snippet-embed.js (${(Buffer.byteLength(snippetEmbed) / 1024).toFixed(1)} KB)`);
 
 const staggerSnippetJs = escapeForInlineScript(read('Components/StaggerTextButton/component.js'));
 const staggerSnippetEmbed = `window.StaggerTextButtonSnippetJs = \`${escapeTemplate(staggerSnippetJs)}\`;\n`;
-fs.writeFileSync(path.join(root, 'experiment-9-snippet-embed.js'), staggerSnippetEmbed);
-console.log(`Built experiment-9-snippet-embed.js (${(Buffer.byteLength(staggerSnippetEmbed) / 1024).toFixed(1)} KB)`);
+fs.writeFileSync(path.join(root, 'button-stagger-text-snippet-embed.js'), staggerSnippetEmbed);
+console.log(`Built button-stagger-text-snippet-embed.js (${(Buffer.byteLength(staggerSnippetEmbed) / 1024).toFixed(1)} KB)`);
 
 const arcSnippetCss = read('Components/ArcScrollTransition/component.css');
 const arcSnippetJs = escapeForInlineScript(read('Components/ArcScrollTransition/component.js'));
@@ -43,8 +43,17 @@ const arcSnippetEmbed = `window.ArcScrollTransitionSnippet = {
   css: \`${escapeTemplate(arcSnippetCss)}\`,
   js: \`${escapeTemplate(arcSnippetJs)}\`,
 };\n`;
-fs.writeFileSync(path.join(root, 'experiment-6-snippet-embed.js'), arcSnippetEmbed);
-console.log(`Built experiment-6-snippet-embed.js (${(Buffer.byteLength(arcSnippetEmbed) / 1024).toFixed(1)} KB)`);
+fs.writeFileSync(path.join(root, 'transition-arc-scroll-snippet-embed.js'), arcSnippetEmbed);
+console.log(`Built transition-arc-scroll-snippet-embed.js (${(Buffer.byteLength(arcSnippetEmbed) / 1024).toFixed(1)} KB)`);
+
+const headingCss = read('Components/HeadingEntrance/component.css').split('/* Experiment preview only')[0].trim();
+const headingJs = escapeForInlineScript(read('Components/HeadingEntrance/component.js'));
+const headingEmbed = `window.HeadingEntranceSnippet = {
+  css: \`${escapeTemplate(headingCss)}\`,
+  js: \`${escapeTemplate(headingJs)}\`,
+};\n`;
+fs.writeFileSync(path.join(root, 'heading-entrance-snippet-embed.js'), headingEmbed);
+console.log(`Built heading-entrance-snippet-embed.js (${(Buffer.byteLength(headingEmbed) / 1024).toFixed(1)} KB)`);
 
 const styles = [
   'Components/shared/base.css',
@@ -65,6 +74,7 @@ const styles = [
   'Components/InfiniteCarousel/component.css',
   'Components/HorizontalParallax/component.css',
   'Components/StaggerTextButton/component.css',
+  'Components/HeadingEntrance/component.css',
 ].map(read).join('\n');
 
 const scripts = [
@@ -86,18 +96,21 @@ const scripts = [
   'Components/InfiniteCarousel/component.js',
   'Components/HorizontalParallax/component.js',
   'Components/StaggerTextButton/component.js',
-  'hover-button-app.js',
-  'experiment-2-app.js',
-  'experiment-3-app.js',
-  'experiment-4-5-app.js',
-  'experiment-5-app.js',
-  'experiment-6-snippet-embed.js',
-  'experiment-6-app.js',
-  'experiment-7-snippet-embed.js',
-  'experiment-7-app.js',
-  'experiment-8-app.js',
-  'experiment-9-snippet-embed.js',
-  'experiment-9-app.js',
+  'Components/HeadingEntrance/component.js',
+  'button-hover-app.js',
+  'button-rotate-x-app.js',
+  'carousel-rotate-app.js',
+  'carousel-rotate-x-app.js',
+  'carousel-flip-app.js',
+  'transition-arc-scroll-snippet-embed.js',
+  'transition-arc-scroll-app.js',
+  'carousel-infinite-snippet-embed.js',
+  'carousel-infinite-app.js',
+  'parallax-horizontal-app.js',
+  'button-stagger-text-snippet-embed.js',
+  'button-stagger-text-app.js',
+  'heading-entrance-snippet-embed.js',
+  'heading-entrance-app.js',
   'experiments-app.js',
 ].map(read).join('\n');
 
@@ -115,7 +128,7 @@ const html = `<!DOCTYPE html>
   <title>Experiments</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Inter:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Inter:wght@100..900&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -159,10 +172,10 @@ const hoverScripts = [
   'Components/CubicBezierInput/component.js',
   'Components/SnippetOutput/component.js',
   'Components/HoverButton/component.js',
-  'hover-button-app.js',
+  'button-hover-app.js',
 ].map(read).join('\n');
 
-const hoverBody = read('hover-button.shell.html');
+const hoverBody = read('button-hover.shell.html');
 
 const hoverHtml = `<!DOCTYPE html>
 <html lang="en">
@@ -194,5 +207,5 @@ ${hoverScripts}
 </html>
 `;
 
-fs.writeFileSync(path.join(root, 'hover-button.html'), hoverHtml);
-console.log(`Built hover-button.html (${(Buffer.byteLength(hoverHtml) / 1024).toFixed(1)} KB)`);
+fs.writeFileSync(path.join(root, 'button-hover.html'), hoverHtml);
+console.log(`Built button-hover.html (${(Buffer.byteLength(hoverHtml) / 1024).toFixed(1)} KB)`);

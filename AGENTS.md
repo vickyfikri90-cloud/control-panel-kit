@@ -20,9 +20,9 @@ Target use: copy `Components/` into future vibe-code / prototype projects (butto
 | Manifest ID | kebab-case | `color-input` |
 | Data attributes | kebab-case | `data-color-hex` |
 | State classes | `is-*` prefix | `is-on`, `is-open`, `is-fixed` |
-| Experiment shell | `{name}.shell.html` | `hover-button.shell.html` |
-| Experiment logic | `{name}-app.js` | `hover-button-app.js` |
-| Built output | `{name}.html` | `hover-button.html` |
+| Experiment shell | `{name}.shell.html` | `button-hover.shell.html` |
+| Experiment logic | `{name}-app.js` | `button-hover-app.js` |
+| Built output | `{name}.html` | `button-hover.html` |
 
 ### Init function pattern
 
@@ -93,7 +93,7 @@ When editing `{Folder}/component.html`, also update the matching key in `compone
 ## Don't
 
 - Don't convert to React/Vue unless the user explicitly asks — preserve init/controller API
-- Don't edit **`hover-button.html`** directly — it's build output
+- Don't edit **`button-hover.html`** directly — it's build output
 - Don't fetch panel HTML in single-file builds — use `components-templates.js`
 - Don't skip manifest registration for reusable primitives
 - Don't open multiple dropdown menus simultaneously
@@ -144,33 +144,36 @@ When editing `{Folder}/component.html`, also update the matching key in `compone
 
 ## Experiment registry
 
-When the user or another agent says "Experiment N", use this mapping — **selector label ≠ internal id** for Experiment 4.
+Experiments use semantic ids (matching their component). Old numbers ("Experiment N") are listed for reference only; `experiments-app.js` migrates saved numeric-id defaults automatically.
 
-| User says | Selector label | Internal id | App file | Init function | Notes |
+| Old name | Selector label | Internal id | App file | Init function | Notes |
 |-----------|----------------|-------------|----------|---------------|-------|
-| Experiment 1 | Experiment 1 | `1` | `hover-button-app.js` | `initExperiment1` | Hover button slide animation |
-| Experiment 2 | Experiment 2 | `2` | `experiment-2-app.js` | `initExperiment2` | Rotate carousel |
-| Experiment 3 | Experiment 3 | `3` | `experiment-3-app.js` | `initExperiment3` | Rotate X button |
-| Experiment 4 | Experiment 4 | `4.5` | `experiment-4-5-app.js` | `initExperiment4_5` | 3D carousel — Variant (V/H), Input (Drag/Scroll), Reverse Scroll Direction toggle (scroll only), Highlight Scale. DOM ids use `exp45-*`. Snippet: `experiment-4-5.html`. |
-| Experiment 5 | Experiment 5 | `5` | `experiment-5-app.js` | `initExperiment5` | Flip carousel |
-| Experiment 6 | Experiment 6 | `6` | `experiment-6-app.js` | `initExperiment6` | Arc scroll transition — vanilla port of Osmo's resource (osmo.supply `arc-scroll-transition`). 5 sections (image / solid / image / solid / image) scroll inside the preview; square SVG per transition, quadratic arc `depth*sin(progress*PI)`, `depth = curve * section aspect`. Transitions: cover 12, reveal 10, cover 25, reveal 5. Lenis-like wheel smoothing + ScrollTrigger-style scrub (no GSAP). Controls: section 1–4 height (vh of preview), 4 curves, scrub, smoothing, heading size, solid color, image opacity. DOM ids use `exp6-*`. Snippet: `experiment-6.html` (embeds component via `experiment-6-snippet-embed.js`). |
-| Experiment 7 | Experiment 7 | `7` | `experiment-7-app.js` | `initExperiment7` | Infinite height carousel — drag / horizontal swipe, 10 boxes, slot structure C-B-A-ACTIVE-A-B-C. Heights, duration, easing, velocity. DOM ids use `exp7-*`. Snippet: `experiment-7.html`. |
-| Experiment 8 | Experiment 8 | `8` | `experiment-8-app.js` | `initExperiment8` | Horizontal parallax — 5 cards, infinite loop, single image at 120% in frame; position shifts left/center/right by slot (before/middle/after). Card width/height, gap, duration, easing, velocity. DOM ids use `exp8-*`. Snippet: `experiment-8.html`. |
-| Experiment 9 | Experiment 9 | `9` | `experiment-9-app.js` | `initExperiment9` | Staggered vertical text swap button — fixed-width per-char slots (current/incoming), stagger Sequential or Center out (`abs(i-mid)*step`, forms a chevron-up wave), focus-visible = hover, prefers-reduced-motion instant swap. Glyphs only ever move upward (below → center → above); changing hover mid-animation lets in-flight glyphs finish then continue, pending ones are cancelled. DOM ids use `exp9-*`. Snippet: `experiment-9.html`. |
+| Experiment 1 | Button Hover | `button-hover` | `button-hover-app.js` | `initHoverButtonExperiment` | Hover button slide animation |
+| Experiment 2 | Button Rotate X | `button-rotate-x` | `button-rotate-x-app.js` | `initRotateXButtonExperiment` | Rotate X button |
+| Experiment 3 | Carousel Rotate | `carousel-rotate` | `carousel-rotate-app.js` | `initRotateCarouselExperiment` | Rotate carousel |
+| Experiment 4 | Carousel Rotate X | `carousel-rotate-x` | `carousel-rotate-x-app.js` | `initRotateXCarouselExperiment` | 3D carousel — Variant (V/H), Input (Drag/Scroll), Reverse Scroll Direction toggle (scroll only), Highlight Scale. DOM ids use `exp-carousel-rotate-x-*`. Snippet: `carousel-rotate-x.html`. |
+| Experiment 5 | Carousel Flip | `carousel-flip` | `carousel-flip-app.js` | `initFlipCarouselExperiment` | Flip carousel |
+| Experiment 6 | Transition Arc Scroll | `transition-arc-scroll` | `transition-arc-scroll-app.js` | `initArcScrollTransitionExperiment` | Arc scroll transition — vanilla port of Osmo's resource (osmo.supply `transition-arc-scroll`). 5 sections (image / solid / image / solid / image) scroll inside the preview; square SVG per transition, quadratic arc `depth*sin(progress*PI)`, `depth = curve * section aspect`. Transitions: cover 12, reveal 10, cover 25, reveal 5. Lenis-like wheel smoothing + ScrollTrigger-style scrub (no GSAP). Controls: section 1–4 height (vh of preview), 4 curves, scrub, smoothing, heading size, solid color, image opacity. DOM ids use `exp-transition-arc-scroll-*`. Snippet: `transition-arc-scroll.html` (embeds component via `transition-arc-scroll-snippet-embed.js`). |
+| Experiment 7 | Carousel Infinite | `carousel-infinite` | `carousel-infinite-app.js` | `initInfiniteCarouselExperiment` | Infinite height carousel — drag / horizontal swipe, 10 boxes, slot structure C-B-A-ACTIVE-A-B-C. Heights, duration, easing, velocity. DOM ids use `exp-carousel-infinite-*`. Snippet: `carousel-infinite.html`. |
+| Experiment 8 | Parallax Horizontal | `parallax-horizontal` | `parallax-horizontal-app.js` | `initHorizontalParallaxExperiment` | Horizontal parallax — 5 cards, infinite loop, single image at 120% in frame; position shifts left/center/right by slot (before/middle/after). Card width/height, gap, duration, easing, velocity. DOM ids use `exp-parallax-horizontal-*`. Snippet: `parallax-horizontal.html`. |
+| Experiment 9 | Button Stagger Text | `button-stagger-text` | `button-stagger-text-app.js` | `initStaggerTextButtonExperiment` | Staggered vertical text swap button — fixed-width per-char slots (current/incoming), stagger Sequential or Center out (`abs(i-mid)*step`, forms a chevron-up wave), focus-visible = hover, prefers-reduced-motion instant swap. Glyphs only ever move upward (below → center → above); changing hover mid-animation lets in-flight glyphs finish then continue, pending ones are cancelled. DOM ids use `exp-button-stagger-text-*`. Snippet: `button-stagger-text.html`. |
+| — | Heading Entrance | `heading-entrance` | `heading-entrance-app.js` | `initHeadingEntranceExperiment` | "Bleeding" heading: text blurred via `filter: blur()`, then thresholded sharp by `color-burn` (#000) + `color-dodge` (#474747) overlay layers. Per-char WAAPI blur entrance: filter blur animates start → end (no position change), with duration, stagger, easing. Controls: text, blur start/end, font size. Restart button in preview. Component: `Components/HeadingEntrance/`. Snippet: `heading-entrance.html`. |
 
 ### Changelog
 
-- **2026-08:** Basic Experiment 4 (`experiment-4-app.js`, internal id `4`) removed. "Experiment 4" in the UI now maps to internal id `4.5`. Code and DOM still use `4.5` / `exp45-*` — do not rename unless explicitly requested.
+- **2026-08:** Basic Experiment 4 (`experiment-4-app.js`, internal id `4`) removed. "Experiment 4" in the UI now maps to internal id `4.5`. 
 - **2026-09:** Experiment 6 rebuilt to match Osmo's Arc Scroll Transition (old infinite-loop / burst modes removed).
-- **2026-09:** Experiment 9 added. Staggered vertical text-swap hover button (`experiment-9-app.js`, `Components/StaggerTextButton/`).
+- **2026-09:** Experiment 9 added. Staggered vertical text-swap hover button (`button-stagger-text-app.js`, `Components/StaggerTextButton/`).
+- **2026-09-26:** Heading Entrance experiment added (`heading-entrance-app.js`, `Components/HeadingEntrance/`).
+- **2026-09-26:** Numeric experiment ids renamed to semantic ids (files, init functions, `data-experiment-*` values, `exp-<slug>-*` DOM ids, selector labels).
 
 ## Example: Hover Button experiment
 
 Reference implementation:
 
-- Shell: `hover-button.shell.html`
-- Logic: `hover-button-app.js`
+- Shell: `button-hover.shell.html`
+- Logic: `button-hover-app.js`
 - Preview component: `Components/HoverButton/`
-- Build: `scripts/build-single-html.js` → `hover-button.html`
+- Build: `scripts/build-single-html.js` → `button-hover.html`
 
-When cloning this pattern for a new experiment, copy the wiring structure from `hover-button-app.js`, not the HoverButton-specific logic.
+When cloning this pattern for a new experiment, copy the wiring structure from `button-hover-app.js`, not the HoverButton-specific logic.

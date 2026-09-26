@@ -1,6 +1,6 @@
-window.initExperiment4_5 = function initExperiment4_5() {
-  const preview = document.querySelector('[data-experiment-preview="4.5"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="4.5"]');
+window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="carousel-rotate"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="carousel-rotate"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
@@ -13,82 +13,53 @@ window.initExperiment4_5 = function initExperiment4_5() {
     { hex: 'C77DFF', opacity: '100' },
   ];
 
-  const carousel = window.initRotateXCarousel(preview, {
+  const carousel = window.initRotateCarousel(preview, {
     count: 5,
-    width: 600,
-    height: 400,
+    width: 400,
+    height: 500,
     radius: 0,
     colors: DEFAULT_COLORS.map((item) => utils.colorWithOpacity(item.hex, item.opacity)),
-    orbit: 600,
-    perspective: 1200,
+    originY: 2000,
     stepDeg: 12,
     duration: 350,
     easingRaw: '0.7, 0, 0.25, 1',
     velocityIntensity: 1,
-    highlightScale: 1.2,
   });
 
   const controls = {
-    count: document.getElementById('exp45-count'),
-    radius: document.getElementById('exp45-radius'),
-    rotate: document.getElementById('exp45-rotate'),
-    orbit: document.getElementById('exp45-orbit'),
-    perspective: document.getElementById('exp45-perspective'),
-    scale: document.getElementById('exp45-scale'),
-    duration: document.getElementById('exp45-duration'),
-    velocity: document.getElementById('exp45-velocity'),
+    count: document.getElementById('exp-carousel-rotate-count'),
+    radius: document.getElementById('exp-carousel-rotate-radius'),
+    rotate: document.getElementById('exp-carousel-rotate-rotate'),
+    originY: document.getElementById('exp-carousel-rotate-origin-y'),
+    duration: document.getElementById('exp-carousel-rotate-duration'),
+    velocity: document.getElementById('exp-carousel-rotate-velocity'),
   };
 
-  const easing = window.initCubicBezierInput(document.getElementById('exp45-easing-root'), {
-    onChange: applyAll,
-  });
-
-  const variantSelector = window.initOptionSelector(document.getElementById('exp45-variant-root'), {
-    value: 'vertical',
-    options: [
-      { value: 'vertical', label: 'Vertical' },
-      { value: 'horizontal', label: 'Horizontal' },
-    ],
-    onChange: applyAll,
-  });
-
-  const inputSelector = window.initOptionSelector(document.getElementById('exp45-input-root'), {
-    value: 'drag',
-    options: [
-      { value: 'drag', label: 'Drag' },
-      { value: 'scroll', label: 'Scroll' },
-    ],
-    onChange: applyAll,
-  });
-
-  const reverseScrollRoot = document.getElementById('exp45-reverse-scroll-root');
-  const reverseScrollToggle = window.initToggle(reverseScrollRoot, {
-    rowLabel: 'Reverse Scroll Direction',
-    checked: false,
+  const easing = window.initCubicBezierInput(document.getElementById('exp-carousel-rotate-easing-root'), {
     onChange: applyAll,
   });
 
   const dimensions = window.initDimensionControlGroup(panelRoot, {
     width: {
       initialMode: 'fixed',
-      measure: () => 600,
+      measure: () => 400,
       onChange: applyAll,
     },
     height: {
       initialMode: 'fixed',
-      measure: () => 400,
+      measure: () => 500,
       onChange: applyAll,
     },
   });
 
   const colorInputs = [1, 2, 3, 4, 5].map((index) => (
-    window.initColorInput(document.getElementById(`exp45-color-${index}-root`), {
+    window.initColorInput(document.getElementById(`exp-carousel-rotate-color-${index}-root`), {
       onChange: applyAll,
     })
   ));
 
-  const snippet = window.initSnippetOutput(document.getElementById('exp45-snippet-root'), {
-    filename: 'experiment-4-5.html',
+  const snippet = window.initSnippetOutput(document.getElementById('exp-carousel-rotate-snippet-root'), {
+    filename: 'carousel-rotate.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -104,9 +75,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
     controls.count,
     controls.radius,
     controls.rotate,
-    controls.orbit,
-    controls.perspective,
-    controls.scale,
+    controls.originY,
     controls.duration,
     controls.velocity,
   ].forEach((input) => {
@@ -129,17 +98,8 @@ window.initExperiment4_5 = function initExperiment4_5() {
     return utils.parsePx(controls.rotate.value, 12);
   }
 
-  function getOrbit() {
-    return utils.parsePx(controls.orbit.value, 600);
-  }
-
-  function getPerspective() {
-    return utils.parsePx(controls.perspective.value, 1200);
-  }
-
-  function getHighlightScale() {
-    const value = parseFloat(controls.scale.value);
-    return Number.isFinite(value) && value > 0 ? value : 1.2;
+  function getOriginY() {
+    return utils.parsePx(controls.originY.value, 2000);
   }
 
   function getDuration() {
@@ -148,22 +108,6 @@ window.initExperiment4_5 = function initExperiment4_5() {
 
   function getVelocityIntensity() {
     return Math.max(0, utils.parsePx(controls.velocity.value, 1));
-  }
-
-  function getOrientation() {
-    return variantSelector.getValue();
-  }
-
-  function getInputAction() {
-    return inputSelector.getValue();
-  }
-
-  function getReverseScroll() {
-    return reverseScrollToggle.getChecked();
-  }
-
-  function syncReverseScrollVisibility() {
-    reverseScrollRoot.hidden = getInputAction() !== 'scroll';
   }
 
   function getEasing() {
@@ -177,20 +121,15 @@ window.initExperiment4_5 = function initExperiment4_5() {
   function getConfig() {
     return {
       count: getCount(),
-      width: utils.parsePx(dimensions.width.getValue(), 600),
-      height: utils.parsePx(dimensions.height.getValue(), 400),
+      width: utils.parsePx(dimensions.width.getValue(), 400),
+      height: utils.parsePx(dimensions.height.getValue(), 500),
       radius: utils.parsePx(controls.radius.value, 0),
       colors: getColors(),
       colorHexes: colorInputs.map((colorInput) => colorInput.getHex()),
-      orbit: getOrbit(),
-      perspective: getPerspective(),
+      originY: getOriginY(),
       stepDeg: getStepDeg(),
       duration: getDuration(),
       velocityIntensity: getVelocityIntensity(),
-      highlightScale: getHighlightScale(),
-      orientation: getOrientation(),
-      inputAction: getInputAction(),
-      reverseScroll: getReverseScroll(),
       easing: getEasing(),
       easingRaw: easing.getRaw() || '0.7, 0, 0.25, 1',
     };
@@ -201,14 +140,9 @@ window.initExperiment4_5 = function initExperiment4_5() {
       count: controls.count.value,
       radius: controls.radius.value,
       rotate: controls.rotate.value,
-      orbit: controls.orbit.value,
-      perspective: controls.perspective.value,
-      scale: controls.scale.value,
+      originY: controls.originY.value,
       duration: controls.duration.value,
       velocity: controls.velocity.value,
-      variant: variantSelector.getValue(),
-      input: inputSelector.getValue(),
-      reverseScroll: reverseScrollToggle.getChecked(),
       easing: easing.getRaw(),
       widthMode: dimensions.width.getMode(),
       widthValue: dimensions.width.getValue(),
@@ -227,14 +161,9 @@ window.initExperiment4_5 = function initExperiment4_5() {
     if (data.count != null) controls.count.value = data.count;
     if (data.radius != null) controls.radius.value = data.radius;
     if (data.rotate != null) controls.rotate.value = data.rotate;
-    if (data.orbit != null) controls.orbit.value = data.orbit;
-    if (data.perspective != null) controls.perspective.value = data.perspective;
-    if (data.scale != null) controls.scale.value = data.scale;
+    if (data.originY != null) controls.originY.value = data.originY;
     if (data.duration != null) controls.duration.value = data.duration;
     if (data.velocity != null) controls.velocity.value = data.velocity;
-    if (data.variant != null) variantSelector.setValue(data.variant, false);
-    if (data.input != null) inputSelector.setValue(data.input, false);
-    if (data.reverseScroll != null) reverseScrollToggle.setChecked(data.reverseScroll, false);
     if (data.easing != null) easing.setRaw(data.easing, false);
 
     if (data.widthMode) {
@@ -265,12 +194,12 @@ window.initExperiment4_5 = function initExperiment4_5() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['4.5'] = {
+  window.ExperimentSettings['carousel-rotate'] = {
     collect: collectSettings,
     apply: applySettings,
   };
 
-  const pending = window.__pendingExperimentDefaults?.['4.5'];
+  const pending = window.__pendingExperimentDefaults?.['carousel-rotate'];
   if (pending) applySettings(pending);
 
   function applyAll() {
@@ -282,19 +211,13 @@ window.initExperiment4_5 = function initExperiment4_5() {
       height: config.height,
       radius: config.radius,
       colors: config.colors,
-      orbit: config.orbit,
-      perspective: config.perspective,
+      originY: config.originY,
       stepDeg: config.stepDeg,
       duration: config.duration,
       velocityIntensity: config.velocityIntensity,
-      highlightScale: config.highlightScale,
-      orientation: config.orientation,
-      inputAction: config.inputAction,
-      reverseScroll: config.reverseScroll,
       easingRaw: config.easingRaw,
     });
 
-    syncReverseScrollVisibility();
     dimensions.width.updateLabel();
     dimensions.height.updateLabel();
     snippet.update();
@@ -312,7 +235,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3D Carousel (Highlight Scale)</title>
+  <title>Rotate Carousel</title>
   <style>
     body {
       margin: 0;
@@ -324,7 +247,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       font-family: Inter, system-ui, sans-serif;
     }
 
-    .rotate-x-carousel {
+    .rotate-carousel {
       position: relative;
       width: 100vw;
       height: 100vh;
@@ -335,49 +258,26 @@ window.initExperiment4_5 = function initExperiment4_5() {
       overflow: hidden;
     }
 
-    .rotate-x-carousel__stage {
+    .rotate-carousel__stage {
       position: relative;
       width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: visible;
+      overflow: hidden;
       cursor: grab;
       user-select: none;
-      transform-style: preserve-3d;
     }
 
-    .rotate-x-carousel__stage.is-dragging {
+    .rotate-carousel__stage.is-dragging {
       cursor: grabbing;
     }
 
-    .rotate-x-carousel.is-scroll-input .rotate-x-carousel__stage {
-      cursor: default;
-    }
-
-    .rotate-x-carousel__ring {
+    .rotate-carousel__card {
       position: absolute;
       left: 50%;
       top: 50%;
-      width: 0;
-      height: 0;
-      transform-style: preserve-3d;
-    }
-
-    .rotate-x-carousel__card {
-      position: absolute;
-      left: 0;
-      top: 0;
-      box-sizing: border-box;
-      will-change: transform;
-      backface-visibility: hidden;
-      transform-style: preserve-3d;
-    }
-
-    .rotate-x-carousel__card-face {
-      width: 100%;
-      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -385,12 +285,11 @@ window.initExperiment4_5 = function initExperiment4_5() {
       font-size: 48px;
       font-weight: 500;
       color: rgba(0, 0, 0, 0.35);
-      transform-origin: center center;
       will-change: transform;
       backface-visibility: hidden;
     }
 
-    .rotate-x-carousel__nav {
+    .rotate-carousel__nav {
       position: absolute;
       bottom: 24px;
       left: 50%;
@@ -400,7 +299,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
       z-index: 2;
     }
 
-    .rotate-x-carousel__nav-btn {
+    .rotate-carousel__nav-btn {
       width: 50px;
       height: 50px;
       padding: 0;
@@ -418,13 +317,11 @@ window.initExperiment4_5 = function initExperiment4_5() {
   </style>
 </head>
 <body>
-  <div class="rotate-x-carousel" data-carousel>
-    <div class="rotate-x-carousel__stage">
-      <div class="rotate-x-carousel__ring"></div>
-    </div>
-    <div class="rotate-x-carousel__nav">
-      <button type="button" class="rotate-x-carousel__nav-btn" data-carousel-prev>Prev</button>
-      <button type="button" class="rotate-x-carousel__nav-btn" data-carousel-next>Next</button>
+  <div class="rotate-carousel" data-carousel>
+    <div class="rotate-carousel__stage"></div>
+    <div class="rotate-carousel__nav">
+      <button type="button" class="rotate-carousel__nav-btn" data-carousel-prev>Prev</button>
+      <button type="button" class="rotate-carousel__nav-btn" data-carousel-next>Next</button>
     </div>
   </div>
 
@@ -435,28 +332,21 @@ window.initExperiment4_5 = function initExperiment4_5() {
       height: ${config.height},
       radius: ${config.radius},
       colors: ${colorsJson},
-      orbit: ${config.orbit},
-      perspective: ${config.perspective},
+      originY: ${config.originY},
       stepDeg: ${config.stepDeg},
       duration: ${config.duration},
       velocityIntensity: ${config.velocityIntensity},
-      highlightScale: ${config.highlightScale},
-      orientation: ${JSON.stringify(config.orientation)},
-      inputAction: ${JSON.stringify(config.inputAction)},
-      reverseScroll: ${config.reverseScroll ? 'true' : 'false'},
       easingRaw: ${JSON.stringify(easingRaw)},
     };
 
-    const carousel = document.querySelector('.rotate-x-carousel');
-    const stage = document.querySelector('.rotate-x-carousel__stage');
-    const ring = document.querySelector('.rotate-x-carousel__ring');
+    const stage = document.querySelector('.rotate-carousel__stage');
     const prevBtn = document.querySelector('[data-carousel-prev]');
     const nextBtn = document.querySelector('[data-carousel-next]');
     let count = CONFIG.count;
     let rotation = 0;
-    let dragStartPointer = 0;
+    let dragStartX = 0;
     let dragStartRotation = 0;
-    let lastMovePointer = 0;
+    let lastMoveX = 0;
     let lastMoveTime = 0;
     let velocityDegPerMs = 0;
     let isDragging = false;
@@ -464,79 +354,30 @@ window.initExperiment4_5 = function initExperiment4_5() {
     let isMomentum = false;
     let activePointerId = null;
     let animationFrameId = null;
-    let scrollSnapTimer = null;
-    let wheelVelocityDegPerMs = 0;
-    let lastWheelTime = 0;
 
     function getEasing() {
       const raw = String(CONFIG.easingRaw).trim();
       if (!raw) return 'cubic-bezier(0.7, 0, 0.25, 1)';
       if (raw.startsWith('cubic-bezier(')) return raw;
 
-      const parts = raw.split(',').map(function (n) { return parseFloat(n.trim()); });
-      if (parts.length === 4 && parts.every(function (n) { return Number.isFinite(n); })) {
+      const parts = raw.split(',').map((n) => parseFloat(n.trim()));
+      if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) {
         return 'cubic-bezier(' + parts.join(', ') + ')';
       }
 
       return raw;
     }
 
+    function getOrigin() {
+      return '50% calc(100% + ' + CONFIG.originY + 'px)';
+    }
+
     function getDragRadius() {
-      return Math.max(CONFIG.orbit, 1);
-    }
-
-    function isHorizontal() {
-      return String(CONFIG.orientation).toLowerCase() === 'horizontal';
-    }
-
-    function getPointerCoord(event) {
-      return isHorizontal() ? event.clientX : event.clientY;
-    }
-
-    function getDragDirection() {
-      return isHorizontal() ? -1 : 1;
-    }
-
-    function isScrollInput() {
-      return String(CONFIG.inputAction).toLowerCase() === 'scroll';
+      return Math.max(CONFIG.originY + CONFIG.height / 2, 1);
     }
 
     function pxVelocityToDegVelocity(pxPerMs) {
-      return getDragDirection() * (pxPerMs / getDragRadius()) * (180 / Math.PI);
-    }
-
-    function getWheelDeltaPx(event) {
-      let delta = isHorizontal()
-        ? (Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY)
-        : event.deltaY;
-
-      if (event.deltaMode === 1) delta *= 16;
-      else if (event.deltaMode === 2) delta *= window.innerHeight;
-
-      return CONFIG.reverseScroll ? -delta : delta;
-    }
-
-    function clearScrollSnapTimer() {
-      if (scrollSnapTimer != null) {
-        clearTimeout(scrollSnapTimer);
-        scrollSnapTimer = null;
-      }
-    }
-
-    function scheduleScrollSnap() {
-      clearScrollSnapTimer();
-      scrollSnapTimer = setTimeout(function () {
-        scrollSnapTimer = null;
-        const boostedVelocity = wheelVelocityDegPerMs * CONFIG.velocityIntensity;
-        wheelVelocityDegPerMs = 0;
-
-        if (Math.abs(boostedVelocity) > 0.02) {
-          startMomentum(boostedVelocity);
-          return;
-        }
-
-        snapRotation();
-      }, 120);
+      return -(pxPerMs / getDragRadius()) * (180 / Math.PI);
     }
 
     function wrapAngle(angle, halfSpan) {
@@ -581,41 +422,9 @@ window.initExperiment4_5 = function initExperiment4_5() {
       return angle;
     }
 
-    function getHighlightScale() {
-      const value = Number(CONFIG.highlightScale);
-      return Number.isFinite(value) && value > 0 ? value : 1;
-    }
-
-    function getCardScaleFromAngle(angle) {
-      const scaleValue = getHighlightScale();
-      if (scaleValue === 1 || CONFIG.stepDeg <= 0) return 1;
-
-      const falloff = CONFIG.stepDeg / 2;
-      const proximity = Math.max(0, 1 - Math.abs(angle) / falloff);
-      return 1 + (scaleValue - 1) * proximity;
-    }
-
-    function applyStageStyles() {
-      stage.style.perspective = CONFIG.perspective + 'px';
-      stage.style.perspectiveOrigin = '50% 50%';
-      ring.style.transform = 'translate(-50%, -50%) translateZ(' + (-CONFIG.orbit) + 'px)';
-    }
-
     function setCardTransform(card, angle) {
       card.style.transition = 'none';
-      const rotate = isHorizontal()
-        ? 'rotateY(' + angle + 'deg)'
-        : 'rotateX(' + angle + 'deg)';
-      card.style.transform =
-        'translate(-50%, -50%) ' + rotate + ' translateZ(' + CONFIG.orbit + 'px)';
-    }
-
-    function setCardScale(card, scale) {
-      const face = card.querySelector('.rotate-x-carousel__card-face');
-      if (!face) return;
-
-      face.style.transition = 'none';
-      face.style.transform = 'scale(' + scale + ')';
+      card.style.transform = 'translate(-50%, -50%) rotate(' + angle + 'deg)';
     }
 
     function cancelAnimation() {
@@ -625,7 +434,6 @@ window.initExperiment4_5 = function initExperiment4_5() {
       }
       isAnimating = false;
       isMomentum = false;
-      clearScrollSnapTimer();
     }
 
     function parseCubicBezier(raw) {
@@ -710,7 +518,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
         rotation = nextRotation;
         animationFrameId = null;
         isAnimating = false;
-        ring.querySelectorAll('.rotate-x-carousel__card').forEach(function (card) {
+        stage.querySelectorAll('.rotate-carousel__card').forEach(function (card) {
           delete card.dataset.angle;
         });
         renderCards();
@@ -757,60 +565,39 @@ window.initExperiment4_5 = function initExperiment4_5() {
     }
 
     function ensureCards() {
-      const existing = ring.querySelectorAll('.rotate-x-carousel__card');
-      const hasValidStructure = existing.length === count
-        && (count === 0 || existing[0].querySelector('.rotate-x-carousel__card-face'));
+      const existing = stage.querySelectorAll('.rotate-carousel__card');
+      if (existing.length === count) return;
 
-      if (hasValidStructure) return;
-
-      ring.innerHTML = '';
+      stage.innerHTML = '';
       for (let i = 0; i < count; i += 1) {
         const card = document.createElement('div');
-        card.className = 'rotate-x-carousel__card';
-
-        const face = document.createElement('div');
-        face.className = 'rotate-x-carousel__card-face';
-        face.textContent = String(i + 1);
-        card.appendChild(face);
-        ring.appendChild(card);
+        card.className = 'rotate-carousel__card';
+        card.textContent = String(i + 1);
+        stage.appendChild(card);
       }
     }
 
     function applyCardStyles() {
-      const cards = ring.querySelectorAll('.rotate-x-carousel__card');
+      const cards = stage.querySelectorAll('.rotate-carousel__card');
+      const origin = getOrigin();
 
-      cards.forEach(function (card, index) {
-        const face = card.querySelector('.rotate-x-carousel__card-face');
+      cards.forEach((card, index) => {
         card.style.width = CONFIG.width + 'px';
         card.style.height = CONFIG.height + 'px';
-        if (!face) return;
-
-        face.style.borderRadius = CONFIG.radius + 'px';
-        face.style.background = CONFIG.colors[index % CONFIG.colors.length];
-        face.textContent = String(index + 1);
+        card.style.borderRadius = CONFIG.radius + 'px';
+        card.style.background = CONFIG.colors[index % CONFIG.colors.length];
+        card.style.transformOrigin = origin;
+        card.textContent = String(index + 1);
       });
     }
 
     function renderCards() {
-      if (carousel) {
-        carousel.classList.toggle('is-horizontal', isHorizontal());
-        carousel.classList.toggle('is-vertical', !isHorizontal());
-        carousel.classList.toggle('is-scroll-input', isScrollInput());
-      }
-      applyStageStyles();
       ensureCards();
       applyCardStyles();
 
-      const cards = ring.querySelectorAll('.rotate-x-carousel__card');
-      const angles = Array.from(cards, function (card, index) {
-        return getRenderAngle(index, card);
-      });
-
+      const cards = stage.querySelectorAll('.rotate-carousel__card');
       cards.forEach(function (card, index) {
-        const angle = angles[index];
-        const scale = getCardScaleFromAngle(angle);
-        setCardTransform(card, angle);
-        setCardScale(card, scale);
+        setCardTransform(card, getRenderAngle(index, card));
       });
     }
 
@@ -827,15 +614,15 @@ window.initExperiment4_5 = function initExperiment4_5() {
     }
 
     stage.addEventListener('pointerdown', function (event) {
-      if (isScrollInput() || (isAnimating && !isMomentum) || event.button !== 0) return;
+      if ((isAnimating && !isMomentum) || event.button !== 0) return;
 
       cancelAnimation();
 
       isDragging = true;
       activePointerId = event.pointerId;
-      dragStartPointer = getPointerCoord(event);
+      dragStartX = event.clientX;
       dragStartRotation = rotation;
-      lastMovePointer = getPointerCoord(event);
+      lastMoveX = event.clientX;
       lastMoveTime = performance.now();
       velocityDegPerMs = 0;
       stage.classList.add('is-dragging');
@@ -846,19 +633,17 @@ window.initExperiment4_5 = function initExperiment4_5() {
     stage.addEventListener('pointermove', function (event) {
       if (!isDragging || event.pointerId !== activePointerId) return;
 
-      const delta = getPointerCoord(event) - dragStartPointer;
-      const deltaDeg = getDragDirection() * (delta / getDragRadius()) * (180 / Math.PI);
+      const deltaX = event.clientX - dragStartX;
+      const deltaDeg = -(deltaX / getDragRadius()) * (180 / Math.PI);
       rotation = dragStartRotation + deltaDeg;
 
       const now = performance.now();
       const dt = now - lastMoveTime;
       if (dt > 0 && lastMoveTime > 0) {
-        const instantVelocity = pxVelocityToDegVelocity(
-          (getPointerCoord(event) - lastMovePointer) / dt,
-        );
+        const instantVelocity = pxVelocityToDegVelocity((event.clientX - lastMoveX) / dt);
         velocityDegPerMs = velocityDegPerMs * 0.75 + instantVelocity * 0.25;
       }
-      lastMovePointer = getPointerCoord(event);
+      lastMoveX = event.clientX;
       lastMoveTime = now;
 
       renderCards();
@@ -887,29 +672,6 @@ window.initExperiment4_5 = function initExperiment4_5() {
 
     stage.addEventListener('pointerup', endDrag);
     stage.addEventListener('pointercancel', endDrag);
-
-    stage.addEventListener('wheel', function (event) {
-      if (!isScrollInput()) return;
-      if (isDragging || (isAnimating && !isMomentum)) return;
-
-      event.preventDefault();
-      cancelAnimation();
-
-      const now = performance.now();
-      const deltaPx = getWheelDeltaPx(event);
-      const deltaDeg = getDragDirection() * (deltaPx / getDragRadius()) * (180 / Math.PI);
-      rotation += deltaDeg;
-
-      const dt = now - lastWheelTime;
-      if (dt > 0 && lastWheelTime > 0) {
-        const instantVelocity = pxVelocityToDegVelocity(deltaPx / dt);
-        wheelVelocityDegPerMs = wheelVelocityDegPerMs * 0.75 + instantVelocity * 0.25;
-      }
-      lastWheelTime = now;
-
-      renderCards();
-      scheduleScrollSnap();
-    }, { passive: false });
 
     prevBtn?.addEventListener('click', function () { stepBy(-1); });
     nextBtn?.addEventListener('click', function () { stepBy(1); });

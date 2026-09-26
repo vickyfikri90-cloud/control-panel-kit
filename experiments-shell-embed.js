@@ -1,6 +1,6 @@
 window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
     <div class="cp-preview-area">
-      <div class="cp-preview" data-experiment-preview="1" hidden>
+      <div class="cp-preview" data-experiment-preview="button-hover" hidden>
         <button id="btn" class="hover-button" type="button">
           <span class="label">
             <span class="text">Hover here</span>
@@ -9,8 +9,8 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </button>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="2">
-        <button id="exp2-btn" class="rotate-x-button" type="button">
+      <div class="cp-preview" data-experiment-preview="button-rotate-x">
+        <button id="exp-button-rotate-x-btn" class="rotate-x-button" type="button">
           <span class="label">
             <span class="text">Hover here</span>
             <span class="text is-hidden">Hover here</span>
@@ -18,7 +18,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </button>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="3" hidden>
+      <div class="cp-preview" data-experiment-preview="carousel-rotate" hidden>
         <div class="rotate-carousel" data-carousel>
           <div class="rotate-carousel__stage"></div>
           <div class="rotate-carousel__nav">
@@ -28,7 +28,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="4.5" hidden>
+      <div class="cp-preview" data-experiment-preview="carousel-rotate-x" hidden>
         <div class="rotate-x-carousel" data-carousel>
           <div class="rotate-x-carousel__stage">
             <div class="rotate-x-carousel__ring"></div>
@@ -40,7 +40,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="5" hidden>
+      <div class="cp-preview" data-experiment-preview="carousel-flip" hidden>
         <div class="flip-carousel" data-carousel>
           <div class="flip-carousel__stage">
             <div class="flip-carousel__ring"></div>
@@ -56,22 +56,30 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="6" hidden>
+      <div class="cp-preview" data-experiment-preview="transition-arc-scroll" hidden>
         <div class="arc-scroll-root"></div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="7" hidden>
+      <div class="cp-preview" data-experiment-preview="carousel-infinite" hidden>
         <div class="infinite-carousel" data-carousel></div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="8" hidden>
+      <div class="cp-preview" data-experiment-preview="parallax-horizontal" hidden>
         <div class="horizontal-parallax" data-horizontal-parallax></div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="9" hidden>
-        <button id="exp9-btn" class="stagger-text-button" type="button" aria-label="Hover here">
+      <div class="cp-preview" data-experiment-preview="button-stagger-text" hidden>
+        <button id="exp-button-stagger-text-btn" class="stagger-text-button" type="button" aria-label="Hover here">
           <span class="label"></span>
         </button>
+      </div>
+      <div class="cp-preview" data-experiment-preview="heading-entrance" hidden>
+        <div class="heading-entrance">
+          <h2 class="heading-entrance__text">Bleeding Text</h2>
+          <div class="heading-entrance__burn"></div>
+          <div class="heading-entrance__dodge"></div>
+        </div>
+        <button type="button" class="heading-entrance-restart" id="exp-heading-entrance-restart">Restart</button>
       </div>
     </div>
 
@@ -80,7 +88,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <span class="field-label">Experiment</span>
         <div class="row">
           <div class="input-wrap input-wrap--label option-selector__wrap">
-            <input type="text" class="option-selector__input" value="Experiment 2" autocomplete="off" spellcheck="false">
+            <input type="text" class="option-selector__input" value="Button Rotate X" autocomplete="off" spellcheck="false">
             <div class="option-selector__menu" role="listbox"></div>
           </div>
         </div>
@@ -90,7 +98,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <button type="button" class="download-btn" id="save-default-btn">Save Default</button>
       </div>
 
-      <div data-experiment-panel="1" hidden>
+      <div data-experiment-panel="button-hover" hidden>
       <div class="field">
         <label class="field-label" for="label-text">Text Label</label>
         <div class="row">
@@ -250,12 +258,12 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
       </div>
 
-      <div data-experiment-panel="2">
+      <div data-experiment-panel="button-rotate-x">
       <div class="field">
-        <label class="field-label" for="exp2-label-text">Text Label</label>
+        <label class="field-label" for="exp-button-rotate-x-label-text">Text Label</label>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp2-label-text" value="Hover here">
+            <input type="text" id="exp-button-rotate-x-label-text" value="Hover here">
           </div>
         </div>
       </div>
@@ -299,26 +307,26 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAgMS41QzAgMS4xMDIxOCAwLjE1ODAzNSAwLjcyMDY0NCAwLjQzOTM0IDAuNDM5MzRDMC43MjA2NDQgMC4xNTgwMzUgMS4xMDIxOCAwIDEuNSAwSDEwLjVDMTAuODk3OCAwIDExLjI3OTQgMC4xNTgwMzUgMTEuNTYwNyAwLjQzOTM0QzExLjg0MiAwLjcyMDY0NCAxMiAxLjEwMjE4IDEyIDEuNVYxMC41QzEyIDEwLjg5NzggMTEuODQyIDExLjI3OTQgMTEuNTYwNyAxMS41NjA3QzExLjI3OTQgMTEuODQyIDEwLjg5NzggMTIgMTAuNSAxMkgxLjVDMS4xMDIxOCAxMiAwLjcyMDY0NCAxMS44NDIgMC40MzkzNCAxMS41NjA3QzAuMTU4MDM1IDExLjI3OTQgMCAxMC44OTc4IDAgMTAuNVYxLjVaTTEgMTAuNUMxIDEwLjYzMjYgMS4wNTI2OCAxMC43NTk4IDEuMTQ2NDUgMTAuODUzNkMxLjI0MDIxIDEwLjk0NzMgMS4zNjczOSAxMSAxLjUgMTFIMTAuNUMxMC42MzI2IDExIDEwLjc1OTggMTAuOTQ3MyAxMC44NTM2IDEwLjg1MzZDMTAuOTQ3MyAxMC43NTk4IDExIDEwLjYzMjYgMTEgMTAuNVYxLjVDMTEgMS4zNjczOSAxMC45NDczIDEuMjQwMjEgMTAuODUzNiAxLjE0NjQ1QzEwLjc1OTggMS4wNTI2OCAxMC42MzI2IDEgMTAuNSAxSDEuNUMxLjM2NzM5IDEgMS4yNDAyMSAxLjA1MjY4IDEuMTQ2NDUgMS4xNDY0NUMxLjA1MjY4IDEuMjQwMjEgMSAxLjM2NzM5IDEgMS41VjEwLjVaTTIgMi41QzIgMi4zNjczOSAyLjA1MjY4IDIuMjQwMjEgMi4xNDY0NSAyLjE0NjQ1QzIuMjQwMjEgMi4wNTI2OCAyLjM2NzM5IDIgMi41IDJIOS41QzkuNjMyNjEgMiA5Ljc1OTc5IDIuMDUyNjggOS44NTM1NSAyLjE0NjQ1QzkuOTQ3MzIgMi4yNDAyMSAxMCAyLjM2NzM5IDEwIDIuNUMxMCAyLjYzMjYxIDkuOTQ3MzIgMi43NTk3OSA5Ljg1MzU1IDIuODUzNTVDOS43NTk3OSAyLjk0NzMyIDkuNjMyNjEgMyA5LjUgM0gyLjVDMi4zNjczOSAzIDIuMjQwMjEgMi45NDczMiAyLjE0NjQ1IDIuODUzNTVDMi4wNTI2OCAyLjc1OTc5IDIgMi42MzI2MSAyIDIuNVoiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp2-padding-top" value="0">
+            <input type="text" id="exp-button-rotate-x-padding-top" value="0">
           </div>
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwLjUgMEMxMC44OTc4IDAgMTEuMjc5NCAwLjE1ODAzNSAxMS41NjA3IDAuNDM5MzRDMTEuODQyIDAuNzIwNjQ0IDEyIDEuMTAyMTggMTIgMS41VjEwLjVDMTIgMTAuODk3OCAxMS44NDIgMTEuMjc5NCAxMS41NjA3IDExLjU2MDdDMTEuMjc5NCAxMS44NDIgMTAuODk3OCAxMiAxMC41IDEySDEuNUMxLjEwMjE4IDEyIDAuNzIwNjQ0IDExLjg0MiAwLjQzOTM0IDExLjU2MDdDMC4xNTgwMzUgMTEuMjc5NCAwIDEwLjg5NzggMCAxMC41VjEuNUMwIDEuMTAyMTggMC4xNTgwMzUgMC43MjA2NDQgMC40MzkzNCAwLjQzOTM0QzAuNzIwNjQ0IDAuMTU4MDM1IDEuMTAyMTggMCAxLjUgMEgxMC41Wk0xLjUgMUMxLjM2NzM5IDEgMS4yNDAyMSAxLjA1MjY4IDEuMTQ2NDUgMS4xNDY0NUMxLjA1MjY4IDEuMjQwMjEgMSAxLjM2NzM5IDEgMS41VjEwLjVDMSAxMC42MzI2IDEuMDUyNjggMTAuNzU5OCAxLjE0NjQ1IDEwLjg1MzZDMS4yNDAyMSAxMC45NDczIDEuMzY3MzkgMTEgMS41IDExSDEwLjVDMTAuNjMyNiAxMSAxMC43NTk4IDEwLjk0NzMgMTAuODUzNiAxMC44NTM2QzEwLjk0NzMgMTAuNzU5OCAxMSAxMC42MzI2IDExIDEwLjVWMS41QzExIDEuMzY3MzkgMTAuOTQ3MyAxLjI0MDIxIDEwLjg1MzYgMS4xNDY0NUMxMC43NTk4IDEuMDUyNjggMTAuNjMyNiAxIDEwLjUgMUgxLjVaTTkuNSA5QzkuNjMyNjEgOSA5Ljc1OTc5IDkuMDUyNjggOS44NTM1NSA5LjE0NjQ1QzkuOTQ3MzIgOS4yNDAyMSAxMCA5LjM2NzM5IDEwIDkuNUMxMCA5LjYzMjYxIDkuOTQ3MzIgOS43NTk3OSA5Ljg1MzU1IDkuODUzNTVDOS43NTk3OSA5Ljk0NzMyIDkuNjMyNjEgMTAgOS41IDEwSDIuNUMyLjM2NzM5IDEwIDIuMjQwMjEgOS45NDczMiAyLjE0NjQ1IDkuODUzNTVDMi4wNTI2OCA5Ljc1OTc5IDIgOS42MzI2MSAyIDkuNUMyIDkuMzY3MzkgMi4wNTI2OCA5LjI0MDIxIDIuMTQ2NDUgOS4xNDY0NUMyLjI0MDIxIDkuMDUyNjggMi4zNjczOSA5IDIuNSA5SDkuNVoiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp2-padding-bottom" value="0">
+            <input type="text" id="exp-button-rotate-x-padding-bottom" value="0">
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwLjUgMEMxMC44OTc4IDAgMTEuMjc5NCAwLjE1ODAzNSAxMS41NjA3IDAuNDM5MzRDMTEuODQyIDAuNzIwNjQ0IDEyIDEuMTAyMTggMTIgMS41VjEwLjVDMTIgMTAuODk3OCAxMS44NDIgMTEuMjc5NCAxMS41NjA3IDExLjU2MDdDMTEuMjc5NCAxMS44NDIgMTAuODk3OCAxMiAxMC41IDEySDEuNUMxLjEwMjE4IDEyIDAuNzIwNjQ0IDExLjg0MiAwLjQzOTM0IDExLjU2MDdDMC4xNTgwMzUgMTEuMjc5NCAwIDEwLjg5NzggMCAxMC41VjEuNUMwIDEuMTAyMTggMC4xNTgwMzUgMC43MjA2NDQgMC40MzkzNCAwLjQzOTM0QzAuNzIwNjQ0IDAuMTU4MDM1IDEuMTAyMTggMCAxLjUgMEgxMC41Wk0xLjUgMUMxLjM2NzM5IDEgMS4yNDAyMSAxLjA1MjY4IDEuMTQ2NDUgMS4xNDY0NUMxLjA1MjY4IDEuMjQwMjEgMSAxLjM2NzM5IDEgMS41VjEwLjVDMSAxMC42MzI2IDEuMDUyNjggMTAuNzU5OCAxLjE0NjQ1IDEwLjg1MzZDMS4yNDAyMSAxMC45NDczIDEuMzY3MzkgMTEgMS41IDExSDEwLjVDMTAuNjMyNiAxMSAxMC43NTk4IDEwLjk0NzMgMTAuODUzNiAxMC44NTM2QzEwLjk0NzMgMTAuNzU5OCAxMSAxMC42MzI2IDExIDEwLjVWMS41QzExIDEuMzY3MzkgMTAuOTQ3MyAxLjI0MDIxIDEwLjg1MzYgMS4xNDY0NUMxMC43NTk4IDEuMDUyNjggMTAuNjMyNiAxIDEwLjUgMUgxLjVaTTIuNSAyQzIuNjMyNjEgMiAyLjc1OTc5IDIuMDUyNjggMi44NTM1NSAyLjE0NjQ1QzIuOTQ3MzIgMi4yNDAyMSAzIDIuMzY3MzkgMyAyLjVWOS41QzMgOS42MzI2MSAyLjk0NzMyIDkuNzU5NzkgMi44NTM1NSA5Ljg1MzU1QzIuNzU5NzkgOS45NDczMiAyLjYzMjYxIDEwIDIuNSAxMEMyLjM2NzM5IDEwIDIuMjQwMjEgOS45NDczMiAyLjE0NjQ1IDkuODUzNTVDMi4wNTI2OCA5Ljc1OTc5IDIgOS42MzI2MSAyIDkuNVYyLjVDMiAyLjM2NzM5IDIuMDUyNjggMi4yNDAyMSAyLjE0NjQ1IDIuMTQ2NDVDMi4yNDAyMSAyLjA1MjY4IDIuMzY3MzkgMiAyLjUgMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp2-padding-left" value="24">
+            <input type="text" id="exp-button-rotate-x-padding-left" value="24">
           </div>
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwLjUgMEMxMC44OTc4IDAgMTEuMjc5NCAwLjE1ODAzNSAxMS41NjA3IDAuNDM5MzRDMTEuODQyIDAuNzIwNjQ0IDEyIDEuMTAyMTggMTIgMS41VjEwLjVDMTIgMTAuODk3OCAxMS44NDIgMTEuMjc5NCAxMS41NjA3IDExLjU2MDdDMTEuMjc5NCAxMS44NDIgMTAuODk3OCAxMiAxMC41IDEySDEuNUMxLjEwMjE4IDEyIDAuNzIwNjQ0IDExLjg0MiAwLjQzOTM0IDExLjU2MDdDMC4xNTgwMzUgMTEuMjc5NCAwIDEwLjg5NzggMCAxMC41VjEuNUMwIDEuMTAyMTggMC4xNTgwMzUgMC43MjA2NDQgMC40MzkzNCAwLjQzOTM0QzAuNzIwNjQ0IDAuMTU4MDM1IDEuMTAyMTggMCAxLjUgMEgxMC41Wk0xLjUgMUMxLjM2NzM5IDEgMS4yNDAyMSAxLjA1MjY4IDEuMTQ2NDUgMS4xNDY0NUMxLjA1MjY4IDEuMjQwMjEgMSAxLjM2NzM5IDEgMS41VjEwLjVDMSAxMC42MzI2IDEuMDUyNjggMTAuNzU5OCAxLjE0NjQ1IDEwLjg1MzZDMS4yNDAyMSAxMC45NDczIDEuMzY3MzkgMTEgMS41IDExSDEwLjVDMTAuNjMyNiAxMSAxMC43NTk4IDEwLjk0NzMgMTAuODUzNiAxMC44NTM2QzEwLjk0NzMgMTAuNzU5OCAxMSAxMC42MzI2IDExIDEwLjVWMS41QzExIDEuMzY3MzkgMTAuOTQ3MyAxLjI0MDIxIDEwLjg1MzYgMS4xNDY0NUMxMC43NTk4IDEuMDUyNjggMTAuNjMyNiAxIDEwLjUgMUgxLjVaTTkuNSAyQzkuNjMyNjEgMiA5Ljc1OTc5IDIuMDUyNjggOS44NTM1NSAyLjE0NjQ1QzkuOTQ3MzIgMi4yNDAyMSAxMCAyLjM2NzM5IDEwIDIuNVY5LjVDMTAgOS42MzI2MSA5Ljk0NzMyIDkuNzU5NzkgOS44NTM1NSA5Ljg1MzU1QzkuNzU5NzkgOS45NDczMiA5LjYzMjYxIDEwIDkuNSAxMEM5LjM2NzM5IDEwIDkuMjQwMjEgOS45NDczMiA5LjE0NjQ1IDkuODUzNTVDOS4wNTI2OCA5Ljc1OTc5IDkgOS42MzI2MSA5IDkuNVYyLjVDOSAyLjM2NzM5IDkuMDUyNjggMi4yNDAyMSA5LjE0NjQ1IDIuMTQ2NDVDOS4yNDAyMSAyLjA1MjY4IDkuMzY3MzkgMiA5LjUgMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp2-padding-right" value="24">
+            <input type="text" id="exp-button-rotate-x-padding-right" value="24">
           </div>
         </div>
       </div>
 
-      <div id="exp2-bg-color-root">
+      <div id="exp-button-rotate-x-bg-color-root">
         <div class="field">
           <span class="field-label">Background color</span>
           <div class="row">
@@ -337,7 +345,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       <div class="field">
         <span class="field-label">Border</span>
         <div class="field-stack">
-        <div id="exp2-border-color-root">
+        <div id="exp-button-rotate-x-border-color-root">
           <div class="row">
             <div class="input-wrap color-wrap">
               <span class="swatch" data-color-swatch></span>
@@ -352,11 +360,11 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMS4yNSA4QzExLjQ0ODkgOCAxMS42Mzk2IDguMDc5MDcgMTEuNzgwMyA4LjIxOTczQzExLjkyMDkgOC4zNjAzOCAxMiA4LjU1MTA5IDEyIDguNzVWMTEuMjVDMTIgMTEuNDQ4OSAxMS45MjA5IDExLjYzOTYgMTEuNzgwMyAxMS43ODAzQzExLjYzOTYgMTEuOTIwOSAxMS40NDg5IDEyIDExLjI1IDEySDAuNzVDMC41NTEwODggMTIgMC4zNjAzNzkgMTEuOTIwOSAwLjIxOTcyNyAxMS43ODAzQzAuMDc5MDc0NCAxMS42Mzk2IDAgMTEuNDQ4OSAwIDExLjI1VjguNzVDMCA4LjU1MTA5IDAuMDc5MDc0MyA4LjM2MDM4IDAuMjE5NzI3IDguMjE5NzNDMC4zNjAzNzkgOC4wNzkwNyAwLjU1MTA4OCA4IDAuNzUgOEgxMS4yNVpNMSA5VjExSDExVjlIMVoiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjI1IDNDMTEuNDQ4OSAzIDExLjYzOTYgMy4wNzkwNyAxMS43ODAzIDMuMjE5NzNDMTEuOTIwOSAzLjM2MDM4IDEyIDMuNTUxMDkgMTIgMy43NVY1LjI1QzEyIDUuNDQ4OTEgMTEuOTIwOSA1LjYzOTYyIDExLjc4MDMgNS43ODAyN0MxMS42Mzk2IDUuOTIwOTMgMTEuNDQ4OSA2IDExLjI1IDZIMC43NUMwLjMzNiA2IDAgNS42NjQgMCA1LjI1VjMuNzVDMCAzLjU1MTA5IDAuMDc5MDc0MyAzLjM2MDM4IDAuMjE5NzI3IDMuMjE5NzNDMC4zNjAzNzkgMy4wNzkwNyAwLjU1MTA4OCAzIDAuNzUgM0gxMS4yNVpNMSA1SDExVjRIMVY1WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+CjxwYXRoIGQ9Ik0xMS41IDBDMTEuNjMyNiAwIDExLjc1OTcgMC4wNTI3MTYzIDExLjg1MzUgMC4xNDY0ODRDMTEuOTQ3MyAwLjI0MDI1MyAxMiAwLjM2NzM5MiAxMiAwLjVDMTIgMC42MzI2MDggMTEuOTQ3MyAwLjc1OTc0NyAxMS44NTM1IDAuODUzNTE2QzExLjc1OTcgMC45NDcyODQgMTEuNjMyNiAxIDExLjUgMUgwLjVDMC4zNjczOTIgMSAwLjI0MDI1MyAwLjk0NzI4NCAwLjE0NjQ4NCAwLjg1MzUxNkMwLjA1MjcxNjIgMC43NTk3NDcgMCAwLjYzMjYwOCAwIDAuNUMwIDAuMzY3MzkyIDAuMDUyNzE2MiAwLjI0MDI1MyAwLjE0NjQ4NCAwLjE0NjQ4NEMwLjI0MDI1MyAwLjA1MjcxNjIgMC4zNjczOTIgMCAwLjUgMEgxMS41WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+Cjwvc3ZnPgo=" alt=""></span>
-            <input type="text" id="exp2-border" value="0">
+            <input type="text" id="exp-button-rotate-x-border" value="0">
           </div>
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAuNTAxODMxIDhDMC42MzQ0NCA4IDAuNzYxNjE3IDguMDUyNjggMC44NTUzODUgOC4xNDY0NUMwLjk0OTE1MyA4LjI0MDIxIDEuMDAxODMgOC4zNjczOSAxLjAwMTgzIDguNVY5LjFDMS4wMDE4MyA5LjUyOCAxLjAwMTgzIDkuODIgMS4wMjA4MyAxMC4wNDVDMS4wMzc4MyAxMC4yNjQgMS4wNzA4MyAxMC4zNzYgMS4xMTA4MyAxMC40NTVDMS4yMDY4MyAxMC42NDIgMS4zNTk4MyAxMC43OTUgMS41NDc4MyAxMC44OTFDMS42MjU4MyAxMC45MzEgMS43Mzc4MyAxMC45NjQgMS45NTc4MyAxMC45ODFDMi4xODE4MyAxMSAyLjQ3MzgzIDExIDIuOTAxODMgMTFIMy41MDE4M0MzLjYzNDQ0IDExIDMuNzYxNjIgMTEuMDUyNyAzLjg1NTM5IDExLjE0NjRDMy45NDkxNSAxMS4yNDAyIDQuMDAxODMgMTEuMzY3NCA0LjAwMTgzIDExLjVDNC4wMDE4MyAxMS42MzI2IDMuOTQ5MTUgMTEuNzU5OCAzLjg1NTM5IDExLjg1MzZDMy43NjE2MiAxMS45NDczIDMuNjM0NDQgMTIgMy41MDE4MyAxMkgyLjg4MDgzQzIuNDc4ODMgMTIgMi4xNDY4MyAxMiAxLjg3NTgzIDExLjk3N0MxLjU5NDgzIDExLjk1NSAxLjMzNTgzIDExLjkwNiAxLjA5MzgzIDExLjc4MkMwLjcxNzUyNCAxMS41OTAzIDAuNDExNTc1IDExLjI4NDMgMC4yMTk4MzEgMTAuOTA4QzAuMDk1ODMxMyAxMC42NjYgMC4wNDY4MzEzIDEwLjQwNyAwLjAyMzgzMTMgMTAuMTI2QzAuMDAzNTQzNjcgOS43OTE0MSAtMC4wMDM3OTQ5OCA5LjQ1NjE2IDAuMDAxODMxNDEgOS4xMjFWOC41QzAuMDAxODMxNDEgOC4zNjczOSAwLjA1NDUwOTkgOC4yNDAyMSAwLjE0ODI3OCA4LjE0NjQ1QzAuMjQyMDQ2IDguMDUyNjggMC4zNjkyMjMgOCAwLjUwMTgzMSA4Wk0xMS41MDE4IDhDMTEuNjM0NCA4IDExLjc2MTYgOC4wNTI2OCAxMS44NTU0IDguMTQ2NDVDMTEuOTQ5MiA4LjI0MDIxIDEyLjAwMTggOC4zNjczOSAxMi4wMDE4IDguNVY5LjEyMUMxMi4wMDE4IDkuNTIzIDEyLjAwMTggOS44NTUgMTEuOTc4OCAxMC4xMjZDMTEuOTU2OCAxMC40MDcgMTEuOTA3OCAxMC42NjYgMTEuNzgzOCAxMC45MDhDMTEuNTkyMSAxMS4yODQzIDExLjI4NjEgMTEuNTkwMyAxMC45MDk4IDExLjc4MkMxMC42Njc4IDExLjkwNiAxMC40MDg4IDExLjk1NSAxMC4xMjc4IDExLjk3N0M5Ljg1NzgzIDEyIDkuNTI0ODMgMTIgOS4xMjI4MyAxMkg4LjUwMTgzQzguMzY5MjIgMTIgOC4yNDIwNSAxMS45NDczIDguMTQ4MjggMTEuODUzNkM4LjA1NDUxIDExLjc1OTggOC4wMDE4MyAxMS42MzI2IDguMDAxODMgMTEuNUM4LjAwMTgzIDExLjM2NzQgOC4wNTQ1MSAxMS4yNDAyIDguMTQ4MjggMTEuMTQ2NEM4LjI0MjA1IDExLjA1MjcgOC4zNjkyMiAxMSA4LjUwMTgzIDExSDkuMTAxODNDOS41Mjk4MyAxMSA5LjgyMTgzIDExIDEwLjA0NjggMTAuOTgxQzEwLjI2NTggMTAuOTYzIDEwLjM3NzggMTAuOTMxIDEwLjQ1NjggMTAuODkxQzEwLjY0NDYgMTAuNzk1IDEwLjc5NzIgMTAuNjQyIDEwLjg5MjggMTAuNDU0QzEwLjkzMjggMTAuMzc2IDEwLjk2NTggMTAuMjY0IDEwLjk4MjggMTAuMDQ0QzExLjAwMTggOS44MiAxMS4wMDE4IDkuNTI4IDExLjAwMTggOS4xVjguNUMxMS4wMDE4IDguMzY3MzkgMTEuMDU0NSA4LjI0MDIxIDExLjE0ODMgOC4xNDY0NUMxMS4yNDIgOC4wNTI2OCAxMS4zNjkyIDggMTEuNTAxOCA4Wk0zLjUwMTgzIDBDMy42MzQ0NCAwIDMuNzYxNjIgMC4wNTI2Nzg1IDMuODU1MzkgMC4xNDY0NDdDMy45NDkxNSAwLjI0MDIxNSA0LjAwMTgzIDAuMzY3MzkyIDQuMDAxODMgMC41QzQuMDAxODMgMC42MzI2MDggMy45NDkxNSAwLjc1OTc4NSAzLjg1NTM5IDAuODUzNTUzQzMuNzYxNjIgMC45NDczMjEgMy42MzQ0NCAxIDMuNTAxODMgMUgyLjkwMTgzQzIuNDczODMgMSAyLjE4MjgzIDEgMS45NTc4MyAxLjAxOUMxLjczNzgzIDEuMDM2IDEuNjI1ODMgMS4wNjkgMS41NDc4MyAxLjEwOUMxLjM1OTY4IDEuMjA0ODcgMS4yMDY3IDEuMzU3ODUgMS4xMTA4MyAxLjU0NkMxLjA3MDgzIDEuNjI0IDEuMDM3ODMgMS43MzYgMS4wMjA4MyAxLjk1NkMxLjAwMTgzIDIuMTggMS4wMDE4MyAyLjQ3MSAxLjAwMTgzIDIuOVYzLjVDMS4wMDE4MyAzLjYzMjYxIDAuOTQ5MTUzIDMuNzU5NzkgMC44NTUzODUgMy44NTM1NUMwLjc2MTYxNyAzLjk0NzMyIDAuNjM0NDQgNCAwLjUwMTgzMSA0QzAuMzY5MjIzIDQgMC4yNDIwNDYgMy45NDczMiAwLjE0ODI3OCAzLjg1MzU1QzAuMDU0NTA5OSAzLjc1OTc5IDAuMDAxODMxNDEgMy42MzI2MSAwLjAwMTgzMTQxIDMuNVYyLjg3OUMwLjAwMTgzMTQxIDIuNDc3IDAuMDAxODMxMjUgMi4xNDUgMC4wMjM4MzEzIDEuODc0QzAuMDQ2ODMxMyAxLjU5MyAwLjA5NTgzMTMgMS4zMzQgMC4yMTk4MzEgMS4wOTJDMC40MTE1NzUgMC43MTU2OTMgMC43MTc1MjQgMC40MDk3NDQgMS4wOTM4MyAwLjIxOEMxLjMzNTgzIDAuMDkzOTk5OSAxLjU5NDgzIDAuMDQ0OTk5OCAxLjg3NTgzIDAuMDIxOTk5OEMyLjE0NTgzIC0xLjYzOTEzZS0wNyAyLjQ3ODgzIDAgMi44ODE4MyAwSDMuNTAxODNaTTkuMTIyODMgMEM5LjUyNDgzIDAgOS44NTY4MyAtMS42MzkxM2UtMDcgMTAuMTI3OCAwLjAyMTk5OThDMTAuNDA4OCAwLjA0NDk5OTggMTAuNjY3OCAwLjA5Mzk5OTkgMTAuOTA5OCAwLjIxOEMxMS4yODYxIDAuNDA5NzQ0IDExLjU5MjEgMC43MTU2OTMgMTEuNzgzOCAxLjA5MkMxMS45MDc4IDEuMzM0IDExLjk1NjggMS41OTMgMTEuOTc4OCAxLjg3NEMxMi4wMDE4IDIuMTQ0IDEyLjAwMTggMi40NzcgMTIuMDAxOCAyLjg3OVYzLjVDMTIuMDAxOCAzLjYzMjYxIDExLjk0OTIgMy43NTk3OSAxMS44NTU0IDMuODUzNTVDMTEuNzYxNiAzLjk0NzMyIDExLjYzNDQgNCAxMS41MDE4IDRDMTEuMzY5MiA0IDExLjI0MiAzLjk0NzMyIDExLjE0ODMgMy44NTM1NUMxMS4wNTQ1IDMuNzU5NzkgMTEuMDAxOCAzLjYzMjYxIDExLjAwMTggMy41VjIuOUMxMS4wMDE4IDIuNDcyIDExLjAwMTggMi4xOCAxMC45ODI4IDEuOTU1QzEwLjk2NDggMS43MzYgMTAuOTMyOCAxLjYyNSAxMC44OTI4IDEuNTQ1QzEwLjc5NjggMS4zNTcyMiAxMC42NDM4IDEuMjA0NjEgMTAuNDU1OCAxLjEwOUMxMC4zNzc4IDEuMDY5IDEwLjI2NTggMS4wMzYgMTAuMDQ1OCAxLjAxOUM5LjczMTUgMS4wMDEyNCA5LjQxNjYyIDAuOTk0OSA5LjEwMTgzIDFIOC41MDE4M0M4LjM2OTIyIDEgOC4yNDIwNSAwLjk0NzMyMSA4LjE0ODI4IDAuODUzNTUzQzguMDU0NTEgMC43NTk3ODUgOC4wMDE4MyAwLjYzMjYwOCA4LjAwMTgzIDAuNUM4LjAwMTgzIDAuMzY3MzkyIDguMDU0NTEgMC4yNDAyMTUgOC4xNDgyOCAwLjE0NjQ0N0M4LjI0MjA1IDAuMDUyNjc4NSA4LjM2OTIyIDAgOC41MDE4MyAwSDkuMTIyODNaIiBmaWxsPSJibGFjayIgZmlsbC1vcGFjaXR5PSIwLjUiLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp2-radius" value="0">
+            <input type="text" id="exp-button-rotate-x-radius" value="0">
           </div>
         </div>
         </div>
@@ -364,7 +372,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
 
       <div class="field">
         <span class="field-label">Animation</span>
-        <div id="exp2-axis-root" class="option-selector option-selector--nested">
+        <div id="exp-button-rotate-x-axis-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Axis X" autocomplete="off" spellcheck="false">
@@ -375,27 +383,27 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTEyIDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp2-rotate" value="90">
+            <input type="text" id="exp-button-rotate-x-rotate" value="90">
             <div class="suffix-wrap"><span>°</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">Y</span>
-            <input type="text" id="exp2-origin-y" value="5000">
+            <input type="text" id="exp-button-rotate-x-origin-y" value="5000">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp2-duration" value="350">
+            <input type="text" id="exp-button-rotate-x-duration" value="350">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
       </div>
 
-      <div id="exp2-easing-root">
+      <div id="exp-button-rotate-x-easing-root">
         <div class="field cubic-bezier-field">
           <span class="field-label">Easing</span>
           <div class="cubic-bezier-editor" data-bezier-editor>
@@ -417,7 +425,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp2-snippet-root">
+      <div id="exp-button-rotate-x-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -426,12 +434,12 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
       </div>
 
-      <div data-experiment-panel="3" hidden>
+      <div data-experiment-panel="carousel-rotate" hidden>
       <div class="field">
-        <label class="field-label" for="exp3-count">Box Count</label>
+        <label class="field-label" for="exp-carousel-rotate-count">Box Count</label>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp3-count" value="5">
+            <input type="text" id="exp-carousel-rotate-count" value="5">
           </div>
         </div>
       </div>
@@ -474,12 +482,12 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <span class="field-label">Border Radius</span>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp3-radius" value="0">
+            <input type="text" id="exp-carousel-rotate-radius" value="0">
           </div>
         </div>
       </div>
 
-      <div id="exp3-color-1-root">
+      <div id="exp-carousel-rotate-color-1-root">
         <div class="field">
           <span class="field-label">Box 1 Color</span>
           <div class="row">
@@ -495,7 +503,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp3-color-2-root">
+      <div id="exp-carousel-rotate-color-2-root">
         <div class="field">
           <span class="field-label">Box 2 Color</span>
           <div class="row">
@@ -511,7 +519,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp3-color-3-root">
+      <div id="exp-carousel-rotate-color-3-root">
         <div class="field">
           <span class="field-label">Box 3 Color</span>
           <div class="row">
@@ -527,7 +535,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp3-color-4-root">
+      <div id="exp-carousel-rotate-color-4-root">
         <div class="field">
           <span class="field-label">Box 4 Color</span>
           <div class="row">
@@ -543,7 +551,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp3-color-5-root">
+      <div id="exp-carousel-rotate-color-5-root">
         <div class="field">
           <span class="field-label">Box 5 Color</span>
           <div class="row">
@@ -564,21 +572,21 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTI2IDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp3-rotate" value="12">
+            <input type="text" id="exp-carousel-rotate-rotate" value="12">
             <div class="suffix-wrap"><span>°</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">Y</span>
-            <input type="text" id="exp3-origin-y" value="2000">
+            <input type="text" id="exp-carousel-rotate-origin-y" value="2000">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp3-duration" value="350">
+            <input type="text" id="exp-carousel-rotate-duration" value="350">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -587,12 +595,12 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp3-velocity" value="1">
+            <input type="text" id="exp-carousel-rotate-velocity" value="1">
           </div>
         </div>
       </div>
 
-      <div id="exp3-easing-root">
+      <div id="exp-carousel-rotate-easing-root">
         <div class="field cubic-bezier-field">
           <span class="field-label">Easing</span>
           <div class="cubic-bezier-editor" data-bezier-editor>
@@ -614,7 +622,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp3-snippet-root">
+      <div id="exp-carousel-rotate-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -623,19 +631,19 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
       </div>
 
-      <div data-experiment-panel="4.5" hidden>
+      <div data-experiment-panel="carousel-rotate-x" hidden>
       <div class="field">
-        <label class="field-label" for="exp45-count">Box Count</label>
+        <label class="field-label" for="exp-carousel-rotate-x-count">Box Count</label>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp45-count" value="5">
+            <input type="text" id="exp-carousel-rotate-x-count" value="5">
           </div>
         </div>
       </div>
 
       <div class="field">
         <span class="field-label">Variant</span>
-        <div id="exp45-variant-root" class="option-selector option-selector--nested">
+        <div id="exp-carousel-rotate-x-variant-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Vertical" autocomplete="off" spellcheck="false">
@@ -647,7 +655,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
 
       <div class="field">
         <span class="field-label">Input</span>
-        <div id="exp45-input-root" class="option-selector option-selector--nested">
+        <div id="exp-carousel-rotate-x-input-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Drag" autocomplete="off" spellcheck="false">
@@ -657,7 +665,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp45-reverse-scroll-root" class="field toggle-field" hidden>
+      <div id="exp-carousel-rotate-x-reverse-scroll-root" class="field toggle-field" hidden>
         <div class="toggle-stack">
           <button type="button" class="toggle-row" role="switch" aria-checked="false">
             <span class="toggle-switch" aria-hidden="true">
@@ -706,12 +714,12 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <span class="field-label">Border Radius</span>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp45-radius" value="0">
+            <input type="text" id="exp-carousel-rotate-x-radius" value="0">
           </div>
         </div>
       </div>
 
-      <div id="exp45-color-1-root">
+      <div id="exp-carousel-rotate-x-color-1-root">
         <div class="field">
           <span class="field-label">Box 1 Color</span>
           <div class="row">
@@ -727,7 +735,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp45-color-2-root">
+      <div id="exp-carousel-rotate-x-color-2-root">
         <div class="field">
           <span class="field-label">Box 2 Color</span>
           <div class="row">
@@ -743,7 +751,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp45-color-3-root">
+      <div id="exp-carousel-rotate-x-color-3-root">
         <div class="field">
           <span class="field-label">Box 3 Color</span>
           <div class="row">
@@ -759,7 +767,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp45-color-4-root">
+      <div id="exp-carousel-rotate-x-color-4-root">
         <div class="field">
           <span class="field-label">Box 4 Color</span>
           <div class="row">
@@ -775,7 +783,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp45-color-5-root">
+      <div id="exp-carousel-rotate-x-color-5-root">
         <div class="field">
           <span class="field-label">Box 5 Color</span>
           <div class="row">
@@ -796,35 +804,35 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTI2IDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp45-rotate" value="12">
+            <input type="text" id="exp-carousel-rotate-x-rotate" value="12">
             <div class="suffix-wrap"><span>°</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">Z</span>
-            <input type="text" id="exp45-orbit" value="600">
+            <input type="text" id="exp-carousel-rotate-x-orbit" value="600">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">P</span>
-            <input type="text" id="exp45-perspective" value="1200">
+            <input type="text" id="exp-carousel-rotate-x-perspective" value="1200">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">S</span>
-            <input type="text" id="exp45-scale" value="1.2" data-arrow-step="0.1">
+            <input type="text" id="exp-carousel-rotate-x-scale" value="1.2" data-arrow-step="0.1">
             <div class="suffix-wrap"><span>×</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp45-duration" value="350">
+            <input type="text" id="exp-carousel-rotate-x-duration" value="350">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -833,12 +841,12 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp45-velocity" value="1">
+            <input type="text" id="exp-carousel-rotate-x-velocity" value="1">
           </div>
         </div>
       </div>
 
-      <div id="exp45-easing-root">
+      <div id="exp-carousel-rotate-x-easing-root">
         <div class="field cubic-bezier-field">
           <span class="field-label">Easing</span>
           <div class="cubic-bezier-editor" data-bezier-editor>
@@ -860,7 +868,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp45-snippet-root">
+      <div id="exp-carousel-rotate-x-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -869,17 +877,17 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
       </div>
 
-      <div data-experiment-panel="5" hidden>
+      <div data-experiment-panel="carousel-flip" hidden>
       <div class="field">
-        <label class="field-label" for="exp5-count">Box Count</label>
+        <label class="field-label" for="exp-carousel-flip-count">Box Count</label>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp5-count" value="5">
+            <input type="text" id="exp-carousel-flip-count" value="5">
           </div>
         </div>
       </div>
 
-      <div id="exp5-color-1-root">
+      <div id="exp-carousel-flip-color-1-root">
         <div class="field">
           <span class="field-label">Box 1 Color</span>
           <div class="row">
@@ -895,7 +903,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp5-color-2-root">
+      <div id="exp-carousel-flip-color-2-root">
         <div class="field">
           <span class="field-label">Box 2 Color</span>
           <div class="row">
@@ -911,7 +919,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp5-color-3-root">
+      <div id="exp-carousel-flip-color-3-root">
         <div class="field">
           <span class="field-label">Box 3 Color</span>
           <div class="row">
@@ -927,7 +935,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp5-color-4-root">
+      <div id="exp-carousel-flip-color-4-root">
         <div class="field">
           <span class="field-label">Box 4 Color</span>
           <div class="row">
@@ -943,7 +951,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp5-color-5-root">
+      <div id="exp-carousel-flip-color-5-root">
         <div class="field">
           <span class="field-label">Box 5 Color</span>
           <div class="row">
@@ -963,7 +971,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <span class="panel-divider__line" role="separator"></span>
       </div>
 
-      <div id="exp5-fan-section">
+      <div id="exp-carousel-flip-fan-section">
       <div class="field">
         <span class="field-label">Fan</span>
       </div>
@@ -1006,7 +1014,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <span class="field-label">Border Radius</span>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp5-fan-radius" value="0">
+            <input type="text" id="exp-carousel-flip-fan-radius" value="0">
           </div>
         </div>
       </div>
@@ -1016,21 +1024,21 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTI2IDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp5-fan-rotate" value="12">
+            <input type="text" id="exp-carousel-flip-fan-rotate" value="12">
             <div class="suffix-wrap"><span>°</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">Y</span>
-            <input type="text" id="exp5-fan-origin-y" value="2000">
+            <input type="text" id="exp-carousel-flip-fan-origin-y" value="2000">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp5-fan-duration" value="350">
+            <input type="text" id="exp-carousel-flip-fan-duration" value="350">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -1039,12 +1047,12 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp5-fan-velocity" value="1">
+            <input type="text" id="exp-carousel-flip-fan-velocity" value="1">
           </div>
         </div>
       </div>
 
-      <div id="exp5-fan-easing-root">
+      <div id="exp-carousel-flip-fan-easing-root">
         <div class="field cubic-bezier-field">
           <span class="field-label">Easing</span>
           <div class="cubic-bezier-editor" data-bezier-editor>
@@ -1071,14 +1079,14 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <span class="panel-divider__line" role="separator"></span>
       </div>
 
-      <div id="exp5-horiz-section">
+      <div id="exp-carousel-flip-horiz-section">
       <div class="field">
         <span class="field-label">Horizontal</span>
       </div>
 
       <div class="field">
         <span class="field-label">Variant</span>
-        <div id="exp5-variant-root" class="option-selector option-selector--nested">
+        <div id="exp-carousel-flip-variant-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Horizontal" autocomplete="off" spellcheck="false">
@@ -1090,7 +1098,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
 
       <div class="field">
         <span class="field-label">Input</span>
-        <div id="exp5-input-root" class="option-selector option-selector--nested">
+        <div id="exp-carousel-flip-input-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Drag" autocomplete="off" spellcheck="false">
@@ -1138,7 +1146,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <span class="field-label">Border Radius</span>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp5-horiz-radius" value="0">
+            <input type="text" id="exp-carousel-flip-horiz-radius" value="0">
           </div>
         </div>
       </div>
@@ -1148,35 +1156,35 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTI2IDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp5-horiz-rotate" value="12">
+            <input type="text" id="exp-carousel-flip-horiz-rotate" value="12">
             <div class="suffix-wrap"><span>°</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">Z</span>
-            <input type="text" id="exp5-horiz-orbit" value="600">
+            <input type="text" id="exp-carousel-flip-horiz-orbit" value="600">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">P</span>
-            <input type="text" id="exp5-horiz-perspective" value="1200">
+            <input type="text" id="exp-carousel-flip-horiz-perspective" value="1200">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">S</span>
-            <input type="text" id="exp5-horiz-scale" value="1.2" data-arrow-step="0.1">
+            <input type="text" id="exp-carousel-flip-horiz-scale" value="1.2" data-arrow-step="0.1">
             <div class="suffix-wrap"><span>×</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp5-horiz-duration" value="350">
+            <input type="text" id="exp-carousel-flip-horiz-duration" value="350">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -1185,12 +1193,12 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp5-horiz-velocity" value="1">
+            <input type="text" id="exp-carousel-flip-horiz-velocity" value="1">
           </div>
         </div>
       </div>
 
-      <div id="exp5-horiz-easing-root">
+      <div id="exp-carousel-flip-horiz-easing-root">
         <div class="field cubic-bezier-field">
           <span class="field-label">Easing</span>
           <div class="cubic-bezier-editor" data-bezier-editor>
@@ -1217,7 +1225,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <span class="panel-divider__line" role="separator"></span>
       </div>
 
-      <div id="exp5-transition-section">
+      <div id="exp-carousel-flip-transition-section">
       <div class="field">
         <span class="field-label">Transition</span>
       </div>
@@ -1227,13 +1235,13 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp5-transition-duration" value="600">
+            <input type="text" id="exp-carousel-flip-transition-duration" value="600">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
       </div>
 
-      <div id="exp5-transition-easing-root">
+      <div id="exp-carousel-flip-transition-easing-root">
         <div class="field cubic-bezier-field">
           <span class="field-label">Easing</span>
           <div class="cubic-bezier-editor" data-bezier-editor>
@@ -1256,7 +1264,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
       </div>
 
-      <div id="exp5-snippet-root">
+      <div id="exp-carousel-flip-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -1265,42 +1273,42 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
       </div>
 
-      <div data-experiment-panel="6" hidden>
+      <div data-experiment-panel="transition-arc-scroll" hidden>
       <div class="field">
-        <label class="field-label" for="exp6-section-height-1">Section 1 Height</label>
+        <label class="field-label" for="exp-transition-arc-scroll-section-height-1">Section 1 Height</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-section-height-1" value="100">
+            <input type="text" id="exp-transition-arc-scroll-section-height-1" value="100">
             <div class="suffix-wrap"><span>vh</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-section-height-2">Section 2 Height</label>
+        <label class="field-label" for="exp-transition-arc-scroll-section-height-2">Section 2 Height</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-section-height-2" value="100">
+            <input type="text" id="exp-transition-arc-scroll-section-height-2" value="100">
             <div class="suffix-wrap"><span>vh</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-section-height-3">Section 3 Height</label>
+        <label class="field-label" for="exp-transition-arc-scroll-section-height-3">Section 3 Height</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-section-height-3" value="100">
+            <input type="text" id="exp-transition-arc-scroll-section-height-3" value="100">
             <div class="suffix-wrap"><span>vh</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-section-height-4">Section 4 Height</label>
+        <label class="field-label" for="exp-transition-arc-scroll-section-height-4">Section 4 Height</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-section-height-4" value="100">
+            <input type="text" id="exp-transition-arc-scroll-section-height-4" value="100">
             <div class="suffix-wrap"><span>vh</span></div>
           </div>
         </div>
@@ -1311,37 +1319,37 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-curve-1">Transition 1 Curve (Cover)</label>
+        <label class="field-label" for="exp-transition-arc-scroll-curve-1">Transition 1 Curve (Cover)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-curve-1" value="12">
+            <input type="text" id="exp-transition-arc-scroll-curve-1" value="12">
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-curve-2">Transition 2 Curve (Reveal)</label>
+        <label class="field-label" for="exp-transition-arc-scroll-curve-2">Transition 2 Curve (Reveal)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-curve-2" value="10">
+            <input type="text" id="exp-transition-arc-scroll-curve-2" value="10">
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-curve-3">Transition 3 Curve (Cover)</label>
+        <label class="field-label" for="exp-transition-arc-scroll-curve-3">Transition 3 Curve (Cover)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-curve-3" value="25">
+            <input type="text" id="exp-transition-arc-scroll-curve-3" value="25">
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-curve-4">Transition 4 Curve (Reveal)</label>
+        <label class="field-label" for="exp-transition-arc-scroll-curve-4">Transition 4 Curve (Reveal)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-curve-4" value="5">
+            <input type="text" id="exp-transition-arc-scroll-curve-4" value="5">
           </div>
         </div>
       </div>
@@ -1351,20 +1359,20 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-scrub">Scrub</label>
+        <label class="field-label" for="exp-transition-arc-scroll-scrub">Scrub</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-scrub" value="0.3" data-arrow-step="0.1">
+            <input type="text" id="exp-transition-arc-scroll-scrub" value="0.3" data-arrow-step="0.1">
             <div class="suffix-wrap"><span>s</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-smoothing">Smooth Scroll (Lerp)</label>
+        <label class="field-label" for="exp-transition-arc-scroll-smoothing">Smooth Scroll (Lerp)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-smoothing" value="0.1" data-arrow-step="0.01">
+            <input type="text" id="exp-transition-arc-scroll-smoothing" value="0.1" data-arrow-step="0.01">
           </div>
         </div>
       </div>
@@ -1374,16 +1382,16 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-heading-size">Heading Size</label>
+        <label class="field-label" for="exp-transition-arc-scroll-heading-size">Heading Size</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-heading-size" value="96">
+            <input type="text" id="exp-transition-arc-scroll-heading-size" value="96">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
       </div>
 
-      <div id="exp6-solid-color-root">
+      <div id="exp-transition-arc-scroll-solid-color-root">
         <div class="field">
           <span class="field-label">Solid Color</span>
           <div class="row">
@@ -1400,16 +1408,16 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-image-opacity">Image Opacity</label>
+        <label class="field-label" for="exp-transition-arc-scroll-image-opacity">Image Opacity</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-image-opacity" value="80">
+            <input type="text" id="exp-transition-arc-scroll-image-opacity" value="80">
             <div class="suffix-wrap"><span>%</span></div>
           </div>
         </div>
       </div>
 
-      <div id="exp6-snippet-root">
+      <div id="exp-transition-arc-scroll-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -1418,46 +1426,46 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
       </div>
 
-      <div data-experiment-panel="7" hidden>
+      <div data-experiment-panel="carousel-infinite" hidden>
       <div class="field">
         <span class="field-label">Heights</span>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp7-height-active">Active</label>
+        <label class="field-label" for="exp-carousel-infinite-height-active">Active</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp7-height-active" value="400">
+            <input type="text" id="exp-carousel-infinite-height-active" value="400">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp7-height-a">A</label>
+        <label class="field-label" for="exp-carousel-infinite-height-a">A</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp7-height-a" value="320">
+            <input type="text" id="exp-carousel-infinite-height-a" value="320">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp7-height-b">B</label>
+        <label class="field-label" for="exp-carousel-infinite-height-b">B</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp7-height-b" value="240">
+            <input type="text" id="exp-carousel-infinite-height-b" value="240">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp7-height-c">C</label>
+        <label class="field-label" for="exp-carousel-infinite-height-c">C</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp7-height-c" value="360">
+            <input type="text" id="exp-carousel-infinite-height-c" value="360">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
@@ -1471,7 +1479,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <span class="field-label">Animation</span>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp7-duration" value="450">
+            <input type="text" id="exp-carousel-infinite-duration" value="450">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -1480,7 +1488,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp7-velocity" value="1">
+            <input type="text" id="exp-carousel-infinite-velocity" value="1">
           </div>
         </div>
         <div class="row">
@@ -1488,13 +1496,13 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp7-autoplay-interval" value="4000">
+            <input type="text" id="exp-carousel-infinite-autoplay-interval" value="4000">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
       </div>
 
-      <div id="exp7-easing-root">
+      <div id="exp-carousel-infinite-easing-root">
       <div class="field cubic-bezier-field">
         <span class="field-label">Easing</span>
         <div class="cubic-bezier-editor" data-bezier-editor>
@@ -1516,7 +1524,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
       </div>
 
-      <div id="exp7-snippet-root">
+      <div id="exp-carousel-infinite-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -1525,36 +1533,36 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
       </div>
 
-      <div data-experiment-panel="8" hidden>
+      <div data-experiment-panel="parallax-horizontal" hidden>
       <div class="field">
         <span class="field-label">Card size</span>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp8-width">Width</label>
+        <label class="field-label" for="exp-parallax-horizontal-width">Width</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp8-width" value="393">
+            <input type="text" id="exp-parallax-horizontal-width" value="393">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp8-height">Height</label>
+        <label class="field-label" for="exp-parallax-horizontal-height">Height</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp8-height" value="263">
+            <input type="text" id="exp-parallax-horizontal-height" value="263">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp8-gap">Gap</label>
+        <label class="field-label" for="exp-parallax-horizontal-gap">Gap</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp8-gap" value="16">
+            <input type="text" id="exp-parallax-horizontal-gap" value="16">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
@@ -1562,7 +1570,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
 
       <div class="field">
         <span class="field-label">Layout</span>
-        <div id="exp8-layout-root" class="option-selector option-selector--nested">
+        <div id="exp-parallax-horizontal-layout-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Horizontal" autocomplete="off" spellcheck="false">
@@ -1572,7 +1580,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
       </div>
 
-      <div id="exp8-image-scale-root" class="slider-field">
+      <div id="exp-parallax-horizontal-image-scale-root" class="slider-field">
         <span class="slider-field__label">Image size (%)</span>
         <div class="slider-field__row">
           <div class="slider-value-wrap">
@@ -1595,48 +1603,48 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <span class="field-label">Images</span>
       </div>
 
-      <div class="field exp8-image-field">
-        <label class="field-label" for="exp8-image-1-file">Card 1</label>
-        <div class="row exp8-image-row">
-          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-1-btn">Upload</button>
-          <span class="exp8-image-name" id="exp8-image-1-name">Default</span>
-          <input type="file" id="exp8-image-1-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      <div class="field exp-parallax-horizontal-image-field">
+        <label class="field-label" for="exp-parallax-horizontal-image-1-file">Card 1</label>
+        <div class="row exp-parallax-horizontal-image-row">
+          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-1-btn">Upload</button>
+          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-1-name">Default</span>
+          <input type="file" id="exp-parallax-horizontal-image-1-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
         </div>
       </div>
 
-      <div class="field exp8-image-field">
-        <label class="field-label" for="exp8-image-2-file">Card 2</label>
-        <div class="row exp8-image-row">
-          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-2-btn">Upload</button>
-          <span class="exp8-image-name" id="exp8-image-2-name">Default</span>
-          <input type="file" id="exp8-image-2-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      <div class="field exp-parallax-horizontal-image-field">
+        <label class="field-label" for="exp-parallax-horizontal-image-2-file">Card 2</label>
+        <div class="row exp-parallax-horizontal-image-row">
+          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-2-btn">Upload</button>
+          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-2-name">Default</span>
+          <input type="file" id="exp-parallax-horizontal-image-2-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
         </div>
       </div>
 
-      <div class="field exp8-image-field">
-        <label class="field-label" for="exp8-image-3-file">Card 3</label>
-        <div class="row exp8-image-row">
-          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-3-btn">Upload</button>
-          <span class="exp8-image-name" id="exp8-image-3-name">Default</span>
-          <input type="file" id="exp8-image-3-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      <div class="field exp-parallax-horizontal-image-field">
+        <label class="field-label" for="exp-parallax-horizontal-image-3-file">Card 3</label>
+        <div class="row exp-parallax-horizontal-image-row">
+          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-3-btn">Upload</button>
+          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-3-name">Default</span>
+          <input type="file" id="exp-parallax-horizontal-image-3-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
         </div>
       </div>
 
-      <div class="field exp8-image-field">
-        <label class="field-label" for="exp8-image-4-file">Card 4</label>
-        <div class="row exp8-image-row">
-          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-4-btn">Upload</button>
-          <span class="exp8-image-name" id="exp8-image-4-name">Default</span>
-          <input type="file" id="exp8-image-4-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      <div class="field exp-parallax-horizontal-image-field">
+        <label class="field-label" for="exp-parallax-horizontal-image-4-file">Card 4</label>
+        <div class="row exp-parallax-horizontal-image-row">
+          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-4-btn">Upload</button>
+          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-4-name">Default</span>
+          <input type="file" id="exp-parallax-horizontal-image-4-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
         </div>
       </div>
 
-      <div class="field exp8-image-field">
-        <label class="field-label" for="exp8-image-5-file">Card 5</label>
-        <div class="row exp8-image-row">
-          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-5-btn">Upload</button>
-          <span class="exp8-image-name" id="exp8-image-5-name">Default</span>
-          <input type="file" id="exp8-image-5-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      <div class="field exp-parallax-horizontal-image-field">
+        <label class="field-label" for="exp-parallax-horizontal-image-5-file">Card 5</label>
+        <div class="row exp-parallax-horizontal-image-row">
+          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-5-btn">Upload</button>
+          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-5-name">Default</span>
+          <input type="file" id="exp-parallax-horizontal-image-5-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
         </div>
       </div>
 
@@ -1648,7 +1656,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <span class="field-label">Animation</span>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp8-duration" value="450">
+            <input type="text" id="exp-parallax-horizontal-duration" value="450">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -1657,12 +1665,12 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp8-velocity" value="1">
+            <input type="text" id="exp-parallax-horizontal-velocity" value="1">
           </div>
         </div>
       </div>
 
-      <div id="exp8-easing-root">
+      <div id="exp-parallax-horizontal-easing-root">
       <div class="field cubic-bezier-field">
         <span class="field-label">Easing</span>
         <div class="cubic-bezier-editor" data-bezier-editor>
@@ -1684,7 +1692,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
       </div>
 
-      <div id="exp8-snippet-root">
+      <div id="exp-parallax-horizontal-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -1693,21 +1701,21 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
       </div>
 
-      <div data-experiment-panel="9" hidden>
+      <div data-experiment-panel="button-stagger-text" hidden>
       <div class="field">
-        <label class="field-label" for="exp9-label-text">Text</label>
+        <label class="field-label" for="exp-button-stagger-text-label-text">Text</label>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp9-label-text" value="Hover here">
+            <input type="text" id="exp-button-stagger-text-label-text" value="Hover here">
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp9-hover-text">Hover text</label>
+        <label class="field-label" for="exp-button-stagger-text-hover-text">Hover text</label>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp9-hover-text" value="Click me">
+            <input type="text" id="exp-button-stagger-text-hover-text" value="Click me">
           </div>
         </div>
       </div>
@@ -1751,26 +1759,26 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">T</span>
-            <input type="text" id="exp9-padding-top" value="0">
+            <input type="text" id="exp-button-stagger-text-padding-top" value="0">
           </div>
           <div class="input-wrap">
             <span class="input-icon">B</span>
-            <input type="text" id="exp9-padding-bottom" value="0">
+            <input type="text" id="exp-button-stagger-text-padding-bottom" value="0">
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">L</span>
-            <input type="text" id="exp9-padding-left" value="24">
+            <input type="text" id="exp-button-stagger-text-padding-left" value="24">
           </div>
           <div class="input-wrap">
             <span class="input-icon">R</span>
-            <input type="text" id="exp9-padding-right" value="24">
+            <input type="text" id="exp-button-stagger-text-padding-right" value="24">
           </div>
         </div>
       </div>
 
-      <div id="exp9-bg-color-root">
+      <div id="exp-button-stagger-text-bg-color-root">
         <div class="field">
           <span class="field-label">Background color</span>
           <div class="row">
@@ -1789,7 +1797,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       <div class="field">
         <span class="field-label">Border</span>
         <div class="field-stack">
-        <div id="exp9-border-color-root">
+        <div id="exp-button-stagger-text-border-color-root">
           <div class="row">
             <div class="input-wrap color-wrap">
               <span class="swatch" data-color-swatch></span>
@@ -1803,11 +1811,11 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp9-border" value="0">
+            <input type="text" id="exp-button-stagger-text-border" value="0">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
           <div class="input-wrap">
-            <input type="text" id="exp9-radius" value="0">
+            <input type="text" id="exp-button-stagger-text-radius" value="0">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
@@ -1815,10 +1823,10 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp9-duration">Duration</label>
+        <label class="field-label" for="exp-button-stagger-text-duration">Duration</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp9-duration" value="600">
+            <input type="text" id="exp-button-stagger-text-duration" value="600">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -1826,7 +1834,7 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
 
       <div class="field">
         <span class="field-label">Stagger</span>
-        <div id="exp9-stagger-mode-root" class="option-selector option-selector--nested">
+        <div id="exp-button-stagger-text-stagger-mode-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Center out" autocomplete="off" spellcheck="false">
@@ -1836,13 +1844,13 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
         </div>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp9-stagger" value="40">
+            <input type="text" id="exp-button-stagger-text-stagger" value="40">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
       </div>
 
-      <div id="exp9-easing-root">
+      <div id="exp-button-stagger-text-easing-root">
       <div class="field cubic-bezier-field">
         <span class="field-label">Easing</span>
         <div class="cubic-bezier-editor" data-bezier-editor>
@@ -1864,7 +1872,116 @@ window.EXPERIMENTS_SHELL_HTML = `  <div class="cp-app cp-app--fullscreen">
       </div>
       </div>
 
-      <div id="exp9-snippet-root">
+      <div id="exp-button-stagger-text-snippet-root">
+        <div class="field code-field">
+          <span class="field-label">Code</span>
+          <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
+          <button type="button" class="download-btn" data-snippet-download>Download HTML</button>
+        </div>
+      </div>
+      </div>
+
+      <div data-experiment-panel="heading-entrance" hidden>
+      <div class="field">
+        <label class="field-label" for="exp-heading-entrance-text">Text</label>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp-heading-entrance-text" value="Bleeding Text">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Blur (start → end)</span>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-blur-start" value="24">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-blur-end" value="2">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp-heading-entrance-font-size">Font size</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-font-size" value="48">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Weight / Letter spacing</span>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon">W</span>
+            <input type="text" id="exp-heading-entrance-font-weight" value="600">
+          </div>
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-letter-spacing" value="0">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp-heading-entrance-duration">Duration</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-duration" value="800">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp-heading-entrance-stagger">Stagger (% of duration)</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-stagger" value="5">
+            <div class="suffix-wrap"><span>%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp-heading-entrance-layers-off">Layers off before end</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-layers-off" value="2">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp-heading-entrance-easing-root">
+      <div class="field cubic-bezier-field">
+        <span class="field-label">Easing</span>
+        <div class="cubic-bezier-editor" data-bezier-editor>
+          <svg class="cubic-bezier-svg" data-bezier-svg viewBox="0 0 208 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="208" height="200" rx="5" fill="#F5F5F5"/>
+            <line class="cubic-bezier-guide" x1="29" y1="25" x2="179" y2="25"/>
+            <line class="cubic-bezier-guide" x1="29" y1="175" x2="179" y2="175"/>
+            <path class="cubic-bezier-curve" data-bezier-curve></path>
+            <line class="cubic-bezier-handle-line" data-bezier-line1></line>
+            <line class="cubic-bezier-handle-line" data-bezier-line2></line>
+            <circle class="cubic-bezier-handle" data-bezier-p1 r="6" tabindex="0" role="slider" aria-label="First control point"></circle>
+            <circle class="cubic-bezier-handle" data-bezier-p2 r="6" tabindex="0" role="slider" aria-label="Second control point"></circle>
+          </svg>
+        </div>
+        <div class="input-wrap cubic-bezier-value-input">
+          <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTVlLTA3IDguMjIzNzUgOS4yMzQxNWUtMDcgOC4zMzQyNkM5LjIzNDE1ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODEgMTAgMS42Njc1OVpNNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE1ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxIDUuODMzMzQgMS42Njc1OVpNMi41IDEuNjY3NTlDMi41IDEuODg4NiAyLjQxMjIgMi4xMDA1NyAyLjI1NTkyIDIuMjU2ODVDMi4wOTk2NCAyLjQxMzEzIDEuODg3NjggMi41MDA5MiAxLjY2NjY3IDIuNTAwOTJDMS40NDU2NSAyLjUwMDkyIDEuMjMzNjkgMi40MTMxMyAxLjA3NzQxIDIuMjU2ODVDMC45MjExMzIgMi4xMDA1NyAwLjgzMzMzNCAxLjg4ODYgMC44MzMzMzQgMS42Njc1OUMwLjgzMzMzNCAxLjQ0NjU4IDAuOTIxMTMyIDEuMjM0NjIgMS4wNzc0MSAxLjA3ODM0QzEuMjMzNjkgMC45MjIwNTUgMS40NDU2NSAwLjgzNDI1NyAxLjY2NjY3IDAuODM0MjU3QzEuODg3NjggMC44MzQyNTcgMi4wOTk2NCAwLjkyMjA1NSAyLjI1NTkyIDEuMDc4MzRDMi40MTMyIDEuMjM0NjIgMi41IDEuNDQ2NTggMi41IDEuNjY3NTlaTTEwIDguMzM0MjZDMTAuMDAxMyA3LjkyODE1IDkuODU0MDQgNy41MzU1OCA5LjU4NjA2IDcuMjMwNDRDOS4zMTgwOCA2LjkyNTI5IDguOTQ3ODEgNi43Mjg2MSA4LjU0NDk0IDYuNjc3NDFDOC4xNDIwNyA2LjYyNjIgNy43MzQzNyA2LjcyNDAxIDcuMzk4NTggNi45NTI0MUM3LjA2Mjc4IDcuMTgwODIgNi44MjIwNCA3LjUyNDA4IDYuNzIxNjcgNy45MTc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OSA0LjM2Njg1IDcuOTYxNDkgNC4yODg3MSA4LjAzOTYzQzQuMjEwNTcgOC4xMTc3NyA0LjE2NjY3IDguMjIzNzUgNC4xNjY2NyA4LjMzNDI2QzQuMTY2NjcgOC40NDQ3NyA0LjIxMDU3IDguNTUwNzUgNC4yODg3MSA4LjYyODg5QzQuMzY2ODUgOC43MDcwMyA0LjQ3MjgzIDguNzUwOTMgNC41ODMzMyA4Ljc1MDkzSDYuNzIxNjdDNi44MjIwNCA5LjE0NDQ0IDcuMDYyNzggOS40ODc3IDcuMzk4NTggOS43MTYxQzcuNzM0MzcgOS45NDQ1MSA4LjE0MjA3IDEwLjA0MjMgOC41NDQ5NCA5Ljk5MTExQzguOTQ3ODEgOS45Mzk5MSA5LjMxODA4IDkuNzQzMjMgOS41ODYwNiA5LjQzODA4QzkuODU0MDQgOS4xMzI5NCAxMC4wMDEzIDguNzQwMzcgMTAgOC4zMzQyNlpNOS4xNjY2NyA4LjMzNDI2QzkuMTY2NjcgOC41NTUyNyA5LjA3ODg3IDguNzY3MjMgOC45MjI1OSA4LjkyMzUxQzguNzY2MzEgOS4wNzk3OSA4LjU1NDM1IDkuMTY3NTkgOC4zMzMzNCA5LjE2NzU5QzguMTEyMzIgOS4xNjc1OSA3LjkwMDM2IDkuMDc5NzkgNy43NDQwOCA4LjkyMzUxQzcuNTg3OCA4Ljc2NzIzIDcuNSA4LjU1NTI3IDcuNSA4LjMzNDI2QzcuNSA4LjExMzI1IDcuNTg3OCA3LjkwMTI4IDcuNzQ0MDggNy43NDVDNy45MDAzNiA3LjU4ODcyIDguMTEyMzIgNy41MDA5MyA4LjMzMzM0IDcuNTAwOTNDOC41NTQzNSA3LjUwMDkzIDguNzY2MzEgNy41ODg3MiA4LjkyMjU5IDcuNzQ1QzkuMDc4ODcgNy45MDEyOCA5LjE2NjY3IDguMTEzMjUgOS4xNjY2NyA4LjMzNDI2WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+Cjwvc3ZnPgo=" alt=""></span>
+          <input type="text" data-bezier-text value="0.22, 1, 0.36, 1" spellcheck="false" autocomplete="off">
+        </div>
+      </div>
+      </div>
+
+      <div id="exp-heading-entrance-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>

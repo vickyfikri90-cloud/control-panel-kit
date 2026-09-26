@@ -19,4 +19,4 @@ Key rules:
 - Init functions: `window.initXxx(root, options)` returning controller object
 - Keep 241px panel, 240px fields, 24px control height
 - Sync `component.html` ↔ `components-templates.js`
-- Don't edit build outputs (`hover-button.html`) directly
+- Don't edit build outputs (`button-hover.html`) directly

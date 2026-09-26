@@ -3,10 +3,10 @@
 ## Hover Button (reference implementation)
 
 Files:
-- Shell: `hover-button.shell.html`
-- Logic: `hover-button-app.js`
+- Shell: `button-hover.shell.html`
+- Logic: `button-hover-app.js`
 - Preview: `Components/HoverButton/`
-- Build: `scripts/build-single-html.js` → `hover-button.html`
+- Build: `scripts/build-single-html.js` → `button-hover.html`
 
 ### Wiring pattern to copy
 
@@ -25,7 +25,7 @@ Files:
   });
   const bgColor = initColorInput(document.getElementById('bg-color-root'), { onChange: applyAll });
   const snippet = initSnippetOutput(document.getElementById('snippet-root'), {
-    filename: 'hover-button.html',
+    filename: 'button-hover.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -66,7 +66,7 @@ Files:
 })();
 ```
 
-### Panel HTML patterns from hover-button.shell.html
+### Panel HTML patterns from button-hover.shell.html
 
 **Dimension row:**
 ```html
@@ -129,7 +129,7 @@ Files:
 
 Example: `card-hover` experiment.
 
-1. **Create `card-hover.shell.html`** — copy structure from `hover-button.shell.html`, replace preview markup with your component.
+1. **Create `card-hover.shell.html`** — copy structure from `button-hover.shell.html`, replace preview markup with your component.
 
 2. **Create `Components/CardHover/component.{js,css,html}`** — preview component with `apply(config)` method.
 

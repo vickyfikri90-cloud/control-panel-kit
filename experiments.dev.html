@@ -6,7 +6,7 @@
   <title>Experiments</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Inter:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Inter:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="Components/shared/base.css">
   <link rel="stylesheet" href="Components/ControlPanel/component.css">
   <link rel="stylesheet" href="Components/DimensionControl/component.css">
@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="Components/InfiniteCarousel/component.css">
   <link rel="stylesheet" href="Components/HorizontalParallax/component.css">
   <link rel="stylesheet" href="Components/StaggerTextButton/component.css">
+  <link rel="stylesheet" href="Components/HeadingEntrance/component.css">
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Satoshi:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
@@ -47,26 +48,29 @@
 
       await ControlPanelKit.load();
       await ControlPanelKit.loadScript('HoverButton/component.js', 'hover-button');
-      await ControlPanelKit.loadScript('RotateXButton/component.js', 'rotate-x-button');
+      await ControlPanelKit.loadScript('RotateXButton/component.js', 'button-rotate-x');
       await ControlPanelKit.loadScript('RotateCarousel/component.js', 'rotate-carousel');
       await ControlPanelKit.loadScript('RotateXCarousel/component.js', 'rotate-x-carousel');
       await ControlPanelKit.loadScript('FlipCarousel/component.js', 'flip-carousel');
       await ControlPanelKit.loadScript('ArcScrollTransition/component.js', 'arc-scroll-transition');
       await ControlPanelKit.loadScript('InfiniteCarousel/component.js', 'infinite-carousel');
       await ControlPanelKit.loadScript('HorizontalParallax/component.js', 'horizontal-parallax');
-      await ControlPanelKit.loadScript('StaggerTextButton/component.js', 'stagger-text-button');
-      await ControlPanelKit.loadScript('../hover-button-app.js', 'experiment-1');
-      await ControlPanelKit.loadScript('../experiment-2-app.js', 'experiment-2');
-      await ControlPanelKit.loadScript('../experiment-3-app.js', 'experiment-3');
-      await ControlPanelKit.loadScript('../experiment-4-5-app.js', 'experiment-4-5');
-      await ControlPanelKit.loadScript('../experiment-5-app.js', 'experiment-5');
-      await ControlPanelKit.loadScript('../experiment-6-snippet-embed.js', 'experiment-6-snippet-embed');
-      await ControlPanelKit.loadScript('../experiment-6-app.js', 'experiment-6');
-      await ControlPanelKit.loadScript('../experiment-7-snippet-embed.js', 'experiment-7-snippet-embed');
-      await ControlPanelKit.loadScript('../experiment-7-app.js', 'experiment-7');
-      await ControlPanelKit.loadScript('../experiment-8-app.js', 'experiment-8');
-      await ControlPanelKit.loadScript('../experiment-9-snippet-embed.js', 'experiment-9-snippet-embed');
-      await ControlPanelKit.loadScript('../experiment-9-app.js', 'experiment-9');
+      await ControlPanelKit.loadScript('StaggerTextButton/component.js', 'button-stagger-text');
+      await ControlPanelKit.loadScript('HeadingEntrance/component.js', 'heading-entrance');
+      await ControlPanelKit.loadScript('../button-hover-app.js', 'button-hover');
+      await ControlPanelKit.loadScript('../button-rotate-x-app.js', 'button-rotate-x');
+      await ControlPanelKit.loadScript('../carousel-rotate-app.js', 'carousel-rotate');
+      await ControlPanelKit.loadScript('../carousel-rotate-x-app.js', 'carousel-rotate-x');
+      await ControlPanelKit.loadScript('../carousel-flip-app.js', 'carousel-flip');
+      await ControlPanelKit.loadScript('../transition-arc-scroll-snippet-embed.js', 'transition-arc-scroll-snippet-embed');
+      await ControlPanelKit.loadScript('../transition-arc-scroll-app.js', 'transition-arc-scroll');
+      await ControlPanelKit.loadScript('../carousel-infinite-snippet-embed.js', 'carousel-infinite-snippet-embed');
+      await ControlPanelKit.loadScript('../carousel-infinite-app.js', 'carousel-infinite');
+      await ControlPanelKit.loadScript('../parallax-horizontal-app.js', 'parallax-horizontal');
+      await ControlPanelKit.loadScript('../button-stagger-text-snippet-embed.js', 'button-stagger-text-snippet-embed');
+      await ControlPanelKit.loadScript('../button-stagger-text-app.js', 'button-stagger-text');
+      await ControlPanelKit.loadScript('../heading-entrance-snippet-embed.js', 'heading-entrance-snippet-embed');
+      await ControlPanelKit.loadScript('../heading-entrance-app.js', 'heading-entrance');
       await ControlPanelKit.loadScript('../experiments-app.js', 'experiments');
     })().catch((error) => {
       console.error(error);

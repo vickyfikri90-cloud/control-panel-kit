@@ -287,7 +287,7 @@ initSnippetOutput(root, options)
 
 ```js
 const snippet = initSnippetOutput(root, {
-  filename: 'hover-button.html',
+  filename: 'button-hover.html',
   getContent: () => generateSnippet(),
 });
 // In applyAll:
@@ -653,7 +653,7 @@ btn.applyStyles({ background: '#f0f0f0', padding: '0 24px' });
 
 - Load manually: `ControlPanelKit.loadScript('HoverButton/component.js')`
 - Do not break two-text-node structure
-- Reference wiring: `hover-button-app.js`
+- Reference wiring: `button-hover-app.js`
 
 ---
 

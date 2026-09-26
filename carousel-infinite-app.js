@@ -1,28 +1,28 @@
-window.initExperiment7 = function initExperiment7() {
-  const preview = document.querySelector('[data-experiment-preview="7"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="7"]');
+window.initInfiniteCarouselExperiment = function initInfiniteCarouselExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="carousel-infinite"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="carousel-infinite"]');
   if (!preview || !panelRoot) return;
 
   const utils = window.ComponentUtils;
 
   if (typeof window.initInfiniteCarousel !== 'function') {
-    console.error('Experiment 7: initInfiniteCarousel is not loaded');
+    console.error('Carousel Infinite: initInfiniteCarousel is not loaded');
     return;
   }
 
   const controls = {
-    heightActive: document.getElementById('exp7-height-active'),
-    heightA: document.getElementById('exp7-height-a'),
-    heightB: document.getElementById('exp7-height-b'),
-    heightC: document.getElementById('exp7-height-c'),
-    duration: document.getElementById('exp7-duration'),
-    velocity: document.getElementById('exp7-velocity'),
-    autoPlayInterval: document.getElementById('exp7-autoplay-interval'),
+    heightActive: document.getElementById('exp-carousel-infinite-height-active'),
+    heightA: document.getElementById('exp-carousel-infinite-height-a'),
+    heightB: document.getElementById('exp-carousel-infinite-height-b'),
+    heightC: document.getElementById('exp-carousel-infinite-height-c'),
+    duration: document.getElementById('exp-carousel-infinite-duration'),
+    velocity: document.getElementById('exp-carousel-infinite-velocity'),
+    autoPlayInterval: document.getElementById('exp-carousel-infinite-autoplay-interval'),
   };
 
   let carousel = preview.__infiniteCarousel;
-  let easing = preview.__exp7Easing;
-  let snippet = preview.__exp7Snippet;
+  let easing = preview.__expInfiniteCarouselEasing;
+  let snippet = preview.__expInfiniteCarouselSnippet;
 
   if (!carousel) {
     carousel = window.initInfiniteCarousel(preview, {
@@ -39,29 +39,29 @@ window.initExperiment7 = function initExperiment7() {
   }
 
   if (!easing) {
-    const easingRoot = document.getElementById('exp7-easing-root');
+    const easingRoot = document.getElementById('exp-carousel-infinite-easing-root');
     if (!easingRoot) {
-      console.error('Experiment 7: missing #exp7-easing-root');
+      console.error('Carousel Infinite: missing #exp-carousel-infinite-easing-root');
       return;
     }
 
     easing = window.initCubicBezierInput(easingRoot, { onChange: applyAll });
-    preview.__exp7Easing = easing;
+    preview.__expInfiniteCarouselEasing = easing;
   }
 
   if (!snippet) {
-    const snippetRoot = document.getElementById('exp7-snippet-root');
+    const snippetRoot = document.getElementById('exp-carousel-infinite-snippet-root');
     if (!snippetRoot) {
-      console.error('Experiment 7: missing #exp7-snippet-root');
+      console.error('Carousel Infinite: missing #exp-carousel-infinite-snippet-root');
       return;
     }
 
     snippet = window.initSnippetOutput(snippetRoot, {
-      filename: 'experiment-7.html',
+      filename: 'carousel-infinite.html',
       getContent: generateSnippet,
       updateOnInit: true,
     });
-    preview.__exp7Snippet = snippet;
+    preview.__expInfiniteCarouselSnippet = snippet;
   }
 
   if (preview.dataset.experimentReady !== '1') {
@@ -132,7 +132,7 @@ window.initExperiment7 = function initExperiment7() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['7'] = {
+  window.ExperimentSettings['carousel-infinite'] = {
     collect: collectSettings,
     apply: applySettings,
   };
@@ -182,7 +182,7 @@ ${embed.js}
 </html>`;
   }
 
-  const pending = window.__pendingExperimentDefaults?.['7'];
+  const pending = window.__pendingExperimentDefaults?.['carousel-infinite'];
   if (pending) applySettings(pending);
   else applyAll();
 };

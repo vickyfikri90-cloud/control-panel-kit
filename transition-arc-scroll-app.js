@@ -1,12 +1,12 @@
-window.initExperiment6 = function initExperiment6() {
-  const preview = document.querySelector('[data-experiment-preview="6"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="6"]');
+window.initArcScrollTransitionExperiment = function initArcScrollTransitionExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="transition-arc-scroll"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="transition-arc-scroll"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
 
   if (typeof window.initArcScrollTransition !== 'function') {
-    console.error('Experiment 6: initArcScrollTransition is not loaded');
+    console.error('Transition Arc Scroll: initArcScrollTransition is not loaded');
     return;
   }
 
@@ -14,12 +14,12 @@ window.initExperiment6 = function initExperiment6() {
   const DEFAULT_HEIGHTS = [100, 100, 100, 100];
 
   const controls = {
-    sectionHeights: [1, 2, 3, 4].map((n) => document.getElementById(`exp6-section-height-${n}`)),
-    curves: [1, 2, 3, 4].map((n) => document.getElementById(`exp6-curve-${n}`)),
-    scrub: document.getElementById('exp6-scrub'),
-    smoothing: document.getElementById('exp6-smoothing'),
-    headingSize: document.getElementById('exp6-heading-size'),
-    imageOpacity: document.getElementById('exp6-image-opacity'),
+    sectionHeights: [1, 2, 3, 4].map((n) => document.getElementById(`exp-transition-arc-scroll-section-height-${n}`)),
+    curves: [1, 2, 3, 4].map((n) => document.getElementById(`exp-transition-arc-scroll-curve-${n}`)),
+    scrub: document.getElementById('exp-transition-arc-scroll-scrub'),
+    smoothing: document.getElementById('exp-transition-arc-scroll-smoothing'),
+    headingSize: document.getElementById('exp-transition-arc-scroll-heading-size'),
+    imageOpacity: document.getElementById('exp-transition-arc-scroll-image-opacity'),
   };
 
   const numericInputs = [
@@ -33,12 +33,12 @@ window.initExperiment6 = function initExperiment6() {
 
   const arcScroll = window.initArcScrollTransition(preview, {});
 
-  const solidColor = window.initColorInput(document.getElementById('exp6-solid-color-root'), {
+  const solidColor = window.initColorInput(document.getElementById('exp-transition-arc-scroll-solid-color-root'), {
     onChange: applyAll,
   });
 
-  const snippet = window.initSnippetOutput(document.getElementById('exp6-snippet-root'), {
-    filename: 'experiment-6.html',
+  const snippet = window.initSnippetOutput(document.getElementById('exp-transition-arc-scroll-snippet-root'), {
+    filename: 'transition-arc-scroll.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -106,7 +106,7 @@ window.initExperiment6 = function initExperiment6() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['6'] = {
+  window.ExperimentSettings['transition-arc-scroll'] = {
     collect: collectSettings,
     apply(data) {
       applySettings(data);
@@ -154,7 +154,7 @@ ${embed.js}
 </html>`;
   }
 
-  const pending = window.__pendingExperimentDefaults?.['6'];
+  const pending = window.__pendingExperimentDefaults?.['transition-arc-scroll'];
   if (pending) applySettings(pending);
   applyAll();
 

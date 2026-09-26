@@ -6,7 +6,7 @@
   <title>Experiments</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Inter:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Inter:wght@100..900&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -199,9 +199,9 @@
   display: none !important;
 }
 
-.panel [data-exp6-pos-x][hidden],
-.panel [data-exp6-pos-group][hidden],
-.panel [data-exp6-burst-group][hidden] {
+.panel [data-exp-transition-arc-scroll-pos-x][hidden],
+.panel [data-exp-transition-arc-scroll-pos-group][hidden],
+.panel [data-exp-transition-arc-scroll-burst-group][hidden] {
   display: none !important;
 }
 
@@ -1095,7 +1095,7 @@
   opacity: 0.5;
 }
 
-.cp-preview[data-experiment-preview="6"] {
+.cp-preview[data-experiment-preview="transition-arc-scroll"] {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -1104,7 +1104,7 @@
   background: #000;
 }
 
-.cp-preview[data-experiment-preview="6"] .arc-scroll {
+.cp-preview[data-experiment-preview="transition-arc-scroll"] .arc-scroll {
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;
@@ -1214,7 +1214,7 @@
   fill: currentColor;
 }
 
-.cp-preview[data-experiment-preview="7"] {
+.cp-preview[data-experiment-preview="carousel-infinite"] {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -1223,7 +1223,7 @@
   background: rgb(31, 10, 9);
 }
 
-.cp-preview[data-experiment-preview="7"] .infinite-carousel {
+.cp-preview[data-experiment-preview="carousel-infinite"] .infinite-carousel {
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;
@@ -1394,7 +1394,7 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
-.cp-preview[data-experiment-preview="8"] {
+.cp-preview[data-experiment-preview="parallax-horizontal"] {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -1403,7 +1403,7 @@
   background: rgb(255, 255, 255);
 }
 
-.cp-preview[data-experiment-preview="8"] .horizontal-parallax {
+.cp-preview[data-experiment-preview="parallax-horizontal"] .horizontal-parallax {
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;
@@ -1456,16 +1456,16 @@
   background: #e8e8e8;
 }
 
-[data-experiment-panel="8"] .exp8-image-field {
+[data-experiment-panel="parallax-horizontal"] .exp-parallax-horizontal-image-field {
   margin-bottom: 0;
 }
 
-[data-experiment-panel="8"] .exp8-image-row {
+[data-experiment-panel="parallax-horizontal"] .exp-parallax-horizontal-image-row {
   align-items: center;
   width: 100%;
 }
 
-[data-experiment-panel="8"] .exp8-image-btn {
+[data-experiment-panel="parallax-horizontal"] .exp-parallax-horizontal-image-btn {
   width: 72px;
   min-width: 72px;
   height: 24px;
@@ -1474,7 +1474,7 @@
   padding: 0 8px;
 }
 
-[data-experiment-panel="8"] .exp8-image-name {
+[data-experiment-panel="parallax-horizontal"] .exp-parallax-horizontal-image-name {
   flex: 1;
   min-width: 0;
   font: 500 11px/16px Inter, system-ui, sans-serif;
@@ -1575,12 +1575,81 @@
   will-change: transform;
 }
 
+.heading-entrance {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: #fff;
+}
+
+.heading-entrance__text {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #000;
+  white-space: nowrap;
+}
+
+.heading-entrance__char {
+  display: inline-block;
+  white-space: pre;
+  will-change: filter;
+}
+
+/* Blend layers threshold the blurred text back into sharp, "bleeding" shapes. */
+.heading-entrance__burn,
+.heading-entrance__dodge {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.heading-entrance__burn {
+  z-index: 2;
+  background: #000;
+  mix-blend-mode: color-burn;
+}
+
+.heading-entrance__dodge {
+  z-index: 3;
+  background: #474747;
+  mix-blend-mode: color-dodge;
+}
+
+/* Experiment preview only (stripped from snippet) */
+.heading-entrance-restart {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid #e4e4e7;
+  border-radius: 6px;
+  background: #fff;
+  font: 500 12px/1 Inter, sans-serif;
+  color: #09090b;
+  cursor: pointer;
+}
+
+.heading-entrance-restart:hover {
+  background: #f4f4f5;
+}
+
+.cp-preview[data-experiment-preview="heading-entrance"] {
+  position: relative;
+}
+
   </style>
 </head>
 <body>
   <div class="cp-app cp-app--fullscreen">
     <div class="cp-preview-area">
-      <div class="cp-preview" data-experiment-preview="1" hidden>
+      <div class="cp-preview" data-experiment-preview="button-hover" hidden>
         <button id="btn" class="hover-button" type="button">
           <span class="label">
             <span class="text">Hover here</span>
@@ -1589,8 +1658,8 @@
         </button>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="2">
-        <button id="exp2-btn" class="rotate-x-button" type="button">
+      <div class="cp-preview" data-experiment-preview="button-rotate-x">
+        <button id="exp-button-rotate-x-btn" class="rotate-x-button" type="button">
           <span class="label">
             <span class="text">Hover here</span>
             <span class="text is-hidden">Hover here</span>
@@ -1598,7 +1667,7 @@
         </button>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="3" hidden>
+      <div class="cp-preview" data-experiment-preview="carousel-rotate" hidden>
         <div class="rotate-carousel" data-carousel>
           <div class="rotate-carousel__stage"></div>
           <div class="rotate-carousel__nav">
@@ -1608,7 +1677,7 @@
         </div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="4.5" hidden>
+      <div class="cp-preview" data-experiment-preview="carousel-rotate-x" hidden>
         <div class="rotate-x-carousel" data-carousel>
           <div class="rotate-x-carousel__stage">
             <div class="rotate-x-carousel__ring"></div>
@@ -1620,7 +1689,7 @@
         </div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="5" hidden>
+      <div class="cp-preview" data-experiment-preview="carousel-flip" hidden>
         <div class="flip-carousel" data-carousel>
           <div class="flip-carousel__stage">
             <div class="flip-carousel__ring"></div>
@@ -1636,22 +1705,30 @@
         </div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="6" hidden>
+      <div class="cp-preview" data-experiment-preview="transition-arc-scroll" hidden>
         <div class="arc-scroll-root"></div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="7" hidden>
+      <div class="cp-preview" data-experiment-preview="carousel-infinite" hidden>
         <div class="infinite-carousel" data-carousel></div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="8" hidden>
+      <div class="cp-preview" data-experiment-preview="parallax-horizontal" hidden>
         <div class="horizontal-parallax" data-horizontal-parallax></div>
       </div>
 
-      <div class="cp-preview" data-experiment-preview="9" hidden>
-        <button id="exp9-btn" class="stagger-text-button" type="button" aria-label="Hover here">
+      <div class="cp-preview" data-experiment-preview="button-stagger-text" hidden>
+        <button id="exp-button-stagger-text-btn" class="stagger-text-button" type="button" aria-label="Hover here">
           <span class="label"></span>
         </button>
+      </div>
+      <div class="cp-preview" data-experiment-preview="heading-entrance" hidden>
+        <div class="heading-entrance">
+          <h2 class="heading-entrance__text">Bleeding Text</h2>
+          <div class="heading-entrance__burn"></div>
+          <div class="heading-entrance__dodge"></div>
+        </div>
+        <button type="button" class="heading-entrance-restart" id="exp-heading-entrance-restart">Restart</button>
       </div>
     </div>
 
@@ -1660,7 +1737,7 @@
         <span class="field-label">Experiment</span>
         <div class="row">
           <div class="input-wrap input-wrap--label option-selector__wrap">
-            <input type="text" class="option-selector__input" value="Experiment 2" autocomplete="off" spellcheck="false">
+            <input type="text" class="option-selector__input" value="Button Rotate X" autocomplete="off" spellcheck="false">
             <div class="option-selector__menu" role="listbox"></div>
           </div>
         </div>
@@ -1670,7 +1747,7 @@
         <button type="button" class="download-btn" id="save-default-btn">Save Default</button>
       </div>
 
-      <div data-experiment-panel="1" hidden>
+      <div data-experiment-panel="button-hover" hidden>
       <div class="field">
         <label class="field-label" for="label-text">Text Label</label>
         <div class="row">
@@ -1830,12 +1907,12 @@
       </div>
       </div>
 
-      <div data-experiment-panel="2">
+      <div data-experiment-panel="button-rotate-x">
       <div class="field">
-        <label class="field-label" for="exp2-label-text">Text Label</label>
+        <label class="field-label" for="exp-button-rotate-x-label-text">Text Label</label>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp2-label-text" value="Hover here">
+            <input type="text" id="exp-button-rotate-x-label-text" value="Hover here">
           </div>
         </div>
       </div>
@@ -1879,26 +1956,26 @@
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAgMS41QzAgMS4xMDIxOCAwLjE1ODAzNSAwLjcyMDY0NCAwLjQzOTM0IDAuNDM5MzRDMC43MjA2NDQgMC4xNTgwMzUgMS4xMDIxOCAwIDEuNSAwSDEwLjVDMTAuODk3OCAwIDExLjI3OTQgMC4xNTgwMzUgMTEuNTYwNyAwLjQzOTM0QzExLjg0MiAwLjcyMDY0NCAxMiAxLjEwMjE4IDEyIDEuNVYxMC41QzEyIDEwLjg5NzggMTEuODQyIDExLjI3OTQgMTEuNTYwNyAxMS41NjA3QzExLjI3OTQgMTEuODQyIDEwLjg5NzggMTIgMTAuNSAxMkgxLjVDMS4xMDIxOCAxMiAwLjcyMDY0NCAxMS44NDIgMC40MzkzNCAxMS41NjA3QzAuMTU4MDM1IDExLjI3OTQgMCAxMC44OTc4IDAgMTAuNVYxLjVaTTEgMTAuNUMxIDEwLjYzMjYgMS4wNTI2OCAxMC43NTk4IDEuMTQ2NDUgMTAuODUzNkMxLjI0MDIxIDEwLjk0NzMgMS4zNjczOSAxMSAxLjUgMTFIMTAuNUMxMC42MzI2IDExIDEwLjc1OTggMTAuOTQ3MyAxMC44NTM2IDEwLjg1MzZDMTAuOTQ3MyAxMC43NTk4IDExIDEwLjYzMjYgMTEgMTAuNVYxLjVDMTEgMS4zNjczOSAxMC45NDczIDEuMjQwMjEgMTAuODUzNiAxLjE0NjQ1QzEwLjc1OTggMS4wNTI2OCAxMC42MzI2IDEgMTAuNSAxSDEuNUMxLjM2NzM5IDEgMS4yNDAyMSAxLjA1MjY4IDEuMTQ2NDUgMS4xNDY0NUMxLjA1MjY4IDEuMjQwMjEgMSAxLjM2NzM5IDEgMS41VjEwLjVaTTIgMi41QzIgMi4zNjczOSAyLjA1MjY4IDIuMjQwMjEgMi4xNDY0NSAyLjE0NjQ1QzIuMjQwMjEgMi4wNTI2OCAyLjM2NzM5IDIgMi41IDJIOS41QzkuNjMyNjEgMiA5Ljc1OTc5IDIuMDUyNjggOS44NTM1NSAyLjE0NjQ1QzkuOTQ3MzIgMi4yNDAyMSAxMCAyLjM2NzM5IDEwIDIuNUMxMCAyLjYzMjYxIDkuOTQ3MzIgMi43NTk3OSA5Ljg1MzU1IDIuODUzNTVDOS43NTk3OSAyLjk0NzMyIDkuNjMyNjEgMyA5LjUgM0gyLjVDMi4zNjczOSAzIDIuMjQwMjEgMi45NDczMiAyLjE0NjQ1IDIuODUzNTVDMi4wNTI2OCAyLjc1OTc5IDIgMi42MzI2MSAyIDIuNVoiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp2-padding-top" value="0">
+            <input type="text" id="exp-button-rotate-x-padding-top" value="0">
           </div>
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwLjUgMEMxMC44OTc4IDAgMTEuMjc5NCAwLjE1ODAzNSAxMS41NjA3IDAuNDM5MzRDMTEuODQyIDAuNzIwNjQ0IDEyIDEuMTAyMTggMTIgMS41VjEwLjVDMTIgMTAuODk3OCAxMS44NDIgMTEuMjc5NCAxMS41NjA3IDExLjU2MDdDMTEuMjc5NCAxMS44NDIgMTAuODk3OCAxMiAxMC41IDEySDEuNUMxLjEwMjE4IDEyIDAuNzIwNjQ0IDExLjg0MiAwLjQzOTM0IDExLjU2MDdDMC4xNTgwMzUgMTEuMjc5NCAwIDEwLjg5NzggMCAxMC41VjEuNUMwIDEuMTAyMTggMC4xNTgwMzUgMC43MjA2NDQgMC40MzkzNCAwLjQzOTM0QzAuNzIwNjQ0IDAuMTU4MDM1IDEuMTAyMTggMCAxLjUgMEgxMC41Wk0xLjUgMUMxLjM2NzM5IDEgMS4yNDAyMSAxLjA1MjY4IDEuMTQ2NDUgMS4xNDY0NUMxLjA1MjY4IDEuMjQwMjEgMSAxLjM2NzM5IDEgMS41VjEwLjVDMSAxMC42MzI2IDEuMDUyNjggMTAuNzU5OCAxLjE0NjQ1IDEwLjg1MzZDMS4yNDAyMSAxMC45NDczIDEuMzY3MzkgMTEgMS41IDExSDEwLjVDMTAuNjMyNiAxMSAxMC43NTk4IDEwLjk0NzMgMTAuODUzNiAxMC44NTM2QzEwLjk0NzMgMTAuNzU5OCAxMSAxMC42MzI2IDExIDEwLjVWMS41QzExIDEuMzY3MzkgMTAuOTQ3MyAxLjI0MDIxIDEwLjg1MzYgMS4xNDY0NUMxMC43NTk4IDEuMDUyNjggMTAuNjMyNiAxIDEwLjUgMUgxLjVaTTkuNSA5QzkuNjMyNjEgOSA5Ljc1OTc5IDkuMDUyNjggOS44NTM1NSA5LjE0NjQ1QzkuOTQ3MzIgOS4yNDAyMSAxMCA5LjM2NzM5IDEwIDkuNUMxMCA5LjYzMjYxIDkuOTQ3MzIgOS43NTk3OSA5Ljg1MzU1IDkuODUzNTVDOS43NTk3OSA5Ljk0NzMyIDkuNjMyNjEgMTAgOS41IDEwSDIuNUMyLjM2NzM5IDEwIDIuMjQwMjEgOS45NDczMiAyLjE0NjQ1IDkuODUzNTVDMi4wNTI2OCA5Ljc1OTc5IDIgOS42MzI2MSAyIDkuNUMyIDkuMzY3MzkgMi4wNTI2OCA5LjI0MDIxIDIuMTQ2NDUgOS4xNDY0NUMyLjI0MDIxIDkuMDUyNjggMi4zNjczOSA5IDIuNSA5SDkuNVoiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp2-padding-bottom" value="0">
+            <input type="text" id="exp-button-rotate-x-padding-bottom" value="0">
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwLjUgMEMxMC44OTc4IDAgMTEuMjc5NCAwLjE1ODAzNSAxMS41NjA3IDAuNDM5MzRDMTEuODQyIDAuNzIwNjQ0IDEyIDEuMTAyMTggMTIgMS41VjEwLjVDMTIgMTAuODk3OCAxMS44NDIgMTEuMjc5NCAxMS41NjA3IDExLjU2MDdDMTEuMjc5NCAxMS44NDIgMTAuODk3OCAxMiAxMC41IDEySDEuNUMxLjEwMjE4IDEyIDAuNzIwNjQ0IDExLjg0MiAwLjQzOTM0IDExLjU2MDdDMC4xNTgwMzUgMTEuMjc5NCAwIDEwLjg5NzggMCAxMC41VjEuNUMwIDEuMTAyMTggMC4xNTgwMzUgMC43MjA2NDQgMC40MzkzNCAwLjQzOTM0QzAuNzIwNjQ0IDAuMTU4MDM1IDEuMTAyMTggMCAxLjUgMEgxMC41Wk0xLjUgMUMxLjM2NzM5IDEgMS4yNDAyMSAxLjA1MjY4IDEuMTQ2NDUgMS4xNDY0NUMxLjA1MjY4IDEuMjQwMjEgMSAxLjM2NzM5IDEgMS41VjEwLjVDMSAxMC42MzI2IDEuMDUyNjggMTAuNzU5OCAxLjE0NjQ1IDEwLjg1MzZDMS4yNDAyMSAxMC45NDczIDEuMzY3MzkgMTEgMS41IDExSDEwLjVDMTAuNjMyNiAxMSAxMC43NTk4IDEwLjk0NzMgMTAuODUzNiAxMC44NTM2QzEwLjk0NzMgMTAuNzU5OCAxMSAxMC42MzI2IDExIDEwLjVWMS41QzExIDEuMzY3MzkgMTAuOTQ3MyAxLjI0MDIxIDEwLjg1MzYgMS4xNDY0NUMxMC43NTk4IDEuMDUyNjggMTAuNjMyNiAxIDEwLjUgMUgxLjVaTTIuNSAyQzIuNjMyNjEgMiAyLjc1OTc5IDIuMDUyNjggMi44NTM1NSAyLjE0NjQ1QzIuOTQ3MzIgMi4yNDAyMSAzIDIuMzY3MzkgMyAyLjVWOS41QzMgOS42MzI2MSAyLjk0NzMyIDkuNzU5NzkgMi44NTM1NSA5Ljg1MzU1QzIuNzU5NzkgOS45NDczMiAyLjYzMjYxIDEwIDIuNSAxMEMyLjM2NzM5IDEwIDIuMjQwMjEgOS45NDczMiAyLjE0NjQ1IDkuODUzNTVDMi4wNTI2OCA5Ljc1OTc5IDIgOS42MzI2MSAyIDkuNVYyLjVDMiAyLjM2NzM5IDIuMDUyNjggMi4yNDAyMSAyLjE0NjQ1IDIuMTQ2NDVDMi4yNDAyMSAyLjA1MjY4IDIuMzY3MzkgMiAyLjUgMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp2-padding-left" value="24">
+            <input type="text" id="exp-button-rotate-x-padding-left" value="24">
           </div>
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwLjUgMEMxMC44OTc4IDAgMTEuMjc5NCAwLjE1ODAzNSAxMS41NjA3IDAuNDM5MzRDMTEuODQyIDAuNzIwNjQ0IDEyIDEuMTAyMTggMTIgMS41VjEwLjVDMTIgMTAuODk3OCAxMS44NDIgMTEuMjc5NCAxMS41NjA3IDExLjU2MDdDMTEuMjc5NCAxMS44NDIgMTAuODk3OCAxMiAxMC41IDEySDEuNUMxLjEwMjE4IDEyIDAuNzIwNjQ0IDExLjg0MiAwLjQzOTM0IDExLjU2MDdDMC4xNTgwMzUgMTEuMjc5NCAwIDEwLjg5NzggMCAxMC41VjEuNUMwIDEuMTAyMTggMC4xNTgwMzUgMC43MjA2NDQgMC40MzkzNCAwLjQzOTM0QzAuNzIwNjQ0IDAuMTU4MDM1IDEuMTAyMTggMCAxLjUgMEgxMC41Wk0xLjUgMUMxLjM2NzM5IDEgMS4yNDAyMSAxLjA1MjY4IDEuMTQ2NDUgMS4xNDY0NUMxLjA1MjY4IDEuMjQwMjEgMSAxLjM2NzM5IDEgMS41VjEwLjVDMSAxMC42MzI2IDEuMDUyNjggMTAuNzU5OCAxLjE0NjQ1IDEwLjg1MzZDMS4yNDAyMSAxMC45NDczIDEuMzY3MzkgMTEgMS41IDExSDEwLjVDMTAuNjMyNiAxMSAxMC43NTk4IDEwLjk0NzMgMTAuODUzNiAxMC44NTM2QzEwLjk0NzMgMTAuNzU5OCAxMSAxMC42MzI2IDExIDEwLjVWMS41QzExIDEuMzY3MzkgMTAuOTQ3MyAxLjI0MDIxIDEwLjg1MzYgMS4xNDY0NUMxMC43NTk4IDEuMDUyNjggMTAuNjMyNiAxIDEwLjUgMUgxLjVaTTkuNSAyQzkuNjMyNjEgMiA5Ljc1OTc5IDIuMDUyNjggOS44NTM1NSAyLjE0NjQ1QzkuOTQ3MzIgMi4yNDAyMSAxMCAyLjM2NzM5IDEwIDIuNVY5LjVDMTAgOS42MzI2MSA5Ljk0NzMyIDkuNzU5NzkgOS44NTM1NSA5Ljg1MzU1QzkuNzU5NzkgOS45NDczMiA5LjYzMjYxIDEwIDkuNSAxMEM5LjM2NzM5IDEwIDkuMjQwMjEgOS45NDczMiA5LjE0NjQ1IDkuODUzNTVDOS4wNTI2OCA5Ljc1OTc5IDkgOS42MzI2MSA5IDkuNVYyLjVDOSAyLjM2NzM5IDkuMDUyNjggMi4yNDAyMSA5LjE0NjQ1IDIuMTQ2NDVDOS4yNDAyMSAyLjA1MjY4IDkuMzY3MzkgMiA5LjUgMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp2-padding-right" value="24">
+            <input type="text" id="exp-button-rotate-x-padding-right" value="24">
           </div>
         </div>
       </div>
 
-      <div id="exp2-bg-color-root">
+      <div id="exp-button-rotate-x-bg-color-root">
         <div class="field">
           <span class="field-label">Background color</span>
           <div class="row">
@@ -1917,7 +1994,7 @@
       <div class="field">
         <span class="field-label">Border</span>
         <div class="field-stack">
-        <div id="exp2-border-color-root">
+        <div id="exp-button-rotate-x-border-color-root">
           <div class="row">
             <div class="input-wrap color-wrap">
               <span class="swatch" data-color-swatch></span>
@@ -1932,11 +2009,11 @@
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMS4yNSA4QzExLjQ0ODkgOCAxMS42Mzk2IDguMDc5MDcgMTEuNzgwMyA4LjIxOTczQzExLjkyMDkgOC4zNjAzOCAxMiA4LjU1MTA5IDEyIDguNzVWMTEuMjVDMTIgMTEuNDQ4OSAxMS45MjA5IDExLjYzOTYgMTEuNzgwMyAxMS43ODAzQzExLjYzOTYgMTEuOTIwOSAxMS40NDg5IDEyIDExLjI1IDEySDAuNzVDMC41NTEwODggMTIgMC4zNjAzNzkgMTEuOTIwOSAwLjIxOTcyNyAxMS43ODAzQzAuMDc5MDc0NCAxMS42Mzk2IDAgMTEuNDQ4OSAwIDExLjI1VjguNzVDMCA4LjU1MTA5IDAuMDc5MDc0MyA4LjM2MDM4IDAuMjE5NzI3IDguMjE5NzNDMC4zNjAzNzkgOC4wNzkwNyAwLjU1MTA4OCA4IDAuNzUgOEgxMS4yNVpNMSA5VjExSDExVjlIMVoiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjI1IDNDMTEuNDQ4OSAzIDExLjYzOTYgMy4wNzkwNyAxMS43ODAzIDMuMjE5NzNDMTEuOTIwOSAzLjM2MDM4IDEyIDMuNTUxMDkgMTIgMy43NVY1LjI1QzEyIDUuNDQ4OTEgMTEuOTIwOSA1LjYzOTYyIDExLjc4MDMgNS43ODAyN0MxMS42Mzk2IDUuOTIwOTMgMTEuNDQ4OSA2IDExLjI1IDZIMC43NUMwLjMzNiA2IDAgNS42NjQgMCA1LjI1VjMuNzVDMCAzLjU1MTA5IDAuMDc5MDc0MyAzLjM2MDM4IDAuMjE5NzI3IDMuMjE5NzNDMC4zNjAzNzkgMy4wNzkwNyAwLjU1MTA4OCAzIDAuNzUgM0gxMS4yNVpNMSA1SDExVjRIMVY1WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+CjxwYXRoIGQ9Ik0xMS41IDBDMTEuNjMyNiAwIDExLjc1OTcgMC4wNTI3MTYzIDExLjg1MzUgMC4xNDY0ODRDMTEuOTQ3MyAwLjI0MDI1MyAxMiAwLjM2NzM5MiAxMiAwLjVDMTIgMC42MzI2MDggMTEuOTQ3MyAwLjc1OTc0NyAxMS44NTM1IDAuODUzNTE2QzExLjc1OTcgMC45NDcyODQgMTEuNjMyNiAxIDExLjUgMUgwLjVDMC4zNjczOTIgMSAwLjI0MDI1MyAwLjk0NzI4NCAwLjE0NjQ4NCAwLjg1MzUxNkMwLjA1MjcxNjIgMC43NTk3NDcgMCAwLjYzMjYwOCAwIDAuNUMwIDAuMzY3MzkyIDAuMDUyNzE2MiAwLjI0MDI1MyAwLjE0NjQ4NCAwLjE0NjQ4NEMwLjI0MDI1MyAwLjA1MjcxNjIgMC4zNjczOTIgMCAwLjUgMEgxMS41WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+Cjwvc3ZnPgo=" alt=""></span>
-            <input type="text" id="exp2-border" value="0">
+            <input type="text" id="exp-button-rotate-x-border" value="0">
           </div>
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAuNTAxODMxIDhDMC42MzQ0NCA4IDAuNzYxNjE3IDguMDUyNjggMC44NTUzODUgOC4xNDY0NUMwLjk0OTE1MyA4LjI0MDIxIDEuMDAxODMgOC4zNjczOSAxLjAwMTgzIDguNVY5LjFDMS4wMDE4MyA5LjUyOCAxLjAwMTgzIDkuODIgMS4wMjA4MyAxMC4wNDVDMS4wMzc4MyAxMC4yNjQgMS4wNzA4MyAxMC4zNzYgMS4xMTA4MyAxMC40NTVDMS4yMDY4MyAxMC42NDIgMS4zNTk4MyAxMC43OTUgMS41NDc4MyAxMC44OTFDMS42MjU4MyAxMC45MzEgMS43Mzc4MyAxMC45NjQgMS45NTc4MyAxMC45ODFDMi4xODE4MyAxMSAyLjQ3MzgzIDExIDIuOTAxODMgMTFIMy41MDE4M0MzLjYzNDQ0IDExIDMuNzYxNjIgMTEuMDUyNyAzLjg1NTM5IDExLjE0NjRDMy45NDkxNSAxMS4yNDAyIDQuMDAxODMgMTEuMzY3NCA0LjAwMTgzIDExLjVDNC4wMDE4MyAxMS42MzI2IDMuOTQ5MTUgMTEuNzU5OCAzLjg1NTM5IDExLjg1MzZDMy43NjE2MiAxMS45NDczIDMuNjM0NDQgMTIgMy41MDE4MyAxMkgyLjg4MDgzQzIuNDc4ODMgMTIgMi4xNDY4MyAxMiAxLjg3NTgzIDExLjk3N0MxLjU5NDgzIDExLjk1NSAxLjMzNTgzIDExLjkwNiAxLjA5MzgzIDExLjc4MkMwLjcxNzUyNCAxMS41OTAzIDAuNDExNTc1IDExLjI4NDMgMC4yMTk4MzEgMTAuOTA4QzAuMDk1ODMxMyAxMC42NjYgMC4wNDY4MzEzIDEwLjQwNyAwLjAyMzgzMTMgMTAuMTI2QzAuMDAzNTQzNjcgOS43OTE0MSAtMC4wMDM3OTQ5OCA5LjQ1NjE2IDAuMDAxODMxNDEgOS4xMjFWOC41QzAuMDAxODMxNDEgOC4zNjczOSAwLjA1NDUwOTkgOC4yNDAyMSAwLjE0ODI3OCA4LjE0NjQ1QzAuMjQyMDQ2IDguMDUyNjggMC4zNjkyMjMgOCAwLjUwMTgzMSA4Wk0xMS41MDE4IDhDMTEuNjM0NCA4IDExLjc2MTYgOC4wNTI2OCAxMS44NTU0IDguMTQ2NDVDMTEuOTQ5MiA4LjI0MDIxIDEyLjAwMTggOC4zNjczOSAxMi4wMDE4IDguNVY5LjEyMUMxMi4wMDE4IDkuNTIzIDEyLjAwMTggOS44NTUgMTEuOTc4OCAxMC4xMjZDMTEuOTU2OCAxMC40MDcgMTEuOTA3OCAxMC42NjYgMTEuNzgzOCAxMC45MDhDMTEuNTkyMSAxMS4yODQzIDExLjI4NjEgMTEuNTkwMyAxMC45MDk4IDExLjc4MkMxMC42Njc4IDExLjkwNiAxMC40MDg4IDExLjk1NSAxMC4xMjc4IDExLjk3N0M5Ljg1NzgzIDEyIDkuNTI0ODMgMTIgOS4xMjI4MyAxMkg4LjUwMTgzQzguMzY5MjIgMTIgOC4yNDIwNSAxMS45NDczIDguMTQ4MjggMTEuODUzNkM4LjA1NDUxIDExLjc1OTggOC4wMDE4MyAxMS42MzI2IDguMDAxODMgMTEuNUM4LjAwMTgzIDExLjM2NzQgOC4wNTQ1MSAxMS4yNDAyIDguMTQ4MjggMTEuMTQ2NEM4LjI0MjA1IDExLjA1MjcgOC4zNjkyMiAxMSA4LjUwMTgzIDExSDkuMTAxODNDOS41Mjk4MyAxMSA5LjgyMTgzIDExIDEwLjA0NjggMTAuOTgxQzEwLjI2NTggMTAuOTYzIDEwLjM3NzggMTAuOTMxIDEwLjQ1NjggMTAuODkxQzEwLjY0NDYgMTAuNzk1IDEwLjc5NzIgMTAuNjQyIDEwLjg5MjggMTAuNDU0QzEwLjkzMjggMTAuMzc2IDEwLjk2NTggMTAuMjY0IDEwLjk4MjggMTAuMDQ0QzExLjAwMTggOS44MiAxMS4wMDE4IDkuNTI4IDExLjAwMTggOS4xVjguNUMxMS4wMDE4IDguMzY3MzkgMTEuMDU0NSA4LjI0MDIxIDExLjE0ODMgOC4xNDY0NUMxMS4yNDIgOC4wNTI2OCAxMS4zNjkyIDggMTEuNTAxOCA4Wk0zLjUwMTgzIDBDMy42MzQ0NCAwIDMuNzYxNjIgMC4wNTI2Nzg1IDMuODU1MzkgMC4xNDY0NDdDMy45NDkxNSAwLjI0MDIxNSA0LjAwMTgzIDAuMzY3MzkyIDQuMDAxODMgMC41QzQuMDAxODMgMC42MzI2MDggMy45NDkxNSAwLjc1OTc4NSAzLjg1NTM5IDAuODUzNTUzQzMuNzYxNjIgMC45NDczMjEgMy42MzQ0NCAxIDMuNTAxODMgMUgyLjkwMTgzQzIuNDczODMgMSAyLjE4MjgzIDEgMS45NTc4MyAxLjAxOUMxLjczNzgzIDEuMDM2IDEuNjI1ODMgMS4wNjkgMS41NDc4MyAxLjEwOUMxLjM1OTY4IDEuMjA0ODcgMS4yMDY3IDEuMzU3ODUgMS4xMTA4MyAxLjU0NkMxLjA3MDgzIDEuNjI0IDEuMDM3ODMgMS43MzYgMS4wMjA4MyAxLjk1NkMxLjAwMTgzIDIuMTggMS4wMDE4MyAyLjQ3MSAxLjAwMTgzIDIuOVYzLjVDMS4wMDE4MyAzLjYzMjYxIDAuOTQ5MTUzIDMuNzU5NzkgMC44NTUzODUgMy44NTM1NUMwLjc2MTYxNyAzLjk0NzMyIDAuNjM0NDQgNCAwLjUwMTgzMSA0QzAuMzY5MjIzIDQgMC4yNDIwNDYgMy45NDczMiAwLjE0ODI3OCAzLjg1MzU1QzAuMDU0NTA5OSAzLjc1OTc5IDAuMDAxODMxNDEgMy42MzI2MSAwLjAwMTgzMTQxIDMuNVYyLjg3OUMwLjAwMTgzMTQxIDIuNDc3IDAuMDAxODMxMjUgMi4xNDUgMC4wMjM4MzEzIDEuODc0QzAuMDQ2ODMxMyAxLjU5MyAwLjA5NTgzMTMgMS4zMzQgMC4yMTk4MzEgMS4wOTJDMC40MTE1NzUgMC43MTU2OTMgMC43MTc1MjQgMC40MDk3NDQgMS4wOTM4MyAwLjIxOEMxLjMzNTgzIDAuMDkzOTk5OSAxLjU5NDgzIDAuMDQ0OTk5OCAxLjg3NTgzIDAuMDIxOTk5OEMyLjE0NTgzIC0xLjYzOTEzZS0wNyAyLjQ3ODgzIDAgMi44ODE4MyAwSDMuNTAxODNaTTkuMTIyODMgMEM5LjUyNDgzIDAgOS44NTY4MyAtMS42MzkxM2UtMDcgMTAuMTI3OCAwLjAyMTk5OThDMTAuNDA4OCAwLjA0NDk5OTggMTAuNjY3OCAwLjA5Mzk5OTkgMTAuOTA5OCAwLjIxOEMxMS4yODYxIDAuNDA5NzQ0IDExLjU5MjEgMC43MTU2OTMgMTEuNzgzOCAxLjA5MkMxMS45MDc4IDEuMzM0IDExLjk1NjggMS41OTMgMTEuOTc4OCAxLjg3NEMxMi4wMDE4IDIuMTQ0IDEyLjAwMTggMi40NzcgMTIuMDAxOCAyLjg3OVYzLjVDMTIuMDAxOCAzLjYzMjYxIDExLjk0OTIgMy43NTk3OSAxMS44NTU0IDMuODUzNTVDMTEuNzYxNiAzLjk0NzMyIDExLjYzNDQgNCAxMS41MDE4IDRDMTEuMzY5MiA0IDExLjI0MiAzLjk0NzMyIDExLjE0ODMgMy44NTM1NUMxMS4wNTQ1IDMuNzU5NzkgMTEuMDAxOCAzLjYzMjYxIDExLjAwMTggMy41VjIuOUMxMS4wMDE4IDIuNDcyIDExLjAwMTggMi4xOCAxMC45ODI4IDEuOTU1QzEwLjk2NDggMS43MzYgMTAuOTMyOCAxLjYyNSAxMC44OTI4IDEuNTQ1QzEwLjc5NjggMS4zNTcyMiAxMC42NDM4IDEuMjA0NjEgMTAuNDU1OCAxLjEwOUMxMC4zNzc4IDEuMDY5IDEwLjI2NTggMS4wMzYgMTAuMDQ1OCAxLjAxOUM5LjczMTUgMS4wMDEyNCA5LjQxNjYyIDAuOTk0OSA5LjEwMTgzIDFIOC41MDE4M0M4LjM2OTIyIDEgOC4yNDIwNSAwLjk0NzMyMSA4LjE0ODI4IDAuODUzNTUzQzguMDU0NTEgMC43NTk3ODUgOC4wMDE4MyAwLjYzMjYwOCA4LjAwMTgzIDAuNUM4LjAwMTgzIDAuMzY3MzkyIDguMDU0NTEgMC4yNDAyMTUgOC4xNDgyOCAwLjE0NjQ0N0M4LjI0MjA1IDAuMDUyNjc4NSA4LjM2OTIyIDAgOC41MDE4MyAwSDkuMTIyODNaIiBmaWxsPSJibGFjayIgZmlsbC1vcGFjaXR5PSIwLjUiLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp2-radius" value="0">
+            <input type="text" id="exp-button-rotate-x-radius" value="0">
           </div>
         </div>
         </div>
@@ -1944,7 +2021,7 @@
 
       <div class="field">
         <span class="field-label">Animation</span>
-        <div id="exp2-axis-root" class="option-selector option-selector--nested">
+        <div id="exp-button-rotate-x-axis-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Axis X" autocomplete="off" spellcheck="false">
@@ -1955,27 +2032,27 @@
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTEyIDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp2-rotate" value="90">
+            <input type="text" id="exp-button-rotate-x-rotate" value="90">
             <div class="suffix-wrap"><span>°</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">Y</span>
-            <input type="text" id="exp2-origin-y" value="5000">
+            <input type="text" id="exp-button-rotate-x-origin-y" value="5000">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp2-duration" value="350">
+            <input type="text" id="exp-button-rotate-x-duration" value="350">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
       </div>
 
-      <div id="exp2-easing-root">
+      <div id="exp-button-rotate-x-easing-root">
         <div class="field cubic-bezier-field">
           <span class="field-label">Easing</span>
           <div class="cubic-bezier-editor" data-bezier-editor>
@@ -1997,7 +2074,7 @@
         </div>
       </div>
 
-      <div id="exp2-snippet-root">
+      <div id="exp-button-rotate-x-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -2006,12 +2083,12 @@
       </div>
       </div>
 
-      <div data-experiment-panel="3" hidden>
+      <div data-experiment-panel="carousel-rotate" hidden>
       <div class="field">
-        <label class="field-label" for="exp3-count">Box Count</label>
+        <label class="field-label" for="exp-carousel-rotate-count">Box Count</label>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp3-count" value="5">
+            <input type="text" id="exp-carousel-rotate-count" value="5">
           </div>
         </div>
       </div>
@@ -2054,12 +2131,12 @@
         <span class="field-label">Border Radius</span>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp3-radius" value="0">
+            <input type="text" id="exp-carousel-rotate-radius" value="0">
           </div>
         </div>
       </div>
 
-      <div id="exp3-color-1-root">
+      <div id="exp-carousel-rotate-color-1-root">
         <div class="field">
           <span class="field-label">Box 1 Color</span>
           <div class="row">
@@ -2075,7 +2152,7 @@
         </div>
       </div>
 
-      <div id="exp3-color-2-root">
+      <div id="exp-carousel-rotate-color-2-root">
         <div class="field">
           <span class="field-label">Box 2 Color</span>
           <div class="row">
@@ -2091,7 +2168,7 @@
         </div>
       </div>
 
-      <div id="exp3-color-3-root">
+      <div id="exp-carousel-rotate-color-3-root">
         <div class="field">
           <span class="field-label">Box 3 Color</span>
           <div class="row">
@@ -2107,7 +2184,7 @@
         </div>
       </div>
 
-      <div id="exp3-color-4-root">
+      <div id="exp-carousel-rotate-color-4-root">
         <div class="field">
           <span class="field-label">Box 4 Color</span>
           <div class="row">
@@ -2123,7 +2200,7 @@
         </div>
       </div>
 
-      <div id="exp3-color-5-root">
+      <div id="exp-carousel-rotate-color-5-root">
         <div class="field">
           <span class="field-label">Box 5 Color</span>
           <div class="row">
@@ -2144,21 +2221,21 @@
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTI2IDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp3-rotate" value="12">
+            <input type="text" id="exp-carousel-rotate-rotate" value="12">
             <div class="suffix-wrap"><span>°</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">Y</span>
-            <input type="text" id="exp3-origin-y" value="2000">
+            <input type="text" id="exp-carousel-rotate-origin-y" value="2000">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp3-duration" value="350">
+            <input type="text" id="exp-carousel-rotate-duration" value="350">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -2167,12 +2244,12 @@
         </div>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp3-velocity" value="1">
+            <input type="text" id="exp-carousel-rotate-velocity" value="1">
           </div>
         </div>
       </div>
 
-      <div id="exp3-easing-root">
+      <div id="exp-carousel-rotate-easing-root">
         <div class="field cubic-bezier-field">
           <span class="field-label">Easing</span>
           <div class="cubic-bezier-editor" data-bezier-editor>
@@ -2194,7 +2271,7 @@
         </div>
       </div>
 
-      <div id="exp3-snippet-root">
+      <div id="exp-carousel-rotate-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -2203,19 +2280,19 @@
       </div>
       </div>
 
-      <div data-experiment-panel="4.5" hidden>
+      <div data-experiment-panel="carousel-rotate-x" hidden>
       <div class="field">
-        <label class="field-label" for="exp45-count">Box Count</label>
+        <label class="field-label" for="exp-carousel-rotate-x-count">Box Count</label>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp45-count" value="5">
+            <input type="text" id="exp-carousel-rotate-x-count" value="5">
           </div>
         </div>
       </div>
 
       <div class="field">
         <span class="field-label">Variant</span>
-        <div id="exp45-variant-root" class="option-selector option-selector--nested">
+        <div id="exp-carousel-rotate-x-variant-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Vertical" autocomplete="off" spellcheck="false">
@@ -2227,7 +2304,7 @@
 
       <div class="field">
         <span class="field-label">Input</span>
-        <div id="exp45-input-root" class="option-selector option-selector--nested">
+        <div id="exp-carousel-rotate-x-input-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Drag" autocomplete="off" spellcheck="false">
@@ -2237,7 +2314,7 @@
         </div>
       </div>
 
-      <div id="exp45-reverse-scroll-root" class="field toggle-field" hidden>
+      <div id="exp-carousel-rotate-x-reverse-scroll-root" class="field toggle-field" hidden>
         <div class="toggle-stack">
           <button type="button" class="toggle-row" role="switch" aria-checked="false">
             <span class="toggle-switch" aria-hidden="true">
@@ -2286,12 +2363,12 @@
         <span class="field-label">Border Radius</span>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp45-radius" value="0">
+            <input type="text" id="exp-carousel-rotate-x-radius" value="0">
           </div>
         </div>
       </div>
 
-      <div id="exp45-color-1-root">
+      <div id="exp-carousel-rotate-x-color-1-root">
         <div class="field">
           <span class="field-label">Box 1 Color</span>
           <div class="row">
@@ -2307,7 +2384,7 @@
         </div>
       </div>
 
-      <div id="exp45-color-2-root">
+      <div id="exp-carousel-rotate-x-color-2-root">
         <div class="field">
           <span class="field-label">Box 2 Color</span>
           <div class="row">
@@ -2323,7 +2400,7 @@
         </div>
       </div>
 
-      <div id="exp45-color-3-root">
+      <div id="exp-carousel-rotate-x-color-3-root">
         <div class="field">
           <span class="field-label">Box 3 Color</span>
           <div class="row">
@@ -2339,7 +2416,7 @@
         </div>
       </div>
 
-      <div id="exp45-color-4-root">
+      <div id="exp-carousel-rotate-x-color-4-root">
         <div class="field">
           <span class="field-label">Box 4 Color</span>
           <div class="row">
@@ -2355,7 +2432,7 @@
         </div>
       </div>
 
-      <div id="exp45-color-5-root">
+      <div id="exp-carousel-rotate-x-color-5-root">
         <div class="field">
           <span class="field-label">Box 5 Color</span>
           <div class="row">
@@ -2376,35 +2453,35 @@
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTI2IDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp45-rotate" value="12">
+            <input type="text" id="exp-carousel-rotate-x-rotate" value="12">
             <div class="suffix-wrap"><span>°</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">Z</span>
-            <input type="text" id="exp45-orbit" value="600">
+            <input type="text" id="exp-carousel-rotate-x-orbit" value="600">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">P</span>
-            <input type="text" id="exp45-perspective" value="1200">
+            <input type="text" id="exp-carousel-rotate-x-perspective" value="1200">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">S</span>
-            <input type="text" id="exp45-scale" value="1.2" data-arrow-step="0.1">
+            <input type="text" id="exp-carousel-rotate-x-scale" value="1.2" data-arrow-step="0.1">
             <div class="suffix-wrap"><span>×</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp45-duration" value="350">
+            <input type="text" id="exp-carousel-rotate-x-duration" value="350">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -2413,12 +2490,12 @@
         </div>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp45-velocity" value="1">
+            <input type="text" id="exp-carousel-rotate-x-velocity" value="1">
           </div>
         </div>
       </div>
 
-      <div id="exp45-easing-root">
+      <div id="exp-carousel-rotate-x-easing-root">
         <div class="field cubic-bezier-field">
           <span class="field-label">Easing</span>
           <div class="cubic-bezier-editor" data-bezier-editor>
@@ -2440,7 +2517,7 @@
         </div>
       </div>
 
-      <div id="exp45-snippet-root">
+      <div id="exp-carousel-rotate-x-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -2449,17 +2526,17 @@
       </div>
       </div>
 
-      <div data-experiment-panel="5" hidden>
+      <div data-experiment-panel="carousel-flip" hidden>
       <div class="field">
-        <label class="field-label" for="exp5-count">Box Count</label>
+        <label class="field-label" for="exp-carousel-flip-count">Box Count</label>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp5-count" value="5">
+            <input type="text" id="exp-carousel-flip-count" value="5">
           </div>
         </div>
       </div>
 
-      <div id="exp5-color-1-root">
+      <div id="exp-carousel-flip-color-1-root">
         <div class="field">
           <span class="field-label">Box 1 Color</span>
           <div class="row">
@@ -2475,7 +2552,7 @@
         </div>
       </div>
 
-      <div id="exp5-color-2-root">
+      <div id="exp-carousel-flip-color-2-root">
         <div class="field">
           <span class="field-label">Box 2 Color</span>
           <div class="row">
@@ -2491,7 +2568,7 @@
         </div>
       </div>
 
-      <div id="exp5-color-3-root">
+      <div id="exp-carousel-flip-color-3-root">
         <div class="field">
           <span class="field-label">Box 3 Color</span>
           <div class="row">
@@ -2507,7 +2584,7 @@
         </div>
       </div>
 
-      <div id="exp5-color-4-root">
+      <div id="exp-carousel-flip-color-4-root">
         <div class="field">
           <span class="field-label">Box 4 Color</span>
           <div class="row">
@@ -2523,7 +2600,7 @@
         </div>
       </div>
 
-      <div id="exp5-color-5-root">
+      <div id="exp-carousel-flip-color-5-root">
         <div class="field">
           <span class="field-label">Box 5 Color</span>
           <div class="row">
@@ -2543,7 +2620,7 @@
         <span class="panel-divider__line" role="separator"></span>
       </div>
 
-      <div id="exp5-fan-section">
+      <div id="exp-carousel-flip-fan-section">
       <div class="field">
         <span class="field-label">Fan</span>
       </div>
@@ -2586,7 +2663,7 @@
         <span class="field-label">Border Radius</span>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp5-fan-radius" value="0">
+            <input type="text" id="exp-carousel-flip-fan-radius" value="0">
           </div>
         </div>
       </div>
@@ -2596,21 +2673,21 @@
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTI2IDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp5-fan-rotate" value="12">
+            <input type="text" id="exp-carousel-flip-fan-rotate" value="12">
             <div class="suffix-wrap"><span>°</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">Y</span>
-            <input type="text" id="exp5-fan-origin-y" value="2000">
+            <input type="text" id="exp-carousel-flip-fan-origin-y" value="2000">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp5-fan-duration" value="350">
+            <input type="text" id="exp-carousel-flip-fan-duration" value="350">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -2619,12 +2696,12 @@
         </div>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp5-fan-velocity" value="1">
+            <input type="text" id="exp-carousel-flip-fan-velocity" value="1">
           </div>
         </div>
       </div>
 
-      <div id="exp5-fan-easing-root">
+      <div id="exp-carousel-flip-fan-easing-root">
         <div class="field cubic-bezier-field">
           <span class="field-label">Easing</span>
           <div class="cubic-bezier-editor" data-bezier-editor>
@@ -2651,14 +2728,14 @@
         <span class="panel-divider__line" role="separator"></span>
       </div>
 
-      <div id="exp5-horiz-section">
+      <div id="exp-carousel-flip-horiz-section">
       <div class="field">
         <span class="field-label">Horizontal</span>
       </div>
 
       <div class="field">
         <span class="field-label">Variant</span>
-        <div id="exp5-variant-root" class="option-selector option-selector--nested">
+        <div id="exp-carousel-flip-variant-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Horizontal" autocomplete="off" spellcheck="false">
@@ -2670,7 +2747,7 @@
 
       <div class="field">
         <span class="field-label">Input</span>
-        <div id="exp5-input-root" class="option-selector option-selector--nested">
+        <div id="exp-carousel-flip-input-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Drag" autocomplete="off" spellcheck="false">
@@ -2718,7 +2795,7 @@
         <span class="field-label">Border Radius</span>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp5-horiz-radius" value="0">
+            <input type="text" id="exp-carousel-flip-horiz-radius" value="0">
           </div>
         </div>
       </div>
@@ -2728,35 +2805,35 @@
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon input-icon--wide"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDE0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMS4xNDY0IDAuMTQ2NDI1QzExLjM0MTcgLTAuMDQ4NzkzOCAxMS42NTgyIC0wLjA0ODgyMjggMTEuODUzNSAwLjE0NjQyNUwxMy44NTM1IDIuMTQ2NDNDMTMuODg2NyAyLjE3OTYyIDEzLjkxMTcgMi4yMTc3NyAxMy45MzM2IDIuMjU2NzhDMTMuOTc0MiAyLjMyOTA3IDE0IDIuNDExMTIgMTQgMi40OTk5NEMxNCAyLjU4ODQ3IDEzLjk3MzkgMi42NyAxMy45MzM2IDIuNzQyMTNDMTMuOTExNiAyLjc4MTQxIDEzLjg4NjkgMi44MjAwNSAxMy44NTM1IDIuODUzNDZMMTEuODUzNSA0Ljg1MzQ2QzExLjY1ODIgNS4wNDg2OSAxMS4zNDE3IDUuMDQ4NjQgMTEuMTQ2NCA0Ljg1MzQ2QzEwLjk1MTIgNC42NTgxOSAxMC45NTI2IDQuMzQxNjkgMTEuMTQ2NCA0LjE0NjQyTDEyLjI5MjkgMi45OTk5NEgxLjcwNjk5TDIuODUzNDggNC4xNDY0MkMzLjA0ODY0IDQuMzQxNjggMy4wNDg2NyA0LjY1ODIyIDIuODUzNDggNC44NTM0NkMyLjY1ODI0IDUuMDQ4NjkgMi4zNDE3MiA1LjA0ODY0IDIuMTQ2NDUgNC44NTM0NkwwLjE0NjQ0NyAyLjg1MzQ2Qy0wLjA0ODgxNTUgMi42NTgxOSAtMC4wNDg4MTU1IDIuMzQxNjkgMC4xNDY0NDcgMi4xNDY0M0wyLjE0NjQ1IDAuMTQ2NDI1QzIuMzQxNzEgLTAuMDQ4NzkzOCAyLjY1ODIzIC0wLjA0ODgyMjcgMi44NTM0OCAwLjE0NjQyNUMzLjA0ODY0IDAuMzQxNjc5IDMuMDQ4NjcgMC42NTgyMTggMi44NTM0OCAwLjg1MzQ1NkwxLjcwNjk5IDEuOTk5OTRIMTIuMjkyOUwxMS4xNDY0IDAuODUzNDU2QzEwLjk1MTIgMC42NTgxOTQgMTAuOTUxMiAwLjM0MTY4NyAxMS4xNDY0IDAuMTQ2NDI1WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==" alt=""></span>
-            <input type="text" id="exp5-horiz-rotate" value="12">
+            <input type="text" id="exp-carousel-flip-horiz-rotate" value="12">
             <div class="suffix-wrap"><span>°</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">Z</span>
-            <input type="text" id="exp5-horiz-orbit" value="600">
+            <input type="text" id="exp-carousel-flip-horiz-orbit" value="600">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">P</span>
-            <input type="text" id="exp5-horiz-perspective" value="1200">
+            <input type="text" id="exp-carousel-flip-horiz-perspective" value="1200">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">S</span>
-            <input type="text" id="exp5-horiz-scale" value="1.2" data-arrow-step="0.1">
+            <input type="text" id="exp-carousel-flip-horiz-scale" value="1.2" data-arrow-step="0.1">
             <div class="suffix-wrap"><span>×</span></div>
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp5-horiz-duration" value="350">
+            <input type="text" id="exp-carousel-flip-horiz-duration" value="350">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -2765,12 +2842,12 @@
         </div>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp5-horiz-velocity" value="1">
+            <input type="text" id="exp-carousel-flip-horiz-velocity" value="1">
           </div>
         </div>
       </div>
 
-      <div id="exp5-horiz-easing-root">
+      <div id="exp-carousel-flip-horiz-easing-root">
         <div class="field cubic-bezier-field">
           <span class="field-label">Easing</span>
           <div class="cubic-bezier-editor" data-bezier-editor>
@@ -2797,7 +2874,7 @@
         <span class="panel-divider__line" role="separator"></span>
       </div>
 
-      <div id="exp5-transition-section">
+      <div id="exp-carousel-flip-transition-section">
       <div class="field">
         <span class="field-label">Transition</span>
       </div>
@@ -2807,13 +2884,13 @@
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkuOTY4NzUgNS41QzkuOTY4NzUgMy4wMjkzIDcuOTcwNyAxLjAzMTI1IDUuNSAxLjAzMTI1QzMuMDI5MyAxLjAzMTI1IDEuMDMxMjUgMy4wMjkzIDEuMDMxMjUgNS41QzEuMDMxMjUgNy45NzA3IDMuMDI5MyA5Ljk2ODc1IDUuNSA5Ljk2ODc1QzcuOTcwNyA5Ljk2ODc1IDkuOTY4NzUgNy45NzA3IDkuOTY4NzUgNS41Wk0wIDUuNUMwIDIuNDcwNyAyLjQ3MDcgMCA1LjUgMEM4LjUyOTMgMCAxMSAyLjQ3MDcgMTEgNS41QzExIDguNTI5MyA4LjUyOTMgMTEgNS41IDExQzIuNDcwNyAxMSAwIDguNTI5MyAwIDUuNVpNNC45ODQzOCAyLjU3ODEyQzQuOTg0MzggMi4yOTg4MyA1LjIyMDcgMi4wNjI1IDUuNSAyLjA2MjVDNS43NzkzIDIuMDYyNSA2LjAxNTYyIDIuMjk4ODMgNi4wMTU2MiAyLjU3ODEyVjUuMjIwN0w3Ljg0MTggNi40NDUzMUM4LjA3ODEyIDYuNTk1NyA4LjE0MjU4IDYuOTE3OTcgNy45OTIxOSA3LjE1NDNDNy44NDE4IDcuMzkwNjIgNy41MTk1MyA3LjQ1NTA4IDcuMjgzMiA3LjMwNDY5TDUuMjIwNyA1LjkyOTY5QzUuMDcwMzEgNS44NDM3NSA0Ljk4NDM4IDUuNjcxODggNC45ODQzOCA1LjVWMi41NzgxMloiIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4K" alt=""></span>
-            <input type="text" id="exp5-transition-duration" value="600">
+            <input type="text" id="exp-carousel-flip-transition-duration" value="600">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
       </div>
 
-      <div id="exp5-transition-easing-root">
+      <div id="exp-carousel-flip-transition-easing-root">
         <div class="field cubic-bezier-field">
           <span class="field-label">Easing</span>
           <div class="cubic-bezier-editor" data-bezier-editor>
@@ -2836,7 +2913,7 @@
       </div>
       </div>
 
-      <div id="exp5-snippet-root">
+      <div id="exp-carousel-flip-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -2845,42 +2922,42 @@
       </div>
       </div>
 
-      <div data-experiment-panel="6" hidden>
+      <div data-experiment-panel="transition-arc-scroll" hidden>
       <div class="field">
-        <label class="field-label" for="exp6-section-height-1">Section 1 Height</label>
+        <label class="field-label" for="exp-transition-arc-scroll-section-height-1">Section 1 Height</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-section-height-1" value="100">
+            <input type="text" id="exp-transition-arc-scroll-section-height-1" value="100">
             <div class="suffix-wrap"><span>vh</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-section-height-2">Section 2 Height</label>
+        <label class="field-label" for="exp-transition-arc-scroll-section-height-2">Section 2 Height</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-section-height-2" value="100">
+            <input type="text" id="exp-transition-arc-scroll-section-height-2" value="100">
             <div class="suffix-wrap"><span>vh</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-section-height-3">Section 3 Height</label>
+        <label class="field-label" for="exp-transition-arc-scroll-section-height-3">Section 3 Height</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-section-height-3" value="100">
+            <input type="text" id="exp-transition-arc-scroll-section-height-3" value="100">
             <div class="suffix-wrap"><span>vh</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-section-height-4">Section 4 Height</label>
+        <label class="field-label" for="exp-transition-arc-scroll-section-height-4">Section 4 Height</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-section-height-4" value="100">
+            <input type="text" id="exp-transition-arc-scroll-section-height-4" value="100">
             <div class="suffix-wrap"><span>vh</span></div>
           </div>
         </div>
@@ -2891,37 +2968,37 @@
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-curve-1">Transition 1 Curve (Cover)</label>
+        <label class="field-label" for="exp-transition-arc-scroll-curve-1">Transition 1 Curve (Cover)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-curve-1" value="12">
+            <input type="text" id="exp-transition-arc-scroll-curve-1" value="12">
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-curve-2">Transition 2 Curve (Reveal)</label>
+        <label class="field-label" for="exp-transition-arc-scroll-curve-2">Transition 2 Curve (Reveal)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-curve-2" value="10">
+            <input type="text" id="exp-transition-arc-scroll-curve-2" value="10">
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-curve-3">Transition 3 Curve (Cover)</label>
+        <label class="field-label" for="exp-transition-arc-scroll-curve-3">Transition 3 Curve (Cover)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-curve-3" value="25">
+            <input type="text" id="exp-transition-arc-scroll-curve-3" value="25">
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-curve-4">Transition 4 Curve (Reveal)</label>
+        <label class="field-label" for="exp-transition-arc-scroll-curve-4">Transition 4 Curve (Reveal)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-curve-4" value="5">
+            <input type="text" id="exp-transition-arc-scroll-curve-4" value="5">
           </div>
         </div>
       </div>
@@ -2931,20 +3008,20 @@
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-scrub">Scrub</label>
+        <label class="field-label" for="exp-transition-arc-scroll-scrub">Scrub</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-scrub" value="0.3" data-arrow-step="0.1">
+            <input type="text" id="exp-transition-arc-scroll-scrub" value="0.3" data-arrow-step="0.1">
             <div class="suffix-wrap"><span>s</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-smoothing">Smooth Scroll (Lerp)</label>
+        <label class="field-label" for="exp-transition-arc-scroll-smoothing">Smooth Scroll (Lerp)</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-smoothing" value="0.1" data-arrow-step="0.01">
+            <input type="text" id="exp-transition-arc-scroll-smoothing" value="0.1" data-arrow-step="0.01">
           </div>
         </div>
       </div>
@@ -2954,16 +3031,16 @@
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-heading-size">Heading Size</label>
+        <label class="field-label" for="exp-transition-arc-scroll-heading-size">Heading Size</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-heading-size" value="96">
+            <input type="text" id="exp-transition-arc-scroll-heading-size" value="96">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
       </div>
 
-      <div id="exp6-solid-color-root">
+      <div id="exp-transition-arc-scroll-solid-color-root">
         <div class="field">
           <span class="field-label">Solid Color</span>
           <div class="row">
@@ -2980,16 +3057,16 @@
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp6-image-opacity">Image Opacity</label>
+        <label class="field-label" for="exp-transition-arc-scroll-image-opacity">Image Opacity</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp6-image-opacity" value="80">
+            <input type="text" id="exp-transition-arc-scroll-image-opacity" value="80">
             <div class="suffix-wrap"><span>%</span></div>
           </div>
         </div>
       </div>
 
-      <div id="exp6-snippet-root">
+      <div id="exp-transition-arc-scroll-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -2998,46 +3075,46 @@
       </div>
       </div>
 
-      <div data-experiment-panel="7" hidden>
+      <div data-experiment-panel="carousel-infinite" hidden>
       <div class="field">
         <span class="field-label">Heights</span>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp7-height-active">Active</label>
+        <label class="field-label" for="exp-carousel-infinite-height-active">Active</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp7-height-active" value="400">
+            <input type="text" id="exp-carousel-infinite-height-active" value="400">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp7-height-a">A</label>
+        <label class="field-label" for="exp-carousel-infinite-height-a">A</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp7-height-a" value="320">
+            <input type="text" id="exp-carousel-infinite-height-a" value="320">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp7-height-b">B</label>
+        <label class="field-label" for="exp-carousel-infinite-height-b">B</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp7-height-b" value="240">
+            <input type="text" id="exp-carousel-infinite-height-b" value="240">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp7-height-c">C</label>
+        <label class="field-label" for="exp-carousel-infinite-height-c">C</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp7-height-c" value="360">
+            <input type="text" id="exp-carousel-infinite-height-c" value="360">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
@@ -3051,7 +3128,7 @@
         <span class="field-label">Animation</span>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp7-duration" value="450">
+            <input type="text" id="exp-carousel-infinite-duration" value="450">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -3060,7 +3137,7 @@
         </div>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp7-velocity" value="1">
+            <input type="text" id="exp-carousel-infinite-velocity" value="1">
           </div>
         </div>
         <div class="row">
@@ -3068,13 +3145,13 @@
         </div>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp7-autoplay-interval" value="4000">
+            <input type="text" id="exp-carousel-infinite-autoplay-interval" value="4000">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
       </div>
 
-      <div id="exp7-easing-root">
+      <div id="exp-carousel-infinite-easing-root">
       <div class="field cubic-bezier-field">
         <span class="field-label">Easing</span>
         <div class="cubic-bezier-editor" data-bezier-editor>
@@ -3096,7 +3173,7 @@
       </div>
       </div>
 
-      <div id="exp7-snippet-root">
+      <div id="exp-carousel-infinite-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -3105,36 +3182,36 @@
       </div>
       </div>
 
-      <div data-experiment-panel="8" hidden>
+      <div data-experiment-panel="parallax-horizontal" hidden>
       <div class="field">
         <span class="field-label">Card size</span>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp8-width">Width</label>
+        <label class="field-label" for="exp-parallax-horizontal-width">Width</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp8-width" value="393">
+            <input type="text" id="exp-parallax-horizontal-width" value="393">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp8-height">Height</label>
+        <label class="field-label" for="exp-parallax-horizontal-height">Height</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp8-height" value="263">
+            <input type="text" id="exp-parallax-horizontal-height" value="263">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp8-gap">Gap</label>
+        <label class="field-label" for="exp-parallax-horizontal-gap">Gap</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp8-gap" value="16">
+            <input type="text" id="exp-parallax-horizontal-gap" value="16">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
@@ -3142,7 +3219,7 @@
 
       <div class="field">
         <span class="field-label">Layout</span>
-        <div id="exp8-layout-root" class="option-selector option-selector--nested">
+        <div id="exp-parallax-horizontal-layout-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Horizontal" autocomplete="off" spellcheck="false">
@@ -3152,7 +3229,7 @@
         </div>
       </div>
 
-      <div id="exp8-image-scale-root" class="slider-field">
+      <div id="exp-parallax-horizontal-image-scale-root" class="slider-field">
         <span class="slider-field__label">Image size (%)</span>
         <div class="slider-field__row">
           <div class="slider-value-wrap">
@@ -3175,48 +3252,48 @@
         <span class="field-label">Images</span>
       </div>
 
-      <div class="field exp8-image-field">
-        <label class="field-label" for="exp8-image-1-file">Card 1</label>
-        <div class="row exp8-image-row">
-          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-1-btn">Upload</button>
-          <span class="exp8-image-name" id="exp8-image-1-name">Default</span>
-          <input type="file" id="exp8-image-1-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      <div class="field exp-parallax-horizontal-image-field">
+        <label class="field-label" for="exp-parallax-horizontal-image-1-file">Card 1</label>
+        <div class="row exp-parallax-horizontal-image-row">
+          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-1-btn">Upload</button>
+          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-1-name">Default</span>
+          <input type="file" id="exp-parallax-horizontal-image-1-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
         </div>
       </div>
 
-      <div class="field exp8-image-field">
-        <label class="field-label" for="exp8-image-2-file">Card 2</label>
-        <div class="row exp8-image-row">
-          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-2-btn">Upload</button>
-          <span class="exp8-image-name" id="exp8-image-2-name">Default</span>
-          <input type="file" id="exp8-image-2-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      <div class="field exp-parallax-horizontal-image-field">
+        <label class="field-label" for="exp-parallax-horizontal-image-2-file">Card 2</label>
+        <div class="row exp-parallax-horizontal-image-row">
+          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-2-btn">Upload</button>
+          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-2-name">Default</span>
+          <input type="file" id="exp-parallax-horizontal-image-2-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
         </div>
       </div>
 
-      <div class="field exp8-image-field">
-        <label class="field-label" for="exp8-image-3-file">Card 3</label>
-        <div class="row exp8-image-row">
-          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-3-btn">Upload</button>
-          <span class="exp8-image-name" id="exp8-image-3-name">Default</span>
-          <input type="file" id="exp8-image-3-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      <div class="field exp-parallax-horizontal-image-field">
+        <label class="field-label" for="exp-parallax-horizontal-image-3-file">Card 3</label>
+        <div class="row exp-parallax-horizontal-image-row">
+          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-3-btn">Upload</button>
+          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-3-name">Default</span>
+          <input type="file" id="exp-parallax-horizontal-image-3-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
         </div>
       </div>
 
-      <div class="field exp8-image-field">
-        <label class="field-label" for="exp8-image-4-file">Card 4</label>
-        <div class="row exp8-image-row">
-          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-4-btn">Upload</button>
-          <span class="exp8-image-name" id="exp8-image-4-name">Default</span>
-          <input type="file" id="exp8-image-4-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      <div class="field exp-parallax-horizontal-image-field">
+        <label class="field-label" for="exp-parallax-horizontal-image-4-file">Card 4</label>
+        <div class="row exp-parallax-horizontal-image-row">
+          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-4-btn">Upload</button>
+          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-4-name">Default</span>
+          <input type="file" id="exp-parallax-horizontal-image-4-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
         </div>
       </div>
 
-      <div class="field exp8-image-field">
-        <label class="field-label" for="exp8-image-5-file">Card 5</label>
-        <div class="row exp8-image-row">
-          <button type="button" class="download-btn exp8-image-btn" id="exp8-image-5-btn">Upload</button>
-          <span class="exp8-image-name" id="exp8-image-5-name">Default</span>
-          <input type="file" id="exp8-image-5-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      <div class="field exp-parallax-horizontal-image-field">
+        <label class="field-label" for="exp-parallax-horizontal-image-5-file">Card 5</label>
+        <div class="row exp-parallax-horizontal-image-row">
+          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-5-btn">Upload</button>
+          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-5-name">Default</span>
+          <input type="file" id="exp-parallax-horizontal-image-5-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
         </div>
       </div>
 
@@ -3228,7 +3305,7 @@
         <span class="field-label">Animation</span>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp8-duration" value="450">
+            <input type="text" id="exp-parallax-horizontal-duration" value="450">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -3237,12 +3314,12 @@
         </div>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp8-velocity" value="1">
+            <input type="text" id="exp-parallax-horizontal-velocity" value="1">
           </div>
         </div>
       </div>
 
-      <div id="exp8-easing-root">
+      <div id="exp-parallax-horizontal-easing-root">
       <div class="field cubic-bezier-field">
         <span class="field-label">Easing</span>
         <div class="cubic-bezier-editor" data-bezier-editor>
@@ -3264,7 +3341,7 @@
       </div>
       </div>
 
-      <div id="exp8-snippet-root">
+      <div id="exp-parallax-horizontal-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -3273,21 +3350,21 @@
       </div>
       </div>
 
-      <div data-experiment-panel="9" hidden>
+      <div data-experiment-panel="button-stagger-text" hidden>
       <div class="field">
-        <label class="field-label" for="exp9-label-text">Text</label>
+        <label class="field-label" for="exp-button-stagger-text-label-text">Text</label>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp9-label-text" value="Hover here">
+            <input type="text" id="exp-button-stagger-text-label-text" value="Hover here">
           </div>
         </div>
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp9-hover-text">Hover text</label>
+        <label class="field-label" for="exp-button-stagger-text-hover-text">Hover text</label>
         <div class="row">
           <div class="input-wrap input-wrap--label">
-            <input type="text" id="exp9-hover-text" value="Click me">
+            <input type="text" id="exp-button-stagger-text-hover-text" value="Click me">
           </div>
         </div>
       </div>
@@ -3331,26 +3408,26 @@
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">T</span>
-            <input type="text" id="exp9-padding-top" value="0">
+            <input type="text" id="exp-button-stagger-text-padding-top" value="0">
           </div>
           <div class="input-wrap">
             <span class="input-icon">B</span>
-            <input type="text" id="exp9-padding-bottom" value="0">
+            <input type="text" id="exp-button-stagger-text-padding-bottom" value="0">
           </div>
         </div>
         <div class="row">
           <div class="input-wrap">
             <span class="input-icon">L</span>
-            <input type="text" id="exp9-padding-left" value="24">
+            <input type="text" id="exp-button-stagger-text-padding-left" value="24">
           </div>
           <div class="input-wrap">
             <span class="input-icon">R</span>
-            <input type="text" id="exp9-padding-right" value="24">
+            <input type="text" id="exp-button-stagger-text-padding-right" value="24">
           </div>
         </div>
       </div>
 
-      <div id="exp9-bg-color-root">
+      <div id="exp-button-stagger-text-bg-color-root">
         <div class="field">
           <span class="field-label">Background color</span>
           <div class="row">
@@ -3369,7 +3446,7 @@
       <div class="field">
         <span class="field-label">Border</span>
         <div class="field-stack">
-        <div id="exp9-border-color-root">
+        <div id="exp-button-stagger-text-border-color-root">
           <div class="row">
             <div class="input-wrap color-wrap">
               <span class="swatch" data-color-swatch></span>
@@ -3383,11 +3460,11 @@
         </div>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp9-border" value="0">
+            <input type="text" id="exp-button-stagger-text-border" value="0">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
           <div class="input-wrap">
-            <input type="text" id="exp9-radius" value="0">
+            <input type="text" id="exp-button-stagger-text-radius" value="0">
             <div class="suffix-wrap"><span>px</span></div>
           </div>
         </div>
@@ -3395,10 +3472,10 @@
       </div>
 
       <div class="field">
-        <label class="field-label" for="exp9-duration">Duration</label>
+        <label class="field-label" for="exp-button-stagger-text-duration">Duration</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp9-duration" value="600">
+            <input type="text" id="exp-button-stagger-text-duration" value="600">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
@@ -3406,7 +3483,7 @@
 
       <div class="field">
         <span class="field-label">Stagger</span>
-        <div id="exp9-stagger-mode-root" class="option-selector option-selector--nested">
+        <div id="exp-button-stagger-text-stagger-mode-root" class="option-selector option-selector--nested">
           <div class="row">
             <div class="input-wrap input-wrap--label option-selector__wrap">
               <input type="text" class="option-selector__input" value="Center out" autocomplete="off" spellcheck="false">
@@ -3416,13 +3493,13 @@
         </div>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp9-stagger" value="40">
+            <input type="text" id="exp-button-stagger-text-stagger" value="40">
             <div class="suffix-wrap"><span>ms</span></div>
           </div>
         </div>
       </div>
 
-      <div id="exp9-easing-root">
+      <div id="exp-button-stagger-text-easing-root">
       <div class="field cubic-bezier-field">
         <span class="field-label">Easing</span>
         <div class="cubic-bezier-editor" data-bezier-editor>
@@ -3444,7 +3521,116 @@
       </div>
       </div>
 
-      <div id="exp9-snippet-root">
+      <div id="exp-button-stagger-text-snippet-root">
+        <div class="field code-field">
+          <span class="field-label">Code</span>
+          <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
+          <button type="button" class="download-btn" data-snippet-download>Download HTML</button>
+        </div>
+      </div>
+      </div>
+
+      <div data-experiment-panel="heading-entrance" hidden>
+      <div class="field">
+        <label class="field-label" for="exp-heading-entrance-text">Text</label>
+        <div class="row">
+          <div class="input-wrap input-wrap--label">
+            <input type="text" id="exp-heading-entrance-text" value="Bleeding Text">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Blur (start → end)</span>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-blur-start" value="24">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-blur-end" value="2">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp-heading-entrance-font-size">Font size</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-font-size" value="48">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Weight / Letter spacing</span>
+        <div class="row">
+          <div class="input-wrap">
+            <span class="input-icon">W</span>
+            <input type="text" id="exp-heading-entrance-font-weight" value="600">
+          </div>
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-letter-spacing" value="0">
+            <div class="suffix-wrap"><span>px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp-heading-entrance-duration">Duration</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-duration" value="800">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp-heading-entrance-stagger">Stagger (% of duration)</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-stagger" value="5">
+            <div class="suffix-wrap"><span>%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="exp-heading-entrance-layers-off">Layers off before end</label>
+        <div class="row">
+          <div class="input-wrap">
+            <input type="text" id="exp-heading-entrance-layers-off" value="2">
+            <div class="suffix-wrap"><span>ms</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exp-heading-entrance-easing-root">
+      <div class="field cubic-bezier-field">
+        <span class="field-label">Easing</span>
+        <div class="cubic-bezier-editor" data-bezier-editor>
+          <svg class="cubic-bezier-svg" data-bezier-svg viewBox="0 0 208 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="208" height="200" rx="5" fill="#F5F5F5"/>
+            <line class="cubic-bezier-guide" x1="29" y1="25" x2="179" y2="25"/>
+            <line class="cubic-bezier-guide" x1="29" y1="175" x2="179" y2="175"/>
+            <path class="cubic-bezier-curve" data-bezier-curve></path>
+            <line class="cubic-bezier-handle-line" data-bezier-line1></line>
+            <line class="cubic-bezier-handle-line" data-bezier-line2></line>
+            <circle class="cubic-bezier-handle" data-bezier-p1 r="6" tabindex="0" role="slider" aria-label="First control point"></circle>
+            <circle class="cubic-bezier-handle" data-bezier-p2 r="6" tabindex="0" role="slider" aria-label="Second control point"></circle>
+          </svg>
+        </div>
+        <div class="input-wrap cubic-bezier-value-input">
+          <span class="input-icon"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDEuNjY3NTlDMTAgMS41NTcwOCA5Ljk1NjEgMS40NTExIDkuODc3OTYgMS4zNzI5NkM5Ljc5OTgyIDEuMjk0ODIgOS42OTM4NCAxLjI1MDkyIDkuNTgzMzQgMS4yNTA5MkM4LjYyOTM4IDEuMjUwNTUgNy42OTQyIDEuNTE2IDYuODgyNyAyLjAxNzVDNi4wNzEyIDIuNTE5IDUuNDE1NTEgMy4yMzY3MSA0Ljk4OTE3IDQuMDkwMDlMNC4yNjUgNS41MzkyNkMzLjkwNzg5IDYuMjU0MTEgMy4zNTg2NCA2Ljg1NTMyIDIuNjc4ODkgNy4yNzU0MkMxLjk5OTEzIDcuNjk1NTIgMS4yMTU3NiA3LjkxNzg5IDAuNDE2NjY4IDcuOTE3NTlDMC4zMDYxNjEgNy45MTc1OSAwLjIwMDE4IDcuOTYxNDkgMC4xMjIwNCA4LjAzOTYzQzAuMDQzODk5NyA4LjExNzc3IDkuMjM0MTVlLTA3IDguMjIzNzUgOS4yMzQxNWUtMDcgOC4zMzQyNkM5LjIzNDE1ZS0wNyA4LjQ0NDc3IDAuMDQzODk5NyA4LjU1MDc1IDAuMTIyMDQgOC42Mjg4OUMwLjIwMDE4IDguNzA3MDMgMC4zMDYxNjEgOC43NTA5MyAwLjQxNjY2OCA4Ljc1MDkzQzEuMzcwNjIgOC43NTEzIDIuMzA1ODEgOC40ODU4NCAzLjExNzMgNy45ODQzNEMzLjkyODggNy40ODI4NSA0LjU4NDUgNi43NjUxNCA1LjAxMDgzIDUuOTExNzZMNS43MzUgNC40NjI1OUM2LjA5MjEyIDMuNzQ3NzMgNi42NDEzNiAzLjE0NjUzIDcuMzIxMTIgMi43MjY0M0M4LjAwMDg3IDIuMzA2MzMgOC43ODQyNCAyLjA4Mzk2IDkuNTgzMzQgMi4wODQyNkM5LjY5Mzg0IDIuMDg0MjYgOS43OTk4MiAyLjA0MDM2IDkuODc3OTYgMS45NjIyMkM5Ljk1NjEgMS44ODQwOCAxMCAxLjc3ODEgMTAgMS42Njc1OVpNNS44MzMzNCAxLjY2NzU5QzUuODMzMzQgMS41NTcwOCA1Ljc4OTQ0IDEuNDUxMSA1LjcxMTMgMS4zNzI5NkM1LjYzMzE2IDEuMjk0ODIgNS41MjcxOCAxLjI1MDkyIDUuNDE2NjcgMS4yNTA5MkgzLjI3OTE3QzMuMTc4MTEgMC44NTc5NyAyLjkzNzExIDAuNTE1NDA4IDIuNjAxNCAwLjI4NzUzNUMyLjI2NTY5IDAuMDU5NjYyNCAxLjg1ODM2IC0wLjAzNzg1MyAxLjQ1NTg1IDAuMDEzMjkxMkMxLjA1MzM1IDAuMDY0NDM1NSAwLjY4MzM0NyAwLjI2MDcyMyAwLjQxNTI5NiAwLjU2NTMxMkMwLjE0NzI0NCAwLjg2OTkwMSAtMC4wMDA0MjYwNzEgMS4yNjE4NSA5LjIzNDE1ZS0wNyAxLjY2NzU5QzAuMDAxMTU2ODYgMi4wNzI0MSAwLjE0OTYxNCAyLjQ2Mjk3IDAuNDE3NjUxIDIuNzY2MzVDMC42ODU2ODkgMy4wNjk3MyAxLjA1NDk4IDMuMjY1MTggMS40NTY1OCAzLjMxNjJDMS44NTgxNyAzLjM2NzIzIDIuMjY0NjEgMy4yNzAzNSAyLjYgMy4wNDM2NUMyLjkzNTM5IDIuODE2OTUgMy4xNzY4MSAyLjQ3NTkyIDMuMjc5MTcgMi4wODQyNkg1LjQxNjY3QzUuNTI3MTggMi4wODQyNiA1LjYzMzE2IDIuMDQwMzYgNS43MTEzIDEuOTYyMjJDNS43ODk0NCAxLjg4NDA4IDUuODMzMzQgMS43NzgxIDUuODMzMzQgMS42Njc1OVpNMi41IDEuNjY3NTlDMi41IDEuODg4NiAyLjQxMjIgMi4xMDA1NyAyLjI1NTkyIDIuMjU2ODVDMi4wOTk2NCAyLjQxMzEzIDEuODg3NjggMi41MDA5MiAxLjY2NjY3IDIuNTAwOTJDMS40NDU2NSAyLjUwMDkyIDEuMjMzNjkgMi40MTMxMyAxLjA3NzQxIDIuMjU2ODVDMC45MjExMzIgMi4xMDA1NyAwLjgzMzMzNCAxLjg4ODYgMC44MzMzMzQgMS42Njc1OUMwLjgzMzMzNCAxLjQ0NjU4IDAuOTIxMTMyIDEuMjM0NjIgMS4wNzc0MSAxLjA3ODM0QzEuMjMzNjkgMC45MjIwNTUgMS40NDU2NSAwLjgzNDI1NyAxLjY2NjY3IDAuODM0MjU3QzEuODg3NjggMC44MzQyNTcgMi4wOTk2NCAwLjkyMjA1NSAyLjI1NTkyIDEuMDc4MzRDMi40MTMyIDEuMjM0NjIgMi41IDEuNDQ2NTggMi41IDEuNjY3NTlaTTEwIDguMzM0MjZDMTAuMDAxMyA3LjkyODE1IDkuODU0MDQgNy41MzU1OCA5LjU4NjA2IDcuMjMwNDRDOS4zMTgwOCA2LjkyNTI5IDguOTQ3ODEgNi43Mjg2MSA4LjU0NDk0IDYuNjc3NDFDOC4xNDIwNyA2LjYyNjIgNy43MzQzNyA2LjcyNDAxIDcuMzk4NTggNi45NTI0MUM3LjA2Mjc4IDcuMTgwODIgNi44MjIwNCA3LjUyNDA4IDYuNzIxNjcgNy45MTc1OUg0LjU4MzMzQzQuNDcyODMgNy45MTc1OSA0LjM2Njg1IDcuOTYxNDkgNC4yODg3MSA4LjAzOTYzQzQuMjEwNTcgOC4xMTc3NyA0LjE2NjY3IDguMjIzNzUgNC4xNjY2NyA4LjMzNDI2QzQuMTY2NjcgOC40NDQ3NyA0LjIxMDU3IDguNTUwNzUgNC4yODg3MSA4LjYyODg5QzQuMzY2ODUgOC43MDcwMyA0LjQ3MjgzIDguNzUwOTMgNC41ODMzMyA4Ljc1MDkzSDYuNzIxNjdDNi44MjIwNCA5LjE0NDQ0IDcuMDYyNzggOS40ODc3IDcuMzk4NTggOS43MTYxQzcuNzM0MzcgOS45NDQ1MSA4LjE0MjA3IDEwLjA0MjMgOC41NDQ5NCA5Ljk5MTExQzguOTQ3ODEgOS45Mzk5MSA5LjMxODA4IDkuNzQzMjMgOS41ODYwNiA5LjQzODA4QzkuODU0MDQgOS4xMzI5NCAxMC4wMDEzIDguNzQwMzcgMTAgOC4zMzQyNlpNOS4xNjY2NyA4LjMzNDI2QzkuMTY2NjcgOC41NTUyNyA5LjA3ODg3IDguNzY3MjMgOC45MjI1OSA4LjkyMzUxQzguNzY2MzEgOS4wNzk3OSA4LjU1NDM1IDkuMTY3NTkgOC4zMzMzNCA5LjE2NzU5QzguMTEyMzIgOS4xNjc1OSA3LjkwMDM2IDkuMDc5NzkgNy43NDQwOCA4LjkyMzUxQzcuNTg3OCA4Ljc2NzIzIDcuNSA4LjU1NTI3IDcuNSA4LjMzNDI2QzcuNSA4LjExMzI1IDcuNTg3OCA3LjkwMTI4IDcuNzQ0MDggNy43NDVDNy45MDAzNiA3LjU4ODcyIDguMTEyMzIgNy41MDA5MyA4LjMzMzM0IDcuNTAwOTNDOC41NTQzNSA3LjUwMDkzIDguNzY2MzEgNy41ODg3MiA4LjkyMjU5IDcuNzQ1QzkuMDc4ODcgNy45MDEyOCA5LjE2NjY3IDguMTEzMjUgOS4xNjY2NyA4LjMzNDI2WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC41Ii8+Cjwvc3ZnPgo=" alt=""></span>
+          <input type="text" data-bezier-text value="0.22, 1, 0.36, 1" spellcheck="false" autocomplete="off">
+        </div>
+      </div>
+      </div>
+
+      <div id="exp-heading-entrance-snippet-root">
         <div class="field code-field">
           <span class="field-label">Code</span>
           <textarea class="snippet-output" data-snippet-output readonly spellcheck="false"></textarea>
@@ -4695,7 +4881,7 @@ window.initHoverButton = function initHoverButton(root, options = {}) {
 };
 
 window.initRotateXButton = function initRotateXButton(root, options = {}) {
-  const btn = root.querySelector('#exp2-btn')
+  const btn = root.querySelector('#exp-button-rotate-x-btn')
     || root.querySelector('.rotate-x-button')
     || root;
   const texts = btn.querySelectorAll('.text');
@@ -8009,7 +8195,7 @@ window.initHorizontalParallax = function initHorizontalParallax(root, options = 
 };
 
 window.initStaggerTextButton = function initStaggerTextButton(root, options = {}) {
-  const btn = root.querySelector('#exp9-btn')
+  const btn = root.querySelector('#exp-button-stagger-text-btn')
     || root.querySelector('.stagger-text-button')
     || root;
   const label = btn.querySelector('.label');
@@ -8353,9 +8539,120 @@ window.initStaggerTextButton = function initStaggerTextButton(root, options = {}
   };
 };
 
-window.initExperiment1 = function initExperiment1() {
-  const preview = document.querySelector('[data-experiment-preview="1"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="1"]');
+window.initHeadingEntrance = function initHeadingEntrance(root, options = {}) {
+  const wrap = root.querySelector('.heading-entrance') || root;
+  const heading = wrap.querySelector('.heading-entrance__text');
+  const layers = wrap.querySelectorAll('.heading-entrance__burn, .heading-entrance__dodge');
+
+  let text = options.text ?? 'Bleeding Text';
+  let blurStart = options.blurStart ?? 24;
+  let blurEnd = options.blurEnd ?? 2;
+  let fontSize = options.fontSize ?? 48;
+  let fontWeight = options.fontWeight ?? 600;
+  let letterSpacing = options.letterSpacing ?? 0;
+  let duration = options.duration ?? 800;
+  let stagger = options.stagger ?? 40;
+  let easingRaw = options.easingRaw ?? '0.22, 1, 0.36, 1';
+  let chars = [];
+  let running = [];
+  let layersTimer = null;
+  // Blend layers switch off instantly this many ms before the entrance ends.
+  let layersOffBefore = options.layersOffBefore ?? 2;
+
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function getEasing() {
+    const raw = String(easingRaw).trim();
+    if (!raw) return 'cubic-bezier(0.22, 1, 0.36, 1)';
+    if (raw.startsWith('cubic-bezier(')) return raw;
+    const parts = raw.split(',').map((n) => parseFloat(n.trim()));
+    if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) {
+      return `cubic-bezier(${parts.join(', ')})`;
+    }
+    return raw;
+  }
+
+  function splitChars(value) {
+    if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+      return [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(value)]
+        .map((part) => part.segment);
+    }
+    return Array.from(value);
+  }
+
+  function render() {
+    heading.replaceChildren();
+    heading.setAttribute('aria-label', text);
+    chars = splitChars(text).map((char) => {
+      const el = document.createElement('span');
+      el.className = 'heading-entrance__char';
+      el.textContent = char;
+      el.setAttribute('aria-hidden', 'true');
+      heading.appendChild(el);
+      return el;
+    });
+  }
+
+  function play() {
+    running.forEach((anim) => anim.cancel());
+    running = [];
+    clearTimeout(layersTimer);
+    setLayersVisible(true);
+    if (motionQuery.matches) return;
+    // Blur goes start → end per char; the blend layers keep it sharp-edged.
+    const from = { filter: `blur(${blurStart}px)` };
+    const to = { filter: `blur(${blurEnd}px)` };
+    chars.forEach((el, i) => {
+      running.push(el.animate([from, to], {
+        duration,
+        delay: i * stagger,
+        easing: getEasing(),
+        fill: 'backwards',
+      }));
+    });
+    const total = Math.max(0, chars.length - 1) * stagger + duration;
+    layersTimer = setTimeout(() => setLayersVisible(false), Math.max(0, total - layersOffBefore));
+  }
+
+  function setLayersVisible(visible) {
+    layers.forEach((el) => { el.style.opacity = visible ? '1' : '0'; });
+  }
+
+  function applyStyles() {
+    heading.style.fontSize = `${fontSize}px`;
+    heading.style.fontWeight = String(fontWeight);
+    heading.style.letterSpacing = `${letterSpacing}px`;
+    chars.forEach((el) => { el.style.filter = `blur(${blurEnd}px)`; });
+    // Blend layers must cover the full blur spread, or blurred edges get clipped.
+    const spread = Math.ceil(Math.max(blurStart, blurEnd) * 3);
+    layers.forEach((el) => { el.style.inset = `${-spread}px`; });
+  }
+
+  function set(next = {}) {
+    const textChanged = next.text != null && next.text !== text;
+    if (next.text != null) text = next.text;
+    if (next.blurStart != null) blurStart = next.blurStart;
+    if (next.blurEnd != null) blurEnd = next.blurEnd;
+    if (next.fontSize != null) fontSize = next.fontSize;
+    if (next.fontWeight != null) fontWeight = next.fontWeight;
+    if (next.letterSpacing != null) letterSpacing = next.letterSpacing;
+    if (next.duration != null) duration = next.duration;
+    if (next.stagger != null) stagger = next.stagger;
+    if (next.easingRaw != null) easingRaw = next.easingRaw;
+    if (next.layersOffBefore != null) layersOffBefore = next.layersOffBefore;
+    if (textChanged || !chars.length) render();
+    applyStyles();
+  }
+
+  set();
+  if (options.autoplay !== false) play();
+
+  return { element: wrap, set, play };
+};
+
+window.initHoverButtonExperiment = function initHoverButtonExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="button-hover"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="button-hover"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
@@ -8406,7 +8703,7 @@ window.initExperiment1 = function initExperiment1() {
   });
 
   const snippet = window.initSnippetOutput(document.getElementById('snippet-root'), {
-    filename: 'hover-button.html',
+    filename: 'button-hover.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -8497,12 +8794,12 @@ window.initExperiment1 = function initExperiment1() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['1'] = {
+  window.ExperimentSettings['button-hover'] = {
     collect: collectSettings,
     apply: applySettings,
   };
 
-  const pending = window.__pendingExperimentDefaults?.['1'];
+  const pending = window.__pendingExperimentDefaults?.['button-hover'];
   if (pending) applySettings(pending);
   applyAll();
 
@@ -8737,12 +9034,12 @@ window.initExperiment1 = function initExperiment1() {
 };
 
 if (!document.getElementById('experiment-selector-root')) {
-  window.initExperiment1();
+  window.initHoverButtonExperiment();
 }
 
-window.initExperiment2 = function initExperiment2() {
-  const preview = document.querySelector('[data-experiment-preview="2"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="2"]');
+window.initRotateXButtonExperiment = function initRotateXButtonExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="button-rotate-x"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="button-rotate-x"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
@@ -8757,19 +9054,19 @@ window.initExperiment2 = function initExperiment2() {
   const btn = rotateButton.element;
 
   const controls = {
-    labelText: document.getElementById('exp2-label-text'),
-    paddingTop: document.getElementById('exp2-padding-top'),
-    paddingRight: document.getElementById('exp2-padding-right'),
-    paddingBottom: document.getElementById('exp2-padding-bottom'),
-    paddingLeft: document.getElementById('exp2-padding-left'),
-    border: document.getElementById('exp2-border'),
-    radius: document.getElementById('exp2-radius'),
-    rotate: document.getElementById('exp2-rotate'),
-    originY: document.getElementById('exp2-origin-y'),
-    duration: document.getElementById('exp2-duration'),
+    labelText: document.getElementById('exp-button-rotate-x-label-text'),
+    paddingTop: document.getElementById('exp-button-rotate-x-padding-top'),
+    paddingRight: document.getElementById('exp-button-rotate-x-padding-right'),
+    paddingBottom: document.getElementById('exp-button-rotate-x-padding-bottom'),
+    paddingLeft: document.getElementById('exp-button-rotate-x-padding-left'),
+    border: document.getElementById('exp-button-rotate-x-border'),
+    radius: document.getElementById('exp-button-rotate-x-radius'),
+    rotate: document.getElementById('exp-button-rotate-x-rotate'),
+    originY: document.getElementById('exp-button-rotate-x-origin-y'),
+    duration: document.getElementById('exp-button-rotate-x-duration'),
   };
 
-  const easing = window.initCubicBezierInput(document.getElementById('exp2-easing-root'), {
+  const easing = window.initCubicBezierInput(document.getElementById('exp-button-rotate-x-easing-root'), {
     onChange: applyAll,
   });
 
@@ -8786,15 +9083,15 @@ window.initExperiment2 = function initExperiment2() {
     },
   });
 
-  const bgColor = window.initColorInput(document.getElementById('exp2-bg-color-root'), {
+  const bgColor = window.initColorInput(document.getElementById('exp-button-rotate-x-bg-color-root'), {
     onChange: applyAll,
   });
 
-  const borderColor = window.initColorInput(document.getElementById('exp2-border-color-root'), {
+  const borderColor = window.initColorInput(document.getElementById('exp-button-rotate-x-border-color-root'), {
     onChange: applyAll,
   });
 
-  const axisSelector = window.initOptionSelector(document.getElementById('exp2-axis-root'), {
+  const axisSelector = window.initOptionSelector(document.getElementById('exp-button-rotate-x-axis-root'), {
     value: 'x',
     options: [
       { value: 'x', label: 'Axis X' },
@@ -8804,8 +9101,8 @@ window.initExperiment2 = function initExperiment2() {
     onChange: applyAll,
   });
 
-  const snippet = window.initSnippetOutput(document.getElementById('exp2-snippet-root'), {
-    filename: 'experiment-2.html',
+  const snippet = window.initSnippetOutput(document.getElementById('exp-button-rotate-x-snippet-root'), {
+    filename: 'button-rotate-x.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -8902,12 +9199,12 @@ window.initExperiment2 = function initExperiment2() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['2'] = {
+  window.ExperimentSettings['button-rotate-x'] = {
     collect: collectSettings,
     apply: applySettings,
   };
 
-  const pending = window.__pendingExperimentDefaults?.['2'];
+  const pending = window.__pendingExperimentDefaults?.['button-rotate-x'];
   if (pending) applySettings(pending);
   applyAll();
 
@@ -9178,9 +9475,9 @@ window.initExperiment2 = function initExperiment2() {
   preview.dataset.experimentReady = '1';
 };
 
-window.initExperiment3 = function initExperiment3() {
-  const preview = document.querySelector('[data-experiment-preview="3"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="3"]');
+window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="carousel-rotate"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="carousel-rotate"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
@@ -9207,15 +9504,15 @@ window.initExperiment3 = function initExperiment3() {
   });
 
   const controls = {
-    count: document.getElementById('exp3-count'),
-    radius: document.getElementById('exp3-radius'),
-    rotate: document.getElementById('exp3-rotate'),
-    originY: document.getElementById('exp3-origin-y'),
-    duration: document.getElementById('exp3-duration'),
-    velocity: document.getElementById('exp3-velocity'),
+    count: document.getElementById('exp-carousel-rotate-count'),
+    radius: document.getElementById('exp-carousel-rotate-radius'),
+    rotate: document.getElementById('exp-carousel-rotate-rotate'),
+    originY: document.getElementById('exp-carousel-rotate-origin-y'),
+    duration: document.getElementById('exp-carousel-rotate-duration'),
+    velocity: document.getElementById('exp-carousel-rotate-velocity'),
   };
 
-  const easing = window.initCubicBezierInput(document.getElementById('exp3-easing-root'), {
+  const easing = window.initCubicBezierInput(document.getElementById('exp-carousel-rotate-easing-root'), {
     onChange: applyAll,
   });
 
@@ -9233,13 +9530,13 @@ window.initExperiment3 = function initExperiment3() {
   });
 
   const colorInputs = [1, 2, 3, 4, 5].map((index) => (
-    window.initColorInput(document.getElementById(`exp3-color-${index}-root`), {
+    window.initColorInput(document.getElementById(`exp-carousel-rotate-color-${index}-root`), {
       onChange: applyAll,
     })
   ));
 
-  const snippet = window.initSnippetOutput(document.getElementById('exp3-snippet-root'), {
-    filename: 'experiment-3.html',
+  const snippet = window.initSnippetOutput(document.getElementById('exp-carousel-rotate-snippet-root'), {
+    filename: 'carousel-rotate.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -9374,12 +9671,12 @@ window.initExperiment3 = function initExperiment3() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['3'] = {
+  window.ExperimentSettings['carousel-rotate'] = {
     collect: collectSettings,
     apply: applySettings,
   };
 
-  const pending = window.__pendingExperimentDefaults?.['3'];
+  const pending = window.__pendingExperimentDefaults?.['carousel-rotate'];
   if (pending) applySettings(pending);
 
   function applyAll() {
@@ -9865,9 +10162,9 @@ window.initExperiment3 = function initExperiment3() {
   preview.dataset.experimentReady = '1';
 };
 
-window.initExperiment4_5 = function initExperiment4_5() {
-  const preview = document.querySelector('[data-experiment-preview="4.5"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="4.5"]');
+window.initRotateXCarouselExperiment = function initRotateXCarouselExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="carousel-rotate-x"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="carousel-rotate-x"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
@@ -9896,21 +10193,21 @@ window.initExperiment4_5 = function initExperiment4_5() {
   });
 
   const controls = {
-    count: document.getElementById('exp45-count'),
-    radius: document.getElementById('exp45-radius'),
-    rotate: document.getElementById('exp45-rotate'),
-    orbit: document.getElementById('exp45-orbit'),
-    perspective: document.getElementById('exp45-perspective'),
-    scale: document.getElementById('exp45-scale'),
-    duration: document.getElementById('exp45-duration'),
-    velocity: document.getElementById('exp45-velocity'),
+    count: document.getElementById('exp-carousel-rotate-x-count'),
+    radius: document.getElementById('exp-carousel-rotate-x-radius'),
+    rotate: document.getElementById('exp-carousel-rotate-x-rotate'),
+    orbit: document.getElementById('exp-carousel-rotate-x-orbit'),
+    perspective: document.getElementById('exp-carousel-rotate-x-perspective'),
+    scale: document.getElementById('exp-carousel-rotate-x-scale'),
+    duration: document.getElementById('exp-carousel-rotate-x-duration'),
+    velocity: document.getElementById('exp-carousel-rotate-x-velocity'),
   };
 
-  const easing = window.initCubicBezierInput(document.getElementById('exp45-easing-root'), {
+  const easing = window.initCubicBezierInput(document.getElementById('exp-carousel-rotate-x-easing-root'), {
     onChange: applyAll,
   });
 
-  const variantSelector = window.initOptionSelector(document.getElementById('exp45-variant-root'), {
+  const variantSelector = window.initOptionSelector(document.getElementById('exp-carousel-rotate-x-variant-root'), {
     value: 'vertical',
     options: [
       { value: 'vertical', label: 'Vertical' },
@@ -9919,7 +10216,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
     onChange: applyAll,
   });
 
-  const inputSelector = window.initOptionSelector(document.getElementById('exp45-input-root'), {
+  const inputSelector = window.initOptionSelector(document.getElementById('exp-carousel-rotate-x-input-root'), {
     value: 'drag',
     options: [
       { value: 'drag', label: 'Drag' },
@@ -9928,7 +10225,7 @@ window.initExperiment4_5 = function initExperiment4_5() {
     onChange: applyAll,
   });
 
-  const reverseScrollRoot = document.getElementById('exp45-reverse-scroll-root');
+  const reverseScrollRoot = document.getElementById('exp-carousel-rotate-x-reverse-scroll-root');
   const reverseScrollToggle = window.initToggle(reverseScrollRoot, {
     rowLabel: 'Reverse Scroll Direction',
     checked: false,
@@ -9949,13 +10246,13 @@ window.initExperiment4_5 = function initExperiment4_5() {
   });
 
   const colorInputs = [1, 2, 3, 4, 5].map((index) => (
-    window.initColorInput(document.getElementById(`exp45-color-${index}-root`), {
+    window.initColorInput(document.getElementById(`exp-carousel-rotate-x-color-${index}-root`), {
       onChange: applyAll,
     })
   ));
 
-  const snippet = window.initSnippetOutput(document.getElementById('exp45-snippet-root'), {
-    filename: 'experiment-4-5.html',
+  const snippet = window.initSnippetOutput(document.getElementById('exp-carousel-rotate-x-snippet-root'), {
+    filename: 'carousel-rotate-x.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -10132,12 +10429,12 @@ window.initExperiment4_5 = function initExperiment4_5() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['4.5'] = {
+  window.ExperimentSettings['carousel-rotate-x'] = {
     collect: collectSettings,
     apply: applySettings,
   };
 
-  const pending = window.__pendingExperimentDefaults?.['4.5'];
+  const pending = window.__pendingExperimentDefaults?.['carousel-rotate-x'];
   if (pending) applySettings(pending);
 
   function applyAll() {
@@ -10790,9 +11087,9 @@ window.initExperiment4_5 = function initExperiment4_5() {
   preview.dataset.experimentReady = '1';
 };
 
-window.initExperiment5 = function initExperiment5() {
-  const preview = document.querySelector('[data-experiment-preview="5"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="5"]');
+window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="carousel-flip"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="carousel-flip"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
@@ -10834,38 +11131,38 @@ window.initExperiment5 = function initExperiment5() {
   });
 
   const controls = {
-    count: document.getElementById('exp5-count'),
-    fanRadius: document.getElementById('exp5-fan-radius'),
-    fanRotate: document.getElementById('exp5-fan-rotate'),
-    fanOriginY: document.getElementById('exp5-fan-origin-y'),
-    fanDuration: document.getElementById('exp5-fan-duration'),
-    fanVelocity: document.getElementById('exp5-fan-velocity'),
-    horizRadius: document.getElementById('exp5-horiz-radius'),
-    horizRotate: document.getElementById('exp5-horiz-rotate'),
-    horizOrbit: document.getElementById('exp5-horiz-orbit'),
-    horizPerspective: document.getElementById('exp5-horiz-perspective'),
-    horizScale: document.getElementById('exp5-horiz-scale'),
-    horizDuration: document.getElementById('exp5-horiz-duration'),
-    horizVelocity: document.getElementById('exp5-horiz-velocity'),
-    transitionDuration: document.getElementById('exp5-transition-duration'),
+    count: document.getElementById('exp-carousel-flip-count'),
+    fanRadius: document.getElementById('exp-carousel-flip-fan-radius'),
+    fanRotate: document.getElementById('exp-carousel-flip-fan-rotate'),
+    fanOriginY: document.getElementById('exp-carousel-flip-fan-origin-y'),
+    fanDuration: document.getElementById('exp-carousel-flip-fan-duration'),
+    fanVelocity: document.getElementById('exp-carousel-flip-fan-velocity'),
+    horizRadius: document.getElementById('exp-carousel-flip-horiz-radius'),
+    horizRotate: document.getElementById('exp-carousel-flip-horiz-rotate'),
+    horizOrbit: document.getElementById('exp-carousel-flip-horiz-orbit'),
+    horizPerspective: document.getElementById('exp-carousel-flip-horiz-perspective'),
+    horizScale: document.getElementById('exp-carousel-flip-horiz-scale'),
+    horizDuration: document.getElementById('exp-carousel-flip-horiz-duration'),
+    horizVelocity: document.getElementById('exp-carousel-flip-horiz-velocity'),
+    transitionDuration: document.getElementById('exp-carousel-flip-transition-duration'),
   };
 
-  const fanEasing = window.initCubicBezierInput(document.getElementById('exp5-fan-easing-root'), {
+  const fanEasing = window.initCubicBezierInput(document.getElementById('exp-carousel-flip-fan-easing-root'), {
     onChange: applyAll,
   });
 
-  const horizEasing = window.initCubicBezierInput(document.getElementById('exp5-horiz-easing-root'), {
+  const horizEasing = window.initCubicBezierInput(document.getElementById('exp-carousel-flip-horiz-easing-root'), {
     onChange: applyAll,
   });
 
   const transitionEasing = window.initCubicBezierInput(
-    document.getElementById('exp5-transition-easing-root'),
+    document.getElementById('exp-carousel-flip-transition-easing-root'),
     { onChange: applyAll },
   );
 
   const modeButtons = preview.querySelectorAll('[data-flip-mode]');
 
-  const variantSelector = window.initOptionSelector(document.getElementById('exp5-variant-root'), {
+  const variantSelector = window.initOptionSelector(document.getElementById('exp-carousel-flip-variant-root'), {
     value: 'horizontal',
     options: [
       { value: 'vertical', label: 'Vertical' },
@@ -10874,7 +11171,7 @@ window.initExperiment5 = function initExperiment5() {
     onChange: applyAll,
   });
 
-  const inputSelector = window.initOptionSelector(document.getElementById('exp5-input-root'), {
+  const inputSelector = window.initOptionSelector(document.getElementById('exp-carousel-flip-input-root'), {
     value: 'drag',
     options: [
       { value: 'drag', label: 'Drag' },
@@ -10884,7 +11181,7 @@ window.initExperiment5 = function initExperiment5() {
   });
 
   const fanDimensions = window.initDimensionControlGroup(
-    document.getElementById('exp5-fan-section'),
+    document.getElementById('exp-carousel-flip-fan-section'),
     {
       'fan-width': {
         initialMode: 'fixed',
@@ -10900,7 +11197,7 @@ window.initExperiment5 = function initExperiment5() {
   );
 
   const horizDimensions = window.initDimensionControlGroup(
-    document.getElementById('exp5-horiz-section'),
+    document.getElementById('exp-carousel-flip-horiz-section'),
     {
       'horiz-width': {
         initialMode: 'fixed',
@@ -10916,13 +11213,13 @@ window.initExperiment5 = function initExperiment5() {
   );
 
   const colorInputs = [1, 2, 3, 4, 5].map((index) => (
-    window.initColorInput(document.getElementById(`exp5-color-${index}-root`), {
+    window.initColorInput(document.getElementById(`exp-carousel-flip-color-${index}-root`), {
       onChange: applyAll,
     })
   ));
 
-  const snippet = window.initSnippetOutput(document.getElementById('exp5-snippet-root'), {
-    filename: 'experiment-5.html',
+  const snippet = window.initSnippetOutput(document.getElementById('exp-carousel-flip-snippet-root'), {
+    filename: 'carousel-flip.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -11166,12 +11463,12 @@ window.initExperiment5 = function initExperiment5() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['5'] = {
+  window.ExperimentSettings['carousel-flip'] = {
     collect: collectSettings,
     apply: applySettings,
   };
 
-  const pending = window.__pendingExperimentDefaults?.['5'];
+  const pending = window.__pendingExperimentDefaults?.['carousel-flip'];
   if (pending) applySettings(pending);
   else applyAll();
 
@@ -11372,7 +11669,7 @@ window.initExperiment5 = function initExperiment5() {
 };
 
 window.ArcScrollTransitionSnippet = {
-  css: `.cp-preview[data-experiment-preview="6"] {
+  css: `.cp-preview[data-experiment-preview="transition-arc-scroll"] {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -11381,7 +11678,7 @@ window.ArcScrollTransitionSnippet = {
   background: #000;
 }
 
-.cp-preview[data-experiment-preview="6"] .arc-scroll {
+.cp-preview[data-experiment-preview="transition-arc-scroll"] .arc-scroll {
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;
@@ -11783,15 +12080,15 @@ window.initArcScrollTransition = function initArcScrollTransition(root, options 
 `,
 };
 
-window.initExperiment6 = function initExperiment6() {
-  const preview = document.querySelector('[data-experiment-preview="6"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="6"]');
+window.initArcScrollTransitionExperiment = function initArcScrollTransitionExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="transition-arc-scroll"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="transition-arc-scroll"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
 
   if (typeof window.initArcScrollTransition !== 'function') {
-    console.error('Experiment 6: initArcScrollTransition is not loaded');
+    console.error('Transition Arc Scroll: initArcScrollTransition is not loaded');
     return;
   }
 
@@ -11799,12 +12096,12 @@ window.initExperiment6 = function initExperiment6() {
   const DEFAULT_HEIGHTS = [100, 100, 100, 100];
 
   const controls = {
-    sectionHeights: [1, 2, 3, 4].map((n) => document.getElementById(`exp6-section-height-${n}`)),
-    curves: [1, 2, 3, 4].map((n) => document.getElementById(`exp6-curve-${n}`)),
-    scrub: document.getElementById('exp6-scrub'),
-    smoothing: document.getElementById('exp6-smoothing'),
-    headingSize: document.getElementById('exp6-heading-size'),
-    imageOpacity: document.getElementById('exp6-image-opacity'),
+    sectionHeights: [1, 2, 3, 4].map((n) => document.getElementById(`exp-transition-arc-scroll-section-height-${n}`)),
+    curves: [1, 2, 3, 4].map((n) => document.getElementById(`exp-transition-arc-scroll-curve-${n}`)),
+    scrub: document.getElementById('exp-transition-arc-scroll-scrub'),
+    smoothing: document.getElementById('exp-transition-arc-scroll-smoothing'),
+    headingSize: document.getElementById('exp-transition-arc-scroll-heading-size'),
+    imageOpacity: document.getElementById('exp-transition-arc-scroll-image-opacity'),
   };
 
   const numericInputs = [
@@ -11818,12 +12115,12 @@ window.initExperiment6 = function initExperiment6() {
 
   const arcScroll = window.initArcScrollTransition(preview, {});
 
-  const solidColor = window.initColorInput(document.getElementById('exp6-solid-color-root'), {
+  const solidColor = window.initColorInput(document.getElementById('exp-transition-arc-scroll-solid-color-root'), {
     onChange: applyAll,
   });
 
-  const snippet = window.initSnippetOutput(document.getElementById('exp6-snippet-root'), {
-    filename: 'experiment-6.html',
+  const snippet = window.initSnippetOutput(document.getElementById('exp-transition-arc-scroll-snippet-root'), {
+    filename: 'transition-arc-scroll.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -11891,7 +12188,7 @@ window.initExperiment6 = function initExperiment6() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['6'] = {
+  window.ExperimentSettings['transition-arc-scroll'] = {
     collect: collectSettings,
     apply(data) {
       applySettings(data);
@@ -11939,7 +12236,7 @@ ${embed.js}
 </html>`;
   }
 
-  const pending = window.__pendingExperimentDefaults?.['6'];
+  const pending = window.__pendingExperimentDefaults?.['transition-arc-scroll'];
   if (pending) applySettings(pending);
   applyAll();
 
@@ -11947,7 +12244,7 @@ ${embed.js}
 };
 
 window.InfiniteCarouselSnippet = {
-  css: `.cp-preview[data-experiment-preview="7"] {
+  css: `.cp-preview[data-experiment-preview="carousel-infinite"] {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -11956,7 +12253,7 @@ window.InfiniteCarouselSnippet = {
   background: rgb(31, 10, 9);
 }
 
-.cp-preview[data-experiment-preview="7"] .infinite-carousel {
+.cp-preview[data-experiment-preview="carousel-infinite"] .infinite-carousel {
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;
@@ -12604,31 +12901,31 @@ window.InfiniteCarouselSnippet = {
   headingSrc: "data:image/svg+xml,%3Csvg%20width%3D%221360%22%20height%3D%2286%22%20viewBox%3D%220%200%201360%2086%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%22607.5%22%20y%3D%227%22%20width%3D%222%22%20height%3D%226%22%20rx%3D%221%22%20fill%3D%22white%22%20fill-opacity%3D%220.9%22%2F%3E%0A%3Crect%20x%3D%22611.5%22%20y%3D%222%22%20width%3D%222%22%20height%3D%2216%22%20rx%3D%221%22%20fill%3D%22white%22%20fill-opacity%3D%220.9%22%2F%3E%0A%3Crect%20x%3D%22615.5%22%20y%3D%228%22%20width%3D%222%22%20height%3D%224%22%20rx%3D%221%22%20fill%3D%22white%22%20fill-opacity%3D%220.9%22%2F%3E%0A%3Crect%20x%3D%22619.5%22%20y%3D%225%22%20width%3D%222%22%20height%3D%2210%22%20rx%3D%221%22%20fill%3D%22white%22%20fill-opacity%3D%220.9%22%2F%3E%0A%3Cpath%20d%3D%22M642.969%209.932C642.969%2013.012%20640.953%2015.168%20638.083%2015.168C635.227%2015.168%20633.239%2013.012%20633.239%209.932C633.239%206.866%20635.241%204.696%20638.097%204.696C640.967%204.696%20642.969%206.852%20642.969%209.932ZM641.527%209.932C641.527%207.58%20640.155%206.026%20638.097%206.026C636.039%206.026%20634.681%207.58%20634.681%209.932C634.681%2012.284%20636.039%2013.852%20638.097%2013.852C640.155%2013.852%20641.527%2012.27%20641.527%209.932ZM646.054%2011.402V4.878H647.426V11.318C647.426%2012.942%20648.322%2013.838%20649.932%2013.838C651.528%2013.838%20652.41%2012.928%20652.41%2011.318V4.878H653.796V11.402C653.796%2013.726%20652.312%2015.168%20649.932%2015.168C647.538%2015.168%20646.054%2013.74%20646.054%2011.402ZM658.849%2015H657.477V4.878H661.299C663.469%204.878%20664.757%206.026%20664.757%207.916C664.757%209.316%20664.057%2010.324%20662.797%2010.73L664.855%2015H663.329L661.439%2010.996H658.849V15ZM658.849%206.11V9.778H661.313C662.587%209.778%20663.315%209.092%20663.315%207.93C663.315%206.754%20662.559%206.11%20661.299%206.11H658.849ZM677.465%2015.154C674.581%2015.154%20672.663%2013.082%20672.663%209.946C672.663%206.824%20674.637%204.71%20677.535%204.71C679.817%204.71%20681.567%206.068%20681.945%208.14H680.475C680.097%206.824%20678.963%206.026%20677.493%206.026C675.449%206.026%20674.105%207.566%20674.105%209.932C674.105%2012.298%20675.449%2013.838%20677.493%2013.838C678.977%2013.838%20680.153%2013.04%20680.531%2011.794H681.987C681.553%2013.81%20679.747%2015.154%20677.465%2015.154ZM685.107%2015H683.679L687.375%204.878H688.901L692.611%2015H691.169L690.259%2012.48H686.003L685.107%2015ZM687.963%207.062L686.423%2011.29H689.853L688.299%207.062C688.229%206.866%20688.159%206.628%20688.131%206.474C688.103%206.614%20688.033%206.852%20687.963%207.062ZM693.46%206.138V4.878H700.922V6.138H697.884V15H696.512V6.138H693.46ZM709.876%2015H703.702V4.878H709.876V6.138H705.074V9.302H709.4V10.52H705.074V13.726H709.876V15ZM717.604%205.998C715.42%205.998%20714.104%207.608%20714.104%2010.002C714.104%2012.452%20715.532%2013.866%20717.618%2013.866C719.34%2013.866%20720.726%2012.984%20720.726%2010.94V10.646H717.338V9.428H722.014V15.014H720.866L720.768%2013.642C720.222%2014.524%20718.99%2015.168%20717.506%2015.168C714.636%2015.168%20712.662%2013.096%20712.662%209.974C712.662%206.894%20714.65%204.71%20717.632%204.71C719.844%204.71%20721.566%205.984%20721.902%207.93H720.446C720.068%206.642%20718.948%205.998%20717.604%205.998ZM734.497%209.932C734.497%2013.012%20732.481%2015.168%20729.611%2015.168C726.755%2015.168%20724.767%2013.012%20724.767%209.932C724.767%206.866%20726.769%204.696%20729.625%204.696C732.495%204.696%20734.497%206.852%20734.497%209.932ZM733.055%209.932C733.055%207.58%20731.683%206.026%20729.625%206.026C727.567%206.026%20726.209%207.58%20726.209%209.932C726.209%2012.284%20727.567%2013.852%20729.625%2013.852C731.683%2013.852%20733.055%2012.27%20733.055%209.932ZM739.024%2015H737.652V4.878H741.474C743.644%204.878%20744.932%206.026%20744.932%207.916C744.932%209.316%20744.232%2010.324%20742.972%2010.73L745.03%2015H743.504L741.614%2010.996H739.024V15ZM739.024%206.11V9.778H741.488C742.762%209.778%20743.49%209.092%20743.49%207.93C743.49%206.754%20742.734%206.11%20741.474%206.11H739.024ZM750.415%2010.884L746.985%204.878H748.525L750.779%208.924C750.919%209.162%20751.003%209.358%20751.115%209.596C751.241%209.344%20751.269%209.26%20751.451%208.924L753.691%204.878H755.189L751.787%2010.884V15H750.415V10.884Z%22%20fill%3D%22white%22%20fill-opacity%3D%220.9%22%2F%3E%0A%3Cpath%20d%3D%22M365.793%2047.48C365.159%2048.264%20364.263%2048.8987%20363.105%2049.384C361.985%2049.8693%20360.903%2050.112%20359.857%2050.112V42.44C361.5%2042.1787%20363.124%2041.5253%20364.729%2040.48C366.372%2039.4347%20367.548%2038.072%20368.257%2036.392H375.985V84.552H365.793V47.48Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M390.996%2085.224C387.151%2085.224%20384.09%2084.2907%20381.812%2082.424C379.535%2080.52%20378.396%2077.72%20378.396%2074.024V66.912H388.42V71C388.42%2072.6427%20388.588%2073.9307%20388.924%2074.864C389.26%2075.7973%20389.951%2076.264%20390.996%2076.264C391.967%2076.264%20392.62%2075.9467%20392.956%2075.312C393.33%2074.6773%20393.516%2073.744%20393.516%2072.512V63.048C393.516%2061.5173%20393.348%2060.304%20393.012%2059.408C392.714%2058.4747%20392.06%2058.008%20391.052%2058.008C389.223%2058.008%20388.308%2059.3333%20388.308%2061.984H379.516V36.392H402.42V45.408H388.644V52.184C389.13%2051.5493%20389.783%2051.0267%20390.604%2050.616C391.426%2050.2053%20392.359%2050%20393.404%2050C397.436%2050%20400.18%2051.4187%20401.636%2054.256C403.13%2057.0933%20403.876%2061.1067%20403.876%2066.296C403.876%2070.5893%20403.559%2074.08%20402.924%2076.768C402.327%2079.4187%20401.095%2081.4907%20399.228%2082.984C397.362%2084.4773%20394.618%2085.224%20390.996%2085.224Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M411.052%2076.32V70.608H405.396V64.28H411.052V58.624H417.38V64.28H423.092V70.608H417.38V76.32H411.052Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M438.316%2036.448H451.028C454.873%2036.448%20457.617%2037.6987%20459.26%2040.2C460.902%2042.664%20461.724%2046.2853%20461.724%2051.064C461.724%2055.8427%20460.996%2059.4453%20459.54%2061.872C458.084%2064.2987%20455.47%2065.512%20451.7%2065.512H447.78V84.552H438.316V36.448ZM448.34%2056.832C449.497%2056.832%20450.337%2056.6267%20450.86%2056.216C451.42%2055.768%20451.774%2055.152%20451.924%2054.368C452.11%2053.5467%20452.204%2052.3893%20452.204%2050.896C452.204%2048.88%20451.98%2047.424%20451.532%2046.528C451.084%2045.632%20450.188%2045.184%20448.844%2045.184H447.78V56.832H448.34Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M475.65%2085C471.767%2085%20468.818%2083.824%20466.802%2081.472C464.786%2079.0827%20463.778%2075.7413%20463.778%2071.448V48.544C463.778%2044.4%20464.786%2041.2827%20466.802%2039.192C468.818%2037.064%20471.767%2036%20475.65%2036C479.532%2036%20482.482%2037.064%20484.498%2039.192C486.514%2041.2827%20487.522%2044.4%20487.522%2048.544V71.448C487.522%2075.7787%20486.514%2079.12%20484.498%2081.472C482.482%2083.824%20479.532%2085%20475.65%2085ZM475.65%2076.152C476.508%2076.152%20477.087%2075.7787%20477.386%2075.032C477.684%2074.2853%20477.834%2073.24%20477.834%2071.896V48.376C477.834%2047.3307%20477.684%2046.4907%20477.386%2045.856C477.124%2045.184%20476.564%2044.848%20475.706%2044.848C474.1%2044.848%20473.298%2046.0613%20473.298%2048.488V71.952C473.298%2073.3333%20473.466%2074.3787%20473.802%2075.088C474.138%2075.7973%20474.754%2076.152%20475.65%2076.152Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M490.844%2036.448H504.116C507.551%2036.448%20510.127%2037.4%20511.844%2039.304C513.561%2041.208%20514.439%2044.0267%20514.476%2047.76L514.588%2070.272C514.625%2075.0133%20513.804%2078.5787%20512.124%2080.968C510.444%2083.3573%20507.663%2084.552%20503.78%2084.552H490.844V36.448ZM502.212%2076.04C503.967%2076.04%20504.844%2075.1813%20504.844%2073.464V48.656C504.844%2047.5733%20504.751%2046.7707%20504.564%2046.248C504.415%2045.688%20504.116%2045.3147%20503.668%2045.128C503.22%2044.9413%20502.529%2044.848%20501.596%2044.848H500.532V76.04H502.212Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M529.101%2085C525.592%2085%20522.773%2083.8987%20520.645%2081.696C518.555%2079.4933%20517.509%2076.4693%20517.509%2072.624V50.448C517.509%2045.6693%20518.461%2042.0667%20520.365%2039.64C522.269%2037.2133%20525.256%2036%20529.325%2036C532.872%2036%20535.728%2036.9707%20537.893%2038.912C540.059%2040.8533%20541.141%2043.6533%20541.141%2047.312V55.6H531.565V48.488C531.565%2047.1067%20531.397%2046.1547%20531.061%2045.632C530.725%2045.1093%20530.147%2044.848%20529.325%2044.848C528.467%2044.848%20527.869%2045.1467%20527.533%2045.744C527.235%2046.3413%20527.085%2047.2187%20527.085%2048.376V72.512C527.085%2073.7813%20527.272%2074.7147%20527.645%2075.312C528.019%2075.872%20528.579%2076.152%20529.325%2076.152C530.819%2076.152%20531.565%2074.9387%20531.565%2072.512V63.832H541.253V72.904C541.253%2080.968%20537.203%2085%20529.101%2085Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M542.577%2084.552L547.225%2036.448H563.521L568.113%2084.552H558.985L558.313%2076.768H552.489L551.929%2084.552H542.577ZM553.217%2069.096H557.585L555.457%2044.624H555.009L553.217%2069.096Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M581.908%2085C577.54%2085%20574.386%2083.9173%20572.444%2081.752C570.503%2079.5867%20569.532%2076.096%20569.532%2071.28V66.576H578.996V72.568C578.996%2074.9573%20579.762%2076.152%20581.292%2076.152C582.151%2076.152%20582.748%2075.9093%20583.084%2075.424C583.42%2074.9013%20583.588%2074.0427%20583.588%2072.848C583.588%2071.28%20583.402%2069.992%20583.028%2068.984C582.655%2067.9387%20582.17%2067.08%20581.572%2066.408C581.012%2065.6987%20579.986%2064.616%20578.492%2063.16L574.348%2059.016C571.138%2055.88%20569.532%2052.408%20569.532%2048.6C569.532%2044.4933%20570.466%2041.376%20572.332%2039.248C574.236%2037.0827%20576.999%2036%20580.62%2036C584.951%2036%20588.068%2037.1573%20589.972%2039.472C591.876%2041.7493%20592.828%2045.3333%20592.828%2050.224H583.028L582.972%2046.92C582.972%2046.2853%20582.786%2045.7813%20582.412%2045.408C582.076%2045.0347%20581.591%2044.848%20580.956%2044.848C580.21%2044.848%20579.65%2045.0533%20579.276%2045.464C578.903%2045.8747%20578.716%2046.4347%20578.716%2047.144C578.716%2048.712%20579.612%2050.336%20581.404%2052.016L587.004%2057.392C588.311%2058.6613%20589.394%2059.8747%20590.252%2061.032C591.111%2062.152%20591.802%2063.496%20592.324%2065.064C592.847%2066.5947%20593.108%2068.424%20593.108%2070.552C593.108%2075.2933%20592.231%2078.896%20590.476%2081.36C588.759%2083.7867%20585.903%2085%20581.908%2085Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M599.881%2084.552V45.688H594.169V36.448H615.225V45.688H609.513V84.552H599.881Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M637.561%2085.112C634.686%2085.112%20632.502%2084.0853%20631.009%2082.032C629.516%2079.9787%20628.769%2077.3093%20628.769%2074.024C628.769%2070.3653%20629.292%2067.4347%20630.337%2065.232C631.382%2062.992%20633.025%2061.032%20635.265%2059.352C633.436%2055.768%20632.521%2052.6693%20632.521%2050.056C632.521%2047.3307%20633.398%2045.2027%20635.153%2043.672C636.945%2042.104%20639.241%2041.32%20642.041%2041.32C644.804%2041.32%20647.062%2042.0667%20648.817%2043.56C650.609%2045.016%20651.505%2047.0693%20651.505%2049.72C651.505%2053.6027%20649.358%2057.2427%20645.065%2060.64L646.801%2064.728C647.846%2061.9653%20649.414%2059.8187%20651.505%2058.288L655.313%2064.224C653.11%2065.9413%20651.318%2068.7787%20649.937%2072.736L654.809%2084.552H645.513L644.505%2081.92C643.721%2082.8533%20642.713%2083.6187%20641.481%2084.216C640.286%2084.8133%20638.98%2085.112%20637.561%2085.112ZM643.049%2053.696C643.422%2053.2853%20643.758%2052.7067%20644.057%2051.96C644.356%2051.176%20644.505%2050.4293%20644.505%2049.72C644.505%2048.6%20643.964%2048.04%20642.881%2048.04C642.433%2048.04%20642.078%2048.208%20641.817%2048.544C641.556%2048.8427%20641.425%2049.2347%20641.425%2049.72C641.425%2050.6907%20641.817%2052.184%20642.601%2054.2L643.049%2053.696ZM639.073%2078.112C639.782%2078.112%20640.38%2077.8507%20640.865%2077.328C641.35%2076.768%20641.668%2076.1333%20641.817%2075.424L638.513%2067.472L638.177%2067.976C637.878%2068.424%20637.636%2069.1333%20637.449%2070.104C637.262%2071.0747%20637.169%2072.0267%20637.169%2072.96V73.24C637.169%2074.696%20637.281%2075.872%20637.505%2076.768C637.729%2077.664%20638.252%2078.112%20639.073%2078.112Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M681.647%2085C677.279%2085%20674.125%2083.9173%20672.183%2081.752C670.242%2079.5867%20669.271%2076.096%20669.271%2071.28V66.576H678.735V72.568C678.735%2074.9573%20679.501%2076.152%20681.031%2076.152C681.89%2076.152%20682.487%2075.9093%20682.823%2075.424C683.159%2074.9013%20683.327%2074.0427%20683.327%2072.848C683.327%2071.28%20683.141%2069.992%20682.767%2068.984C682.394%2067.9387%20681.909%2067.08%20681.311%2066.408C680.751%2065.6987%20679.725%2064.616%20678.231%2063.16L674.087%2059.016C670.877%2055.88%20669.271%2052.408%20669.271%2048.6C669.271%2044.4933%20670.205%2041.376%20672.071%2039.248C673.975%2037.0827%20676.738%2036%20680.359%2036C684.69%2036%20687.807%2037.1573%20689.711%2039.472C691.615%2041.7493%20692.567%2045.3333%20692.567%2050.224H682.767L682.711%2046.92C682.711%2046.2853%20682.525%2045.7813%20682.151%2045.408C681.815%2045.0347%20681.33%2044.848%20680.695%2044.848C679.949%2044.848%20679.389%2045.0533%20679.015%2045.464C678.642%2045.8747%20678.455%2046.4347%20678.455%2047.144C678.455%2048.712%20679.351%2050.336%20681.143%2052.016L686.743%2057.392C688.05%2058.6613%20689.133%2059.8747%20689.991%2061.032C690.85%2062.152%20691.541%2063.496%20692.063%2065.064C692.586%2066.5947%20692.847%2068.424%20692.847%2070.552C692.847%2075.2933%20691.97%2078.896%20690.215%2081.36C688.498%2083.7867%20685.642%2085%20681.647%2085Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M695.476%2084.552V36.448H705.052V53.64H709.588V36.448H719.164V84.552H709.588V62.712H705.052V84.552H695.476Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M734.341%2085C730.459%2085%20727.509%2083.824%20725.493%2081.472C723.477%2079.0827%20722.469%2075.7413%20722.469%2071.448V48.544C722.469%2044.4%20723.477%2041.2827%20725.493%2039.192C727.509%2037.064%20730.459%2036%20734.341%2036C738.224%2036%20741.173%2037.064%20743.189%2039.192C745.205%2041.2827%20746.213%2044.4%20746.213%2048.544V71.448C746.213%2075.7787%20745.205%2079.12%20743.189%2081.472C741.173%2083.824%20738.224%2085%20734.341%2085ZM734.341%2076.152C735.2%2076.152%20735.779%2075.7787%20736.077%2075.032C736.376%2074.2853%20736.525%2073.24%20736.525%2071.896V48.376C736.525%2047.3307%20736.376%2046.4907%20736.077%2045.856C735.816%2045.184%20735.256%2044.848%20734.397%2044.848C732.792%2044.848%20731.989%2046.0613%20731.989%2048.488V71.952C731.989%2073.3333%20732.157%2074.3787%20732.493%2075.088C732.829%2075.7973%20733.445%2076.152%20734.341%2076.152Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M753.288%2084.552L748.136%2036.448H757.544L760.232%2066.8L762.92%2036.448H771.88L774.456%2066.8L777.032%2036.448H786.552L781.288%2084.552H769.752L767.344%2061.368L765.048%2084.552H753.288Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M812.608%2085C809.098%2085%20806.28%2083.8987%20804.152%2081.696C802.061%2079.4933%20801.016%2076.4693%20801.016%2072.624V50.448C801.016%2045.6693%20801.968%2042.0667%20803.872%2039.64C805.776%2037.2133%20808.762%2036%20812.832%2036C816.378%2036%20819.234%2036.9707%20821.4%2038.912C823.565%2040.8533%20824.648%2043.6533%20824.648%2047.312V55.6H815.072V48.488C815.072%2047.1067%20814.904%2046.1547%20814.568%2045.632C814.232%2045.1093%20813.653%2044.848%20812.832%2044.848C811.973%2044.848%20811.376%2045.1467%20811.04%2045.744C810.741%2046.3413%20810.592%2047.2187%20810.592%2048.376V72.512C810.592%2073.7813%20810.778%2074.7147%20811.152%2075.312C811.525%2075.872%20812.085%2076.152%20812.832%2076.152C814.325%2076.152%20815.072%2074.9387%20815.072%2072.512V63.832H824.76V72.904C824.76%2080.968%20820.709%2085%20812.608%2085Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M826.083%2084.552L830.731%2036.448H847.027L851.619%2084.552H842.491L841.819%2076.768H835.995L835.435%2084.552H826.083ZM836.723%2069.096H841.091L838.963%2044.624H838.515L836.723%2069.096Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M858.135%2084.552V45.688H852.423V36.448H873.479V45.688H867.767V84.552H858.135Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M875.634%2084.552V36.448H894.898V45.744H885.434V55.096H894.506V64.168H885.434V75.2H895.514V84.552H875.634Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M908.064%2085C904.592%2085%20901.998%2083.7867%20900.28%2081.36C898.6%2078.896%20897.76%2075.1813%20897.76%2070.216V49.496C897.76%2045.0533%20898.75%2041.6933%20900.728%2039.416C902.707%2037.1387%20905.656%2036%20909.576%2036C912.75%2036%20915.214%2036.6347%20916.968%2037.904C918.723%2039.1733%20919.936%2041.0213%20920.608%2043.448C921.28%2045.8747%20921.616%2048.992%20921.616%2052.8H912.208V48.488C912.208%2047.3307%20912.04%2046.4347%20911.704%2045.8C911.406%2045.1653%20910.846%2044.848%20910.024%2044.848C908.195%2044.848%20907.28%2046.0427%20907.28%2048.432V71.728C907.28%2073.184%20907.467%2074.2853%20907.84%2075.032C908.214%2075.7787%20908.867%2076.152%20909.8%2076.152C910.734%2076.152%20911.387%2075.7787%20911.76%2075.032C912.134%2074.2853%20912.32%2073.184%20912.32%2071.728V64.84H909.744V56.552H921.504V84.552H917.64L916.016%2080.52C914.299%2083.5067%20911.648%2085%20908.064%2085Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M936.252%2085C932.369%2085%20929.42%2083.824%20927.404%2081.472C925.388%2079.0827%20924.38%2075.7413%20924.38%2071.448V48.544C924.38%2044.4%20925.388%2041.2827%20927.404%2039.192C929.42%2037.064%20932.369%2036%20936.252%2036C940.134%2036%20943.084%2037.064%20945.1%2039.192C947.116%2041.2827%20948.124%2044.4%20948.124%2048.544V71.448C948.124%2075.7787%20947.116%2079.12%20945.1%2081.472C943.084%2083.824%20940.134%2085%20936.252%2085ZM936.252%2076.152C937.11%2076.152%20937.689%2075.7787%20937.988%2075.032C938.287%2074.2853%20938.436%2073.24%20938.436%2071.896V48.376C938.436%2047.3307%20938.287%2046.4907%20937.988%2045.856C937.727%2045.184%20937.166%2044.848%20936.308%2044.848C934.702%2044.848%20933.9%2046.0613%20933.9%2048.488V71.952C933.9%2073.3333%20934.068%2074.3787%20934.404%2075.088C934.74%2075.7973%20935.356%2076.152%20936.252%2076.152Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M951.446%2036.448H966.23C968.582%2036.448%20970.393%2036.9893%20971.662%2038.072C972.969%2039.1173%20973.846%2040.6107%20974.294%2042.552C974.742%2044.456%20974.966%2046.9013%20974.966%2049.888C974.966%2052.6133%20974.612%2054.7413%20973.902%2056.272C973.193%2057.8027%20971.961%2058.8667%20970.206%2059.464C971.662%2059.7627%20972.708%2060.4907%20973.342%2061.648C974.014%2062.8053%20974.35%2064.3733%20974.35%2066.352L974.238%2084.552H964.83V65.736C964.83%2064.392%20964.569%2063.5333%20964.046%2063.16C963.524%2062.7867%20962.572%2062.6%20961.19%2062.6V84.552H951.446V36.448ZM963.542%2054.256C964.886%2054.256%20965.558%2052.8%20965.558%2049.888C965.558%2048.6187%20965.502%2047.6667%20965.39%2047.032C965.278%2046.3973%20965.073%2045.968%20964.774%2045.744C964.476%2045.4827%20964.046%2045.352%20963.486%2045.352H961.246V54.256H963.542Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3Cpath%20d%3D%22M983.398%2084.552V68.704L975.726%2036.448H985.246L987.934%2052.744L990.622%2036.448H1000.14L992.47%2068.704V84.552H983.398Z%22%20fill%3D%22%23FEFCFA%22%2F%3E%0A%3C%2Fsvg%3E",
 };
 
-window.initExperiment7 = function initExperiment7() {
-  const preview = document.querySelector('[data-experiment-preview="7"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="7"]');
+window.initInfiniteCarouselExperiment = function initInfiniteCarouselExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="carousel-infinite"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="carousel-infinite"]');
   if (!preview || !panelRoot) return;
 
   const utils = window.ComponentUtils;
 
   if (typeof window.initInfiniteCarousel !== 'function') {
-    console.error('Experiment 7: initInfiniteCarousel is not loaded');
+    console.error('Carousel Infinite: initInfiniteCarousel is not loaded');
     return;
   }
 
   const controls = {
-    heightActive: document.getElementById('exp7-height-active'),
-    heightA: document.getElementById('exp7-height-a'),
-    heightB: document.getElementById('exp7-height-b'),
-    heightC: document.getElementById('exp7-height-c'),
-    duration: document.getElementById('exp7-duration'),
-    velocity: document.getElementById('exp7-velocity'),
-    autoPlayInterval: document.getElementById('exp7-autoplay-interval'),
+    heightActive: document.getElementById('exp-carousel-infinite-height-active'),
+    heightA: document.getElementById('exp-carousel-infinite-height-a'),
+    heightB: document.getElementById('exp-carousel-infinite-height-b'),
+    heightC: document.getElementById('exp-carousel-infinite-height-c'),
+    duration: document.getElementById('exp-carousel-infinite-duration'),
+    velocity: document.getElementById('exp-carousel-infinite-velocity'),
+    autoPlayInterval: document.getElementById('exp-carousel-infinite-autoplay-interval'),
   };
 
   let carousel = preview.__infiniteCarousel;
-  let easing = preview.__exp7Easing;
-  let snippet = preview.__exp7Snippet;
+  let easing = preview.__expInfiniteCarouselEasing;
+  let snippet = preview.__expInfiniteCarouselSnippet;
 
   if (!carousel) {
     carousel = window.initInfiniteCarousel(preview, {
@@ -12645,29 +12942,29 @@ window.initExperiment7 = function initExperiment7() {
   }
 
   if (!easing) {
-    const easingRoot = document.getElementById('exp7-easing-root');
+    const easingRoot = document.getElementById('exp-carousel-infinite-easing-root');
     if (!easingRoot) {
-      console.error('Experiment 7: missing #exp7-easing-root');
+      console.error('Carousel Infinite: missing #exp-carousel-infinite-easing-root');
       return;
     }
 
     easing = window.initCubicBezierInput(easingRoot, { onChange: applyAll });
-    preview.__exp7Easing = easing;
+    preview.__expInfiniteCarouselEasing = easing;
   }
 
   if (!snippet) {
-    const snippetRoot = document.getElementById('exp7-snippet-root');
+    const snippetRoot = document.getElementById('exp-carousel-infinite-snippet-root');
     if (!snippetRoot) {
-      console.error('Experiment 7: missing #exp7-snippet-root');
+      console.error('Carousel Infinite: missing #exp-carousel-infinite-snippet-root');
       return;
     }
 
     snippet = window.initSnippetOutput(snippetRoot, {
-      filename: 'experiment-7.html',
+      filename: 'carousel-infinite.html',
       getContent: generateSnippet,
       updateOnInit: true,
     });
-    preview.__exp7Snippet = snippet;
+    preview.__expInfiniteCarouselSnippet = snippet;
   }
 
   if (preview.dataset.experimentReady !== '1') {
@@ -12738,7 +13035,7 @@ window.initExperiment7 = function initExperiment7() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['7'] = {
+  window.ExperimentSettings['carousel-infinite'] = {
     collect: collectSettings,
     apply: applySettings,
   };
@@ -12788,14 +13085,14 @@ ${embed.js}
 </html>`;
   }
 
-  const pending = window.__pendingExperimentDefaults?.['7'];
+  const pending = window.__pendingExperimentDefaults?.['carousel-infinite'];
   if (pending) applySettings(pending);
   else applyAll();
 };
 
-window.initExperiment8 = function initExperiment8() {
-  const preview = document.querySelector('[data-experiment-preview="8"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="8"]');
+window.initHorizontalParallaxExperiment = function initHorizontalParallaxExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="parallax-horizontal"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="parallax-horizontal"]');
   if (!preview || !panelRoot) return;
 
   const utils = window.ComponentUtils;
@@ -12803,30 +13100,30 @@ window.initExperiment8 = function initExperiment8() {
   const PARALLAX_VERSION = '8';
 
   if (typeof window.initHorizontalParallax !== 'function') {
-    console.error('Experiment 8: initHorizontalParallax is not loaded');
+    console.error('Parallax Horizontal: initHorizontalParallax is not loaded');
     return;
   }
 
   const controls = {
-    cardWidth: document.getElementById('exp8-width'),
-    cardHeight: document.getElementById('exp8-height'),
-    gap: document.getElementById('exp8-gap'),
-    duration: document.getElementById('exp8-duration'),
-    velocity: document.getElementById('exp8-velocity'),
+    cardWidth: document.getElementById('exp-parallax-horizontal-width'),
+    cardHeight: document.getElementById('exp-parallax-horizontal-height'),
+    gap: document.getElementById('exp-parallax-horizontal-gap'),
+    duration: document.getElementById('exp-parallax-horizontal-duration'),
+    velocity: document.getElementById('exp-parallax-horizontal-velocity'),
   };
 
   const uploadSlots = [1, 2, 3, 4, 5].map((slot) => ({
     index: slot - 1,
-    fileInput: document.getElementById(`exp8-image-${slot}-file`),
-    button: document.getElementById(`exp8-image-${slot}-btn`),
-    nameLabel: document.getElementById(`exp8-image-${slot}-name`),
+    fileInput: document.getElementById(`exp-parallax-horizontal-image-${slot}-file`),
+    button: document.getElementById(`exp-parallax-horizontal-image-${slot}-btn`),
+    nameLabel: document.getElementById(`exp-parallax-horizontal-image-${slot}-name`),
   }));
 
   let parallax = preview.__horizontalParallax;
-  let easing = preview.__exp8Easing;
-  let snippet = preview.__exp8Snippet;
-  let layoutSelector = preview.__exp8Layout;
-  let imageScaleSlider = preview.__exp8ImageScale;
+  let easing = preview.__expHorizontalParallaxEasing;
+  let snippet = preview.__expHorizontalParallaxSnippet;
+  let layoutSelector = preview.__expHorizontalParallaxLayout;
+  let imageScaleSlider = preview.__expHorizontalParallaxImageScale;
 
   function controlValue(input, fallback) {
     if (!(input instanceof HTMLInputElement)) return String(fallback);
@@ -12852,23 +13149,23 @@ window.initExperiment8 = function initExperiment8() {
   }
 
   async function ensureImageSrcs() {
-    if (Array.isArray(preview.__exp8ImageSrcs) && preview.__exp8ImageSrcs.length === 5) {
-      return preview.__exp8ImageSrcs;
+    if (Array.isArray(preview.__expHorizontalParallaxImageSrcs) && preview.__expHorizontalParallaxImageSrcs.length === 5) {
+      return preview.__expHorizontalParallaxImageSrcs;
     }
 
     try {
       const dataUrl = await loadImageAsDataUrl(DEFAULT_IMAGE);
-      preview.__exp8ImageSrcs = Array.from({ length: 5 }, () => dataUrl);
+      preview.__expHorizontalParallaxImageSrcs = Array.from({ length: 5 }, () => dataUrl);
     } catch {
-      preview.__exp8ImageSrcs = Array.from({ length: 5 }, () => DEFAULT_IMAGE);
+      preview.__expHorizontalParallaxImageSrcs = Array.from({ length: 5 }, () => DEFAULT_IMAGE);
     }
 
-    return preview.__exp8ImageSrcs;
+    return preview.__expHorizontalParallaxImageSrcs;
   }
 
   function getImageSrcs() {
-    return Array.isArray(preview.__exp8ImageSrcs) && preview.__exp8ImageSrcs.length === 5
-      ? [...preview.__exp8ImageSrcs]
+    return Array.isArray(preview.__expHorizontalParallaxImageSrcs) && preview.__expHorizontalParallaxImageSrcs.length === 5
+      ? [...preview.__expHorizontalParallaxImageSrcs]
       : Array.from({ length: 5 }, () => DEFAULT_IMAGE);
   }
 
@@ -12947,13 +13244,13 @@ window.initExperiment8 = function initExperiment8() {
       if (!saved) continue;
 
       if (String(saved).startsWith('data:')) {
-        preview.__exp8ImageSrcs[i] = saved;
+        preview.__expHorizontalParallaxImageSrcs[i] = saved;
         setUploadLabel(i, savedNames[i] || 'Uploaded');
         continue;
       }
 
       try {
-        preview.__exp8ImageSrcs[i] = await loadImageAsDataUrl(saved);
+        preview.__expHorizontalParallaxImageSrcs[i] = await loadImageAsDataUrl(saved);
         setUploadLabel(i, savedNames[i] || 'Uploaded');
       } catch {
         // keep existing slot
@@ -13007,7 +13304,7 @@ window.initExperiment8 = function initExperiment8() {
   function wireUploads() {
     uploadSlots.forEach((slot) => {
       if (!slot.fileInput || !slot.button) return;
-      if (slot.fileInput.dataset.exp8Wired === '1') return;
+      if (slot.fileInput.dataset.expHorizontalParallaxWired === '1') return;
 
       slot.button.addEventListener('click', () => slot.fileInput.click());
       slot.fileInput.addEventListener('change', () => {
@@ -13016,10 +13313,10 @@ window.initExperiment8 = function initExperiment8() {
 
         const reader = new FileReader();
         reader.onload = () => {
-          if (!Array.isArray(preview.__exp8ImageSrcs)) {
-            preview.__exp8ImageSrcs = Array.from({ length: 5 }, () => DEFAULT_IMAGE);
+          if (!Array.isArray(preview.__expHorizontalParallaxImageSrcs)) {
+            preview.__expHorizontalParallaxImageSrcs = Array.from({ length: 5 }, () => DEFAULT_IMAGE);
           }
-          preview.__exp8ImageSrcs[slot.index] = String(reader.result);
+          preview.__expHorizontalParallaxImageSrcs[slot.index] = String(reader.result);
           setUploadLabel(slot.index, file.name);
           applyAll();
         };
@@ -13027,12 +13324,12 @@ window.initExperiment8 = function initExperiment8() {
         slot.fileInput.value = '';
       });
 
-      slot.fileInput.dataset.exp8Wired = '1';
+      slot.fileInput.dataset.expHorizontalParallaxWired = '1';
     });
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['8'] = {
+  window.ExperimentSettings['parallax-horizontal'] = {
     collect: collectSettings,
     apply: applySettings,
   };
@@ -13057,9 +13354,9 @@ window.initExperiment8 = function initExperiment8() {
     }
 
     if (!layoutSelector) {
-      const layoutRoot = document.getElementById('exp8-layout-root');
+      const layoutRoot = document.getElementById('exp-parallax-horizontal-layout-root');
       if (!layoutRoot) {
-        console.error('Experiment 8: missing #exp8-layout-root');
+        console.error('Parallax Horizontal: missing #exp-parallax-horizontal-layout-root');
         return;
       }
 
@@ -13071,18 +13368,18 @@ window.initExperiment8 = function initExperiment8() {
         ],
         onChange: applyAll,
       });
-      preview.__exp8Layout = layoutSelector;
+      preview.__expHorizontalParallaxLayout = layoutSelector;
     }
 
     if (!imageScaleSlider) {
-      const scaleRoot = document.getElementById('exp8-image-scale-root');
+      const scaleRoot = document.getElementById('exp-parallax-horizontal-image-scale-root');
       if (!scaleRoot) {
-        console.error('Experiment 8: missing #exp8-image-scale-root');
+        console.error('Parallax Horizontal: missing #exp-parallax-horizontal-image-scale-root');
         return;
       }
 
       if (typeof window.initSlider !== 'function') {
-        console.error('Experiment 8: initSlider is not loaded');
+        console.error('Parallax Horizontal: initSlider is not loaded');
         return;
       }
 
@@ -13093,33 +13390,33 @@ window.initExperiment8 = function initExperiment8() {
         value: 120,
         onChange: applyAll,
       });
-      preview.__exp8ImageScale = imageScaleSlider;
+      preview.__expHorizontalParallaxImageScale = imageScaleSlider;
     }
 
     if (!easing) {
-      const easingRoot = document.getElementById('exp8-easing-root');
+      const easingRoot = document.getElementById('exp-parallax-horizontal-easing-root');
       if (!easingRoot) {
-        console.error('Experiment 8: missing #exp8-easing-root');
+        console.error('Parallax Horizontal: missing #exp-parallax-horizontal-easing-root');
         return;
       }
 
       easing = window.initCubicBezierInput(easingRoot, { onChange: applyAll });
-      preview.__exp8Easing = easing;
+      preview.__expHorizontalParallaxEasing = easing;
     }
 
     if (!snippet) {
-      const snippetRoot = document.getElementById('exp8-snippet-root');
+      const snippetRoot = document.getElementById('exp-parallax-horizontal-snippet-root');
       if (!snippetRoot) {
-        console.error('Experiment 8: missing #exp8-snippet-root');
+        console.error('Parallax Horizontal: missing #exp-parallax-horizontal-snippet-root');
         return;
       }
 
       snippet = window.initSnippetOutput(snippetRoot, {
-        filename: 'experiment-8.html',
+        filename: 'parallax-horizontal.html',
         getContent: generateSnippet,
         updateOnInit: true,
       });
-      preview.__exp8Snippet = snippet;
+      preview.__expHorizontalParallaxSnippet = snippet;
     }
 
     if (preview.dataset.experimentReady !== '1') {
@@ -13135,14 +13432,14 @@ window.initExperiment8 = function initExperiment8() {
       preview.dataset.experimentReady = '1';
     }
 
-    const pending = window.__pendingExperimentDefaults?.['8'];
+    const pending = window.__pendingExperimentDefaults?.['parallax-horizontal'];
     if (pending) await applySettings(pending);
     else applyAll();
   })();
 };
 
 window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function initStaggerTextButton(root, options = {}) {
-  const btn = root.querySelector('#exp9-btn')
+  const btn = root.querySelector('#exp-button-stagger-text-btn')
     || root.querySelector('.stagger-text-button')
     || root;
   const label = btn.querySelector('.label');
@@ -13487,9 +13784,9 @@ window.StaggerTextButtonSnippetJs = `window.initStaggerTextButton = function ini
 };
 `;
 
-window.initExperiment9 = function initExperiment9() {
-  const preview = document.querySelector('[data-experiment-preview="9"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="9"]');
+window.initStaggerTextButtonExperiment = function initStaggerTextButtonExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="button-stagger-text"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="button-stagger-text"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
@@ -13505,19 +13802,19 @@ window.initExperiment9 = function initExperiment9() {
   const btn = staggerButton.element;
 
   const controls = {
-    labelText: document.getElementById('exp9-label-text'),
-    hoverText: document.getElementById('exp9-hover-text'),
-    paddingTop: document.getElementById('exp9-padding-top'),
-    paddingRight: document.getElementById('exp9-padding-right'),
-    paddingBottom: document.getElementById('exp9-padding-bottom'),
-    paddingLeft: document.getElementById('exp9-padding-left'),
-    border: document.getElementById('exp9-border'),
-    radius: document.getElementById('exp9-radius'),
-    duration: document.getElementById('exp9-duration'),
-    stagger: document.getElementById('exp9-stagger'),
+    labelText: document.getElementById('exp-button-stagger-text-label-text'),
+    hoverText: document.getElementById('exp-button-stagger-text-hover-text'),
+    paddingTop: document.getElementById('exp-button-stagger-text-padding-top'),
+    paddingRight: document.getElementById('exp-button-stagger-text-padding-right'),
+    paddingBottom: document.getElementById('exp-button-stagger-text-padding-bottom'),
+    paddingLeft: document.getElementById('exp-button-stagger-text-padding-left'),
+    border: document.getElementById('exp-button-stagger-text-border'),
+    radius: document.getElementById('exp-button-stagger-text-radius'),
+    duration: document.getElementById('exp-button-stagger-text-duration'),
+    stagger: document.getElementById('exp-button-stagger-text-stagger'),
   };
 
-  const staggerModeSelector = window.initOptionSelector(document.getElementById('exp9-stagger-mode-root'), {
+  const staggerModeSelector = window.initOptionSelector(document.getElementById('exp-button-stagger-text-stagger-mode-root'), {
     value: 'center-out',
     options: [
       { value: 'sequential', label: 'Sequential' },
@@ -13526,7 +13823,7 @@ window.initExperiment9 = function initExperiment9() {
     onChange: applyAll,
   });
 
-  const easing = window.initCubicBezierInput(document.getElementById('exp9-easing-root'), {
+  const easing = window.initCubicBezierInput(document.getElementById('exp-button-stagger-text-easing-root'), {
     onChange: applyAll,
   });
 
@@ -13543,16 +13840,16 @@ window.initExperiment9 = function initExperiment9() {
     },
   });
 
-  const bgColor = window.initColorInput(document.getElementById('exp9-bg-color-root'), {
+  const bgColor = window.initColorInput(document.getElementById('exp-button-stagger-text-bg-color-root'), {
     onChange: applyAll,
   });
 
-  const borderColor = window.initColorInput(document.getElementById('exp9-border-color-root'), {
+  const borderColor = window.initColorInput(document.getElementById('exp-button-stagger-text-border-color-root'), {
     onChange: applyAll,
   });
 
-  const snippet = window.initSnippetOutput(document.getElementById('exp9-snippet-root'), {
-    filename: 'experiment-9.html',
+  const snippet = window.initSnippetOutput(document.getElementById('exp-button-stagger-text-snippet-root'), {
+    filename: 'button-stagger-text.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -13647,12 +13944,12 @@ window.initExperiment9 = function initExperiment9() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['9'] = {
+  window.ExperimentSettings['button-stagger-text'] = {
     collect: collectSettings,
     apply: applySettings,
   };
 
-  const pending = window.__pendingExperimentDefaults?.['9'];
+  const pending = window.__pendingExperimentDefaults?.['button-stagger-text'];
   if (pending) applySettings(pending);
   applyAll();
 
@@ -13813,25 +14110,342 @@ ${window.StaggerTextButtonSnippetJs || ''}
   preview.dataset.experimentReady = '1';
 };
 
+window.HeadingEntranceSnippet = {
+  css: `.heading-entrance {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: #fff;
+}
+
+.heading-entrance__text {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #000;
+  white-space: nowrap;
+}
+
+.heading-entrance__char {
+  display: inline-block;
+  white-space: pre;
+  will-change: filter;
+}
+
+/* Blend layers threshold the blurred text back into sharp, "bleeding" shapes. */
+.heading-entrance__burn,
+.heading-entrance__dodge {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.heading-entrance__burn {
+  z-index: 2;
+  background: #000;
+  mix-blend-mode: color-burn;
+}
+
+.heading-entrance__dodge {
+  z-index: 3;
+  background: #474747;
+  mix-blend-mode: color-dodge;
+}`,
+  js: `window.initHeadingEntrance = function initHeadingEntrance(root, options = {}) {
+  const wrap = root.querySelector('.heading-entrance') || root;
+  const heading = wrap.querySelector('.heading-entrance__text');
+  const layers = wrap.querySelectorAll('.heading-entrance__burn, .heading-entrance__dodge');
+
+  let text = options.text ?? 'Bleeding Text';
+  let blurStart = options.blurStart ?? 24;
+  let blurEnd = options.blurEnd ?? 2;
+  let fontSize = options.fontSize ?? 48;
+  let fontWeight = options.fontWeight ?? 600;
+  let letterSpacing = options.letterSpacing ?? 0;
+  let duration = options.duration ?? 800;
+  let stagger = options.stagger ?? 40;
+  let easingRaw = options.easingRaw ?? '0.22, 1, 0.36, 1';
+  let chars = [];
+  let running = [];
+  let layersTimer = null;
+  // Blend layers switch off instantly this many ms before the entrance ends.
+  let layersOffBefore = options.layersOffBefore ?? 2;
+
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function getEasing() {
+    const raw = String(easingRaw).trim();
+    if (!raw) return 'cubic-bezier(0.22, 1, 0.36, 1)';
+    if (raw.startsWith('cubic-bezier(')) return raw;
+    const parts = raw.split(',').map((n) => parseFloat(n.trim()));
+    if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) {
+      return \`cubic-bezier(\${parts.join(', ')})\`;
+    }
+    return raw;
+  }
+
+  function splitChars(value) {
+    if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+      return [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(value)]
+        .map((part) => part.segment);
+    }
+    return Array.from(value);
+  }
+
+  function render() {
+    heading.replaceChildren();
+    heading.setAttribute('aria-label', text);
+    chars = splitChars(text).map((char) => {
+      const el = document.createElement('span');
+      el.className = 'heading-entrance__char';
+      el.textContent = char;
+      el.setAttribute('aria-hidden', 'true');
+      heading.appendChild(el);
+      return el;
+    });
+  }
+
+  function play() {
+    running.forEach((anim) => anim.cancel());
+    running = [];
+    clearTimeout(layersTimer);
+    setLayersVisible(true);
+    if (motionQuery.matches) return;
+    // Blur goes start → end per char; the blend layers keep it sharp-edged.
+    const from = { filter: \`blur(\${blurStart}px)\` };
+    const to = { filter: \`blur(\${blurEnd}px)\` };
+    chars.forEach((el, i) => {
+      running.push(el.animate([from, to], {
+        duration,
+        delay: i * stagger,
+        easing: getEasing(),
+        fill: 'backwards',
+      }));
+    });
+    const total = Math.max(0, chars.length - 1) * stagger + duration;
+    layersTimer = setTimeout(() => setLayersVisible(false), Math.max(0, total - layersOffBefore));
+  }
+
+  function setLayersVisible(visible) {
+    layers.forEach((el) => { el.style.opacity = visible ? '1' : '0'; });
+  }
+
+  function applyStyles() {
+    heading.style.fontSize = \`\${fontSize}px\`;
+    heading.style.fontWeight = String(fontWeight);
+    heading.style.letterSpacing = \`\${letterSpacing}px\`;
+    chars.forEach((el) => { el.style.filter = \`blur(\${blurEnd}px)\`; });
+    // Blend layers must cover the full blur spread, or blurred edges get clipped.
+    const spread = Math.ceil(Math.max(blurStart, blurEnd) * 3);
+    layers.forEach((el) => { el.style.inset = \`\${-spread}px\`; });
+  }
+
+  function set(next = {}) {
+    const textChanged = next.text != null && next.text !== text;
+    if (next.text != null) text = next.text;
+    if (next.blurStart != null) blurStart = next.blurStart;
+    if (next.blurEnd != null) blurEnd = next.blurEnd;
+    if (next.fontSize != null) fontSize = next.fontSize;
+    if (next.fontWeight != null) fontWeight = next.fontWeight;
+    if (next.letterSpacing != null) letterSpacing = next.letterSpacing;
+    if (next.duration != null) duration = next.duration;
+    if (next.stagger != null) stagger = next.stagger;
+    if (next.easingRaw != null) easingRaw = next.easingRaw;
+    if (next.layersOffBefore != null) layersOffBefore = next.layersOffBefore;
+    if (textChanged || !chars.length) render();
+    applyStyles();
+  }
+
+  set();
+  if (options.autoplay !== false) play();
+
+  return { element: wrap, set, play };
+};
+`,
+};
+
+window.initHeadingEntranceExperiment = function initHeadingEntranceExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="heading-entrance"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="heading-entrance"]');
+  if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
+
+  const utils = window.ComponentUtils;
+  const heading = window.initHeadingEntrance(preview, { autoplay: false });
+
+  const controls = {
+    text: document.getElementById('exp-heading-entrance-text'),
+    blurStart: document.getElementById('exp-heading-entrance-blur-start'),
+    blurEnd: document.getElementById('exp-heading-entrance-blur-end'),
+    fontSize: document.getElementById('exp-heading-entrance-font-size'),
+    fontWeight: document.getElementById('exp-heading-entrance-font-weight'),
+    letterSpacing: document.getElementById('exp-heading-entrance-letter-spacing'),
+    duration: document.getElementById('exp-heading-entrance-duration'),
+    stagger: document.getElementById('exp-heading-entrance-stagger'),
+    layersOffBefore: document.getElementById('exp-heading-entrance-layers-off'),
+  };
+
+  const easing = window.initCubicBezierInput(document.getElementById('exp-heading-entrance-easing-root'), {
+    onChange: () => applyAll(true),
+  });
+
+  const snippet = window.initSnippetOutput(document.getElementById('exp-heading-entrance-snippet-root'), {
+    filename: 'heading-entrance.html',
+    getContent: generateSnippet,
+    updateOnInit: false,
+  });
+
+  utils.bindInputWrapInputs(panelRoot);
+
+  controls.text.addEventListener('input', () => applyAll(true));
+  [controls.fontSize, controls.fontWeight, controls.letterSpacing].forEach((input) => {
+    input.addEventListener('input', () => applyAll(false));
+    utils.bindNumericArrowKey(input, () => applyAll(false));
+  });
+  [controls.blurStart, controls.blurEnd, controls.duration, controls.stagger, controls.layersOffBefore].forEach((input) => {
+    input.addEventListener('input', () => applyAll(true));
+    utils.bindNumericArrowKey(input, () => applyAll(true));
+  });
+
+  document.getElementById('exp-heading-entrance-restart').addEventListener('click', () => heading.play());
+
+  function collectSettings() {
+    return {
+      text: controls.text.value,
+      blurStart: controls.blurStart.value,
+      blurEnd: controls.blurEnd.value,
+      fontSize: controls.fontSize.value,
+      fontWeight: controls.fontWeight.value,
+      letterSpacing: controls.letterSpacing.value,
+      duration: controls.duration.value,
+      staggerPercent: controls.stagger.value,
+      layersOffBefore: controls.layersOffBefore.value,
+      easing: easing.getRaw(),
+    };
+  }
+
+  function applySettings(data) {
+    if (!data) return;
+    ['text', 'blurStart', 'blurEnd', 'fontSize', 'fontWeight', 'letterSpacing', 'duration', 'layersOffBefore'].forEach((key) => {
+      if (data[key] != null) controls[key].value = data[key];
+    });
+    if (data.staggerPercent != null) controls.stagger.value = data.staggerPercent;
+    if (data.easing != null) easing.setRaw(data.easing, false);
+  }
+
+  window.ExperimentSettings = window.ExperimentSettings || {};
+  window.ExperimentSettings['heading-entrance'] = {
+    collect: collectSettings,
+    apply: applySettings,
+  };
+
+  function getConfig() {
+    const duration = Math.max(0, utils.parseMs(controls.duration.value, 800));
+    const staggerPercent = Math.max(0, parseFloat(controls.stagger.value) || 0);
+    return {
+      text: controls.text.value,
+      blurStart: Math.max(0, utils.parsePx(controls.blurStart.value, 24)),
+      blurEnd: Math.max(0, utils.parsePx(controls.blurEnd.value, 2)),
+      fontSize: Math.max(1, utils.parsePx(controls.fontSize.value, 48)),
+      fontWeight: Math.min(900, Math.max(100, Math.round(Number(controls.fontWeight.value) || 600))),
+      letterSpacing: utils.parsePx(controls.letterSpacing.value, 0),
+      duration,
+      // Per-char delay as a % of duration.
+      stagger: Math.round(duration * staggerPercent) / 100,
+      layersOffBefore: Math.max(0, utils.parseMs(controls.layersOffBefore.value, 2)),
+      easingRaw: easing.getRaw() || '0.22, 1, 0.36, 1',
+    };
+  }
+
+  function applyAll(replay) {
+    heading.set(getConfig());
+    if (replay) heading.play();
+    snippet.update();
+  }
+
+  const pending = window.__pendingExperimentDefaults?.['heading-entrance'];
+  if (pending) applySettings(pending);
+  applyAll(true);
+
+  function generateSnippet() {
+    const config = getConfig();
+    const text = utils.escapeHtml(config.text);
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heading Entrance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+    }
+
+${window.HeadingEntranceSnippet?.css || ''}
+  </style>
+</head>
+<body>
+  <div class="heading-entrance">
+    <h2 class="heading-entrance__text">${text}</h2>
+    <div class="heading-entrance__burn"></div>
+    <div class="heading-entrance__dodge"></div>
+  </div>
+
+  <script>
+${window.HeadingEntranceSnippet?.js || ''}
+    window.initHeadingEntrance(document.body, ${JSON.stringify(config, null, 2).replace(/\n/g, '\n    ')});
+  <\/script>
+</body>
+</html>`;
+  }
+
+  preview.dataset.experimentReady = '1';
+};
+
 (function () {
   const LEGACY_STORAGE_KEY = 'cp-kit-experiment-defaults';
   const STORAGE_PREFIX = 'cp-kit-experiment-defaults-';
   const ACTIVE_KEY = 'cp-kit-experiment-active';
-  const DEFAULT_EXPERIMENT = '2';
-  const EXPERIMENT_IDS = ['1', '2', '3', '4.5', '5', '6', '7', '8', '9'];
+  const DEFAULT_EXPERIMENT = 'button-rotate-x';
+  // Old numeric ids → semantic ids, so saved defaults survive the rename.
+  const NUMERIC_ID_MAP = {
+    1: 'button-hover',
+    2: 'button-rotate-x',
+    3: 'carousel-rotate',
+    '4.5': 'carousel-rotate-x',
+    5: 'carousel-flip',
+    6: 'transition-arc-scroll',
+    7: 'carousel-infinite',
+    8: 'parallax-horizontal',
+    9: 'button-stagger-text',
+  };
+  const EXPERIMENT_IDS = [...Object.values(NUMERIC_ID_MAP), 'heading-entrance'];
 
   window.ExperimentSettings = window.ExperimentSettings || {};
 
   const experiments = {
-    1: { init: () => window.initExperiment1?.() },
-    2: { init: () => window.initExperiment2?.() },
-    3: { init: () => window.initExperiment3?.() },
-    '4.5': { init: () => window.initExperiment4_5?.() },
-    5: { init: () => window.initExperiment5?.() },
-    6: { init: () => window.initExperiment6?.() },
-    7: { init: () => window.initExperiment7?.() },
-    8: { init: () => window.initExperiment8?.() },
-    9: { init: () => window.initExperiment9?.() },
+    'button-hover': { init: () => window.initHoverButtonExperiment?.() },
+    'button-rotate-x': { init: () => window.initRotateXButtonExperiment?.() },
+    'carousel-rotate': { init: () => window.initRotateCarouselExperiment?.() },
+    'carousel-rotate-x': { init: () => window.initRotateXCarouselExperiment?.() },
+    'carousel-flip': { init: () => window.initFlipCarouselExperiment?.() },
+    'transition-arc-scroll': { init: () => window.initArcScrollTransitionExperiment?.() },
+    'carousel-infinite': { init: () => window.initInfiniteCarouselExperiment?.() },
+    'parallax-horizontal': { init: () => window.initHorizontalParallaxExperiment?.() },
+    'button-stagger-text': { init: () => window.initStaggerTextButtonExperiment?.() },
+    'heading-entrance': { init: () => window.initHeadingEntranceExperiment?.() },
   };
 
   function loadExperimentDefaults(id) {
@@ -13848,7 +14462,8 @@ ${window.StaggerTextButtonSnippetJs || ''}
   }
 
   function loadActiveExperiment() {
-    return localStorage.getItem(ACTIVE_KEY) || DEFAULT_EXPERIMENT;
+    const id = localStorage.getItem(ACTIVE_KEY);
+    return EXPERIMENT_IDS.includes(id) ? id : DEFAULT_EXPERIMENT;
   }
 
   function saveActiveExperiment(id) {
@@ -13862,15 +14477,16 @@ ${window.StaggerTextButtonSnippetJs || ''}
 
       const saved = JSON.parse(raw);
       if (saved?.panels) {
-        EXPERIMENT_IDS.forEach((id) => {
-          if (saved.panels[id] && !loadExperimentDefaults(id)) {
-            saveExperimentDefaults(id, saved.panels[id]);
+        Object.entries(NUMERIC_ID_MAP).forEach(([oldId, id]) => {
+          const panel = saved.panels[id] || saved.panels[oldId];
+          if (panel && !loadExperimentDefaults(id)) {
+            saveExperimentDefaults(id, panel);
           }
         });
       }
 
       if (saved?.experiment) {
-        saveActiveExperiment(saved.experiment);
+        saveActiveExperiment(NUMERIC_ID_MAP[saved.experiment] || saved.experiment);
       }
 
       localStorage.removeItem(LEGACY_STORAGE_KEY);
@@ -13879,7 +14495,25 @@ ${window.StaggerTextButtonSnippetJs || ''}
     }
   }
 
+  function migrateNumericIds() {
+    try {
+      Object.entries(NUMERIC_ID_MAP).forEach(([oldId, newId]) => {
+        const raw = localStorage.getItem(`${STORAGE_PREFIX}${oldId}`);
+        if (raw == null) return;
+        if (localStorage.getItem(`${STORAGE_PREFIX}${newId}`) == null) {
+          localStorage.setItem(`${STORAGE_PREFIX}${newId}`, raw);
+        }
+        localStorage.removeItem(`${STORAGE_PREFIX}${oldId}`);
+      });
+      const active = localStorage.getItem(ACTIVE_KEY);
+      if (active && NUMERIC_ID_MAP[active]) localStorage.setItem(ACTIVE_KEY, NUMERIC_ID_MAP[active]);
+    } catch {
+      // ignore storage errors
+    }
+  }
+
   migrateLegacyDefaults();
+  migrateNumericIds();
 
   window.__pendingExperimentDefaults = Object.fromEntries(
     EXPERIMENT_IDS.map((id) => [id, loadExperimentDefaults(id)])
@@ -13891,15 +14525,16 @@ ${window.StaggerTextButtonSnippetJs || ''}
     label: 'Experiment',
     value: startExperiment,
     options: [
-      { value: '1', label: 'Experiment 1' },
-      { value: '2', label: 'Experiment 2' },
-      { value: '3', label: 'Experiment 3' },
-      { value: '4.5', label: 'Experiment 4' },
-      { value: '5', label: 'Experiment 5' },
-      { value: '6', label: 'Experiment 6' },
-      { value: '7', label: 'Experiment 7' },
-      { value: '8', label: 'Experiment 8' },
-      { value: '9', label: 'Experiment 9' },
+      { value: 'button-hover', label: 'Button Hover' },
+      { value: 'button-rotate-x', label: 'Button Rotate X' },
+      { value: 'carousel-rotate', label: 'Carousel Rotate' },
+      { value: 'carousel-rotate-x', label: 'Carousel Rotate X' },
+      { value: 'carousel-flip', label: 'Carousel Flip' },
+      { value: 'transition-arc-scroll', label: 'Transition Arc Scroll' },
+      { value: 'carousel-infinite', label: 'Carousel Infinite' },
+      { value: 'parallax-horizontal', label: 'Parallax Horizontal' },
+      { value: 'button-stagger-text', label: 'Button Stagger Text' },
+      { value: 'heading-entrance', label: 'Heading Entrance' },
     ],
     onChange: (value) => switchExperiment(value),
   });

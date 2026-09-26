@@ -1,5 +1,5 @@
 window.initStaggerTextButton = function initStaggerTextButton(root, options = {}) {
-  const btn = root.querySelector('#exp9-btn')
+  const btn = root.querySelector('#exp-button-stagger-text-btn')
     || root.querySelector('.stagger-text-button')
     || root;
   const label = btn.querySelector('.label');

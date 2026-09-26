@@ -1,33 +1,43 @@
-window.initExperiment2 = function initExperiment2() {
-  const preview = document.querySelector('[data-experiment-preview="2"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="2"]');
+window.initStaggerTextButtonExperiment = function initStaggerTextButtonExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="button-stagger-text"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="button-stagger-text"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
-  const rotateButton = window.initRotateXButton(preview, {
-    rotateDeg: 90,
-    rotateAxis: 'x',
-    originOffset: 5000,
-    duration: 350,
-    easingRaw: '0.7, 0, 0.25, 1',
+  const staggerButton = window.initStaggerTextButton(preview, {
+    restLabel: 'Hover here',
+    hoverLabel: 'Click me',
+    duration: 600,
+    stagger: 40,
+    easingRaw: '0.65, 0, 0.35, 1',
+    staggerMode: 'center-out',
   });
 
-  const btn = rotateButton.element;
+  const btn = staggerButton.element;
 
   const controls = {
-    labelText: document.getElementById('exp2-label-text'),
-    paddingTop: document.getElementById('exp2-padding-top'),
-    paddingRight: document.getElementById('exp2-padding-right'),
-    paddingBottom: document.getElementById('exp2-padding-bottom'),
-    paddingLeft: document.getElementById('exp2-padding-left'),
-    border: document.getElementById('exp2-border'),
-    radius: document.getElementById('exp2-radius'),
-    rotate: document.getElementById('exp2-rotate'),
-    originY: document.getElementById('exp2-origin-y'),
-    duration: document.getElementById('exp2-duration'),
+    labelText: document.getElementById('exp-button-stagger-text-label-text'),
+    hoverText: document.getElementById('exp-button-stagger-text-hover-text'),
+    paddingTop: document.getElementById('exp-button-stagger-text-padding-top'),
+    paddingRight: document.getElementById('exp-button-stagger-text-padding-right'),
+    paddingBottom: document.getElementById('exp-button-stagger-text-padding-bottom'),
+    paddingLeft: document.getElementById('exp-button-stagger-text-padding-left'),
+    border: document.getElementById('exp-button-stagger-text-border'),
+    radius: document.getElementById('exp-button-stagger-text-radius'),
+    duration: document.getElementById('exp-button-stagger-text-duration'),
+    stagger: document.getElementById('exp-button-stagger-text-stagger'),
   };
 
-  const easing = window.initCubicBezierInput(document.getElementById('exp2-easing-root'), {
+  const staggerModeSelector = window.initOptionSelector(document.getElementById('exp-button-stagger-text-stagger-mode-root'), {
+    value: 'center-out',
+    options: [
+      { value: 'sequential', label: 'Sequential' },
+      { value: 'center-out', label: 'Center out' },
+    ],
+    onChange: applyAll,
+  });
+
+  const easing = window.initCubicBezierInput(document.getElementById('exp-button-stagger-text-easing-root'), {
     onChange: applyAll,
   });
 
@@ -44,26 +54,16 @@ window.initExperiment2 = function initExperiment2() {
     },
   });
 
-  const bgColor = window.initColorInput(document.getElementById('exp2-bg-color-root'), {
+  const bgColor = window.initColorInput(document.getElementById('exp-button-stagger-text-bg-color-root'), {
     onChange: applyAll,
   });
 
-  const borderColor = window.initColorInput(document.getElementById('exp2-border-color-root'), {
+  const borderColor = window.initColorInput(document.getElementById('exp-button-stagger-text-border-color-root'), {
     onChange: applyAll,
   });
 
-  const axisSelector = window.initOptionSelector(document.getElementById('exp2-axis-root'), {
-    value: 'x',
-    options: [
-      { value: 'x', label: 'Axis X' },
-      { value: 'y', label: 'Axis Y' },
-      { value: 'z', label: 'Axis Z' },
-    ],
-    onChange: applyAll,
-  });
-
-  const snippet = window.initSnippetOutput(document.getElementById('exp2-snippet-root'), {
-    filename: 'experiment-2.html',
+  const snippet = window.initSnippetOutput(document.getElementById('exp-button-stagger-text-snippet-root'), {
+    filename: 'button-stagger-text.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -82,9 +82,8 @@ window.initExperiment2 = function initExperiment2() {
     controls.paddingLeft,
     controls.border,
     controls.radius,
-    controls.rotate,
-    controls.originY,
     controls.duration,
+    controls.stagger,
   ].forEach((input) => {
     utils.bindNumericArrowKey(input, applyAll);
   });
@@ -95,17 +94,17 @@ window.initExperiment2 = function initExperiment2() {
   function collectSettings() {
     return {
       label: controls.labelText.value,
+      hoverLabel: controls.hoverText.value,
       paddingTop: controls.paddingTop.value,
       paddingRight: controls.paddingRight.value,
       paddingBottom: controls.paddingBottom.value,
       paddingLeft: controls.paddingLeft.value,
       border: controls.border.value,
       radius: controls.radius.value,
-      rotate: controls.rotate.value,
-      originY: controls.originY.value,
       duration: controls.duration.value,
+      stagger: controls.stagger.value,
+      staggerMode: staggerModeSelector.getValue(),
       easing: easing.getRaw(),
-      axis: axisSelector.getValue(),
       bgHex: bgColor.hexInput.value,
       bgOpacity: bgColor.opacityInput.value,
       borderHex: borderColor.hexInput.value,
@@ -121,15 +120,16 @@ window.initExperiment2 = function initExperiment2() {
     if (!data) return;
 
     if (data.label != null) controls.labelText.value = data.label;
+    if (data.hoverLabel != null) controls.hoverText.value = data.hoverLabel;
     if (data.paddingTop != null) controls.paddingTop.value = data.paddingTop;
     if (data.paddingRight != null) controls.paddingRight.value = data.paddingRight;
     if (data.paddingBottom != null) controls.paddingBottom.value = data.paddingBottom;
     if (data.paddingLeft != null) controls.paddingLeft.value = data.paddingLeft;
     if (data.border != null) controls.border.value = data.border;
     if (data.radius != null) controls.radius.value = data.radius;
-    if (data.rotate != null) controls.rotate.value = data.rotate;
-    if (data.originY != null) controls.originY.value = data.originY;
     if (data.duration != null) controls.duration.value = data.duration;
+    if (data.stagger != null) controls.stagger.value = data.stagger;
+    if (data.staggerMode != null) staggerModeSelector.setValue(data.staggerMode, false);
     if (data.easing != null) easing.setRaw(data.easing, false);
 
     if (data.bgHex != null) bgColor.hexInput.value = data.bgHex;
@@ -139,8 +139,6 @@ window.initExperiment2 = function initExperiment2() {
     if (data.borderHex != null) borderColor.hexInput.value = data.borderHex;
     if (data.borderOpacity != null) borderColor.opacityInput.value = data.borderOpacity;
     borderColor.updateUI(false);
-
-    if (data.axis != null) axisSelector.setValue(data.axis, false);
 
     if (data.widthMode) {
       dimensions.width.setMode(data.widthMode, false);
@@ -160,40 +158,21 @@ window.initExperiment2 = function initExperiment2() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['2'] = {
+  window.ExperimentSettings['button-stagger-text'] = {
     collect: collectSettings,
     apply: applySettings,
   };
 
-  const pending = window.__pendingExperimentDefaults?.['2'];
+  const pending = window.__pendingExperimentDefaults?.['button-stagger-text'];
   if (pending) applySettings(pending);
   applyAll();
 
-  function getRotateDeg() {
-    return utils.parsePx(controls.rotate.value, 90);
-  }
-
-  function getOriginOffset() {
-    return utils.parsePx(controls.originY.value, 5000);
-  }
-
   function getDuration() {
-    return utils.parseMs(controls.duration.value, 350);
+    return Math.max(0, utils.parseMs(controls.duration.value, 600));
   }
 
-  function getEasing() {
-    return easing.getValue();
-  }
-
-  function getRotateAxis() {
-    const axis = String(axisSelector.getValue()).trim().toLowerCase();
-    if (axis === 'y' || axis === 'z') return axis;
-    return 'x';
-  }
-
-  function getOriginCss(axis, offset) {
-    if (axis === 'y') return `calc(100% + ${offset}px) 50%`;
-    return `50% calc(100% + ${offset}px)`;
+  function getStagger() {
+    return Math.max(0, utils.parseMs(controls.stagger.value, 40));
   }
 
   function getConfig() {
@@ -203,12 +182,12 @@ window.initExperiment2 = function initExperiment2() {
 
     return {
       label: controls.labelText.value,
+      hoverLabel: controls.hoverText.value,
       width: dimensions.width.getValue(),
-      rotateDeg: getRotateDeg(),
-      rotateAxis: getRotateAxis(),
-      originOffset: getOriginOffset(),
       duration: getDuration(),
-      easing: getEasing(),
+      stagger: getStagger(),
+      staggerMode: staggerModeSelector.getValue(),
+      easing: easing.getValue(),
       bg: bgColor.getColor(),
       bgHex,
       radius: utils.parsePx(controls.radius.value, 0),
@@ -229,15 +208,14 @@ window.initExperiment2 = function initExperiment2() {
   function applyAll() {
     const config = getConfig();
 
-    rotateButton.setLabel(config.label);
-    rotateButton.setAnimation({
-      rotateDeg: config.rotateDeg,
-      rotateAxis: config.rotateAxis,
-      originOffset: config.originOffset,
+    staggerButton.setLabels(config.label, config.hoverLabel);
+    staggerButton.setAnimation({
       duration: config.duration,
-      easingRaw: easing.getRaw() || '0.7, 0, 0.25, 1',
+      stagger: config.stagger,
+      staggerMode: config.staggerMode,
+      easingRaw: easing.getRaw() || '0.65, 0, 0.35, 1',
     });
-    rotateButton.applyStyles({
+    staggerButton.applyStyles({
       background: config.bg,
       borderRadius: `${config.radius}px`,
       border: config.borderCss,
@@ -258,21 +236,21 @@ window.initExperiment2 = function initExperiment2() {
   function generateSnippet() {
     const config = getConfig();
     const label = utils.escapeHtml(config.label);
-    const easingRaw = easing.getRaw() || '0.7, 0, 0.25, 1';
+    const hoverLabel = utils.escapeHtml(config.hoverLabel || config.label);
+    const easingRaw = easing.getRaw() || '0.65, 0, 0.35, 1';
     const widthCss = config.width.toLowerCase() === 'auto'
       ? 'auto'
       : `${utils.parsePx(config.width, 0)}px`;
     const heightCss = config.height.toLowerCase() === 'auto'
       ? 'auto'
       : `${utils.parsePx(config.height, 56)}px`;
-    const originCss = getOriginCss(config.rotateAxis, config.originOffset);
 
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rotate Button</title>
+  <title>Stagger Text Button</title>
   <style>
     body {
       margin: 0;
@@ -285,149 +263,59 @@ window.initExperiment2 = function initExperiment2() {
     }
 
     button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
       width: ${widthCss};
+      height: ${heightCss};
       padding: ${config.paddingTop}px ${config.paddingRight}px ${config.paddingBottom}px ${config.paddingLeft}px;
       font-size: 16px;
+      line-height: 1;
       border: ${config.borderCss};
       border-radius: ${config.radius}px;
       background: ${config.bg};
-      height: ${heightCss};
       cursor: pointer;
       overflow: hidden;
+      position: relative;
       color: #000;
+      user-select: none;
     }
 
     .label {
-      display: block;
+      display: grid;
       position: relative;
-      height: 1.125em;
-      perspective: 1200px;
-      transform-style: preserve-3d;
+      line-height: 1;
     }
 
     .text {
+      grid-area: 1 / 1;
       display: block;
-      will-change: transform;
       white-space: nowrap;
-      backface-visibility: hidden;
-      transform-origin: ${originCss};
     }
 
-    .text.is-hidden {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .stagger-char {
+      display: inline-block;
+      white-space: pre;
+      will-change: transform;
     }
   </style>
 </head>
 <body>
-  <button id="btn" type="button">
-    <span class="label">
-      <span class="text">${label}</span>
-      <span class="text is-hidden">${label}</span>
-    </span>
+  <button id="btn" class="stagger-text-button" type="button" aria-label="${label}">
+    <span class="label"></span>
   </button>
 
   <script>
-    const CONFIG = {
-      rotateDeg: ${config.rotateDeg},
-      rotateAxis: ${JSON.stringify(config.rotateAxis)},
-      originOffset: ${config.originOffset},
+${window.StaggerTextButtonSnippetJs || ''}
+    window.initStaggerTextButton(document.getElementById('btn'), {
+      restLabel: ${JSON.stringify(config.label)},
+      hoverLabel: ${JSON.stringify(config.hoverLabel || config.label)},
       duration: ${config.duration},
+      stagger: ${config.stagger},
+      staggerMode: ${JSON.stringify(config.staggerMode || 'center-out')},
       easingRaw: ${JSON.stringify(easingRaw)},
-    };
-
-    const btn = document.getElementById('btn');
-    const texts = btn.querySelectorAll('.text');
-    let active = 0;
-    let busy = false;
-    let isHovered = false;
-
-    btn.addEventListener('mouseenter', () => {
-      isHovered = true;
-      flip();
     });
-
-    btn.addEventListener('mouseleave', () => {
-      isHovered = false;
-      if (!busy) reset();
-    });
-
-    reset();
-
-    function getEasing() {
-      const raw = CONFIG.easingRaw.trim();
-      if (!raw) return 'cubic-bezier(0.7, 0, 0.25, 1)';
-      if (raw.startsWith('cubic-bezier(')) return raw;
-
-      const parts = raw.split(',').map((n) => parseFloat(n.trim()));
-      if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) {
-        return 'cubic-bezier(' + parts.join(', ') + ')';
-      }
-
-      return raw;
-    }
-
-    function getOrigin() {
-      if (CONFIG.rotateAxis === 'y') {
-        return 'calc(100% + ' + CONFIG.originOffset + 'px) 50%';
-      }
-      return '50% calc(100% + ' + CONFIG.originOffset + 'px)';
-    }
-
-    function rotateProperty() {
-      return 'rotate' + CONFIG.rotateAxis.toUpperCase();
-    }
-
-    function applyOrigin() {
-      const origin = getOrigin();
-      texts.forEach((el) => {
-        el.style.transformOrigin = origin;
-      });
-    }
-
-    function reset() {
-      busy = false;
-      active = 0;
-      texts[0].classList.remove('is-hidden');
-      texts[1].classList.add('is-hidden');
-      applyOrigin();
-      setRotation(texts[0], 0, false);
-      setRotation(texts[1], CONFIG.rotateDeg, false);
-    }
-
-    function finishFlip(current, next) {
-      setRotation(current, -CONFIG.rotateDeg, false);
-      current.classList.add('is-hidden');
-      next.classList.remove('is-hidden');
-      active = 1 - active;
-      busy = false;
-      if (!isHovered) reset();
-    }
-
-    function flip() {
-      if (busy) return;
-      busy = true;
-
-      const current = texts[active];
-      const next = texts[1 - active];
-
-      next.classList.add('is-hidden');
-      setRotation(next, CONFIG.rotateDeg, false);
-      next.offsetHeight;
-
-      setRotation(current, -CONFIG.rotateDeg, true);
-      setRotation(next, 0, true);
-
-      setTimeout(() => finishFlip(current, next), CONFIG.duration);
-    }
-
-    function setRotation(el, degrees, animate) {
-      el.style.transition = animate
-        ? 'transform ' + CONFIG.duration + 'ms ' + getEasing()
-        : 'none';
-      el.style.transform = rotateProperty() + '(' + degrees + 'deg)';
-    }
   <\/script>
 </body>
 </html>`;

@@ -1,5 +1,5 @@
 window.ArcScrollTransitionSnippet = {
-  css: `.cp-preview[data-experiment-preview="6"] {
+  css: `.cp-preview[data-experiment-preview="transition-arc-scroll"] {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -8,7 +8,7 @@ window.ArcScrollTransitionSnippet = {
   background: #000;
 }
 
-.cp-preview[data-experiment-preview="6"] .arc-scroll {
+.cp-preview[data-experiment-preview="transition-arc-scroll"] .arc-scroll {
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;

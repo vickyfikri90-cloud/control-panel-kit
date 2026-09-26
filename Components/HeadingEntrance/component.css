@@ -1,0 +1,68 @@
+.heading-entrance {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: #fff;
+}
+
+.heading-entrance__text {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #000;
+  white-space: nowrap;
+}
+
+.heading-entrance__char {
+  display: inline-block;
+  white-space: pre;
+  will-change: filter;
+}
+
+/* Blend layers threshold the blurred text back into sharp, "bleeding" shapes. */
+.heading-entrance__burn,
+.heading-entrance__dodge {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.heading-entrance__burn {
+  z-index: 2;
+  background: #000;
+  mix-blend-mode: color-burn;
+}
+
+.heading-entrance__dodge {
+  z-index: 3;
+  background: #474747;
+  mix-blend-mode: color-dodge;
+}
+
+/* Experiment preview only (stripped from snippet) */
+.heading-entrance-restart {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid #e4e4e7;
+  border-radius: 6px;
+  background: #fff;
+  font: 500 12px/1 Inter, sans-serif;
+  color: #09090b;
+  cursor: pointer;
+}
+
+.heading-entrance-restart:hover {
+  background: #f4f4f5;
+}
+
+.cp-preview[data-experiment-preview="heading-entrance"] {
+  position: relative;
+}

@@ -75,9 +75,9 @@ Full per-component API → [components-quick-ref.md](components-quick-ref.md)
 | Manifest ID | kebab-case | `color-input` |
 | Data attributes | kebab-case | `data-color-hex` |
 | State classes | `is-*` prefix | `is-on`, `is-open`, `is-fixed` |
-| Experiment shell | `{name}.shell.html` | `hover-button.shell.html` |
-| Experiment logic | `{name}-app.js` | `hover-button-app.js` |
-| Built output | `{name}.html` | `hover-button.html` |
+| Experiment shell | `{name}.shell.html` | `button-hover.shell.html` |
+| Experiment logic | `{name}-app.js` | `button-hover-app.js` |
+| Built output | `{name}.html` | `button-hover.html` |
 
 ## Init function pattern
 
@@ -118,7 +118,7 @@ Every experiment app is an IIFE with this loop:
 })();
 ```
 
-**Reference implementation:** `hover-button-app.js` — copy its wiring structure, not HoverButton-specific logic.
+**Reference implementation:** `button-hover-app.js` — copy its wiring structure, not HoverButton-specific logic.
 
 ## New experiment checklist
 
@@ -226,7 +226,7 @@ Only one dropdown open at a time. Respect:
 ## Don't
 
 - Don't convert to React/Vue unless user explicitly asks
-- Don't edit build outputs (`hover-button.html`) directly
+- Don't edit build outputs (`button-hover.html`) directly
 - Don't fetch panel HTML in single-file builds
 - Don't skip manifest registration for reusable primitives
 - Don't change panel width from 241px without updating all field CSS

@@ -1,5 +1,5 @@
 window.initRotateXButton = function initRotateXButton(root, options = {}) {
-  const btn = root.querySelector('#exp2-btn')
+  const btn = root.querySelector('#exp-button-rotate-x-btn')
     || root.querySelector('.rotate-x-button')
     || root;
   const texts = btn.querySelectorAll('.text');

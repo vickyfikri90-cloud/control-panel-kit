@@ -67,9 +67,9 @@
   display: none !important;
 }
 
-.panel [data-exp6-pos-x][hidden],
-.panel [data-exp6-pos-group][hidden],
-.panel [data-exp6-burst-group][hidden] {
+.panel [data-exp-transition-arc-scroll-pos-x][hidden],
+.panel [data-exp-transition-arc-scroll-pos-group][hidden],
+.panel [data-exp-transition-arc-scroll-burst-group][hidden] {
   display: none !important;
 }
 

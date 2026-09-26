@@ -1,31 +1,33 @@
-window.initExperiment1 = function initExperiment1() {
-  const preview = document.querySelector('[data-experiment-preview="1"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="1"]');
+window.initRotateXButtonExperiment = function initRotateXButtonExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="button-rotate-x"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="button-rotate-x"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
-  const hoverButton = window.initHoverButton(preview, {
-    slideGap: 100,
+  const rotateButton = window.initRotateXButton(preview, {
+    rotateDeg: 90,
+    rotateAxis: 'x',
+    originOffset: 5000,
     duration: 350,
     easingRaw: '0.7, 0, 0.25, 1',
   });
 
-  const btn = hoverButton.element;
-  const texts = hoverButton.texts;
+  const btn = rotateButton.element;
 
   const controls = {
-    labelText: document.getElementById('label-text'),
-    paddingTop: document.getElementById('padding-top'),
-    paddingRight: document.getElementById('padding-right'),
-    paddingBottom: document.getElementById('padding-bottom'),
-    paddingLeft: document.getElementById('padding-left'),
-    border: document.getElementById('border'),
-    radius: document.getElementById('radius'),
-    slideDistance: document.getElementById('slide-distance'),
-    duration: document.getElementById('duration'),
+    labelText: document.getElementById('exp-button-rotate-x-label-text'),
+    paddingTop: document.getElementById('exp-button-rotate-x-padding-top'),
+    paddingRight: document.getElementById('exp-button-rotate-x-padding-right'),
+    paddingBottom: document.getElementById('exp-button-rotate-x-padding-bottom'),
+    paddingLeft: document.getElementById('exp-button-rotate-x-padding-left'),
+    border: document.getElementById('exp-button-rotate-x-border'),
+    radius: document.getElementById('exp-button-rotate-x-radius'),
+    rotate: document.getElementById('exp-button-rotate-x-rotate'),
+    originY: document.getElementById('exp-button-rotate-x-origin-y'),
+    duration: document.getElementById('exp-button-rotate-x-duration'),
   };
 
-  const easing = window.initCubicBezierInput(document.getElementById('easing-root'), {
+  const easing = window.initCubicBezierInput(document.getElementById('exp-button-rotate-x-easing-root'), {
     onChange: applyAll,
   });
 
@@ -42,16 +44,26 @@ window.initExperiment1 = function initExperiment1() {
     },
   });
 
-  const bgColor = window.initColorInput(document.getElementById('bg-color-root'), {
+  const bgColor = window.initColorInput(document.getElementById('exp-button-rotate-x-bg-color-root'), {
     onChange: applyAll,
   });
 
-  const borderColor = window.initColorInput(document.getElementById('border-color-root'), {
+  const borderColor = window.initColorInput(document.getElementById('exp-button-rotate-x-border-color-root'), {
     onChange: applyAll,
   });
 
-  const snippet = window.initSnippetOutput(document.getElementById('snippet-root'), {
-    filename: 'hover-button.html',
+  const axisSelector = window.initOptionSelector(document.getElementById('exp-button-rotate-x-axis-root'), {
+    value: 'x',
+    options: [
+      { value: 'x', label: 'Axis X' },
+      { value: 'y', label: 'Axis Y' },
+      { value: 'z', label: 'Axis Z' },
+    ],
+    onChange: applyAll,
+  });
+
+  const snippet = window.initSnippetOutput(document.getElementById('exp-button-rotate-x-snippet-root'), {
+    filename: 'button-rotate-x.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -70,7 +82,8 @@ window.initExperiment1 = function initExperiment1() {
     controls.paddingLeft,
     controls.border,
     controls.radius,
-    controls.slideDistance,
+    controls.rotate,
+    controls.originY,
     controls.duration,
   ].forEach((input) => {
     utils.bindNumericArrowKey(input, applyAll);
@@ -88,9 +101,11 @@ window.initExperiment1 = function initExperiment1() {
       paddingLeft: controls.paddingLeft.value,
       border: controls.border.value,
       radius: controls.radius.value,
-      slideDistance: controls.slideDistance.value,
+      rotate: controls.rotate.value,
+      originY: controls.originY.value,
       duration: controls.duration.value,
       easing: easing.getRaw(),
+      axis: axisSelector.getValue(),
       bgHex: bgColor.hexInput.value,
       bgOpacity: bgColor.opacityInput.value,
       borderHex: borderColor.hexInput.value,
@@ -112,7 +127,8 @@ window.initExperiment1 = function initExperiment1() {
     if (data.paddingLeft != null) controls.paddingLeft.value = data.paddingLeft;
     if (data.border != null) controls.border.value = data.border;
     if (data.radius != null) controls.radius.value = data.radius;
-    if (data.slideDistance != null) controls.slideDistance.value = data.slideDistance;
+    if (data.rotate != null) controls.rotate.value = data.rotate;
+    if (data.originY != null) controls.originY.value = data.originY;
     if (data.duration != null) controls.duration.value = data.duration;
     if (data.easing != null) easing.setRaw(data.easing, false);
 
@@ -123,6 +139,8 @@ window.initExperiment1 = function initExperiment1() {
     if (data.borderHex != null) borderColor.hexInput.value = data.borderHex;
     if (data.borderOpacity != null) borderColor.opacityInput.value = data.borderOpacity;
     borderColor.updateUI(false);
+
+    if (data.axis != null) axisSelector.setValue(data.axis, false);
 
     if (data.widthMode) {
       dimensions.width.setMode(data.widthMode, false);
@@ -142,17 +160,21 @@ window.initExperiment1 = function initExperiment1() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['1'] = {
+  window.ExperimentSettings['button-rotate-x'] = {
     collect: collectSettings,
     apply: applySettings,
   };
 
-  const pending = window.__pendingExperimentDefaults?.['1'];
+  const pending = window.__pendingExperimentDefaults?.['button-rotate-x'];
   if (pending) applySettings(pending);
   applyAll();
 
-  function getSlideDistance() {
-    return utils.parsePx(controls.slideDistance.value, 100);
+  function getRotateDeg() {
+    return utils.parsePx(controls.rotate.value, 90);
+  }
+
+  function getOriginOffset() {
+    return utils.parsePx(controls.originY.value, 5000);
   }
 
   function getDuration() {
@@ -163,6 +185,17 @@ window.initExperiment1 = function initExperiment1() {
     return easing.getValue();
   }
 
+  function getRotateAxis() {
+    const axis = String(axisSelector.getValue()).trim().toLowerCase();
+    if (axis === 'y' || axis === 'z') return axis;
+    return 'x';
+  }
+
+  function getOriginCss(axis, offset) {
+    if (axis === 'y') return `calc(100% + ${offset}px) 50%`;
+    return `50% calc(100% + ${offset}px)`;
+  }
+
   function getConfig() {
     const border = utils.parsePx(controls.border.value, 0);
     const bgHex = bgColor.getHex();
@@ -171,7 +204,9 @@ window.initExperiment1 = function initExperiment1() {
     return {
       label: controls.labelText.value,
       width: dimensions.width.getValue(),
-      slideGap: getSlideDistance(),
+      rotateDeg: getRotateDeg(),
+      rotateAxis: getRotateAxis(),
+      originOffset: getOriginOffset(),
       duration: getDuration(),
       easing: getEasing(),
       bg: bgColor.getColor(),
@@ -194,13 +229,15 @@ window.initExperiment1 = function initExperiment1() {
   function applyAll() {
     const config = getConfig();
 
-    hoverButton.setLabel(config.label);
-    hoverButton.setAnimation({
-      slideGap: config.slideGap,
+    rotateButton.setLabel(config.label);
+    rotateButton.setAnimation({
+      rotateDeg: config.rotateDeg,
+      rotateAxis: config.rotateAxis,
+      originOffset: config.originOffset,
       duration: config.duration,
       easingRaw: easing.getRaw() || '0.7, 0, 0.25, 1',
     });
-    hoverButton.applyStyles({
+    rotateButton.applyStyles({
       background: config.bg,
       borderRadius: `${config.radius}px`,
       border: config.borderCss,
@@ -228,13 +265,14 @@ window.initExperiment1 = function initExperiment1() {
     const heightCss = config.height.toLowerCase() === 'auto'
       ? 'auto'
       : `${utils.parsePx(config.height, 56)}px`;
+    const originCss = getOriginCss(config.rotateAxis, config.originOffset);
 
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hover Button</title>
+  <title>Rotate Button</title>
   <style>
     body {
       margin: 0;
@@ -263,12 +301,16 @@ window.initExperiment1 = function initExperiment1() {
       display: block;
       position: relative;
       height: 1.125em;
+      perspective: 1200px;
+      transform-style: preserve-3d;
     }
 
     .text {
       display: block;
       will-change: transform;
       white-space: nowrap;
+      backface-visibility: hidden;
+      transform-origin: ${originCss};
     }
 
     .text.is-hidden {
@@ -288,7 +330,9 @@ window.initExperiment1 = function initExperiment1() {
 
   <script>
     const CONFIG = {
-      slideGap: ${config.slideGap},
+      rotateDeg: ${config.rotateDeg},
+      rotateAxis: ${JSON.stringify(config.rotateAxis)},
+      originOffset: ${config.originOffset},
       duration: ${config.duration},
       easingRaw: ${JSON.stringify(easingRaw)},
     };
@@ -301,7 +345,7 @@ window.initExperiment1 = function initExperiment1() {
 
     btn.addEventListener('mouseenter', () => {
       isHovered = true;
-      slide();
+      flip();
     });
 
     btn.addEventListener('mouseleave', () => {
@@ -324,24 +368,36 @@ window.initExperiment1 = function initExperiment1() {
       return raw;
     }
 
-    function getSlideMetrics() {
-      const labelWidth = texts[active].offsetWidth;
-      const travel = labelWidth + CONFIG.slideGap;
-      return { travel };
+    function getOrigin() {
+      if (CONFIG.rotateAxis === 'y') {
+        return 'calc(100% + ' + CONFIG.originOffset + 'px) 50%';
+      }
+      return '50% calc(100% + ' + CONFIG.originOffset + 'px)';
+    }
+
+    function rotateProperty() {
+      return 'rotate' + CONFIG.rotateAxis.toUpperCase();
+    }
+
+    function applyOrigin() {
+      const origin = getOrigin();
+      texts.forEach((el) => {
+        el.style.transformOrigin = origin;
+      });
     }
 
     function reset() {
-      const { travel } = getSlideMetrics();
       busy = false;
       active = 0;
       texts[0].classList.remove('is-hidden');
       texts[1].classList.add('is-hidden');
-      setTransform(texts[0], 0, false);
-      setTransform(texts[1], -travel, false);
+      applyOrigin();
+      setRotation(texts[0], 0, false);
+      setRotation(texts[1], CONFIG.rotateDeg, false);
     }
 
-    function finishSlide(current, next, travel) {
-      setTransform(current, -travel, false);
+    function finishFlip(current, next) {
+      setRotation(current, -CONFIG.rotateDeg, false);
       current.classList.add('is-hidden');
       next.classList.remove('is-hidden');
       active = 1 - active;
@@ -349,29 +405,28 @@ window.initExperiment1 = function initExperiment1() {
       if (!isHovered) reset();
     }
 
-    function slide() {
+    function flip() {
       if (busy) return;
       busy = true;
 
-      const { travel } = getSlideMetrics();
       const current = texts[active];
       const next = texts[1 - active];
 
       next.classList.add('is-hidden');
-      setTransform(next, -travel, false);
+      setRotation(next, CONFIG.rotateDeg, false);
       next.offsetHeight;
 
-      setTransform(current, travel, true);
-      setTransform(next, 0, true);
+      setRotation(current, -CONFIG.rotateDeg, true);
+      setRotation(next, 0, true);
 
-      setTimeout(() => finishSlide(current, next, travel), CONFIG.duration);
+      setTimeout(() => finishFlip(current, next), CONFIG.duration);
     }
 
-    function setTransform(el, x, animate) {
+    function setRotation(el, degrees, animate) {
       el.style.transition = animate
         ? 'transform ' + CONFIG.duration + 'ms ' + getEasing()
         : 'none';
-      el.style.transform = 'translateX(' + x + 'px)';
+      el.style.transform = rotateProperty() + '(' + degrees + 'deg)';
     }
   <\/script>
 </body>
@@ -380,7 +435,3 @@ window.initExperiment1 = function initExperiment1() {
 
   preview.dataset.experimentReady = '1';
 };
-
-if (!document.getElementById('experiment-selector-root')) {
-  window.initExperiment1();
-}

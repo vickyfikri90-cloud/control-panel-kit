@@ -1,6 +1,6 @@
-window.initExperiment8 = function initExperiment8() {
-  const preview = document.querySelector('[data-experiment-preview="8"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="8"]');
+window.initHorizontalParallaxExperiment = function initHorizontalParallaxExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="parallax-horizontal"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="parallax-horizontal"]');
   if (!preview || !panelRoot) return;
 
   const utils = window.ComponentUtils;
@@ -8,30 +8,30 @@ window.initExperiment8 = function initExperiment8() {
   const PARALLAX_VERSION = '8';
 
   if (typeof window.initHorizontalParallax !== 'function') {
-    console.error('Experiment 8: initHorizontalParallax is not loaded');
+    console.error('Parallax Horizontal: initHorizontalParallax is not loaded');
     return;
   }
 
   const controls = {
-    cardWidth: document.getElementById('exp8-width'),
-    cardHeight: document.getElementById('exp8-height'),
-    gap: document.getElementById('exp8-gap'),
-    duration: document.getElementById('exp8-duration'),
-    velocity: document.getElementById('exp8-velocity'),
+    cardWidth: document.getElementById('exp-parallax-horizontal-width'),
+    cardHeight: document.getElementById('exp-parallax-horizontal-height'),
+    gap: document.getElementById('exp-parallax-horizontal-gap'),
+    duration: document.getElementById('exp-parallax-horizontal-duration'),
+    velocity: document.getElementById('exp-parallax-horizontal-velocity'),
   };
 
   const uploadSlots = [1, 2, 3, 4, 5].map((slot) => ({
     index: slot - 1,
-    fileInput: document.getElementById(`exp8-image-${slot}-file`),
-    button: document.getElementById(`exp8-image-${slot}-btn`),
-    nameLabel: document.getElementById(`exp8-image-${slot}-name`),
+    fileInput: document.getElementById(`exp-parallax-horizontal-image-${slot}-file`),
+    button: document.getElementById(`exp-parallax-horizontal-image-${slot}-btn`),
+    nameLabel: document.getElementById(`exp-parallax-horizontal-image-${slot}-name`),
   }));
 
   let parallax = preview.__horizontalParallax;
-  let easing = preview.__exp8Easing;
-  let snippet = preview.__exp8Snippet;
-  let layoutSelector = preview.__exp8Layout;
-  let imageScaleSlider = preview.__exp8ImageScale;
+  let easing = preview.__expHorizontalParallaxEasing;
+  let snippet = preview.__expHorizontalParallaxSnippet;
+  let layoutSelector = preview.__expHorizontalParallaxLayout;
+  let imageScaleSlider = preview.__expHorizontalParallaxImageScale;
 
   function controlValue(input, fallback) {
     if (!(input instanceof HTMLInputElement)) return String(fallback);
@@ -57,23 +57,23 @@ window.initExperiment8 = function initExperiment8() {
   }
 
   async function ensureImageSrcs() {
-    if (Array.isArray(preview.__exp8ImageSrcs) && preview.__exp8ImageSrcs.length === 5) {
-      return preview.__exp8ImageSrcs;
+    if (Array.isArray(preview.__expHorizontalParallaxImageSrcs) && preview.__expHorizontalParallaxImageSrcs.length === 5) {
+      return preview.__expHorizontalParallaxImageSrcs;
     }
 
     try {
       const dataUrl = await loadImageAsDataUrl(DEFAULT_IMAGE);
-      preview.__exp8ImageSrcs = Array.from({ length: 5 }, () => dataUrl);
+      preview.__expHorizontalParallaxImageSrcs = Array.from({ length: 5 }, () => dataUrl);
     } catch {
-      preview.__exp8ImageSrcs = Array.from({ length: 5 }, () => DEFAULT_IMAGE);
+      preview.__expHorizontalParallaxImageSrcs = Array.from({ length: 5 }, () => DEFAULT_IMAGE);
     }
 
-    return preview.__exp8ImageSrcs;
+    return preview.__expHorizontalParallaxImageSrcs;
   }
 
   function getImageSrcs() {
-    return Array.isArray(preview.__exp8ImageSrcs) && preview.__exp8ImageSrcs.length === 5
-      ? [...preview.__exp8ImageSrcs]
+    return Array.isArray(preview.__expHorizontalParallaxImageSrcs) && preview.__expHorizontalParallaxImageSrcs.length === 5
+      ? [...preview.__expHorizontalParallaxImageSrcs]
       : Array.from({ length: 5 }, () => DEFAULT_IMAGE);
   }
 
@@ -152,13 +152,13 @@ window.initExperiment8 = function initExperiment8() {
       if (!saved) continue;
 
       if (String(saved).startsWith('data:')) {
-        preview.__exp8ImageSrcs[i] = saved;
+        preview.__expHorizontalParallaxImageSrcs[i] = saved;
         setUploadLabel(i, savedNames[i] || 'Uploaded');
         continue;
       }
 
       try {
-        preview.__exp8ImageSrcs[i] = await loadImageAsDataUrl(saved);
+        preview.__expHorizontalParallaxImageSrcs[i] = await loadImageAsDataUrl(saved);
         setUploadLabel(i, savedNames[i] || 'Uploaded');
       } catch {
         // keep existing slot
@@ -212,7 +212,7 @@ window.initExperiment8 = function initExperiment8() {
   function wireUploads() {
     uploadSlots.forEach((slot) => {
       if (!slot.fileInput || !slot.button) return;
-      if (slot.fileInput.dataset.exp8Wired === '1') return;
+      if (slot.fileInput.dataset.expHorizontalParallaxWired === '1') return;
 
       slot.button.addEventListener('click', () => slot.fileInput.click());
       slot.fileInput.addEventListener('change', () => {
@@ -221,10 +221,10 @@ window.initExperiment8 = function initExperiment8() {
 
         const reader = new FileReader();
         reader.onload = () => {
-          if (!Array.isArray(preview.__exp8ImageSrcs)) {
-            preview.__exp8ImageSrcs = Array.from({ length: 5 }, () => DEFAULT_IMAGE);
+          if (!Array.isArray(preview.__expHorizontalParallaxImageSrcs)) {
+            preview.__expHorizontalParallaxImageSrcs = Array.from({ length: 5 }, () => DEFAULT_IMAGE);
           }
-          preview.__exp8ImageSrcs[slot.index] = String(reader.result);
+          preview.__expHorizontalParallaxImageSrcs[slot.index] = String(reader.result);
           setUploadLabel(slot.index, file.name);
           applyAll();
         };
@@ -232,12 +232,12 @@ window.initExperiment8 = function initExperiment8() {
         slot.fileInput.value = '';
       });
 
-      slot.fileInput.dataset.exp8Wired = '1';
+      slot.fileInput.dataset.expHorizontalParallaxWired = '1';
     });
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['8'] = {
+  window.ExperimentSettings['parallax-horizontal'] = {
     collect: collectSettings,
     apply: applySettings,
   };
@@ -262,9 +262,9 @@ window.initExperiment8 = function initExperiment8() {
     }
 
     if (!layoutSelector) {
-      const layoutRoot = document.getElementById('exp8-layout-root');
+      const layoutRoot = document.getElementById('exp-parallax-horizontal-layout-root');
       if (!layoutRoot) {
-        console.error('Experiment 8: missing #exp8-layout-root');
+        console.error('Parallax Horizontal: missing #exp-parallax-horizontal-layout-root');
         return;
       }
 
@@ -276,18 +276,18 @@ window.initExperiment8 = function initExperiment8() {
         ],
         onChange: applyAll,
       });
-      preview.__exp8Layout = layoutSelector;
+      preview.__expHorizontalParallaxLayout = layoutSelector;
     }
 
     if (!imageScaleSlider) {
-      const scaleRoot = document.getElementById('exp8-image-scale-root');
+      const scaleRoot = document.getElementById('exp-parallax-horizontal-image-scale-root');
       if (!scaleRoot) {
-        console.error('Experiment 8: missing #exp8-image-scale-root');
+        console.error('Parallax Horizontal: missing #exp-parallax-horizontal-image-scale-root');
         return;
       }
 
       if (typeof window.initSlider !== 'function') {
-        console.error('Experiment 8: initSlider is not loaded');
+        console.error('Parallax Horizontal: initSlider is not loaded');
         return;
       }
 
@@ -298,33 +298,33 @@ window.initExperiment8 = function initExperiment8() {
         value: 120,
         onChange: applyAll,
       });
-      preview.__exp8ImageScale = imageScaleSlider;
+      preview.__expHorizontalParallaxImageScale = imageScaleSlider;
     }
 
     if (!easing) {
-      const easingRoot = document.getElementById('exp8-easing-root');
+      const easingRoot = document.getElementById('exp-parallax-horizontal-easing-root');
       if (!easingRoot) {
-        console.error('Experiment 8: missing #exp8-easing-root');
+        console.error('Parallax Horizontal: missing #exp-parallax-horizontal-easing-root');
         return;
       }
 
       easing = window.initCubicBezierInput(easingRoot, { onChange: applyAll });
-      preview.__exp8Easing = easing;
+      preview.__expHorizontalParallaxEasing = easing;
     }
 
     if (!snippet) {
-      const snippetRoot = document.getElementById('exp8-snippet-root');
+      const snippetRoot = document.getElementById('exp-parallax-horizontal-snippet-root');
       if (!snippetRoot) {
-        console.error('Experiment 8: missing #exp8-snippet-root');
+        console.error('Parallax Horizontal: missing #exp-parallax-horizontal-snippet-root');
         return;
       }
 
       snippet = window.initSnippetOutput(snippetRoot, {
-        filename: 'experiment-8.html',
+        filename: 'parallax-horizontal.html',
         getContent: generateSnippet,
         updateOnInit: true,
       });
-      preview.__exp8Snippet = snippet;
+      preview.__expHorizontalParallaxSnippet = snippet;
     }
 
     if (preview.dataset.experimentReady !== '1') {
@@ -340,7 +340,7 @@ window.initExperiment8 = function initExperiment8() {
       preview.dataset.experimentReady = '1';
     }
 
-    const pending = window.__pendingExperimentDefaults?.['8'];
+    const pending = window.__pendingExperimentDefaults?.['parallax-horizontal'];
     if (pending) await applySettings(pending);
     else applyAll();
   })();

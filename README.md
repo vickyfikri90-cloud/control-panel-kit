@@ -12,10 +12,10 @@ Open in browser (local server recommended):
 
 ```bash
 # Hover Button experiment (multi-file dev)
-open hover-button.shell.html
+open button-hover.shell.html
 
 # Or open the single-file build (shareable, works offline)
-open hover-button.html
+open button-hover.html
 
 # Component catalog — preview every primitive
 open Components/component-index.html
@@ -60,9 +60,9 @@ Experiment Tool/
 │   ├── ControlPanel/            # Shell layout
 │   ├── Field, InputWrap, ...    # Primitives (12 components)
 │   └── HoverButton/             # Example experiment component
-├── hover-button.shell.html      # Hover Button — dev markup
-├── hover-button-app.js          # Hover Button — wiring logic
-├── hover-button.html            # Built single-file output
+├── button-hover.shell.html      # Hover Button — dev markup
+├── button-hover-app.js          # Hover Button — wiring logic
+├── button-hover.html            # Built single-file output
 └── scripts/build-single-html.js # Inliner for production HTML
 ```
 
@@ -128,7 +128,7 @@ Full API, options, CSS classes, and agent rules → [docs/COMPONENTS.md](./docs/
 
 ```bash
 node scripts/build-single-html.js
-# → hover-button.html (all CSS/JS inlined)
+# → button-hover.html (all CSS/JS inlined)
 ```
 
 To build a new experiment: edit `styles[]`, `scripts[]`, shell path, and output filename in the build script.

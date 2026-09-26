@@ -1,5 +1,5 @@
 window.InfiniteCarouselSnippet = {
-  css: `.cp-preview[data-experiment-preview="7"] {
+  css: `.cp-preview[data-experiment-preview="carousel-infinite"] {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -8,7 +8,7 @@ window.InfiniteCarouselSnippet = {
   background: rgb(31, 10, 9);
 }
 
-.cp-preview[data-experiment-preview="7"] .infinite-carousel {
+.cp-preview[data-experiment-preview="carousel-infinite"] .infinite-carousel {
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;

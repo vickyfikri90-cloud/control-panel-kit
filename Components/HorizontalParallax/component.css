@@ -1,4 +1,4 @@
-.cp-preview[data-experiment-preview="8"] {
+.cp-preview[data-experiment-preview="parallax-horizontal"] {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -7,7 +7,7 @@
   background: rgb(255, 255, 255);
 }
 
-.cp-preview[data-experiment-preview="8"] .horizontal-parallax {
+.cp-preview[data-experiment-preview="parallax-horizontal"] .horizontal-parallax {
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;
@@ -60,16 +60,16 @@
   background: #e8e8e8;
 }
 
-[data-experiment-panel="8"] .exp8-image-field {
+[data-experiment-panel="parallax-horizontal"] .exp-parallax-horizontal-image-field {
   margin-bottom: 0;
 }
 
-[data-experiment-panel="8"] .exp8-image-row {
+[data-experiment-panel="parallax-horizontal"] .exp-parallax-horizontal-image-row {
   align-items: center;
   width: 100%;
 }
 
-[data-experiment-panel="8"] .exp8-image-btn {
+[data-experiment-panel="parallax-horizontal"] .exp-parallax-horizontal-image-btn {
   width: 72px;
   min-width: 72px;
   height: 24px;
@@ -78,7 +78,7 @@
   padding: 0 8px;
 }
 
-[data-experiment-panel="8"] .exp8-image-name {
+[data-experiment-panel="parallax-horizontal"] .exp-parallax-horizontal-image-name {
   flex: 1;
   min-width: 0;
   font: 500 11px/16px Inter, system-ui, sans-serif;

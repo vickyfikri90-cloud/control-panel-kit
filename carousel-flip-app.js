@@ -1,6 +1,6 @@
-window.initExperiment5 = function initExperiment5() {
-  const preview = document.querySelector('[data-experiment-preview="5"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="5"]');
+window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="carousel-flip"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="carousel-flip"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
@@ -42,38 +42,38 @@ window.initExperiment5 = function initExperiment5() {
   });
 
   const controls = {
-    count: document.getElementById('exp5-count'),
-    fanRadius: document.getElementById('exp5-fan-radius'),
-    fanRotate: document.getElementById('exp5-fan-rotate'),
-    fanOriginY: document.getElementById('exp5-fan-origin-y'),
-    fanDuration: document.getElementById('exp5-fan-duration'),
-    fanVelocity: document.getElementById('exp5-fan-velocity'),
-    horizRadius: document.getElementById('exp5-horiz-radius'),
-    horizRotate: document.getElementById('exp5-horiz-rotate'),
-    horizOrbit: document.getElementById('exp5-horiz-orbit'),
-    horizPerspective: document.getElementById('exp5-horiz-perspective'),
-    horizScale: document.getElementById('exp5-horiz-scale'),
-    horizDuration: document.getElementById('exp5-horiz-duration'),
-    horizVelocity: document.getElementById('exp5-horiz-velocity'),
-    transitionDuration: document.getElementById('exp5-transition-duration'),
+    count: document.getElementById('exp-carousel-flip-count'),
+    fanRadius: document.getElementById('exp-carousel-flip-fan-radius'),
+    fanRotate: document.getElementById('exp-carousel-flip-fan-rotate'),
+    fanOriginY: document.getElementById('exp-carousel-flip-fan-origin-y'),
+    fanDuration: document.getElementById('exp-carousel-flip-fan-duration'),
+    fanVelocity: document.getElementById('exp-carousel-flip-fan-velocity'),
+    horizRadius: document.getElementById('exp-carousel-flip-horiz-radius'),
+    horizRotate: document.getElementById('exp-carousel-flip-horiz-rotate'),
+    horizOrbit: document.getElementById('exp-carousel-flip-horiz-orbit'),
+    horizPerspective: document.getElementById('exp-carousel-flip-horiz-perspective'),
+    horizScale: document.getElementById('exp-carousel-flip-horiz-scale'),
+    horizDuration: document.getElementById('exp-carousel-flip-horiz-duration'),
+    horizVelocity: document.getElementById('exp-carousel-flip-horiz-velocity'),
+    transitionDuration: document.getElementById('exp-carousel-flip-transition-duration'),
   };
 
-  const fanEasing = window.initCubicBezierInput(document.getElementById('exp5-fan-easing-root'), {
+  const fanEasing = window.initCubicBezierInput(document.getElementById('exp-carousel-flip-fan-easing-root'), {
     onChange: applyAll,
   });
 
-  const horizEasing = window.initCubicBezierInput(document.getElementById('exp5-horiz-easing-root'), {
+  const horizEasing = window.initCubicBezierInput(document.getElementById('exp-carousel-flip-horiz-easing-root'), {
     onChange: applyAll,
   });
 
   const transitionEasing = window.initCubicBezierInput(
-    document.getElementById('exp5-transition-easing-root'),
+    document.getElementById('exp-carousel-flip-transition-easing-root'),
     { onChange: applyAll },
   );
 
   const modeButtons = preview.querySelectorAll('[data-flip-mode]');
 
-  const variantSelector = window.initOptionSelector(document.getElementById('exp5-variant-root'), {
+  const variantSelector = window.initOptionSelector(document.getElementById('exp-carousel-flip-variant-root'), {
     value: 'horizontal',
     options: [
       { value: 'vertical', label: 'Vertical' },
@@ -82,7 +82,7 @@ window.initExperiment5 = function initExperiment5() {
     onChange: applyAll,
   });
 
-  const inputSelector = window.initOptionSelector(document.getElementById('exp5-input-root'), {
+  const inputSelector = window.initOptionSelector(document.getElementById('exp-carousel-flip-input-root'), {
     value: 'drag',
     options: [
       { value: 'drag', label: 'Drag' },
@@ -92,7 +92,7 @@ window.initExperiment5 = function initExperiment5() {
   });
 
   const fanDimensions = window.initDimensionControlGroup(
-    document.getElementById('exp5-fan-section'),
+    document.getElementById('exp-carousel-flip-fan-section'),
     {
       'fan-width': {
         initialMode: 'fixed',
@@ -108,7 +108,7 @@ window.initExperiment5 = function initExperiment5() {
   );
 
   const horizDimensions = window.initDimensionControlGroup(
-    document.getElementById('exp5-horiz-section'),
+    document.getElementById('exp-carousel-flip-horiz-section'),
     {
       'horiz-width': {
         initialMode: 'fixed',
@@ -124,13 +124,13 @@ window.initExperiment5 = function initExperiment5() {
   );
 
   const colorInputs = [1, 2, 3, 4, 5].map((index) => (
-    window.initColorInput(document.getElementById(`exp5-color-${index}-root`), {
+    window.initColorInput(document.getElementById(`exp-carousel-flip-color-${index}-root`), {
       onChange: applyAll,
     })
   ));
 
-  const snippet = window.initSnippetOutput(document.getElementById('exp5-snippet-root'), {
-    filename: 'experiment-5.html',
+  const snippet = window.initSnippetOutput(document.getElementById('exp-carousel-flip-snippet-root'), {
+    filename: 'carousel-flip.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -374,12 +374,12 @@ window.initExperiment5 = function initExperiment5() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['5'] = {
+  window.ExperimentSettings['carousel-flip'] = {
     collect: collectSettings,
     apply: applySettings,
   };
 
-  const pending = window.__pendingExperimentDefaults?.['5'];
+  const pending = window.__pendingExperimentDefaults?.['carousel-flip'];
   if (pending) applySettings(pending);
   else applyAll();
 

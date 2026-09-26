@@ -2,21 +2,34 @@
   const LEGACY_STORAGE_KEY = 'cp-kit-experiment-defaults';
   const STORAGE_PREFIX = 'cp-kit-experiment-defaults-';
   const ACTIVE_KEY = 'cp-kit-experiment-active';
-  const DEFAULT_EXPERIMENT = '2';
-  const EXPERIMENT_IDS = ['1', '2', '3', '4.5', '5', '6', '7', '8', '9'];
+  const DEFAULT_EXPERIMENT = 'button-rotate-x';
+  // Old numeric ids → semantic ids, so saved defaults survive the rename.
+  const NUMERIC_ID_MAP = {
+    1: 'button-hover',
+    2: 'button-rotate-x',
+    3: 'carousel-rotate',
+    '4.5': 'carousel-rotate-x',
+    5: 'carousel-flip',
+    6: 'transition-arc-scroll',
+    7: 'carousel-infinite',
+    8: 'parallax-horizontal',
+    9: 'button-stagger-text',
+  };
+  const EXPERIMENT_IDS = [...Object.values(NUMERIC_ID_MAP), 'heading-entrance'];
 
   window.ExperimentSettings = window.ExperimentSettings || {};
 
   const experiments = {
-    1: { init: () => window.initExperiment1?.() },
-    2: { init: () => window.initExperiment2?.() },
-    3: { init: () => window.initExperiment3?.() },
-    '4.5': { init: () => window.initExperiment4_5?.() },
-    5: { init: () => window.initExperiment5?.() },
-    6: { init: () => window.initExperiment6?.() },
-    7: { init: () => window.initExperiment7?.() },
-    8: { init: () => window.initExperiment8?.() },
-    9: { init: () => window.initExperiment9?.() },
+    'button-hover': { init: () => window.initHoverButtonExperiment?.() },
+    'button-rotate-x': { init: () => window.initRotateXButtonExperiment?.() },
+    'carousel-rotate': { init: () => window.initRotateCarouselExperiment?.() },
+    'carousel-rotate-x': { init: () => window.initRotateXCarouselExperiment?.() },
+    'carousel-flip': { init: () => window.initFlipCarouselExperiment?.() },
+    'transition-arc-scroll': { init: () => window.initArcScrollTransitionExperiment?.() },
+    'carousel-infinite': { init: () => window.initInfiniteCarouselExperiment?.() },
+    'parallax-horizontal': { init: () => window.initHorizontalParallaxExperiment?.() },
+    'button-stagger-text': { init: () => window.initStaggerTextButtonExperiment?.() },
+    'heading-entrance': { init: () => window.initHeadingEntranceExperiment?.() },
   };
 
   function loadExperimentDefaults(id) {
@@ -33,7 +46,8 @@
   }
 
   function loadActiveExperiment() {
-    return localStorage.getItem(ACTIVE_KEY) || DEFAULT_EXPERIMENT;
+    const id = localStorage.getItem(ACTIVE_KEY);
+    return EXPERIMENT_IDS.includes(id) ? id : DEFAULT_EXPERIMENT;
   }
 
   function saveActiveExperiment(id) {
@@ -47,15 +61,16 @@
 
       const saved = JSON.parse(raw);
       if (saved?.panels) {
-        EXPERIMENT_IDS.forEach((id) => {
-          if (saved.panels[id] && !loadExperimentDefaults(id)) {
-            saveExperimentDefaults(id, saved.panels[id]);
+        Object.entries(NUMERIC_ID_MAP).forEach(([oldId, id]) => {
+          const panel = saved.panels[id] || saved.panels[oldId];
+          if (panel && !loadExperimentDefaults(id)) {
+            saveExperimentDefaults(id, panel);
           }
         });
       }
 
       if (saved?.experiment) {
-        saveActiveExperiment(saved.experiment);
+        saveActiveExperiment(NUMERIC_ID_MAP[saved.experiment] || saved.experiment);
       }
 
       localStorage.removeItem(LEGACY_STORAGE_KEY);
@@ -64,7 +79,25 @@
     }
   }
 
+  function migrateNumericIds() {
+    try {
+      Object.entries(NUMERIC_ID_MAP).forEach(([oldId, newId]) => {
+        const raw = localStorage.getItem(`${STORAGE_PREFIX}${oldId}`);
+        if (raw == null) return;
+        if (localStorage.getItem(`${STORAGE_PREFIX}${newId}`) == null) {
+          localStorage.setItem(`${STORAGE_PREFIX}${newId}`, raw);
+        }
+        localStorage.removeItem(`${STORAGE_PREFIX}${oldId}`);
+      });
+      const active = localStorage.getItem(ACTIVE_KEY);
+      if (active && NUMERIC_ID_MAP[active]) localStorage.setItem(ACTIVE_KEY, NUMERIC_ID_MAP[active]);
+    } catch {
+      // ignore storage errors
+    }
+  }
+
   migrateLegacyDefaults();
+  migrateNumericIds();
 
   window.__pendingExperimentDefaults = Object.fromEntries(
     EXPERIMENT_IDS.map((id) => [id, loadExperimentDefaults(id)])
@@ -76,15 +109,16 @@
     label: 'Experiment',
     value: startExperiment,
     options: [
-      { value: '1', label: 'Experiment 1' },
-      { value: '2', label: 'Experiment 2' },
-      { value: '3', label: 'Experiment 3' },
-      { value: '4.5', label: 'Experiment 4' },
-      { value: '5', label: 'Experiment 5' },
-      { value: '6', label: 'Experiment 6' },
-      { value: '7', label: 'Experiment 7' },
-      { value: '8', label: 'Experiment 8' },
-      { value: '9', label: 'Experiment 9' },
+      { value: 'button-hover', label: 'Button Hover' },
+      { value: 'button-rotate-x', label: 'Button Rotate X' },
+      { value: 'carousel-rotate', label: 'Carousel Rotate' },
+      { value: 'carousel-rotate-x', label: 'Carousel Rotate X' },
+      { value: 'carousel-flip', label: 'Carousel Flip' },
+      { value: 'transition-arc-scroll', label: 'Transition Arc Scroll' },
+      { value: 'carousel-infinite', label: 'Carousel Infinite' },
+      { value: 'parallax-horizontal', label: 'Parallax Horizontal' },
+      { value: 'button-stagger-text', label: 'Button Stagger Text' },
+      { value: 'heading-entrance', label: 'Heading Entrance' },
     ],
     onChange: (value) => switchExperiment(value),
   });

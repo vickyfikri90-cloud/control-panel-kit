@@ -199,9 +199,9 @@
   display: none !important;
 }
 
-.panel [data-exp6-pos-x][hidden],
-.panel [data-exp6-pos-group][hidden],
-.panel [data-exp6-burst-group][hidden] {
+.panel [data-exp-transition-arc-scroll-pos-x][hidden],
+.panel [data-exp-transition-arc-scroll-pos-group][hidden],
+.panel [data-exp-transition-arc-scroll-burst-group][hidden] {
   display: none !important;
 }
 
@@ -1443,9 +1443,9 @@ window.initHoverButton = function initHoverButton(root, options = {}) {
   };
 };
 
-window.initExperiment1 = function initExperiment1() {
-  const preview = document.querySelector('[data-experiment-preview="1"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="1"]');
+window.initHoverButtonExperiment = function initHoverButtonExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="button-hover"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="button-hover"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
@@ -1496,7 +1496,7 @@ window.initExperiment1 = function initExperiment1() {
   });
 
   const snippet = window.initSnippetOutput(document.getElementById('snippet-root'), {
-    filename: 'hover-button.html',
+    filename: 'button-hover.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -1587,12 +1587,12 @@ window.initExperiment1 = function initExperiment1() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['1'] = {
+  window.ExperimentSettings['button-hover'] = {
     collect: collectSettings,
     apply: applySettings,
   };
 
-  const pending = window.__pendingExperimentDefaults?.['1'];
+  const pending = window.__pendingExperimentDefaults?.['button-hover'];
   if (pending) applySettings(pending);
   applyAll();
 
@@ -1827,7 +1827,7 @@ window.initExperiment1 = function initExperiment1() {
 };
 
 if (!document.getElementById('experiment-selector-root')) {
-  window.initExperiment1();
+  window.initHoverButtonExperiment();
 }
 
   </script>

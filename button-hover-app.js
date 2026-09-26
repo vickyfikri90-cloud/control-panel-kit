@@ -1,43 +1,31 @@
-window.initExperiment9 = function initExperiment9() {
-  const preview = document.querySelector('[data-experiment-preview="9"]');
-  const panelRoot = document.querySelector('[data-experiment-panel="9"]');
+window.initHoverButtonExperiment = function initHoverButtonExperiment() {
+  const preview = document.querySelector('[data-experiment-preview="button-hover"]');
+  const panelRoot = document.querySelector('[data-experiment-panel="button-hover"]');
   if (!preview || !panelRoot || preview.dataset.experimentReady === '1') return;
 
   const utils = window.ComponentUtils;
-  const staggerButton = window.initStaggerTextButton(preview, {
-    restLabel: 'Hover here',
-    hoverLabel: 'Click me',
-    duration: 600,
-    stagger: 40,
-    easingRaw: '0.65, 0, 0.35, 1',
-    staggerMode: 'center-out',
+  const hoverButton = window.initHoverButton(preview, {
+    slideGap: 100,
+    duration: 350,
+    easingRaw: '0.7, 0, 0.25, 1',
   });
 
-  const btn = staggerButton.element;
+  const btn = hoverButton.element;
+  const texts = hoverButton.texts;
 
   const controls = {
-    labelText: document.getElementById('exp9-label-text'),
-    hoverText: document.getElementById('exp9-hover-text'),
-    paddingTop: document.getElementById('exp9-padding-top'),
-    paddingRight: document.getElementById('exp9-padding-right'),
-    paddingBottom: document.getElementById('exp9-padding-bottom'),
-    paddingLeft: document.getElementById('exp9-padding-left'),
-    border: document.getElementById('exp9-border'),
-    radius: document.getElementById('exp9-radius'),
-    duration: document.getElementById('exp9-duration'),
-    stagger: document.getElementById('exp9-stagger'),
+    labelText: document.getElementById('label-text'),
+    paddingTop: document.getElementById('padding-top'),
+    paddingRight: document.getElementById('padding-right'),
+    paddingBottom: document.getElementById('padding-bottom'),
+    paddingLeft: document.getElementById('padding-left'),
+    border: document.getElementById('border'),
+    radius: document.getElementById('radius'),
+    slideDistance: document.getElementById('slide-distance'),
+    duration: document.getElementById('duration'),
   };
 
-  const staggerModeSelector = window.initOptionSelector(document.getElementById('exp9-stagger-mode-root'), {
-    value: 'center-out',
-    options: [
-      { value: 'sequential', label: 'Sequential' },
-      { value: 'center-out', label: 'Center out' },
-    ],
-    onChange: applyAll,
-  });
-
-  const easing = window.initCubicBezierInput(document.getElementById('exp9-easing-root'), {
+  const easing = window.initCubicBezierInput(document.getElementById('easing-root'), {
     onChange: applyAll,
   });
 
@@ -54,16 +42,16 @@ window.initExperiment9 = function initExperiment9() {
     },
   });
 
-  const bgColor = window.initColorInput(document.getElementById('exp9-bg-color-root'), {
+  const bgColor = window.initColorInput(document.getElementById('bg-color-root'), {
     onChange: applyAll,
   });
 
-  const borderColor = window.initColorInput(document.getElementById('exp9-border-color-root'), {
+  const borderColor = window.initColorInput(document.getElementById('border-color-root'), {
     onChange: applyAll,
   });
 
-  const snippet = window.initSnippetOutput(document.getElementById('exp9-snippet-root'), {
-    filename: 'experiment-9.html',
+  const snippet = window.initSnippetOutput(document.getElementById('snippet-root'), {
+    filename: 'button-hover.html',
     getContent: generateSnippet,
     updateOnInit: false,
   });
@@ -82,8 +70,8 @@ window.initExperiment9 = function initExperiment9() {
     controls.paddingLeft,
     controls.border,
     controls.radius,
+    controls.slideDistance,
     controls.duration,
-    controls.stagger,
   ].forEach((input) => {
     utils.bindNumericArrowKey(input, applyAll);
   });
@@ -94,16 +82,14 @@ window.initExperiment9 = function initExperiment9() {
   function collectSettings() {
     return {
       label: controls.labelText.value,
-      hoverLabel: controls.hoverText.value,
       paddingTop: controls.paddingTop.value,
       paddingRight: controls.paddingRight.value,
       paddingBottom: controls.paddingBottom.value,
       paddingLeft: controls.paddingLeft.value,
       border: controls.border.value,
       radius: controls.radius.value,
+      slideDistance: controls.slideDistance.value,
       duration: controls.duration.value,
-      stagger: controls.stagger.value,
-      staggerMode: staggerModeSelector.getValue(),
       easing: easing.getRaw(),
       bgHex: bgColor.hexInput.value,
       bgOpacity: bgColor.opacityInput.value,
@@ -120,16 +106,14 @@ window.initExperiment9 = function initExperiment9() {
     if (!data) return;
 
     if (data.label != null) controls.labelText.value = data.label;
-    if (data.hoverLabel != null) controls.hoverText.value = data.hoverLabel;
     if (data.paddingTop != null) controls.paddingTop.value = data.paddingTop;
     if (data.paddingRight != null) controls.paddingRight.value = data.paddingRight;
     if (data.paddingBottom != null) controls.paddingBottom.value = data.paddingBottom;
     if (data.paddingLeft != null) controls.paddingLeft.value = data.paddingLeft;
     if (data.border != null) controls.border.value = data.border;
     if (data.radius != null) controls.radius.value = data.radius;
+    if (data.slideDistance != null) controls.slideDistance.value = data.slideDistance;
     if (data.duration != null) controls.duration.value = data.duration;
-    if (data.stagger != null) controls.stagger.value = data.stagger;
-    if (data.staggerMode != null) staggerModeSelector.setValue(data.staggerMode, false);
     if (data.easing != null) easing.setRaw(data.easing, false);
 
     if (data.bgHex != null) bgColor.hexInput.value = data.bgHex;
@@ -158,21 +142,25 @@ window.initExperiment9 = function initExperiment9() {
   }
 
   window.ExperimentSettings = window.ExperimentSettings || {};
-  window.ExperimentSettings['9'] = {
+  window.ExperimentSettings['button-hover'] = {
     collect: collectSettings,
     apply: applySettings,
   };
 
-  const pending = window.__pendingExperimentDefaults?.['9'];
+  const pending = window.__pendingExperimentDefaults?.['button-hover'];
   if (pending) applySettings(pending);
   applyAll();
 
-  function getDuration() {
-    return Math.max(0, utils.parseMs(controls.duration.value, 600));
+  function getSlideDistance() {
+    return utils.parsePx(controls.slideDistance.value, 100);
   }
 
-  function getStagger() {
-    return Math.max(0, utils.parseMs(controls.stagger.value, 40));
+  function getDuration() {
+    return utils.parseMs(controls.duration.value, 350);
+  }
+
+  function getEasing() {
+    return easing.getValue();
   }
 
   function getConfig() {
@@ -182,12 +170,10 @@ window.initExperiment9 = function initExperiment9() {
 
     return {
       label: controls.labelText.value,
-      hoverLabel: controls.hoverText.value,
       width: dimensions.width.getValue(),
+      slideGap: getSlideDistance(),
       duration: getDuration(),
-      stagger: getStagger(),
-      staggerMode: staggerModeSelector.getValue(),
-      easing: easing.getValue(),
+      easing: getEasing(),
       bg: bgColor.getColor(),
       bgHex,
       radius: utils.parsePx(controls.radius.value, 0),
@@ -208,14 +194,13 @@ window.initExperiment9 = function initExperiment9() {
   function applyAll() {
     const config = getConfig();
 
-    staggerButton.setLabels(config.label, config.hoverLabel);
-    staggerButton.setAnimation({
+    hoverButton.setLabel(config.label);
+    hoverButton.setAnimation({
+      slideGap: config.slideGap,
       duration: config.duration,
-      stagger: config.stagger,
-      staggerMode: config.staggerMode,
-      easingRaw: easing.getRaw() || '0.65, 0, 0.35, 1',
+      easingRaw: easing.getRaw() || '0.7, 0, 0.25, 1',
     });
-    staggerButton.applyStyles({
+    hoverButton.applyStyles({
       background: config.bg,
       borderRadius: `${config.radius}px`,
       border: config.borderCss,
@@ -236,8 +221,7 @@ window.initExperiment9 = function initExperiment9() {
   function generateSnippet() {
     const config = getConfig();
     const label = utils.escapeHtml(config.label);
-    const hoverLabel = utils.escapeHtml(config.hoverLabel || config.label);
-    const easingRaw = easing.getRaw() || '0.65, 0, 0.35, 1';
+    const easingRaw = easing.getRaw() || '0.7, 0, 0.25, 1';
     const widthCss = config.width.toLowerCase() === 'auto'
       ? 'auto'
       : `${utils.parsePx(config.width, 0)}px`;
@@ -250,7 +234,7 @@ window.initExperiment9 = function initExperiment9() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stagger Text Button</title>
+  <title>Hover Button</title>
   <style>
     body {
       margin: 0;
@@ -263,59 +247,132 @@ window.initExperiment9 = function initExperiment9() {
     }
 
     button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      box-sizing: border-box;
       width: ${widthCss};
-      height: ${heightCss};
       padding: ${config.paddingTop}px ${config.paddingRight}px ${config.paddingBottom}px ${config.paddingLeft}px;
       font-size: 16px;
-      line-height: 1;
       border: ${config.borderCss};
       border-radius: ${config.radius}px;
       background: ${config.bg};
+      height: ${heightCss};
       cursor: pointer;
       overflow: hidden;
-      position: relative;
       color: #000;
-      user-select: none;
     }
 
     .label {
-      display: grid;
+      display: block;
       position: relative;
-      line-height: 1;
+      height: 1.125em;
     }
 
     .text {
-      grid-area: 1 / 1;
       display: block;
+      will-change: transform;
       white-space: nowrap;
     }
 
-    .stagger-char {
-      display: inline-block;
-      white-space: pre;
-      will-change: transform;
+    .text.is-hidden {
+      position: absolute;
+      top: 0;
+      left: 0;
     }
   </style>
 </head>
 <body>
-  <button id="btn" class="stagger-text-button" type="button" aria-label="${label}">
-    <span class="label"></span>
+  <button id="btn" type="button">
+    <span class="label">
+      <span class="text">${label}</span>
+      <span class="text is-hidden">${label}</span>
+    </span>
   </button>
 
   <script>
-${window.StaggerTextButtonSnippetJs || ''}
-    window.initStaggerTextButton(document.getElementById('btn'), {
-      restLabel: ${JSON.stringify(config.label)},
-      hoverLabel: ${JSON.stringify(config.hoverLabel || config.label)},
+    const CONFIG = {
+      slideGap: ${config.slideGap},
       duration: ${config.duration},
-      stagger: ${config.stagger},
-      staggerMode: ${JSON.stringify(config.staggerMode || 'center-out')},
       easingRaw: ${JSON.stringify(easingRaw)},
+    };
+
+    const btn = document.getElementById('btn');
+    const texts = btn.querySelectorAll('.text');
+    let active = 0;
+    let busy = false;
+    let isHovered = false;
+
+    btn.addEventListener('mouseenter', () => {
+      isHovered = true;
+      slide();
     });
+
+    btn.addEventListener('mouseleave', () => {
+      isHovered = false;
+      if (!busy) reset();
+    });
+
+    reset();
+
+    function getEasing() {
+      const raw = CONFIG.easingRaw.trim();
+      if (!raw) return 'cubic-bezier(0.7, 0, 0.25, 1)';
+      if (raw.startsWith('cubic-bezier(')) return raw;
+
+      const parts = raw.split(',').map((n) => parseFloat(n.trim()));
+      if (parts.length === 4 && parts.every((n) => Number.isFinite(n))) {
+        return 'cubic-bezier(' + parts.join(', ') + ')';
+      }
+
+      return raw;
+    }
+
+    function getSlideMetrics() {
+      const labelWidth = texts[active].offsetWidth;
+      const travel = labelWidth + CONFIG.slideGap;
+      return { travel };
+    }
+
+    function reset() {
+      const { travel } = getSlideMetrics();
+      busy = false;
+      active = 0;
+      texts[0].classList.remove('is-hidden');
+      texts[1].classList.add('is-hidden');
+      setTransform(texts[0], 0, false);
+      setTransform(texts[1], -travel, false);
+    }
+
+    function finishSlide(current, next, travel) {
+      setTransform(current, -travel, false);
+      current.classList.add('is-hidden');
+      next.classList.remove('is-hidden');
+      active = 1 - active;
+      busy = false;
+      if (!isHovered) reset();
+    }
+
+    function slide() {
+      if (busy) return;
+      busy = true;
+
+      const { travel } = getSlideMetrics();
+      const current = texts[active];
+      const next = texts[1 - active];
+
+      next.classList.add('is-hidden');
+      setTransform(next, -travel, false);
+      next.offsetHeight;
+
+      setTransform(current, travel, true);
+      setTransform(next, 0, true);
+
+      setTimeout(() => finishSlide(current, next, travel), CONFIG.duration);
+    }
+
+    function setTransform(el, x, animate) {
+      el.style.transition = animate
+        ? 'transform ' + CONFIG.duration + 'ms ' + getEasing()
+        : 'none';
+      el.style.transform = 'translateX(' + x + 'px)';
+    }
   <\/script>
 </body>
 </html>`;
@@ -323,3 +380,7 @@ ${window.StaggerTextButtonSnippetJs || ''}
 
   preview.dataset.experimentReady = '1';
 };
+
+if (!document.getElementById('experiment-selector-root')) {
+  window.initHoverButtonExperiment();
+}
