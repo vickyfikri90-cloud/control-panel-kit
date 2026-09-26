@@ -28,7 +28,7 @@ Per-component API, CSS, dependencies, usage, and agent rules.
 
 ### `ComponentIcons` (`shared/icons.js`)
 
-Base64 SVG data URIs: `chevron`, `check`, `check-indeterminate`, `upload`, `file`, `image`, `close`, `plus`, `eyedropper`.
+Base64 SVG data URIs: `chevron`, `check`, `check-indeterminate`, `upload`, `file`, `image`, `close`, `plus`, `eyedropper`, `link`, `link-broken`.
 
 Used via `<img data-icon="chevron">` — populated at init.
 
@@ -771,6 +771,46 @@ initTooltip(root = document, { delay: 400 })
 - Placement `top` (default), `bottom`, `left`, `right`; flips when it doesn't fit, clamped 4px inside the viewport
 - Shows on hover after `delay` and on keyboard focus; hides on leave, blur, pointer down, scroll, Escape
 - Keep text to a few words; never the only place required info lives
+
+---
+
+## Size Control
+
+**Folder:** `SizeControl/` · **ID:** `size-control` · **Group:** primitive
+
+Width and height inputs side by side in one row, with a lock aspect ratio button (chain icon when locked, broken chain when unlocked).
+
+### Init
+
+```js
+initSizeControl(root, options)
+```
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `width`, `height` | `number` | from inputs | Initial values |
+| `locked` | `boolean` | `false` | Start with the ratio locked |
+| `min`, `max` | `number` | 0, ∞ | Clamp both sides |
+| `precision` | `number` | 0 | Decimal places (0 = whole px) |
+| `step` | `number` | 1 | Arrow-key step (Shift = 8) |
+| `label` | `string` | — | Field label |
+| `onChange` | `({ width, height, locked }) => void` | — | Any value or lock change |
+
+**Returns:** `{ element, widthInput, heightInput, lockButton, getValue(), getRatio(), setValue(w, h, notify?), getLocked(), setLocked(locked, notify?) }`
+
+### HTML
+
+`.field.size-control` > `.row` with two `.input-wrap`s (`W` / `H` icons, `[data-size-width]`, `[data-size-height]`) and `button.size-control__lock[data-size-lock] > img`
+
+### Agent rules
+
+- Locking captures the current ratio; while locked, typing or arrow-stepping one side updates the other from that ratio (no drift)
+- If either side is 0 when locking, the ratio is captured on the next edit that makes both non-zero
+- `setValue()` while locked re-captures the ratio from the new values
+- Lock button: transparent + 50% `link-broken` icon when off; `#f5f5f5` fill + 100% `link` icon when on; `aria-pressed` and `data-tooltip` follow the state
+- Icons adapted from Lucide (ISC)
 
 ---
 

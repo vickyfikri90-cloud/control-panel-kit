@@ -74,6 +74,7 @@ window.ComponentIndex = {
       'multi-image-upload': { max: 6, onChange() {} },
       'color-selector': { value: '#4372FF', onChange() {} },
       tooltip: {},
+      'size-control': { width: 160, height: 48, onChange() {} },
     };
 
     for (const meta of components) {

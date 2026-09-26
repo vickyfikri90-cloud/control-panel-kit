@@ -20,6 +20,7 @@ window.ExperimentTool = {
     'MultiImageUpload/component.css',
     'ColorSelector/component.css',
     'Tooltip/component.css',
+    'SizeControl/component.css',
   ],
 
   scripts: [
@@ -42,6 +43,7 @@ window.ExperimentTool = {
     'MultiImageUpload/component.js',
     'ColorSelector/component.js',
     'Tooltip/component.js',
+    'SizeControl/component.js',
     'ControlPanel/component.js',
   ],
 

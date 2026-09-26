@@ -253,6 +253,21 @@ window.COMPONENT_TEMPLATES = {
     </div>
   </div>
 </div>`,
+
+  'SizeControl/component.html': `<div class="field size-control">
+  <span class="field-label">Size</span>
+  <div class="row">
+    <div class="input-wrap">
+      <span class="input-icon">W</span>
+      <input type="text" data-size-width value="160" inputmode="decimal" aria-label="Width">
+    </div>
+    <div class="input-wrap">
+      <span class="input-icon">H</span>
+      <input type="text" data-size-height value="48" inputmode="decimal" aria-label="Height">
+    </div>
+    <button type="button" class="size-control__lock" data-size-lock aria-pressed="false" aria-label="Lock aspect ratio"><img src="" alt=""></button>
+  </div>
+</div>`,
 };
 
 window.getComponentHTML = function getComponentHTML(folder) {

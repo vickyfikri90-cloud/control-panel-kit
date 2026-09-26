@@ -161,6 +161,15 @@ window.CONTROL_PANEL_COMPONENTS = [
     styles: ['Tooltip/component.css'],
     group: 'primitive',
   },
+  {
+    id: 'size-control',
+    name: 'Size Control',
+    description: 'Width + height inputs side by side with a lock aspect ratio button.',
+    folder: 'SizeControl',
+    init: 'initSizeControl',
+    styles: ['SizeControl/component.css'],
+    group: 'primitive',
+  },
 ];
 
 window.COMPONENTS = window.CONTROL_PANEL_COMPONENTS;
