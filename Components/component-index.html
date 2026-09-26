@@ -17,6 +17,11 @@
   <link rel="stylesheet" href="OptionSelector/component.css">
   <link rel="stylesheet" href="Toggle/component.css">
   <link rel="stylesheet" href="Checkbox/component.css">
+  <link rel="stylesheet" href="FileUpload/component.css">
+  <link rel="stylesheet" href="ImageUpload/component.css">
+  <link rel="stylesheet" href="MultiImageUpload/component.css">
+  <link rel="stylesheet" href="ColorSelector/component.css">
+  <link rel="stylesheet" href="Tooltip/component.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
 
@@ -114,6 +119,18 @@
       overflow: visible;
     }
 
+    .component-card[data-component-id="color-selector"] {
+      overflow: visible;
+      position: relative;
+      z-index: 2;
+    }
+
+    .component-card[data-component-id="color-selector"] .component-card__preview {
+      align-items: flex-start;
+      overflow: visible;
+      min-height: 280px;
+    }
+
     .component-card[data-component-id="option-selector"] .component-card__preview {
       align-items: flex-start;
       overflow: visible;
@@ -149,6 +166,11 @@
   <script src="OptionSelector/component.js"></script>
   <script src="Toggle/component.js"></script>
   <script src="Checkbox/component.js"></script>
+  <script src="FileUpload/component.js"></script>
+  <script src="ImageUpload/component.js"></script>
+  <script src="MultiImageUpload/component.js"></script>
+  <script src="ColorSelector/component.js"></script>
+  <script src="Tooltip/component.js"></script>
   <script src="components-loader.js"></script>
   <script src="component-index.js"></script>
 </body>

@@ -15,6 +15,11 @@ window.ExperimentTool = {
     'Toggle/component.css',
     'Checkbox/component.css',
     'CubicBezierInput/component.css',
+    'FileUpload/component.css',
+    'ImageUpload/component.css',
+    'MultiImageUpload/component.css',
+    'ColorSelector/component.css',
+    'Tooltip/component.css',
   ],
 
   scripts: [
@@ -32,6 +37,11 @@ window.ExperimentTool = {
     'Toggle/component.js',
     'Checkbox/component.js',
     'CubicBezierInput/component.js',
+    'FileUpload/component.js',
+    'ImageUpload/component.js',
+    'MultiImageUpload/component.js',
+    'ColorSelector/component.js',
+    'Tooltip/component.js',
     'ControlPanel/component.js',
   ],
 

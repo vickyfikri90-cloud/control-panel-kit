@@ -69,6 +69,11 @@ window.ComponentIndex = {
       toggle: { onChange() {} },
       checkbox: { onChange() {} },
       'cubic-bezier-input': { value: '0.7, 0, 0.25, 1', onChange() {} },
+      'file-upload': { accept: '.html,.css,.js,.json,.svg', onChange() {} },
+      'image-upload': { onChange() {} },
+      'multi-image-upload': { max: 6, onChange() {} },
+      'color-selector': { value: '#4372FF', onChange() {} },
+      tooltip: {},
     };
 
     for (const meta of components) {

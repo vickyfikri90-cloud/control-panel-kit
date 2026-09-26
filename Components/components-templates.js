@@ -174,6 +174,85 @@ window.COMPONENT_TEMPLATES = {
     </button>
   </div>
 </div>`,
+
+  'FileUpload/component.html': `<div class="field file-upload">
+  <span class="field-label">File</span>
+  <div class="row">
+    <div class="input-wrap file-upload__wrap" role="button" tabindex="0" aria-label="Choose file">
+      <span class="input-icon"><img src="" alt="" data-icon="file"></span>
+      <span class="file-upload__name" data-upload-name>Choose file</span>
+      <span class="upload-meta" data-upload-meta></span>
+      <button type="button" class="upload-clear" data-upload-clear aria-label="Remove file" hidden><img src="" alt="" data-icon="close"></button>
+      <input type="file" class="upload-file-input" tabindex="-1" aria-hidden="true">
+    </div>
+  </div>
+</div>`,
+
+  'ImageUpload/component.html': `<div class="field image-upload">
+  <span class="field-label">Image</span>
+  <div class="image-upload__drop" role="button" tabindex="0" aria-label="Choose image">
+    <img class="image-upload__icon" src="" alt="" data-icon="upload">
+    <span class="image-upload__hint">Drop image or click</span>
+    <img class="image-upload__img" data-upload-image alt="">
+    <input type="file" class="upload-file-input" accept="image/*" tabindex="-1" aria-hidden="true">
+  </div>
+  <div class="input-wrap input-wrap--label image-upload__file">
+    <span class="image-upload__name" data-upload-name></span>
+    <span class="upload-meta" data-upload-meta></span>
+    <button type="button" class="upload-clear" data-upload-clear aria-label="Remove image" hidden><img src="" alt="" data-icon="close"></button>
+  </div>
+</div>`,
+
+  'MultiImageUpload/component.html': `<div class="field multi-image-upload">
+  <span class="field-label">Images</span>
+  <div class="multi-image-upload__grid" role="list">
+    <button type="button" class="multi-image-upload__add" aria-label="Add images"><img src="" alt="" data-icon="plus"></button>
+    <input type="file" class="upload-file-input" accept="image/*" multiple tabindex="-1" aria-hidden="true">
+  </div>
+  <div class="multi-image-upload__footer">
+    <span class="upload-meta" data-upload-count></span>
+    <button type="button" class="multi-image-upload__clear" data-upload-clear hidden>Clear all</button>
+  </div>
+</div>`,
+
+  'ColorSelector/component.html': `<div class="field color-selector">
+  <span class="field-label">Fill</span>
+  <div class="row">
+    <div class="input-wrap color-wrap color-selector__wrap">
+      <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+      <input type="text" data-color-hex value="4372FF" spellcheck="false" aria-label="Hex">
+      <div class="opacity-wrap">
+        <input type="text" data-color-opacity value="100" aria-label="Opacity">
+        <span class="opacity-suffix">%</span>
+      </div>
+      <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+        <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+        <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+        <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+        <div class="color-selector__hsb">
+          <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+          <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+          <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+          <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+  'Tooltip/component.html': `<div class="field tooltip-demo">
+  <span class="field-label">Tooltip</span>
+  <div class="row">
+    <div class="input-wrap" data-tooltip="Width in px">
+      <span class="input-icon">W</span>
+      <input type="text" value="160">
+    </div>
+    <div class="input-wrap" data-tooltip="Height in px" data-tooltip-placement="bottom">
+      <span class="input-icon">H</span>
+      <input type="text" value="48">
+    </div>
+  </div>
+</div>`,
 };
 
 window.getComponentHTML = function getComponentHTML(folder) {

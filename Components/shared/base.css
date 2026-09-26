@@ -111,3 +111,58 @@
   font: 500 11px/16px Inter, sans-serif;
   color: #09090b;
 }
+
+/* ---- Upload shared (FileUpload, ImageUpload, MultiImageUpload) ---- */
+.upload-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.upload-remove,
+.upload-clear {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upload-remove img,
+.upload-clear img {
+  width: 8px;
+  height: 8px;
+  display: block;
+  opacity: 0.5;
+}
+
+.upload-clear:hover { background: rgba(0, 0, 0, 0.04); }
+
+.upload-remove:focus,
+.upload-clear:focus { outline: none; }
+
+.upload-remove:focus-visible,
+.upload-clear:focus-visible {
+  outline: 1px solid #9d9d9d;
+  outline-offset: 1px;
+}
+
+.upload-meta {
+  flex-shrink: 0;
+  font: 500 11px/16px Inter, sans-serif;
+  letter-spacing: 0.055px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.upload-clear[hidden] {
+  display: none;
+}

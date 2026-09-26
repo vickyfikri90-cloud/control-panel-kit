@@ -21,10 +21,14 @@ Per-component API, CSS, dependencies, usage, and agent rules.
 | `bindInputWrapInputs(root)` | Apply to all `.input-wrap input` |
 | `bindNumericArrowKey(input, onChange, { isOpacity, step })` | ↑↓ step (Shift = ±8). Safe to call more than once per input — one step per key press, every `onChange` runs. Fractional fields: `step` option or `data-arrow-step="0.1"` (Shift = 10×). |
 | `loadStylesheet(href, id)` / `loadScript(src, id)` | Deduped injectors |
+| `fillIcons(root)` | Fill empty `<img data-icon="…">` from `ComponentIcons` |
+| `acceptMatches(file, accept)` | Native `accept` rules (`.png`, `image/*`, `text/html`) |
+| `formatFileSize(bytes)` | `24 KB`, `1.2 MB` |
+| `bindDropTarget(target, input, onFiles, clickSelector?)` | Click / Enter / Space open the picker, drag-and-drop adds `is-dragover`; used by the upload components |
 
 ### `ComponentIcons` (`shared/icons.js`)
 
-Base64 SVG data URIs: `chevron`, `check`, `check-indeterminate`.
+Base64 SVG data URIs: `chevron`, `check`, `check-indeterminate`, `upload`, `file`, `image`, `close`, `plus`, `eyedropper`.
 
 Used via `<img data-icon="chevron">` — populated at init.
 
@@ -34,6 +38,7 @@ Used via `<img data-icon="chevron">` — populated at init.
 - `.field-label` — 9px caps, 50% black
 - `.row` — horizontal flex, 8px gap
 - `.input-wrap` — 24px height, `#f5f5f5` bg, 5px radius
+- `.upload-file-input`, `.upload-clear`, `.upload-remove`, `.upload-meta` — shared by the upload components
 
 ---
 
@@ -597,6 +602,175 @@ element.style.transitionTimingFunction = easing.getValue();
 - X control points clamp to 0–1 (CSS requirement); Y allows overshoot (−0.5 to 1.5 in editor)
 - Text and curve stay in sync; blur normalizes valid input
 - Arrow keys on handles nudge by 0.01 (Shift = 0.05)
+
+---
+
+## File Upload
+
+**Folder:** `FileUpload/` · **ID:** `file-upload` · **Group:** primitive
+
+Single file picker in the shape of a 24px input row: file icon, name + size, clear button.
+
+### Init
+
+```js
+initFileUpload(root, options)
+```
+
+### Options
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `accept` | `string` | Native accept syntax (`.html,.css`, `image/*`) |
+| `maxSize` | `number` | Bytes |
+| `placeholder` | `string` | Empty text (default from markup: `Choose file`) |
+| `label` | `string` | Field label |
+| `onChange` | `(file \| null) => void` | Pick / clear |
+| `onError` | `(reason, file) => void` | `'type'` or `'size'` |
+
+**Returns:** `{ element, input, getFile(), setFile(file, notify?), clear(notify?), setDisabled(disabled) }`
+
+### HTML
+
+`.file-upload__wrap[role=button][tabindex=0]` with `[data-upload-name]`, `[data-upload-meta]`, `[data-upload-clear]`, `input[type=file].upload-file-input`
+
+### Agent rules
+
+- Click, Enter/Space or drop a file; drag-over shows the `#9D9D9D` border
+- Rejected files call `onError` and change nothing
+
+---
+
+## Image Upload
+
+**Folder:** `ImageUpload/` · **ID:** `image-upload` · **Group:** primitive
+
+208×120 drop zone that shows the chosen image, with a file-name row + clear below.
+
+### Init
+
+```js
+initImageUpload(root, options)
+```
+
+### Options
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `accept` | `string` | Default `image/*` |
+| `maxSize` | `number` | Bytes |
+| `fit` | `string` | `object-fit`, default `cover` |
+| `value`, `name` | `string` | Seed an existing image URL |
+| `onChange` | `(file \| null, url) => void` | Pick / clear |
+| `onError` | `(reason, file) => void` | `'type'` or `'size'` |
+
+**Returns:** `{ element, input, getFile(), getURL(), setFile(file, notify?), setURL(url, name?, notify?), clear(notify?) }`
+
+### Agent rules
+
+- `getURL()` is an object URL — use it directly as `src` / `background-image`
+- The previous object URL is revoked on replace / clear
+
+---
+
+## Multi Image Upload
+
+**Folder:** `MultiImageUpload/` · **ID:** `multi-image-upload` · **Group:** primitive
+
+3-column grid of square thumbnails, add tile, remove on hover, count + Clear all.
+
+### Init
+
+```js
+initMultiImageUpload(root, options)
+```
+
+### Options
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `accept` | `string` | Default `image/*` |
+| `max` | `number` | Add tile hides at max |
+| `maxSize` | `number` | Bytes |
+| `value` | `{ url, name }[]` | Seed images |
+| `onChange` | `(files, items) => void` | Add / remove / clear |
+| `onError` | `(reason, file) => void` | `'type'`, `'size'` or `'max'` |
+
+**Returns:** `{ element, input, getFiles(), getItems(), add(list, notify?), remove(index, notify?), clear(notify?) }`
+
+### Agent rules
+
+- Only the add tile opens the picker; drop works anywhere on the grid
+- `items` are `{ file, url, name }`; object URLs are revoked on removal
+
+---
+
+## Color Selector
+
+**Folder:** `ColorSelector/` · **ID:** `color-selector` · **Group:** primitive
+
+Color Input row (swatch, hex, opacity) whose swatch opens a white picker popover: saturation/brightness area, hue strip, opacity strip, H / S / B inputs and an eyedropper.
+
+### Init
+
+```js
+initColorSelector(root, options)
+```
+
+### Options
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `value` | `string` | Hex, with or without `#` |
+| `opacity` | `number` | 0–100 |
+| `label` | `string` | Field label |
+| `onChange` | `(color, { hex, opacity }) => void` | `color` is the same rgba string as Color Input |
+
+**Returns:** `{ element, hexInput, opacityInput, getColor(), getHex(), getOpacity(), setValue(hex, opacity?, notify?), open(), close(), destroy() }`
+
+### CSS
+
+Needs `ColorInput/component.css` (swatch, opacity) + `ColorSelector/component.css`.
+
+### Eyedropper
+
+- Uses the browser EyeDropper API (Chrome, Edge, Opera); disabled at 50% elsewhere
+- One pick per page, always aborted: on pick / Escape, second click, new pick, popover close, `destroy()`, page hide / unload / freeze, and after 30s. This prevents macOS `ColorSampler` being left running
+- Call `window.cancelKitEyedropper()` before a hot reload the page can't see (e.g. Vite `import.meta.hot.dispose`)
+
+### Agent rules
+
+- H 0–360, S/B 0–100, clamped; ↑/↓ step (Shift = 8)
+- Only one menu open at a time — listens to and fires `color-selector:close-all`, and closes on `dimension-menu:close-all` / `option-selector:close-all`
+- Call `destroy()` before removing the element
+
+---
+
+## Tooltip
+
+**Folder:** `Tooltip/` · **ID:** `tooltip` · **Group:** primitive
+
+Black tooltip (`#000`, white Inter 500 11/16, 5px radius, arrow) for any `[data-tooltip]` element.
+
+### Init
+
+```js
+initTooltip(root = document, { delay: 400 })
+```
+
+**Returns:** `{ element, attach(el, text, placement?), show(el), hide() }` — one controller per root.
+
+### HTML
+
+```html
+<button data-tooltip="Reset" data-tooltip-placement="bottom">…</button>
+```
+
+### Agent rules
+
+- Placement `top` (default), `bottom`, `left`, `right`; flips when it doesn't fit, clamped 4px inside the viewport
+- Shows on hover after `delay` and on keyboard focus; hides on leave, blur, pointer down, scroll, Escape
+- Keep text to a few words; never the only place required info lives
 
 ---
 

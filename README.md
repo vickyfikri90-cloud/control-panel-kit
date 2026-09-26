@@ -58,7 +58,7 @@ Experiment Tool/
 │   ├── components-loader.js     # Lazy-load one component
 │   ├── shared/                  # utils, base.css, icons
 │   ├── ControlPanel/            # Shell layout
-│   ├── Field, InputWrap, ...    # Primitives (12 components)
+│   ├── Field, InputWrap, ...    # Primitives (17 components)
 │   └── HoverButton/             # Example experiment component
 ├── button-hover.shell.html      # Hover Button — dev markup
 ├── button-hover-app.js          # Hover Button — wiring logic
@@ -104,6 +104,11 @@ All panel changes flow through one **`applyAll()`** loop that updates preview + 
 | Option Selector | `option-selector` | Searchable dropdown |
 | Toggle | `toggle` | On/off switch |
 | Checkbox | `checkbox` | Checked / unchecked / indeterminate |
+| File Upload | `file-upload` | Single file picker row |
+| Image Upload | `image-upload` | Single image drop zone + preview |
+| Multi Image Upload | `multi-image-upload` | Thumbnail grid, add / remove / clear |
+| Color Selector | `color-selector` | Hex + opacity + picker (area, hue, H/S/B, eyedropper) |
+| Tooltip | `tooltip` | Black tooltip for `[data-tooltip]` |
 
 **HoverButton** is an example experiment component — not in the manifest. Add it manually per project.
 
