@@ -130,6 +130,61 @@
   color: #09090b;
 }
 
+/* ---- Upload shared (FileUpload, ImageUpload, MultiImageUpload) ---- */
+.upload-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.upload-remove,
+.upload-clear {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upload-remove img,
+.upload-clear img {
+  width: 8px;
+  height: 8px;
+  display: block;
+  opacity: 0.5;
+}
+
+.upload-clear:hover { background: rgba(0, 0, 0, 0.04); }
+
+.upload-remove:focus,
+.upload-clear:focus { outline: none; }
+
+.upload-remove:focus-visible,
+.upload-clear:focus-visible {
+  outline: 1px solid #9d9d9d;
+  outline-offset: 1px;
+}
+
+.upload-meta {
+  flex-shrink: 0;
+  font: 500 11px/16px Inter, sans-serif;
+  letter-spacing: 0.055px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.upload-clear[hidden] {
+  display: none;
+}
+
 .cp-app {
   display: flex;
   height: 100%;
@@ -398,6 +453,238 @@
   border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
+.color-selector__wrap {
+  position: relative;
+  overflow: visible;
+  z-index: 1;
+}
+
+.color-selector__wrap.is-menu-open { z-index: 30; }
+
+.color-selector__trigger {
+  flex-shrink: 0;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.color-selector__trigger:focus { outline: none; }
+
+.color-selector__trigger:focus-visible .swatch {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08), 0 0 0 1px #9d9d9d;
+}
+
+.color-selector__popover {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  padding: 8px;
+  flex-direction: column;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+}
+
+.color-selector__popover.is-open { display: flex; }
+
+.color-selector__sv {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: 5px;
+  background-image:
+    linear-gradient(to top, #000, rgba(0, 0, 0, 0)),
+    linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.color-selector__hue,
+.color-selector__alpha {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.color-selector__hue {
+  background: linear-gradient(90deg, #f00 0%, #ff0 16.67%, #0f0 33.33%, #0ff 50%, #00f 66.67%, #f0f 83.33%, #f00 100%);
+}
+
+.color-selector__alpha {
+  background-color: #fff;
+  background-image:
+    linear-gradient(45deg, #d9d9d9 25%, transparent 25%, transparent 75%, #d9d9d9 75%),
+    linear-gradient(45deg, #d9d9d9 25%, transparent 25%, transparent 75%, #d9d9d9 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+}
+
+.color-selector__alpha-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+}
+
+.color-selector__thumb {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.color-selector__sv .color-selector__thumb { top: 0; }
+
+.color-selector__sv:focus,
+.color-selector__hue:focus,
+.color-selector__alpha:focus { outline: none; }
+
+.color-selector__sv:focus-visible,
+.color-selector__hue:focus-visible,
+.color-selector__alpha:focus-visible {
+  outline: 1px solid #9d9d9d;
+  outline-offset: 1px;
+}
+
+.color-selector__hsb {
+  display: flex;
+  gap: 8px;
+}
+
+.color-selector__hsb .input-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.color-selector__hsb .input-icon {
+  width: 20px;
+}
+
+.color-selector__eyedropper {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.color-selector__eyedropper img {
+  width: 12px;
+  height: 12px;
+  display: block;
+  opacity: 0.5;
+}
+
+.color-selector__eyedropper:hover { background: #eeeeee; }
+
+.color-selector__eyedropper:focus { outline: none; }
+
+.color-selector__eyedropper:focus-visible { border-color: #9D9D9D; }
+
+.color-selector__eyedropper.is-active { background: #23272e; }
+
+.color-selector__eyedropper.is-active img {
+  opacity: 1;
+  filter: invert(1);
+}
+
+.color-selector__eyedropper:disabled,
+.color-selector__eyedropper.is-disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.color-selector__eyedropper:disabled:hover { background: #f5f5f5; }
+
+.kit-tooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  max-width: 200px;
+  padding: 4px 8px;
+  background: #000;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+  font: 500 11px/16px Inter, sans-serif;
+  letter-spacing: 0.055px;
+  color: #fff;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s ease, visibility 0s linear 0.12s;
+}
+
+.kit-tooltip.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.12s ease;
+}
+
+.kit-tooltip::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+}
+
+.kit-tooltip[data-placement="top"]::after {
+  top: 100%;
+  left: var(--kit-tooltip-arrow, 50%);
+  margin-left: -4px;
+  border-top-color: #000;
+}
+
+.kit-tooltip[data-placement="bottom"]::after {
+  bottom: 100%;
+  left: var(--kit-tooltip-arrow, 50%);
+  margin-left: -4px;
+  border-bottom-color: #000;
+}
+
+.kit-tooltip[data-placement="left"]::after {
+  left: 100%;
+  top: var(--kit-tooltip-arrow, 50%);
+  margin-top: -4px;
+  border-left-color: #000;
+}
+
+.kit-tooltip[data-placement="right"]::after {
+  right: 100%;
+  top: var(--kit-tooltip-arrow, 50%);
+  margin-top: -4px;
+  border-right-color: #000;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kit-tooltip,
+  .kit-tooltip.is-open { transition: none; }
+}
+
 .cubic-bezier-field {
   display: flex;
   flex-direction: column;
@@ -607,12 +894,23 @@
         <div class="field">
           <span class="field-label">Background color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="F0F0F0">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="F0F0F0" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -624,12 +922,23 @@
         <div class="field-stack">
         <div id="border-color-root">
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="CCCCCC">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="CCCCCC" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -701,6 +1010,14 @@ window.ComponentIcons = {
   chevron: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOCIgaGVpZ2h0PSI1IiB2aWV3Qm94PSIwIDAgOCA1IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBvcGFjaXR5PSIwLjQiIGQ9Ik0zLjcwMzEyIDQuNDA2MjVMMCAwLjcwMzEyNUwwLjcwMzEyNSAwTDEuMDYyNSAwLjM0Mzc1TDMuNzAzMTIgM0w2LjcwMzEyIDBMNy40MjE4OCAwLjcwMzEyNUw3LjA2MjUgMS4wNjI1TDMuNzAzMTIgNC40MDYyNVoiIGZpbGw9IiMwOTA5MEIiLz4KPC9zdmc+Cg==',
   check: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNyIgaGVpZ2h0PSI3IiB2aWV3Qm94PSIwIDAgNyA3IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMC44MzMwMDggMy43NDk2N0wyLjQ5OTY3IDUuNDE2MzRMNS44MzMwMSAwLjgzMzAwOCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjY2NjY3IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==',
   'check-indeterminate': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNyIgaGVpZ2h0PSIzIiB2aWV3Qm94PSIwIDAgNyAzIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNNC44MzMwMSAwQzUuNjYxNDQgMCA2LjMzMzAxIDAuNjcxNTczIDYuMzMzMDEgMS41QzYuMzMzMDEgMi4zMjg0MyA1LjY2MTQ0IDMgNC44MzMwMSAzSDEuNUMwLjY3MTU3MyAzIDAgMi4zMjg0MyAwIDEuNUMwIDAuNjcxNTczIDAuNjcxNTczIDAgMS41IDBINC44MzMwMVoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=',
+  upload: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNiA4VjEuNU02IDEuNUwzLjI1IDQuMjVNNiAxLjVMOC43NSA0LjI1IiBzdHJva2U9IiMwOTA5MEIiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNMS41IDguNVYxMC41SDEwLjVWOC41IiBzdHJva2U9IiMwOTA5MEIiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4K',
+  file: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMi41IDFIN0w5LjUgMy41VjExSDIuNVYxWiIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjEuMSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxwYXRoIGQ9Ik03IDFWMy41SDkuNSIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjEuMSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPgo=',
+  image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIxIiB5PSIxLjUiIHdpZHRoPSIxMCIgaGVpZ2h0PSI5IiByeD0iMS41IiBzdHJva2U9IiMwOTA5MEIiIHN0cm9rZS13aWR0aD0iMS4xIi8+PGNpcmNsZSBjeD0iNC4yNSIgY3k9IjQuNSIgcj0iMSIgZmlsbD0iIzA5MDkwQiIvPjxwYXRoIGQ9Ik0xLjUgOUw0LjUgNi41TDYuNSA4TDguNSA2TDEwLjUgOCIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjEuMSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPgo=',
+  close: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOCIgaGVpZ2h0PSI4IiB2aWV3Qm94PSIwIDAgOCA4IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xIDFMNyA3TTcgMUwxIDciIHN0cm9rZT0iIzA5MDkwQiIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPgo=',
+  plus: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNSAxVjlNMSA1SDkiIHN0cm9rZT0iIzA5MDkwQiIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPgo=',
+  eyedropper: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNy45IDEuMUM4LjYgMC40IDkuOCAwLjQgMTAuNSAxLjFMMTAuOSAxLjVDMTEuNiAyLjIgMTEuNiAzLjQgMTAuOSA0LjFMOS42IDUuNEw2LjYgMi40TDcuOSAxLjFaIiBmaWxsPSIjMDkwOTBCIi8+PHBhdGggZD0iTTUuNiAyLjJMOS44IDYuNCIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTcuNiA0LjNMMi45IDlMMi4yIDkuOUwxLjUgMTAuNSIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHBhdGggZD0iTTguMiA0LjlMMy41IDkuNiIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+Cg==',
+  'link': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgMTNhNSA1IDAgMCAwIDcuNTQuNTRsMy0zYTUgNSAwIDAgMC03LjA3LTcuMDdsLTEuNzIgMS43MSIvPjxwYXRoIGQ9Ik0xNCAxMWE1IDUgMCAwIDAtNy41NC0uNTRsLTMgM2E1IDUgMCAwIDAgNy4wNyA3LjA3bDEuNzEtMS43MSIvPjwvc3ZnPgo=',
+  'link-broken': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJtMTguODQgMTIuMjUgMS43Mi0xLjcxaC0uMDJhNS4wMDQgNS4wMDQgMCAwIDAtLjEyLTcuMDcgNS4wMDYgNS4wMDYgMCAwIDAtNi45NSAwbC0xLjcyIDEuNzEiLz48cGF0aCBkPSJtNS4xNyAxMS43NS0xLjcxIDEuNzFhNS4wMDQgNS4wMDQgMCAwIDAgLjEyIDcuMDcgNS4wMDYgNS4wMDYgMCAwIDAgNi45NSAwbDEuNzEtMS43MSIvPjxsaW5lIHgxPSI4IiB4Mj0iOCIgeTE9IjIiIHkyPSI1Ii8+PGxpbmUgeDE9IjIiIHgyPSI1IiB5MT0iOCIgeTI9IjgiLz48bGluZSB4MT0iMTYiIHgyPSIxNiIgeTE9IjE5IiB5Mj0iMjIiLz48bGluZSB4MT0iMTkiIHgyPSIyMiIgeTE9IjE2IiB5Mj0iMTYiLz48L3N2Zz4K',
 };
 
 window.ComponentUtils = {
@@ -855,6 +1172,84 @@ window.ComponentUtils = {
       script.onload = resolve;
       script.onerror = reject;
       document.body.appendChild(script);
+    });
+  },
+
+  // ---- Upload helpers (FileUpload, ImageUpload, MultiImageUpload) ----
+
+  // Fill <img data-icon="name"> from ComponentIcons (only when src is empty).
+  fillIcons(root) {
+    const icons = window.ComponentIcons || {};
+    root.querySelectorAll('img[data-icon]').forEach((img) => {
+      const src = icons[img.dataset.icon];
+      if (src && !img.getAttribute('src')) img.src = src;
+    });
+  },
+
+  // Same rules as the native `accept` attribute: '.png', 'image/*', 'text/html'.
+  acceptMatches(file, accept) {
+    if (!accept) return true;
+    const name = (file.name || '').toLowerCase();
+    const type = (file.type || '').toLowerCase();
+    return accept.split(',').some((raw) => {
+      const rule = raw.trim().toLowerCase();
+      if (!rule) return false;
+      if (rule.charAt(0) === '.') return name.slice(-rule.length) === rule;
+      if (rule.slice(-2) === '/*') return type.indexOf(rule.slice(0, -1)) === 0;
+      return type === rule;
+    });
+  },
+
+  formatFileSize(bytes) {
+    if (!Number.isFinite(bytes)) return '';
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
+    return `${Math.round(bytes / 102.4 / 1024) / 10} MB`;
+  },
+
+  // Click / Enter / Space open the file picker; drag-and-drop adds `is-dragover`.
+  // `clickSelector` limits which clicks open the picker (e.g. only the add tile).
+  bindDropTarget(target, input, onFiles, clickSelector) {
+    target.addEventListener('click', (event) => {
+      if (event.target === input) return;
+      if (event.target.closest('[data-upload-clear], [data-upload-remove]')) return;
+      if (clickSelector && !event.target.closest(clickSelector)) return;
+      if (target.classList.contains('is-disabled')) return;
+      input.click();
+    });
+    target.addEventListener('keydown', (event) => {
+      if (event.target !== target) return;
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        input.click();
+      }
+    });
+
+    let depth = 0;
+    target.addEventListener('dragenter', (event) => {
+      event.preventDefault();
+      depth += 1;
+      target.classList.add('is-dragover');
+    });
+    target.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
+    });
+    target.addEventListener('dragleave', () => {
+      depth = Math.max(depth - 1, 0);
+      if (!depth) target.classList.remove('is-dragover');
+    });
+    target.addEventListener('drop', (event) => {
+      event.preventDefault();
+      depth = 0;
+      target.classList.remove('is-dragover');
+      const files = event.dataTransfer ? Array.from(event.dataTransfer.files) : [];
+      if (files.length) onFiles(files);
+    });
+    input.addEventListener('change', () => {
+      const files = Array.from(input.files || []);
+      input.value = '';
+      if (files.length) onFiles(files);
     });
   },
 };
@@ -1032,6 +1427,481 @@ window.initColorInput = function initColorInput(root, options = {}) {
     updateUI,
   };
 };
+
+(function () {
+  var clamp = function (v, lo, hi) { return Math.min(hi, Math.max(lo, v)); };
+
+  function hexToRgb(hex) {
+    var h = String(hex || '').trim().replace(/^#/, '');
+    if (/^[0-9a-fA-F]{3}$/.test(h)) h = h.split('').map(function (c) { return c + c; }).join('');
+    if (!/^[0-9a-fA-F]{6}$/.test(h)) return null;
+    return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16) };
+  }
+
+  function rgbToHex(r, g, b) {
+    return [r, g, b].map(function (n) {
+      var s = Math.round(clamp(n, 0, 255)).toString(16);
+      return s.length === 1 ? '0' + s : s;
+    }).join('').toUpperCase();
+  }
+
+  function rgbToHsv(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min, h = 0;
+    if (d) {
+      if (max === r) h = ((g - b) / d) % 6;
+      else if (max === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+      h *= 60;
+      if (h < 0) h += 360;
+    }
+    return { h: h, s: max ? d / max : 0, v: max };
+  }
+
+  function hsvToRgb(h, s, v) {
+    var c = v * s, x = c * (1 - Math.abs(((h / 60) % 2) - 1)), m = v - c, r = 0, g = 0, b = 0;
+    if (h < 60) { r = c; g = x; } else if (h < 120) { r = x; g = c; } else if (h < 180) { g = c; b = x; }
+    else if (h < 240) { g = x; b = c; } else if (h < 300) { r = x; b = c; } else { r = c; b = x; }
+    return { r: (r + m) * 255, g: (g + m) * 255, b: (b + m) * 255 };
+  }
+
+  /*
+   * One EyeDropper session per page, always ended explicitly.
+   * On macOS, Chrome's picker runs as a separate helper process (ColorSampler). If the page
+   * or iframe goes away while a pick is still open (reload, hot reload, tab closed, preview
+   * torn down) the helper can be left running. So every pick gets an AbortController, and we
+   * abort it on: pick finished, a second pick, popover closed, component destroyed, page
+   * hidden / unloaded / frozen, and after a safety timeout.
+   */
+  var EYEDROPPER_TIMEOUT = 30000;
+  var eyePick = null; // { controller, timer, owner }
+
+  function endEyedropper() {
+    var pick = eyePick;
+    if (!pick) return;
+    eyePick = null;
+    clearTimeout(pick.timer);
+    try { pick.controller.abort(); } catch (e) { /* already settled */ }
+    if (pick.owner) pick.owner();
+  }
+
+  function startEyedropper(onPick, onEnd) {
+    endEyedropper();
+    var controller = typeof AbortController === 'function' ? new AbortController() : null;
+    if (!controller) return Promise.reject(new Error('AbortController unavailable'));
+    var pick = { controller: controller, timer: 0, owner: onEnd };
+    pick.timer = setTimeout(endEyedropper, EYEDROPPER_TIMEOUT);
+    eyePick = pick;
+    return new window.EyeDropper().open({ signal: controller.signal }).then(function (result) {
+      if (eyePick === pick && result && result.sRGBHex) onPick(result.sRGBHex);
+    }).catch(function () { /* cancelled: Escape, abort or timeout */ }).then(function () {
+      if (eyePick === pick) endEyedropper();
+    });
+  }
+
+  if (!window.__kitEyedropperGuards) {
+    window.__kitEyedropperGuards = true;
+    window.addEventListener('pagehide', endEyedropper);
+    window.addEventListener('beforeunload', endEyedropper);
+    document.addEventListener('freeze', endEyedropper);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') endEyedropper();
+    });
+  }
+
+  window.initColorSelector = function initColorSelector(root, options) {
+    options = options || {};
+    var utils = window.ComponentUtils;
+    var field = root.querySelector('.color-selector') || root;
+    var wrap = root.querySelector('.color-selector__wrap');
+    var trigger = root.querySelector('[data-color-trigger]');
+    var swatch = root.querySelector('[data-color-swatch]');
+    var hexInput = root.querySelector('[data-color-hex]');
+    var opacityInput = root.querySelector('[data-color-opacity]');
+    var popover = root.querySelector('.color-selector__popover');
+    var sv = root.querySelector('[data-color-sv]');
+    var svThumb = sv && sv.querySelector('.color-selector__thumb');
+    var hue = root.querySelector('[data-color-hue]');
+    var hueThumb = hue && hue.querySelector('.color-selector__thumb');
+    var alpha = root.querySelector('[data-color-alpha]');
+    var alphaThumb = alpha && alpha.querySelector('.color-selector__thumb');
+    var alphaFill = root.querySelector('.color-selector__alpha-fill');
+    var hInput = root.querySelector('[data-color-h]');
+    var sInput = root.querySelector('[data-color-s]');
+    var bInput = root.querySelector('[data-color-b]');
+    var eyedropBtn = root.querySelector('[data-color-eyedropper]');
+    var labelEl = root.querySelector('.field-label');
+    if (!wrap || !trigger || !hexInput || !popover || !sv || !hue) {
+      throw new Error('initColorSelector: missing color selector elements');
+    }
+
+    var onChange = options.onChange;
+    if (options.label && labelEl) labelEl.textContent = options.label;
+
+    var start = hexToRgb(options.value || hexInput.value) || { r: 0, g: 0, b: 0 };
+    var hsv = rgbToHsv(start.r, start.g, start.b);
+    var a = clamp(utils.parseOpacity(options.opacity != null ? options.opacity : (opacityInput ? opacityInput.value : 100), 1), 0, 1);
+
+    function hex() { var c = hsvToRgb(hsv.h, hsv.s, hsv.v); return rgbToHex(c.r, c.g, c.b); }
+    function getColor() { return utils.colorWithOpacity('#' + hex(), a); }
+
+    function render(updateText) {
+      var h = hex();
+      var pure = hsvToRgb(hsv.h, 1, 1);
+      var pureHex = '#' + rgbToHex(pure.r, pure.g, pure.b);
+      if (swatch) swatch.style.background = getColor();
+      sv.style.backgroundColor = pureHex;
+      svThumb.style.left = (hsv.s * 100) + '%';
+      svThumb.style.top = ((1 - hsv.v) * 100) + '%';
+      svThumb.style.background = '#' + h;
+      hueThumb.style.left = (hsv.h / 360 * 100) + '%';
+      hueThumb.style.background = pureHex;
+      if (alpha) {
+        alphaFill.style.background = 'linear-gradient(90deg, rgba(0,0,0,0), #' + h + ')';
+        alphaThumb.style.left = (a * 100) + '%';
+        alphaThumb.style.background = getColor();
+        alpha.setAttribute('aria-valuenow', String(Math.round(a * 100)));
+      }
+      sv.setAttribute('aria-valuetext', 'Saturation ' + Math.round(hsv.s * 100) + '%, brightness ' + Math.round(hsv.v * 100) + '%');
+      hue.setAttribute('aria-valuenow', String(Math.round(hsv.h)));
+      if (updateText !== false) {
+        var focused = document.activeElement;
+        if (focused !== hexInput) hexInput.value = h;
+        if (opacityInput && focused !== opacityInput) opacityInput.value = String(Math.round(a * 100));
+        if (hInput && focused !== hInput) hInput.value = String(Math.round(hsv.h));
+        if (sInput && focused !== sInput) sInput.value = String(Math.round(hsv.s * 100));
+        if (bInput && focused !== bInput) bInput.value = String(Math.round(hsv.v * 100));
+      }
+    }
+
+    function commit(notify) {
+      render();
+      if (notify !== false && onChange) onChange(getColor(), { hex: '#' + hex(), opacity: Math.round(a * 100) });
+    }
+
+    function setHex(value, notify) {
+      var rgb = hexToRgb(value);
+      if (!rgb) return false;
+      var next = rgbToHsv(rgb.r, rgb.g, rgb.b);
+      // Keep the current hue for greys so the hue strip doesn't jump to red.
+      if (!next.s || !next.v) next.h = hsv.h;
+      hsv = next;
+      commit(notify);
+      return true;
+    }
+
+    /* H / S / B number fields: H 0–360, S and B 0–100 */
+    function bindChannel(input, max, apply) {
+      if (!input) return;
+      utils.bindInputBehavior(input);
+      var fromInput = function () {
+        var n = parseFloat(String(input.value).trim());
+        if (!Number.isFinite(n)) return;
+        var c = clamp(n, 0, max);
+        if (c !== n) input.value = String(Math.round(c));
+        apply(c);
+        commit();
+      };
+      input.addEventListener('input', fromInput);
+      utils.bindNumericArrowKey(input, fromInput);
+      input.addEventListener('blur', function () { render(); });
+    }
+    bindChannel(hInput, 360, function (v) { hsv.h = Math.min(v, 359.999); });
+    bindChannel(sInput, 100, function (v) { hsv.s = v / 100; });
+    bindChannel(bInput, 100, function (v) { hsv.v = v / 100; });
+
+    /* drag areas */
+    function drag(area, onPoint) {
+      function at(event) {
+        var r = area.getBoundingClientRect();
+        onPoint(clamp((event.clientX - r.left) / (r.width || 1), 0, 1), clamp((event.clientY - r.top) / (r.height || 1), 0, 1));
+      }
+      function move(event) { at(event); }
+      function up() {
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+        area.classList.remove('is-dragging');
+      }
+      area.addEventListener('pointerdown', function (event) {
+        event.preventDefault();
+        area.focus();
+        area.classList.add('is-dragging');
+        at(event);
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+      });
+    }
+
+    drag(sv, function (x, y) { hsv.s = x; hsv.v = 1 - y; commit(); });
+    drag(hue, function (x) { hsv.h = Math.min(x * 360, 359.999); commit(); });
+    if (alpha) drag(alpha, function (x) { a = Math.round(x * 100) / 100; commit(); });
+
+    function keys(area, handler) {
+      area.addEventListener('keydown', function (event) {
+        var big = event.shiftKey ? 10 : 1;
+        var dx = event.key === 'ArrowRight' ? big : event.key === 'ArrowLeft' ? -big : 0;
+        var dy = event.key === 'ArrowUp' ? big : event.key === 'ArrowDown' ? -big : 0;
+        if (!dx && !dy) return;
+        event.preventDefault();
+        handler(dx, dy);
+        commit();
+      });
+    }
+    keys(sv, function (dx, dy) { hsv.s = clamp(hsv.s + dx / 100, 0, 1); hsv.v = clamp(hsv.v + dy / 100, 0, 1); });
+    keys(hue, function (dx, dy) { hsv.h = clamp(hsv.h + dx + dy, 0, 359.999); });
+    if (alpha) keys(alpha, function (dx, dy) { a = clamp(Math.round(a * 100 + dx + dy) / 100, 0, 1); });
+
+    /* text inputs */
+    utils.bindInputBehavior(hexInput);
+    hexInput.addEventListener('input', function () {
+      var rgb = hexToRgb(hexInput.value);
+      if (!rgb) return;
+      var next = rgbToHsv(rgb.r, rgb.g, rgb.b);
+      if (!next.s || !next.v) next.h = hsv.h;
+      hsv = next;
+      render(false);
+      if (onChange) onChange(getColor(), { hex: '#' + hex(), opacity: Math.round(a * 100) });
+    });
+    hexInput.addEventListener('change', function () { render(); });
+    hexInput.addEventListener('blur', function () { render(); });
+    if (opacityInput) {
+      utils.bindInputBehavior(opacityInput);
+      var fromOpacity = function () {
+        a = utils.parseOpacity(opacityInput.value, a);
+        render(false);
+        if (onChange) onChange(getColor(), { hex: '#' + hex(), opacity: Math.round(a * 100) });
+      };
+      opacityInput.addEventListener('input', fromOpacity);
+      utils.bindNumericArrowKey(opacityInput, fromOpacity, { isOpacity: true });
+      opacityInput.addEventListener('blur', function () { render(); });
+    }
+
+    /* eyedropper — uses the browser EyeDropper API (Chrome, Edge, Opera) */
+    if (eyedropBtn) {
+      var eyeImg = eyedropBtn.querySelector('img');
+      if (eyeImg && !eyeImg.getAttribute('src') && window.ComponentIcons) eyeImg.src = window.ComponentIcons.eyedropper || '';
+      if (typeof window.EyeDropper !== 'function') {
+        eyedropBtn.disabled = true;
+        eyedropBtn.classList.add('is-disabled');
+        eyedropBtn.setAttribute('data-tooltip', 'Eyedropper isn\u2019t supported in this browser');
+      } else {
+        var eyeOff = function () {
+          eyedropBtn.classList.remove('is-active');
+          eyedropBtn.setAttribute('aria-pressed', 'false');
+        };
+        eyedropBtn.addEventListener('click', function (event) {
+          event.preventDefault();
+          // A second click cancels the pick instead of starting another one.
+          if (eyedropBtn.classList.contains('is-active')) { endEyedropper(); return; }
+          eyedropBtn.classList.add('is-active');
+          eyedropBtn.setAttribute('aria-pressed', 'true');
+          startEyedropper(function (value) { setHex(value); }, eyeOff);
+        });
+      }
+    }
+
+    /* open / close */
+    function isOpen() { return popover.classList.contains('is-open'); }
+    function open() {
+      if (isOpen()) return;
+      document.dispatchEvent(new CustomEvent('dimension-menu:close-all'));
+      document.dispatchEvent(new CustomEvent('option-selector:close-all'));
+      document.dispatchEvent(new CustomEvent('color-selector:close-all', { detail: { except: wrap } }));
+      popover.classList.add('is-open');
+      wrap.classList.add('is-menu-open');
+      trigger.setAttribute('aria-expanded', 'true');
+      render();
+    }
+    function ownsPick() { return !!(eyePick && eyedropBtn && eyedropBtn.classList.contains('is-active')); }
+    function close(returnFocus) {
+      if (ownsPick()) endEyedropper();
+      if (!isOpen()) return;
+      popover.classList.remove('is-open');
+      wrap.classList.remove('is-menu-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      if (returnFocus) trigger.focus();
+    }
+
+    trigger.addEventListener('click', function (event) {
+      event.preventDefault();
+      if (isOpen()) close(); else open();
+    });
+    wrap.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && isOpen()) { event.preventDefault(); close(true); }
+    });
+    function onDocClick(event) {
+      if (event.target.closest('.color-selector__wrap') === wrap) return;
+      close();
+    }
+    function onCloseAll(event) {
+      if (event.detail && event.detail.except === wrap) return;
+      close();
+    }
+    function onOtherMenu() { close(); }
+    document.addEventListener('click', onDocClick);
+    document.addEventListener('color-selector:close-all', onCloseAll);
+    document.addEventListener('dimension-menu:close-all', onOtherMenu);
+    document.addEventListener('option-selector:close-all', onOtherMenu);
+
+    render();
+
+    return {
+      element: field,
+      hexInput: hexInput,
+      opacityInput: opacityInput,
+      getColor: getColor,
+      getHex: function () { return '#' + hex(); },
+      getOpacity: function () { return Math.round(a * 100); },
+      setValue: function (value, opacity, notify) {
+        if (opacity != null) a = clamp(utils.parseOpacity(opacity, a), 0, 1);
+        if (!setHex(value, notify === true)) render();
+      },
+      /** Re-reads the hex and opacity inputs (ColorInput-compatible). */
+      updateUI: function (notify) {
+        if (opacityInput) a = clamp(utils.parseOpacity(opacityInput.value, a), 0, 1);
+        if (!setHex(hexInput.value, notify !== false)) commit(notify);
+      },
+      open: open,
+      close: function () { close(); },
+      /** Ends any eyedropper pick and removes document listeners. Call before removing the element. */
+      destroy: function () {
+        if (ownsPick()) endEyedropper();
+        close();
+        document.removeEventListener('click', onDocClick);
+        document.removeEventListener('color-selector:close-all', onCloseAll);
+        document.removeEventListener('dimension-menu:close-all', onOtherMenu);
+        document.removeEventListener('option-selector:close-all', onOtherMenu);
+      },
+    };
+  };
+
+  /** Ends the page's eyedropper pick, if any (e.g. before a hot reload or route change). */
+  window.cancelKitEyedropper = endEyedropper;
+})();
+
+(function () {
+  var clamp = function (v, lo, hi) { return Math.min(hi, Math.max(lo, v)); };
+  var tip = null;
+  var tipText = null;
+  var current = null;
+  var showTimer = 0;
+  var uid = 0;
+
+  function ensureTip() {
+    if (tip) return tip;
+    tip = document.createElement('div');
+    tip.className = 'kit-tooltip';
+    tip.setAttribute('role', 'tooltip');
+    tip.id = 'kit-tooltip';
+    tipText = document.createElement('span');
+    tipText.className = 'kit-tooltip__text';
+    tip.appendChild(tipText);
+    document.body.appendChild(tip);
+    return tip;
+  }
+
+  function place(target, placement) {
+    var gap = 6;
+    var r = target.getBoundingClientRect();
+    var t = tip.getBoundingClientRect();
+    var vw = document.documentElement.clientWidth;
+    var vh = document.documentElement.clientHeight;
+    var fits = {
+      top: r.top - t.height - gap >= 4,
+      bottom: r.bottom + t.height + gap <= vh - 4,
+      left: r.left - t.width - gap >= 4,
+      right: r.right + t.width + gap <= vw - 4,
+    };
+    var opposite = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
+    var p = fits[placement] ? placement : (fits[opposite[placement]] ? opposite[placement] : placement);
+    var x, y;
+    if (p === 'top' || p === 'bottom') {
+      x = r.left + r.width / 2 - t.width / 2;
+      y = p === 'top' ? r.top - t.height - gap : r.bottom + gap;
+    } else {
+      x = p === 'left' ? r.left - t.width - gap : r.right + gap;
+      y = r.top + r.height / 2 - t.height / 2;
+    }
+    var cx = clamp(x, 4, vw - t.width - 4);
+    var cy = clamp(y, 4, vh - t.height - 4);
+    tip.style.left = Math.round(cx) + 'px';
+    tip.style.top = Math.round(cy) + 'px';
+    tip.dataset.placement = p;
+    // keep the arrow pointing at the target when the bubble was clamped
+    if (p === 'top' || p === 'bottom') tip.style.setProperty('--kit-tooltip-arrow', Math.round(r.left + r.width / 2 - cx) + 'px');
+    else tip.style.setProperty('--kit-tooltip-arrow', Math.round(r.top + r.height / 2 - cy) + 'px');
+  }
+
+  function show(target) {
+    var text = target.getAttribute('data-tooltip');
+    if (!text) return;
+    ensureTip();
+    clearTimeout(showTimer);
+    current = target;
+    tipText.textContent = text;
+    tip.classList.add('is-open');
+    if (!target.id) target.id = 'kit-tooltip-target-' + (++uid);
+    target.setAttribute('aria-describedby', tip.id);
+    place(target, target.getAttribute('data-tooltip-placement') || 'top');
+  }
+
+  function hide() {
+    clearTimeout(showTimer);
+    if (!tip) return;
+    tip.classList.remove('is-open');
+    if (current) current.removeAttribute('aria-describedby');
+    current = null;
+  }
+
+  window.initTooltip = function initTooltip(root, options) {
+    options = options || {};
+    root = root || document;
+    var delay = options.delay != null ? options.delay : 400;
+    var scope = root === document ? document.documentElement : root;
+    if (scope.__kitTooltip) return scope.__kitTooltip;
+
+    function targetOf(event) {
+      var el = event.target.closest && event.target.closest('[data-tooltip]');
+      return el && scope.contains(el) ? el : null;
+    }
+
+    scope.addEventListener('pointerover', function (event) {
+      var el = targetOf(event);
+      if (!el || el === current) return;
+      clearTimeout(showTimer);
+      // Moving between tooltip targets swaps instantly; the first one waits.
+      if (current) show(el);
+      else showTimer = setTimeout(function () { show(el); }, delay);
+    });
+    scope.addEventListener('pointerout', function (event) {
+      var el = targetOf(event);
+      if (!el) return;
+      if (event.relatedTarget && el.contains(event.relatedTarget)) return;
+      hide();
+    });
+    scope.addEventListener('focusin', function (event) {
+      var el = targetOf(event);
+      if (el && el.matches(':focus-visible')) show(el);
+    });
+    scope.addEventListener('focusout', function (event) { if (targetOf(event)) hide(); });
+    scope.addEventListener('pointerdown', function () { hide(); });
+    document.addEventListener('keydown', function (event) { if (event.key === 'Escape') hide(); });
+    window.addEventListener('scroll', hide, true);
+
+    var controller = {
+      element: scope,
+      attach: function (el, text, placement) {
+        el.setAttribute('data-tooltip', text);
+        if (placement) el.setAttribute('data-tooltip-placement', placement);
+        return el;
+      },
+      show: function (el) { show(el); },
+      hide: hide,
+    };
+    scope.__kitTooltip = controller;
+    return controller;
+  };
+})();
 
 window.initCubicBezierInput = function initCubicBezierInput(root, options = {}) {
   const utils = window.ComponentUtils;
@@ -1487,11 +2357,11 @@ window.initHoverButtonExperiment = function initHoverButtonExperiment() {
     },
   });
 
-  const bgColor = window.initColorInput(document.getElementById('bg-color-root'), {
+  const bgColor = window.initColorSelector(document.getElementById('bg-color-root'), {
     onChange: applyAll,
   });
 
-  const borderColor = window.initColorInput(document.getElementById('border-color-root'), {
+  const borderColor = window.initColorSelector(document.getElementById('border-color-root'), {
     onChange: applyAll,
   });
 
@@ -1521,8 +2391,6 @@ window.initHoverButtonExperiment = function initHoverButtonExperiment() {
     utils.bindNumericArrowKey(input, applyAll);
   });
 
-  utils.bindNumericArrowKey(bgColor.opacityInput, applyAll, { isOpacity: true });
-  utils.bindNumericArrowKey(borderColor.opacityInput, applyAll, { isOpacity: true });
 
   function collectSettings() {
     return {
@@ -1827,6 +2695,7 @@ window.initHoverButtonExperiment = function initHoverButtonExperiment() {
 };
 
 if (!document.getElementById('experiment-selector-root')) {
+  window.initTooltip?.(document);
   window.initHoverButtonExperiment();
 }
 

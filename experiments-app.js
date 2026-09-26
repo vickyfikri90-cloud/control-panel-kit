@@ -149,6 +149,7 @@
     experiments[id]?.init();
   }
 
+  window.initTooltip?.(document);
   selector.setValue(startExperiment);
   switchExperiment(startExperiment);
 })();

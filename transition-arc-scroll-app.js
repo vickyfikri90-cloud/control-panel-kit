@@ -33,7 +33,7 @@ window.initArcScrollTransitionExperiment = function initArcScrollTransitionExper
 
   const arcScroll = window.initArcScrollTransition(preview, {});
 
-  const solidColor = window.initColorInput(document.getElementById('exp-transition-arc-scroll-solid-color-root'), {
+  const solidColor = window.initColorSelector(document.getElementById('exp-transition-arc-scroll-solid-color-root'), {
     onChange: applyAll,
   });
 
@@ -49,7 +49,6 @@ window.initArcScrollTransitionExperiment = function initArcScrollTransitionExper
     input.addEventListener('input', applyAll);
     utils.bindNumericArrowKey(input, applyAll);
   });
-  utils.bindNumericArrowKey(solidColor.opacityInput, applyAll, { isOpacity: true });
 
   function getConfig() {
     return {

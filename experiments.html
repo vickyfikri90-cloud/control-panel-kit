@@ -130,6 +130,61 @@
   color: #09090b;
 }
 
+/* ---- Upload shared (FileUpload, ImageUpload, MultiImageUpload) ---- */
+.upload-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.upload-remove,
+.upload-clear {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upload-remove img,
+.upload-clear img {
+  width: 8px;
+  height: 8px;
+  display: block;
+  opacity: 0.5;
+}
+
+.upload-clear:hover { background: rgba(0, 0, 0, 0.04); }
+
+.upload-remove:focus,
+.upload-clear:focus { outline: none; }
+
+.upload-remove:focus-visible,
+.upload-clear:focus-visible {
+  outline: 1px solid #9d9d9d;
+  outline-offset: 1px;
+}
+
+.upload-meta {
+  flex-shrink: 0;
+  font: 500 11px/16px Inter, sans-serif;
+  letter-spacing: 0.055px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.upload-clear[hidden] {
+  display: none;
+}
+
 .cp-app {
   display: flex;
   height: 100%;
@@ -396,6 +451,403 @@
   margin-top: 8px;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.color-selector__wrap {
+  position: relative;
+  overflow: visible;
+  z-index: 1;
+}
+
+.color-selector__wrap.is-menu-open { z-index: 30; }
+
+.color-selector__trigger {
+  flex-shrink: 0;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.color-selector__trigger:focus { outline: none; }
+
+.color-selector__trigger:focus-visible .swatch {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08), 0 0 0 1px #9d9d9d;
+}
+
+.color-selector__popover {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  padding: 8px;
+  flex-direction: column;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+}
+
+.color-selector__popover.is-open { display: flex; }
+
+.color-selector__sv {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: 5px;
+  background-image:
+    linear-gradient(to top, #000, rgba(0, 0, 0, 0)),
+    linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.color-selector__hue,
+.color-selector__alpha {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.color-selector__hue {
+  background: linear-gradient(90deg, #f00 0%, #ff0 16.67%, #0f0 33.33%, #0ff 50%, #00f 66.67%, #f0f 83.33%, #f00 100%);
+}
+
+.color-selector__alpha {
+  background-color: #fff;
+  background-image:
+    linear-gradient(45deg, #d9d9d9 25%, transparent 25%, transparent 75%, #d9d9d9 75%),
+    linear-gradient(45deg, #d9d9d9 25%, transparent 25%, transparent 75%, #d9d9d9 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+}
+
+.color-selector__alpha-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+}
+
+.color-selector__thumb {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.color-selector__sv .color-selector__thumb { top: 0; }
+
+.color-selector__sv:focus,
+.color-selector__hue:focus,
+.color-selector__alpha:focus { outline: none; }
+
+.color-selector__sv:focus-visible,
+.color-selector__hue:focus-visible,
+.color-selector__alpha:focus-visible {
+  outline: 1px solid #9d9d9d;
+  outline-offset: 1px;
+}
+
+.color-selector__hsb {
+  display: flex;
+  gap: 8px;
+}
+
+.color-selector__hsb .input-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.color-selector__hsb .input-icon {
+  width: 20px;
+}
+
+.color-selector__eyedropper {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.color-selector__eyedropper img {
+  width: 12px;
+  height: 12px;
+  display: block;
+  opacity: 0.5;
+}
+
+.color-selector__eyedropper:hover { background: #eeeeee; }
+
+.color-selector__eyedropper:focus { outline: none; }
+
+.color-selector__eyedropper:focus-visible { border-color: #9D9D9D; }
+
+.color-selector__eyedropper.is-active { background: #23272e; }
+
+.color-selector__eyedropper.is-active img {
+  opacity: 1;
+  filter: invert(1);
+}
+
+.color-selector__eyedropper:disabled,
+.color-selector__eyedropper.is-disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.color-selector__eyedropper:disabled:hover { background: #f5f5f5; }
+
+.multi-image-upload__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+.multi-image-upload__grid.is-dragover {
+  border-color: #9D9D9D;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.multi-image-upload__tile,
+.multi-image-upload__add {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.multi-image-upload__tile {
+  background: #f5f5f5;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.multi-image-upload__img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.multi-image-upload__tile .upload-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 16px;
+  height: 16px;
+  background: #000;
+  border-radius: 8px;
+  opacity: 0;
+}
+
+.multi-image-upload__tile .upload-remove img {
+  width: 6px;
+  height: 6px;
+  opacity: 1;
+  filter: invert(1);
+}
+
+.multi-image-upload__tile:hover .upload-remove,
+.multi-image-upload__tile .upload-remove:focus-visible {
+  opacity: 1;
+}
+
+.multi-image-upload__add {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.multi-image-upload__add img {
+  width: 10px;
+  height: 10px;
+  display: block;
+  opacity: 0.5;
+}
+
+.multi-image-upload__add:hover { background: #eeeeee; }
+
+.multi-image-upload__add:focus { outline: none; }
+
+.multi-image-upload__add:focus-visible { border-color: #9D9D9D; }
+
+.multi-image-upload__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+  margin-top: 8px;
+}
+
+.multi-image-upload__footer .upload-meta { padding: 0; }
+
+.multi-image-upload__clear {
+  height: 24px;
+  margin: 0;
+  padding: 0 7px;
+  border: none;
+  background: transparent;
+  border-radius: 5px;
+  font: 500 11px/16px Inter, sans-serif;
+  letter-spacing: 0.055px;
+  color: #09090b;
+  cursor: pointer;
+}
+
+.multi-image-upload__clear:hover { background: rgba(0, 0, 0, 0.04); }
+
+.multi-image-upload__clear:focus { outline: none; }
+
+.multi-image-upload__clear:focus-visible {
+  outline: 1px solid #9d9d9d;
+  outline-offset: 1px;
+}
+
+.multi-image-upload__add[hidden],
+.multi-image-upload__clear[hidden] {
+  display: none;
+}
+
+.size-control .row > .input-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.size-control__lock {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.size-control__lock img {
+  width: 12px;
+  height: 12px;
+  display: block;
+  opacity: 0.5;
+}
+
+.size-control__lock:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.size-control__lock.is-active {
+  background: #f5f5f5;
+}
+
+.size-control__lock.is-active img {
+  opacity: 1;
+}
+
+.size-control__lock:focus {
+  outline: none;
+}
+
+.size-control__lock:focus-visible {
+  border-color: #9D9D9D;
+}
+
+.kit-tooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  max-width: 200px;
+  padding: 4px 8px;
+  background: #000;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+  font: 500 11px/16px Inter, sans-serif;
+  letter-spacing: 0.055px;
+  color: #fff;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s ease, visibility 0s linear 0.12s;
+}
+
+.kit-tooltip.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.12s ease;
+}
+
+.kit-tooltip::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+}
+
+.kit-tooltip[data-placement="top"]::after {
+  top: 100%;
+  left: var(--kit-tooltip-arrow, 50%);
+  margin-left: -4px;
+  border-top-color: #000;
+}
+
+.kit-tooltip[data-placement="bottom"]::after {
+  bottom: 100%;
+  left: var(--kit-tooltip-arrow, 50%);
+  margin-left: -4px;
+  border-bottom-color: #000;
+}
+
+.kit-tooltip[data-placement="left"]::after {
+  left: 100%;
+  top: var(--kit-tooltip-arrow, 50%);
+  margin-top: -4px;
+  border-left-color: #000;
+}
+
+.kit-tooltip[data-placement="right"]::after {
+  right: 100%;
+  top: var(--kit-tooltip-arrow, 50%);
+  margin-top: -4px;
+  border-right-color: #000;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kit-tooltip,
+  .kit-tooltip.is-open { transition: none; }
 }
 
 .cubic-bezier-field {
@@ -1456,34 +1908,6 @@
   background: #e8e8e8;
 }
 
-[data-experiment-panel="parallax-horizontal"] .exp-parallax-horizontal-image-field {
-  margin-bottom: 0;
-}
-
-[data-experiment-panel="parallax-horizontal"] .exp-parallax-horizontal-image-row {
-  align-items: center;
-  width: 100%;
-}
-
-[data-experiment-panel="parallax-horizontal"] .exp-parallax-horizontal-image-btn {
-  width: 72px;
-  min-width: 72px;
-  height: 24px;
-  margin-top: 0;
-  flex-shrink: 0;
-  padding: 0 8px;
-}
-
-[data-experiment-panel="parallax-horizontal"] .exp-parallax-horizontal-image-name {
-  flex: 1;
-  min-width: 0;
-  font: 500 11px/16px Inter, system-ui, sans-serif;
-  color: rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .horizontal-parallax__stage {
   position: relative;
   flex: 1 1 auto;
@@ -1819,12 +2243,23 @@
         <div class="field">
           <span class="field-label">Background color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="F0F0F0">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="F0F0F0" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -1836,12 +2271,23 @@
         <div class="field-stack">
         <div id="border-color-root">
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="CCCCCC">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="CCCCCC" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -1979,12 +2425,23 @@
         <div class="field">
           <span class="field-label">Background color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="F0F0F0">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="F0F0F0" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="90">
+                <input type="text" data-color-opacity value="90" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -1996,12 +2453,23 @@
         <div class="field-stack">
         <div id="exp-button-rotate-x-border-color-root">
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="CCCCCC">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="CCCCCC" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="90">
+                <input type="text" data-color-opacity value="90" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2093,37 +2561,18 @@
         </div>
       </div>
 
-      <div class="field">
-        <span class="field-label">Dimensions</span>
+      <div class="field size-control" id="exp-carousel-rotate-size-root">
+        <span class="field-label">Size</span>
         <div class="row">
-          <div class="input-wrap input-wrap--dimension" data-dimension-id="width">
+          <div class="input-wrap">
             <span class="input-icon">W</span>
-            <div class="dimension-control is-fixed">
-              <span class="dimension-mode-label">Fixed (400)</span>
-              <input type="text" class="dimension-fixed-input" value="400">
-            </div>
-            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Width mode">
-              <img src="" alt="" data-icon="chevron">
-            </span>
-            <div class="dimension-menu">
-              <button type="button" data-dimension-mode="fixed">Fixed</button>
-              <button type="button" data-dimension-mode="hug">Hug Content</button>
-            </div>
+            <input type="text" data-size-width value="400" inputmode="decimal" aria-label="Width">
           </div>
-          <div class="input-wrap input-wrap--dimension" data-dimension-id="height">
+          <div class="input-wrap">
             <span class="input-icon">H</span>
-            <div class="dimension-control is-fixed">
-              <span class="dimension-mode-label">Fixed (500)</span>
-              <input type="text" class="dimension-fixed-input" value="500">
-            </div>
-            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Height mode">
-              <img src="" alt="" data-icon="chevron">
-            </span>
-            <div class="dimension-menu">
-              <button type="button" data-dimension-mode="fixed">Fixed</button>
-              <button type="button" data-dimension-mode="hug">Hug Content</button>
-            </div>
+            <input type="text" data-size-height value="500" inputmode="decimal" aria-label="Height">
           </div>
+          <button type="button" class="size-control__lock" data-size-lock aria-pressed="false" aria-label="Lock aspect ratio"><img src="" alt=""></button>
         </div>
       </div>
 
@@ -2140,12 +2589,23 @@
         <div class="field">
           <span class="field-label">Box 1 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="FF6B6B">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="FF6B6B" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2156,12 +2616,23 @@
         <div class="field">
           <span class="field-label">Box 2 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="4ECDC4">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="4ECDC4" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2172,12 +2643,23 @@
         <div class="field">
           <span class="field-label">Box 3 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="FFE66D">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="FFE66D" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2188,12 +2670,23 @@
         <div class="field">
           <span class="field-label">Box 4 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="5B8DEF">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="5B8DEF" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2204,12 +2697,23 @@
         <div class="field">
           <span class="field-label">Box 5 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="C77DFF">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="C77DFF" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2325,37 +2829,18 @@
         </div>
       </div>
 
-      <div class="field">
-        <span class="field-label">Dimensions</span>
+      <div class="field size-control" id="exp-carousel-rotate-x-size-root">
+        <span class="field-label">Size</span>
         <div class="row">
-          <div class="input-wrap input-wrap--dimension" data-dimension-id="width">
+          <div class="input-wrap">
             <span class="input-icon">W</span>
-            <div class="dimension-control is-fixed">
-              <span class="dimension-mode-label">Fixed (600)</span>
-              <input type="text" class="dimension-fixed-input" value="600">
-            </div>
-            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Width mode">
-              <img src="" alt="" data-icon="chevron">
-            </span>
-            <div class="dimension-menu">
-              <button type="button" data-dimension-mode="fixed">Fixed</button>
-              <button type="button" data-dimension-mode="hug">Hug Content</button>
-            </div>
+            <input type="text" data-size-width value="600" inputmode="decimal" aria-label="Width">
           </div>
-          <div class="input-wrap input-wrap--dimension" data-dimension-id="height">
+          <div class="input-wrap">
             <span class="input-icon">H</span>
-            <div class="dimension-control is-fixed">
-              <span class="dimension-mode-label">Fixed (400)</span>
-              <input type="text" class="dimension-fixed-input" value="400">
-            </div>
-            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Height mode">
-              <img src="" alt="" data-icon="chevron">
-            </span>
-            <div class="dimension-menu">
-              <button type="button" data-dimension-mode="fixed">Fixed</button>
-              <button type="button" data-dimension-mode="hug">Hug Content</button>
-            </div>
+            <input type="text" data-size-height value="400" inputmode="decimal" aria-label="Height">
           </div>
+          <button type="button" class="size-control__lock" data-size-lock aria-pressed="false" aria-label="Lock aspect ratio"><img src="" alt=""></button>
         </div>
       </div>
 
@@ -2372,12 +2857,23 @@
         <div class="field">
           <span class="field-label">Box 1 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="FF6B6B">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="FF6B6B" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2388,12 +2884,23 @@
         <div class="field">
           <span class="field-label">Box 2 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="4ECDC4">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="4ECDC4" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2404,12 +2911,23 @@
         <div class="field">
           <span class="field-label">Box 3 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="FFE66D">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="FFE66D" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2420,12 +2938,23 @@
         <div class="field">
           <span class="field-label">Box 4 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="5B8DEF">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="5B8DEF" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2436,12 +2965,23 @@
         <div class="field">
           <span class="field-label">Box 5 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="C77DFF">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="C77DFF" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2540,12 +3080,23 @@
         <div class="field">
           <span class="field-label">Box 1 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="FF6B6B">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="FF6B6B" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2556,12 +3107,23 @@
         <div class="field">
           <span class="field-label">Box 2 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="4ECDC4">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="4ECDC4" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2572,12 +3134,23 @@
         <div class="field">
           <span class="field-label">Box 3 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="FFE66D">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="FFE66D" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2588,12 +3161,23 @@
         <div class="field">
           <span class="field-label">Box 4 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="5B8DEF">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="5B8DEF" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2604,12 +3188,23 @@
         <div class="field">
           <span class="field-label">Box 5 Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="C77DFF">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="C77DFF" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -2625,37 +3220,18 @@
         <span class="field-label">Fan</span>
       </div>
 
-      <div class="field">
-        <span class="field-label">Dimensions</span>
+      <div class="field size-control" id="exp-carousel-flip-fan-size-root">
+        <span class="field-label">Size</span>
         <div class="row">
-          <div class="input-wrap input-wrap--dimension" data-dimension-id="fan-width">
+          <div class="input-wrap">
             <span class="input-icon">W</span>
-            <div class="dimension-control is-fixed">
-              <span class="dimension-mode-label">Fixed (400)</span>
-              <input type="text" class="dimension-fixed-input" value="400">
-            </div>
-            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Width mode">
-              <img src="" alt="" data-icon="chevron">
-            </span>
-            <div class="dimension-menu">
-              <button type="button" data-dimension-mode="fixed">Fixed</button>
-              <button type="button" data-dimension-mode="hug">Hug Content</button>
-            </div>
+            <input type="text" data-size-width value="400" inputmode="decimal" aria-label="Width">
           </div>
-          <div class="input-wrap input-wrap--dimension" data-dimension-id="fan-height">
+          <div class="input-wrap">
             <span class="input-icon">H</span>
-            <div class="dimension-control is-fixed">
-              <span class="dimension-mode-label">Fixed (500)</span>
-              <input type="text" class="dimension-fixed-input" value="500">
-            </div>
-            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Height mode">
-              <img src="" alt="" data-icon="chevron">
-            </span>
-            <div class="dimension-menu">
-              <button type="button" data-dimension-mode="fixed">Fixed</button>
-              <button type="button" data-dimension-mode="hug">Hug Content</button>
-            </div>
+            <input type="text" data-size-height value="500" inputmode="decimal" aria-label="Height">
           </div>
+          <button type="button" class="size-control__lock" data-size-lock aria-pressed="false" aria-label="Lock aspect ratio"><img src="" alt=""></button>
         </div>
       </div>
 
@@ -2757,37 +3333,18 @@
         </div>
       </div>
 
-      <div class="field">
-        <span class="field-label">Dimensions</span>
+      <div class="field size-control" id="exp-carousel-flip-horiz-size-root">
+        <span class="field-label">Size</span>
         <div class="row">
-          <div class="input-wrap input-wrap--dimension" data-dimension-id="horiz-width">
+          <div class="input-wrap">
             <span class="input-icon">W</span>
-            <div class="dimension-control is-fixed">
-              <span class="dimension-mode-label">Fixed (600)</span>
-              <input type="text" class="dimension-fixed-input" value="600">
-            </div>
-            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Width mode">
-              <img src="" alt="" data-icon="chevron">
-            </span>
-            <div class="dimension-menu">
-              <button type="button" data-dimension-mode="fixed">Fixed</button>
-              <button type="button" data-dimension-mode="hug">Hug Content</button>
-            </div>
+            <input type="text" data-size-width value="600" inputmode="decimal" aria-label="Width">
           </div>
-          <div class="input-wrap input-wrap--dimension" data-dimension-id="horiz-height">
+          <div class="input-wrap">
             <span class="input-icon">H</span>
-            <div class="dimension-control is-fixed">
-              <span class="dimension-mode-label">Fixed (400)</span>
-              <input type="text" class="dimension-fixed-input" value="400">
-            </div>
-            <span class="chevron-wrap dimension-chevron" role="button" tabindex="0" aria-label="Height mode">
-              <img src="" alt="" data-icon="chevron">
-            </span>
-            <div class="dimension-menu">
-              <button type="button" data-dimension-mode="fixed">Fixed</button>
-              <button type="button" data-dimension-mode="hug">Hug Content</button>
-            </div>
+            <input type="text" data-size-height value="400" inputmode="decimal" aria-label="Height">
           </div>
+          <button type="button" class="size-control__lock" data-size-lock aria-pressed="false" aria-label="Lock aspect ratio"><img src="" alt=""></button>
         </div>
       </div>
 
@@ -3044,12 +3601,23 @@
         <div class="field">
           <span class="field-label">Solid Color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="CECECE">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="CECECE" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -3183,27 +3751,18 @@
       </div>
 
       <div data-experiment-panel="parallax-horizontal" hidden>
-      <div class="field">
+      <div class="field size-control" id="exp-parallax-horizontal-size-root">
         <span class="field-label">Card size</span>
-      </div>
-
-      <div class="field">
-        <label class="field-label" for="exp-parallax-horizontal-width">Width</label>
         <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp-parallax-horizontal-width" value="393">
-            <div class="suffix-wrap"><span>px</span></div>
+            <span class="input-icon">W</span>
+            <input type="text" data-size-width value="393" inputmode="decimal" aria-label="Width">
           </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="field-label" for="exp-parallax-horizontal-height">Height</label>
-        <div class="row">
           <div class="input-wrap">
-            <input type="text" id="exp-parallax-horizontal-height" value="263">
-            <div class="suffix-wrap"><span>px</span></div>
+            <span class="input-icon">H</span>
+            <input type="text" data-size-height value="263" inputmode="decimal" aria-label="Height">
           </div>
+          <button type="button" class="size-control__lock" data-size-lock aria-pressed="false" aria-label="Lock aspect ratio"><img src="" alt=""></button>
         </div>
       </div>
 
@@ -3248,52 +3807,15 @@
         <span class="panel-divider__line" role="separator"></span>
       </div>
 
-      <div class="field">
+      <div class="field multi-image-upload" id="exp-parallax-horizontal-images-root">
         <span class="field-label">Images</span>
-      </div>
-
-      <div class="field exp-parallax-horizontal-image-field">
-        <label class="field-label" for="exp-parallax-horizontal-image-1-file">Card 1</label>
-        <div class="row exp-parallax-horizontal-image-row">
-          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-1-btn">Upload</button>
-          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-1-name">Default</span>
-          <input type="file" id="exp-parallax-horizontal-image-1-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+        <div class="multi-image-upload__grid" role="list">
+          <button type="button" class="multi-image-upload__add" aria-label="Add images" data-tooltip="Add images"><img src="" alt="" data-icon="plus"></button>
+          <input type="file" class="upload-file-input" accept="image/png,image/jpeg,image/webp,image/gif" multiple tabindex="-1" aria-hidden="true">
         </div>
-      </div>
-
-      <div class="field exp-parallax-horizontal-image-field">
-        <label class="field-label" for="exp-parallax-horizontal-image-2-file">Card 2</label>
-        <div class="row exp-parallax-horizontal-image-row">
-          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-2-btn">Upload</button>
-          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-2-name">Default</span>
-          <input type="file" id="exp-parallax-horizontal-image-2-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
-        </div>
-      </div>
-
-      <div class="field exp-parallax-horizontal-image-field">
-        <label class="field-label" for="exp-parallax-horizontal-image-3-file">Card 3</label>
-        <div class="row exp-parallax-horizontal-image-row">
-          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-3-btn">Upload</button>
-          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-3-name">Default</span>
-          <input type="file" id="exp-parallax-horizontal-image-3-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
-        </div>
-      </div>
-
-      <div class="field exp-parallax-horizontal-image-field">
-        <label class="field-label" for="exp-parallax-horizontal-image-4-file">Card 4</label>
-        <div class="row exp-parallax-horizontal-image-row">
-          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-4-btn">Upload</button>
-          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-4-name">Default</span>
-          <input type="file" id="exp-parallax-horizontal-image-4-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
-        </div>
-      </div>
-
-      <div class="field exp-parallax-horizontal-image-field">
-        <label class="field-label" for="exp-parallax-horizontal-image-5-file">Card 5</label>
-        <div class="row exp-parallax-horizontal-image-row">
-          <button type="button" class="download-btn exp-parallax-horizontal-image-btn" id="exp-parallax-horizontal-image-5-btn">Upload</button>
-          <span class="exp-parallax-horizontal-image-name" id="exp-parallax-horizontal-image-5-name">Default</span>
-          <input type="file" id="exp-parallax-horizontal-image-5-file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+        <div class="multi-image-upload__footer">
+          <span class="upload-meta" data-upload-count></span>
+          <button type="button" class="multi-image-upload__clear" data-upload-clear hidden>Clear all</button>
         </div>
       </div>
 
@@ -3431,12 +3953,23 @@
         <div class="field">
           <span class="field-label">Background color</span>
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="F0F0F0">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="F0F0F0" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -3448,12 +3981,23 @@
         <div class="field-stack">
         <div id="exp-button-stagger-text-border-color-root">
           <div class="row">
-            <div class="input-wrap color-wrap">
-              <span class="swatch" data-color-swatch></span>
-              <input type="text" data-color-hex value="CCCCCC">
+            <div class="input-wrap color-wrap color-selector__wrap">
+              <button type="button" class="color-selector__trigger" data-color-trigger aria-haspopup="dialog" aria-expanded="false" aria-label="Open color picker"><span class="swatch" data-color-swatch></span></button>
+              <input type="text" data-color-hex value="CCCCCC" spellcheck="false" aria-label="Hex">
               <div class="opacity-wrap">
-                <input type="text" data-color-opacity value="100">
+                <input type="text" data-color-opacity value="100" aria-label="Opacity">
                 <span class="opacity-suffix">%</span>
+              </div>
+              <div class="color-selector__popover" role="dialog" aria-label="Color picker">
+                <div class="color-selector__sv" data-color-sv tabindex="0" role="slider" aria-label="Saturation and brightness"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hue" data-color-hue tabindex="0" role="slider" aria-label="Hue" aria-valuemin="0" aria-valuemax="360"><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__alpha" data-color-alpha tabindex="0" role="slider" aria-label="Opacity" aria-valuemin="0" aria-valuemax="100"><span class="color-selector__alpha-fill"></span><span class="color-selector__thumb"></span></div>
+                <div class="color-selector__hsb">
+                  <div class="input-wrap"><span class="input-icon">H</span><input type="text" data-color-h inputmode="numeric" aria-label="Hue (0–360)"></div>
+                  <div class="input-wrap"><span class="input-icon">S</span><input type="text" data-color-s inputmode="numeric" aria-label="Saturation (0–100)"></div>
+                  <div class="input-wrap"><span class="input-icon">B</span><input type="text" data-color-b inputmode="numeric" aria-label="Brightness (0–100)"></div>
+                  <button type="button" class="color-selector__eyedropper" data-color-eyedropper aria-label="Pick color from screen" aria-pressed="false" data-tooltip="Pick color from screen"><img src="" alt=""></button>
+                </div>
               </div>
             </div>
           </div>
@@ -3646,6 +4190,14 @@ window.ComponentIcons = {
   chevron: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOCIgaGVpZ2h0PSI1IiB2aWV3Qm94PSIwIDAgOCA1IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBvcGFjaXR5PSIwLjQiIGQ9Ik0zLjcwMzEyIDQuNDA2MjVMMCAwLjcwMzEyNUwwLjcwMzEyNSAwTDEuMDYyNSAwLjM0Mzc1TDMuNzAzMTIgM0w2LjcwMzEyIDBMNy40MjE4OCAwLjcwMzEyNUw3LjA2MjUgMS4wNjI1TDMuNzAzMTIgNC40MDYyNVoiIGZpbGw9IiMwOTA5MEIiLz4KPC9zdmc+Cg==',
   check: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNyIgaGVpZ2h0PSI3IiB2aWV3Qm94PSIwIDAgNyA3IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMC44MzMwMDggMy43NDk2N0wyLjQ5OTY3IDUuNDE2MzRMNS44MzMwMSAwLjgzMzAwOCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjY2NjY3IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==',
   'check-indeterminate': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNyIgaGVpZ2h0PSIzIiB2aWV3Qm94PSIwIDAgNyAzIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNNC44MzMwMSAwQzUuNjYxNDQgMCA2LjMzMzAxIDAuNjcxNTczIDYuMzMzMDEgMS41QzYuMzMzMDEgMi4zMjg0MyA1LjY2MTQ0IDMgNC44MzMwMSAzSDEuNUMwLjY3MTU3MyAzIDAgMi4zMjg0MyAwIDEuNUMwIDAuNjcxNTczIDAuNjcxNTczIDAgMS41IDBINC44MzMwMVoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=',
+  upload: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNiA4VjEuNU02IDEuNUwzLjI1IDQuMjVNNiAxLjVMOC43NSA0LjI1IiBzdHJva2U9IiMwOTA5MEIiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNMS41IDguNVYxMC41SDEwLjVWOC41IiBzdHJva2U9IiMwOTA5MEIiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4K',
+  file: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMi41IDFIN0w5LjUgMy41VjExSDIuNVYxWiIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjEuMSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxwYXRoIGQ9Ik03IDFWMy41SDkuNSIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjEuMSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPgo=',
+  image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIxIiB5PSIxLjUiIHdpZHRoPSIxMCIgaGVpZ2h0PSI5IiByeD0iMS41IiBzdHJva2U9IiMwOTA5MEIiIHN0cm9rZS13aWR0aD0iMS4xIi8+PGNpcmNsZSBjeD0iNC4yNSIgY3k9IjQuNSIgcj0iMSIgZmlsbD0iIzA5MDkwQiIvPjxwYXRoIGQ9Ik0xLjUgOUw0LjUgNi41TDYuNSA4TDguNSA2TDEwLjUgOCIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjEuMSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPgo=',
+  close: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOCIgaGVpZ2h0PSI4IiB2aWV3Qm94PSIwIDAgOCA4IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xIDFMNyA3TTcgMUwxIDciIHN0cm9rZT0iIzA5MDkwQiIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPgo=',
+  plus: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNSAxVjlNMSA1SDkiIHN0cm9rZT0iIzA5MDkwQiIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPgo=',
+  eyedropper: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNy45IDEuMUM4LjYgMC40IDkuOCAwLjQgMTAuNSAxLjFMMTAuOSAxLjVDMTEuNiAyLjIgMTEuNiAzLjQgMTAuOSA0LjFMOS42IDUuNEw2LjYgMi40TDcuOSAxLjFaIiBmaWxsPSIjMDkwOTBCIi8+PHBhdGggZD0iTTUuNiAyLjJMOS44IDYuNCIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTcuNiA0LjNMMi45IDlMMi4yIDkuOUwxLjUgMTAuNSIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHBhdGggZD0iTTguMiA0LjlMMy41IDkuNiIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+Cg==',
+  'link': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgMTNhNSA1IDAgMCAwIDcuNTQuNTRsMy0zYTUgNSAwIDAgMC03LjA3LTcuMDdsLTEuNzIgMS43MSIvPjxwYXRoIGQ9Ik0xNCAxMWE1IDUgMCAwIDAtNy41NC0uNTRsLTMgM2E1IDUgMCAwIDAgNy4wNyA3LjA3bDEuNzEtMS43MSIvPjwvc3ZnPgo=',
+  'link-broken': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDkwOTBCIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJtMTguODQgMTIuMjUgMS43Mi0xLjcxaC0uMDJhNS4wMDQgNS4wMDQgMCAwIDAtLjEyLTcuMDcgNS4wMDYgNS4wMDYgMCAwIDAtNi45NSAwbC0xLjcyIDEuNzEiLz48cGF0aCBkPSJtNS4xNyAxMS43NS0xLjcxIDEuNzFhNS4wMDQgNS4wMDQgMCAwIDAgLjEyIDcuMDcgNS4wMDYgNS4wMDYgMCAwIDAgNi45NSAwbDEuNzEtMS43MSIvPjxsaW5lIHgxPSI4IiB4Mj0iOCIgeTE9IjIiIHkyPSI1Ii8+PGxpbmUgeDE9IjIiIHgyPSI1IiB5MT0iOCIgeTI9IjgiLz48bGluZSB4MT0iMTYiIHgyPSIxNiIgeTE9IjE5IiB5Mj0iMjIiLz48bGluZSB4MT0iMTkiIHgyPSIyMiIgeTE9IjE2IiB5Mj0iMTYiLz48L3N2Zz4K',
 };
 
 window.ComponentUtils = {
@@ -3800,6 +4352,84 @@ window.ComponentUtils = {
       script.onload = resolve;
       script.onerror = reject;
       document.body.appendChild(script);
+    });
+  },
+
+  // ---- Upload helpers (FileUpload, ImageUpload, MultiImageUpload) ----
+
+  // Fill <img data-icon="name"> from ComponentIcons (only when src is empty).
+  fillIcons(root) {
+    const icons = window.ComponentIcons || {};
+    root.querySelectorAll('img[data-icon]').forEach((img) => {
+      const src = icons[img.dataset.icon];
+      if (src && !img.getAttribute('src')) img.src = src;
+    });
+  },
+
+  // Same rules as the native `accept` attribute: '.png', 'image/*', 'text/html'.
+  acceptMatches(file, accept) {
+    if (!accept) return true;
+    const name = (file.name || '').toLowerCase();
+    const type = (file.type || '').toLowerCase();
+    return accept.split(',').some((raw) => {
+      const rule = raw.trim().toLowerCase();
+      if (!rule) return false;
+      if (rule.charAt(0) === '.') return name.slice(-rule.length) === rule;
+      if (rule.slice(-2) === '/*') return type.indexOf(rule.slice(0, -1)) === 0;
+      return type === rule;
+    });
+  },
+
+  formatFileSize(bytes) {
+    if (!Number.isFinite(bytes)) return '';
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
+    return `${Math.round(bytes / 102.4 / 1024) / 10} MB`;
+  },
+
+  // Click / Enter / Space open the file picker; drag-and-drop adds `is-dragover`.
+  // `clickSelector` limits which clicks open the picker (e.g. only the add tile).
+  bindDropTarget(target, input, onFiles, clickSelector) {
+    target.addEventListener('click', (event) => {
+      if (event.target === input) return;
+      if (event.target.closest('[data-upload-clear], [data-upload-remove]')) return;
+      if (clickSelector && !event.target.closest(clickSelector)) return;
+      if (target.classList.contains('is-disabled')) return;
+      input.click();
+    });
+    target.addEventListener('keydown', (event) => {
+      if (event.target !== target) return;
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        input.click();
+      }
+    });
+
+    let depth = 0;
+    target.addEventListener('dragenter', (event) => {
+      event.preventDefault();
+      depth += 1;
+      target.classList.add('is-dragover');
+    });
+    target.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
+    });
+    target.addEventListener('dragleave', () => {
+      depth = Math.max(depth - 1, 0);
+      if (!depth) target.classList.remove('is-dragover');
+    });
+    target.addEventListener('drop', (event) => {
+      event.preventDefault();
+      depth = 0;
+      target.classList.remove('is-dragover');
+      const files = event.dataTransfer ? Array.from(event.dataTransfer.files) : [];
+      if (files.length) onFiles(files);
+    });
+    input.addEventListener('change', () => {
+      const files = Array.from(input.files || []);
+      input.value = '';
+      if (files.length) onFiles(files);
     });
   },
 };
@@ -3977,6 +4607,721 @@ window.initColorInput = function initColorInput(root, options = {}) {
     updateUI,
   };
 };
+
+(function () {
+  var clamp = function (v, lo, hi) { return Math.min(hi, Math.max(lo, v)); };
+
+  function hexToRgb(hex) {
+    var h = String(hex || '').trim().replace(/^#/, '');
+    if (/^[0-9a-fA-F]{3}$/.test(h)) h = h.split('').map(function (c) { return c + c; }).join('');
+    if (!/^[0-9a-fA-F]{6}$/.test(h)) return null;
+    return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16) };
+  }
+
+  function rgbToHex(r, g, b) {
+    return [r, g, b].map(function (n) {
+      var s = Math.round(clamp(n, 0, 255)).toString(16);
+      return s.length === 1 ? '0' + s : s;
+    }).join('').toUpperCase();
+  }
+
+  function rgbToHsv(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min, h = 0;
+    if (d) {
+      if (max === r) h = ((g - b) / d) % 6;
+      else if (max === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+      h *= 60;
+      if (h < 0) h += 360;
+    }
+    return { h: h, s: max ? d / max : 0, v: max };
+  }
+
+  function hsvToRgb(h, s, v) {
+    var c = v * s, x = c * (1 - Math.abs(((h / 60) % 2) - 1)), m = v - c, r = 0, g = 0, b = 0;
+    if (h < 60) { r = c; g = x; } else if (h < 120) { r = x; g = c; } else if (h < 180) { g = c; b = x; }
+    else if (h < 240) { g = x; b = c; } else if (h < 300) { r = x; b = c; } else { r = c; b = x; }
+    return { r: (r + m) * 255, g: (g + m) * 255, b: (b + m) * 255 };
+  }
+
+  /*
+   * One EyeDropper session per page, always ended explicitly.
+   * On macOS, Chrome's picker runs as a separate helper process (ColorSampler). If the page
+   * or iframe goes away while a pick is still open (reload, hot reload, tab closed, preview
+   * torn down) the helper can be left running. So every pick gets an AbortController, and we
+   * abort it on: pick finished, a second pick, popover closed, component destroyed, page
+   * hidden / unloaded / frozen, and after a safety timeout.
+   */
+  var EYEDROPPER_TIMEOUT = 30000;
+  var eyePick = null; // { controller, timer, owner }
+
+  function endEyedropper() {
+    var pick = eyePick;
+    if (!pick) return;
+    eyePick = null;
+    clearTimeout(pick.timer);
+    try { pick.controller.abort(); } catch (e) { /* already settled */ }
+    if (pick.owner) pick.owner();
+  }
+
+  function startEyedropper(onPick, onEnd) {
+    endEyedropper();
+    var controller = typeof AbortController === 'function' ? new AbortController() : null;
+    if (!controller) return Promise.reject(new Error('AbortController unavailable'));
+    var pick = { controller: controller, timer: 0, owner: onEnd };
+    pick.timer = setTimeout(endEyedropper, EYEDROPPER_TIMEOUT);
+    eyePick = pick;
+    return new window.EyeDropper().open({ signal: controller.signal }).then(function (result) {
+      if (eyePick === pick && result && result.sRGBHex) onPick(result.sRGBHex);
+    }).catch(function () { /* cancelled: Escape, abort or timeout */ }).then(function () {
+      if (eyePick === pick) endEyedropper();
+    });
+  }
+
+  if (!window.__kitEyedropperGuards) {
+    window.__kitEyedropperGuards = true;
+    window.addEventListener('pagehide', endEyedropper);
+    window.addEventListener('beforeunload', endEyedropper);
+    document.addEventListener('freeze', endEyedropper);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') endEyedropper();
+    });
+  }
+
+  window.initColorSelector = function initColorSelector(root, options) {
+    options = options || {};
+    var utils = window.ComponentUtils;
+    var field = root.querySelector('.color-selector') || root;
+    var wrap = root.querySelector('.color-selector__wrap');
+    var trigger = root.querySelector('[data-color-trigger]');
+    var swatch = root.querySelector('[data-color-swatch]');
+    var hexInput = root.querySelector('[data-color-hex]');
+    var opacityInput = root.querySelector('[data-color-opacity]');
+    var popover = root.querySelector('.color-selector__popover');
+    var sv = root.querySelector('[data-color-sv]');
+    var svThumb = sv && sv.querySelector('.color-selector__thumb');
+    var hue = root.querySelector('[data-color-hue]');
+    var hueThumb = hue && hue.querySelector('.color-selector__thumb');
+    var alpha = root.querySelector('[data-color-alpha]');
+    var alphaThumb = alpha && alpha.querySelector('.color-selector__thumb');
+    var alphaFill = root.querySelector('.color-selector__alpha-fill');
+    var hInput = root.querySelector('[data-color-h]');
+    var sInput = root.querySelector('[data-color-s]');
+    var bInput = root.querySelector('[data-color-b]');
+    var eyedropBtn = root.querySelector('[data-color-eyedropper]');
+    var labelEl = root.querySelector('.field-label');
+    if (!wrap || !trigger || !hexInput || !popover || !sv || !hue) {
+      throw new Error('initColorSelector: missing color selector elements');
+    }
+
+    var onChange = options.onChange;
+    if (options.label && labelEl) labelEl.textContent = options.label;
+
+    var start = hexToRgb(options.value || hexInput.value) || { r: 0, g: 0, b: 0 };
+    var hsv = rgbToHsv(start.r, start.g, start.b);
+    var a = clamp(utils.parseOpacity(options.opacity != null ? options.opacity : (opacityInput ? opacityInput.value : 100), 1), 0, 1);
+
+    function hex() { var c = hsvToRgb(hsv.h, hsv.s, hsv.v); return rgbToHex(c.r, c.g, c.b); }
+    function getColor() { return utils.colorWithOpacity('#' + hex(), a); }
+
+    function render(updateText) {
+      var h = hex();
+      var pure = hsvToRgb(hsv.h, 1, 1);
+      var pureHex = '#' + rgbToHex(pure.r, pure.g, pure.b);
+      if (swatch) swatch.style.background = getColor();
+      sv.style.backgroundColor = pureHex;
+      svThumb.style.left = (hsv.s * 100) + '%';
+      svThumb.style.top = ((1 - hsv.v) * 100) + '%';
+      svThumb.style.background = '#' + h;
+      hueThumb.style.left = (hsv.h / 360 * 100) + '%';
+      hueThumb.style.background = pureHex;
+      if (alpha) {
+        alphaFill.style.background = 'linear-gradient(90deg, rgba(0,0,0,0), #' + h + ')';
+        alphaThumb.style.left = (a * 100) + '%';
+        alphaThumb.style.background = getColor();
+        alpha.setAttribute('aria-valuenow', String(Math.round(a * 100)));
+      }
+      sv.setAttribute('aria-valuetext', 'Saturation ' + Math.round(hsv.s * 100) + '%, brightness ' + Math.round(hsv.v * 100) + '%');
+      hue.setAttribute('aria-valuenow', String(Math.round(hsv.h)));
+      if (updateText !== false) {
+        var focused = document.activeElement;
+        if (focused !== hexInput) hexInput.value = h;
+        if (opacityInput && focused !== opacityInput) opacityInput.value = String(Math.round(a * 100));
+        if (hInput && focused !== hInput) hInput.value = String(Math.round(hsv.h));
+        if (sInput && focused !== sInput) sInput.value = String(Math.round(hsv.s * 100));
+        if (bInput && focused !== bInput) bInput.value = String(Math.round(hsv.v * 100));
+      }
+    }
+
+    function commit(notify) {
+      render();
+      if (notify !== false && onChange) onChange(getColor(), { hex: '#' + hex(), opacity: Math.round(a * 100) });
+    }
+
+    function setHex(value, notify) {
+      var rgb = hexToRgb(value);
+      if (!rgb) return false;
+      var next = rgbToHsv(rgb.r, rgb.g, rgb.b);
+      // Keep the current hue for greys so the hue strip doesn't jump to red.
+      if (!next.s || !next.v) next.h = hsv.h;
+      hsv = next;
+      commit(notify);
+      return true;
+    }
+
+    /* H / S / B number fields: H 0–360, S and B 0–100 */
+    function bindChannel(input, max, apply) {
+      if (!input) return;
+      utils.bindInputBehavior(input);
+      var fromInput = function () {
+        var n = parseFloat(String(input.value).trim());
+        if (!Number.isFinite(n)) return;
+        var c = clamp(n, 0, max);
+        if (c !== n) input.value = String(Math.round(c));
+        apply(c);
+        commit();
+      };
+      input.addEventListener('input', fromInput);
+      utils.bindNumericArrowKey(input, fromInput);
+      input.addEventListener('blur', function () { render(); });
+    }
+    bindChannel(hInput, 360, function (v) { hsv.h = Math.min(v, 359.999); });
+    bindChannel(sInput, 100, function (v) { hsv.s = v / 100; });
+    bindChannel(bInput, 100, function (v) { hsv.v = v / 100; });
+
+    /* drag areas */
+    function drag(area, onPoint) {
+      function at(event) {
+        var r = area.getBoundingClientRect();
+        onPoint(clamp((event.clientX - r.left) / (r.width || 1), 0, 1), clamp((event.clientY - r.top) / (r.height || 1), 0, 1));
+      }
+      function move(event) { at(event); }
+      function up() {
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+        area.classList.remove('is-dragging');
+      }
+      area.addEventListener('pointerdown', function (event) {
+        event.preventDefault();
+        area.focus();
+        area.classList.add('is-dragging');
+        at(event);
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+      });
+    }
+
+    drag(sv, function (x, y) { hsv.s = x; hsv.v = 1 - y; commit(); });
+    drag(hue, function (x) { hsv.h = Math.min(x * 360, 359.999); commit(); });
+    if (alpha) drag(alpha, function (x) { a = Math.round(x * 100) / 100; commit(); });
+
+    function keys(area, handler) {
+      area.addEventListener('keydown', function (event) {
+        var big = event.shiftKey ? 10 : 1;
+        var dx = event.key === 'ArrowRight' ? big : event.key === 'ArrowLeft' ? -big : 0;
+        var dy = event.key === 'ArrowUp' ? big : event.key === 'ArrowDown' ? -big : 0;
+        if (!dx && !dy) return;
+        event.preventDefault();
+        handler(dx, dy);
+        commit();
+      });
+    }
+    keys(sv, function (dx, dy) { hsv.s = clamp(hsv.s + dx / 100, 0, 1); hsv.v = clamp(hsv.v + dy / 100, 0, 1); });
+    keys(hue, function (dx, dy) { hsv.h = clamp(hsv.h + dx + dy, 0, 359.999); });
+    if (alpha) keys(alpha, function (dx, dy) { a = clamp(Math.round(a * 100 + dx + dy) / 100, 0, 1); });
+
+    /* text inputs */
+    utils.bindInputBehavior(hexInput);
+    hexInput.addEventListener('input', function () {
+      var rgb = hexToRgb(hexInput.value);
+      if (!rgb) return;
+      var next = rgbToHsv(rgb.r, rgb.g, rgb.b);
+      if (!next.s || !next.v) next.h = hsv.h;
+      hsv = next;
+      render(false);
+      if (onChange) onChange(getColor(), { hex: '#' + hex(), opacity: Math.round(a * 100) });
+    });
+    hexInput.addEventListener('change', function () { render(); });
+    hexInput.addEventListener('blur', function () { render(); });
+    if (opacityInput) {
+      utils.bindInputBehavior(opacityInput);
+      var fromOpacity = function () {
+        a = utils.parseOpacity(opacityInput.value, a);
+        render(false);
+        if (onChange) onChange(getColor(), { hex: '#' + hex(), opacity: Math.round(a * 100) });
+      };
+      opacityInput.addEventListener('input', fromOpacity);
+      utils.bindNumericArrowKey(opacityInput, fromOpacity, { isOpacity: true });
+      opacityInput.addEventListener('blur', function () { render(); });
+    }
+
+    /* eyedropper — uses the browser EyeDropper API (Chrome, Edge, Opera) */
+    if (eyedropBtn) {
+      var eyeImg = eyedropBtn.querySelector('img');
+      if (eyeImg && !eyeImg.getAttribute('src') && window.ComponentIcons) eyeImg.src = window.ComponentIcons.eyedropper || '';
+      if (typeof window.EyeDropper !== 'function') {
+        eyedropBtn.disabled = true;
+        eyedropBtn.classList.add('is-disabled');
+        eyedropBtn.setAttribute('data-tooltip', 'Eyedropper isn\u2019t supported in this browser');
+      } else {
+        var eyeOff = function () {
+          eyedropBtn.classList.remove('is-active');
+          eyedropBtn.setAttribute('aria-pressed', 'false');
+        };
+        eyedropBtn.addEventListener('click', function (event) {
+          event.preventDefault();
+          // A second click cancels the pick instead of starting another one.
+          if (eyedropBtn.classList.contains('is-active')) { endEyedropper(); return; }
+          eyedropBtn.classList.add('is-active');
+          eyedropBtn.setAttribute('aria-pressed', 'true');
+          startEyedropper(function (value) { setHex(value); }, eyeOff);
+        });
+      }
+    }
+
+    /* open / close */
+    function isOpen() { return popover.classList.contains('is-open'); }
+    function open() {
+      if (isOpen()) return;
+      document.dispatchEvent(new CustomEvent('dimension-menu:close-all'));
+      document.dispatchEvent(new CustomEvent('option-selector:close-all'));
+      document.dispatchEvent(new CustomEvent('color-selector:close-all', { detail: { except: wrap } }));
+      popover.classList.add('is-open');
+      wrap.classList.add('is-menu-open');
+      trigger.setAttribute('aria-expanded', 'true');
+      render();
+    }
+    function ownsPick() { return !!(eyePick && eyedropBtn && eyedropBtn.classList.contains('is-active')); }
+    function close(returnFocus) {
+      if (ownsPick()) endEyedropper();
+      if (!isOpen()) return;
+      popover.classList.remove('is-open');
+      wrap.classList.remove('is-menu-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      if (returnFocus) trigger.focus();
+    }
+
+    trigger.addEventListener('click', function (event) {
+      event.preventDefault();
+      if (isOpen()) close(); else open();
+    });
+    wrap.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && isOpen()) { event.preventDefault(); close(true); }
+    });
+    function onDocClick(event) {
+      if (event.target.closest('.color-selector__wrap') === wrap) return;
+      close();
+    }
+    function onCloseAll(event) {
+      if (event.detail && event.detail.except === wrap) return;
+      close();
+    }
+    function onOtherMenu() { close(); }
+    document.addEventListener('click', onDocClick);
+    document.addEventListener('color-selector:close-all', onCloseAll);
+    document.addEventListener('dimension-menu:close-all', onOtherMenu);
+    document.addEventListener('option-selector:close-all', onOtherMenu);
+
+    render();
+
+    return {
+      element: field,
+      hexInput: hexInput,
+      opacityInput: opacityInput,
+      getColor: getColor,
+      getHex: function () { return '#' + hex(); },
+      getOpacity: function () { return Math.round(a * 100); },
+      setValue: function (value, opacity, notify) {
+        if (opacity != null) a = clamp(utils.parseOpacity(opacity, a), 0, 1);
+        if (!setHex(value, notify === true)) render();
+      },
+      /** Re-reads the hex and opacity inputs (ColorInput-compatible). */
+      updateUI: function (notify) {
+        if (opacityInput) a = clamp(utils.parseOpacity(opacityInput.value, a), 0, 1);
+        if (!setHex(hexInput.value, notify !== false)) commit(notify);
+      },
+      open: open,
+      close: function () { close(); },
+      /** Ends any eyedropper pick and removes document listeners. Call before removing the element. */
+      destroy: function () {
+        if (ownsPick()) endEyedropper();
+        close();
+        document.removeEventListener('click', onDocClick);
+        document.removeEventListener('color-selector:close-all', onCloseAll);
+        document.removeEventListener('dimension-menu:close-all', onOtherMenu);
+        document.removeEventListener('option-selector:close-all', onOtherMenu);
+      },
+    };
+  };
+
+  /** Ends the page's eyedropper pick, if any (e.g. before a hot reload or route change). */
+  window.cancelKitEyedropper = endEyedropper;
+})();
+
+window.initMultiImageUpload = function initMultiImageUpload(root, options) {
+  options = options || {};
+  var utils = window.ComponentUtils;
+  var field = root.querySelector('.multi-image-upload') || root;
+  var grid = root.querySelector('.multi-image-upload__grid');
+  var addTile = root.querySelector('.multi-image-upload__add');
+  var input = root.querySelector('input[type="file"]');
+  var countEl = root.querySelector('[data-upload-count]');
+  var clearBtn = root.querySelector('[data-upload-clear]');
+  var labelEl = root.querySelector('.field-label');
+  if (!grid || !addTile || !input) throw new Error('initMultiImageUpload: missing multi image upload elements');
+
+  var accept = options.accept || input.getAttribute('accept') || 'image/*';
+  input.setAttribute('accept', accept);
+  input.multiple = true;
+  var max = options.max || Infinity;
+  var maxSize = options.maxSize;
+  var onChange = options.onChange;
+  var onError = options.onError;
+  var escapeHtml = (window.ComponentUtils && window.ComponentUtils.escapeHtml) || function (v) { return String(v); };
+  var items = []; // { file, url, name, owned }
+
+  if (options.label && labelEl) labelEl.textContent = options.label;
+  utils.fillIcons(root);
+
+  function render() {
+    grid.querySelectorAll('.multi-image-upload__tile').forEach(function (tile) { tile.remove(); });
+    items.forEach(function (item, index) {
+      var tile = document.createElement('div');
+      tile.className = 'multi-image-upload__tile';
+      tile.setAttribute('role', 'listitem');
+      tile.innerHTML =
+        '<img class="multi-image-upload__img" alt="' + escapeHtml(item.name) + '" src="' + escapeHtml(item.url) + '">' +
+        '<button type="button" class="upload-remove" data-upload-remove="' + index + '" aria-label="Remove ' + escapeHtml(item.name) + '">' +
+        '<img src="' + ((window.ComponentIcons || {}).close || '') + '" alt=""></button>';
+      grid.insertBefore(tile, addTile);
+    });
+    addTile.hidden = items.length >= max;
+    field.classList.toggle('is-filled', items.length > 0);
+    if (countEl) {
+      countEl.textContent = items.length
+        ? items.length + (max !== Infinity ? ' / ' + max : '') + (items.length === 1 ? ' image' : ' images')
+        : (max !== Infinity ? 'Up to ' + max + ' images' : 'No images');
+    }
+    if (clearBtn) clearBtn.hidden = !items.length;
+  }
+
+  function notify() {
+    if (onChange) onChange(items.map(function (i) { return i.file; }).filter(Boolean), items.slice());
+  }
+
+  function add(list, shouldNotify) {
+    var added = 0;
+    (list || []).forEach(function (entry) {
+      if (items.length >= max) { if (onError) onError('max', entry); return; }
+      if (typeof File !== 'undefined' && entry instanceof File) {
+        if (!utils.acceptMatches(entry, accept)) { if (onError) onError('type', entry); return; }
+        if (maxSize && entry.size > maxSize) { if (onError) onError('size', entry); return; }
+        items.push({ file: entry, url: URL.createObjectURL(entry), name: entry.name, owned: true });
+      } else if (entry && entry.url) {
+        items.push({ file: null, url: entry.url, name: entry.name || 'Image', owned: false });
+      } else {
+        return;
+      }
+      added += 1;
+    });
+    render();
+    if (added && shouldNotify !== false) notify();
+    return added;
+  }
+
+  function remove(index, shouldNotify) {
+    var item = items[index];
+    if (!item) return;
+    if (item.owned) URL.revokeObjectURL(item.url);
+    items.splice(index, 1);
+    render();
+    if (shouldNotify !== false) notify();
+    var next = grid.querySelector('[data-upload-remove="' + Math.min(index, items.length - 1) + '"]');
+    (next || addTile).focus();
+  }
+
+  function clear(shouldNotify) {
+    items.forEach(function (item) { if (item.owned) URL.revokeObjectURL(item.url); });
+    items = [];
+    render();
+    if (shouldNotify !== false) notify();
+  }
+
+  utils.bindDropTarget(grid, input, function (files) { add(files); }, '.multi-image-upload__add');
+  grid.addEventListener('click', function (event) {
+    var btn = event.target.closest('[data-upload-remove]');
+    if (!btn) return;
+    event.stopPropagation();
+    remove(Number(btn.dataset.uploadRemove));
+  });
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function (event) {
+      event.preventDefault();
+      clear();
+    });
+  }
+
+  if (options.value) add(options.value, false);
+  else render();
+
+  return {
+    element: field,
+    input: input,
+    getFiles: function () { return items.map(function (i) { return i.file; }).filter(Boolean); },
+    getItems: function () { return items.map(function (i) { return { file: i.file, url: i.url, name: i.name }; }); },
+    add: function (list, shouldNotify) { return add(list, shouldNotify === true); },
+    remove: function (index, shouldNotify) { remove(index, shouldNotify === true); },
+    clear: function (shouldNotify) { clear(shouldNotify === true); },
+  };
+};
+
+window.initSizeControl = function initSizeControl(root, options = {}) {
+  const utils = window.ComponentUtils;
+  const icons = window.ComponentIcons || {};
+  const field = root.querySelector('.size-control') || root;
+  const widthInput = root.querySelector('[data-size-width]');
+  const heightInput = root.querySelector('[data-size-height]');
+  const lockBtn = root.querySelector('[data-size-lock]');
+  const lockImg = lockBtn?.querySelector('img');
+  const labelEl = root.querySelector('.field-label');
+
+  if (!widthInput || !heightInput || !lockBtn) {
+    throw new Error('initSizeControl: missing size control elements');
+  }
+
+  const min = options.min ?? 0;
+  const max = options.max ?? Infinity;
+  const precision = options.precision ?? 0;
+  const onChange = options.onChange;
+
+  if (options.label && labelEl) labelEl.textContent = options.label;
+
+  const factor = 10 ** precision;
+  const round = (n) => Math.round(n * factor) / factor;
+  const clamp = (n) => Math.min(max, Math.max(min, n));
+  const parse = (input, fallback) => {
+    const n = parseFloat(String(input.value).trim());
+    return Number.isFinite(n) ? n : fallback;
+  };
+
+  let width = clamp(round(options.width ?? parse(widthInput, 0)));
+  let height = clamp(round(options.height ?? parse(heightInput, 0)));
+  let locked = false;
+  let ratio = null; // width / height, captured when the lock turns on
+
+  function captureRatio() {
+    ratio = width > 0 && height > 0 ? width / height : null;
+  }
+
+  function renderInputs(skip) {
+    if (skip !== widthInput) widthInput.value = String(width);
+    if (skip !== heightInput) heightInput.value = String(height);
+  }
+
+  function renderLock() {
+    lockBtn.classList.toggle('is-active', locked);
+    lockBtn.setAttribute('aria-pressed', locked ? 'true' : 'false');
+    const label = locked ? 'Unlock aspect ratio' : 'Lock aspect ratio';
+    lockBtn.setAttribute('aria-label', label);
+    lockBtn.setAttribute('data-tooltip', label);
+    if (lockImg) {
+      const src = locked ? icons.link : icons['link-broken'];
+      if (src) lockImg.src = src;
+      lockImg.dataset.icon = locked ? 'link' : 'link-broken';
+    }
+  }
+
+  function notify() {
+    onChange?.({ width, height, locked });
+  }
+
+  // Typing in one side: that side follows the text, the other follows the ratio.
+  function fromInput(input) {
+    const isWidth = input === widthInput;
+    const raw = parse(input, NaN);
+    if (!Number.isFinite(raw)) return;
+
+    const value = clamp(round(raw));
+    if (isWidth) width = value; else height = value;
+
+    if (locked) {
+      if (!ratio) captureRatio();
+      if (ratio) {
+        if (isWidth) height = clamp(round(width / ratio));
+        else width = clamp(round(height * ratio));
+      }
+    }
+
+    // Keep what the user is typing; only rewrite it when it was clamped.
+    renderInputs(value === raw ? input : null);
+    notify();
+  }
+
+  [widthInput, heightInput].forEach((input) => {
+    utils.bindInputBehavior(input);
+    input.addEventListener('input', () => fromInput(input));
+    utils.bindNumericArrowKey(input, () => fromInput(input), options.step ? { step: options.step } : {});
+    input.addEventListener('blur', () => renderInputs());
+  });
+
+  function setLocked(next, shouldNotify = false) {
+    locked = Boolean(next);
+    if (locked) captureRatio();
+    renderLock();
+    if (shouldNotify) notify();
+  }
+
+  lockBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    setLocked(!locked, true);
+  });
+
+  renderInputs();
+  setLocked(options.locked ?? lockBtn.getAttribute('aria-pressed') === 'true');
+
+  return {
+    element: field,
+    widthInput,
+    heightInput,
+    lockButton: lockBtn,
+    getValue: () => ({ width, height, locked }),
+    getRatio: () => ratio,
+    setValue(nextWidth, nextHeight, shouldNotify = false) {
+      if (nextWidth != null) width = clamp(round(nextWidth));
+      if (nextHeight != null) height = clamp(round(nextHeight));
+      if (locked) captureRatio();
+      renderInputs();
+      if (shouldNotify) notify();
+    },
+    getLocked: () => locked,
+    setLocked,
+  };
+};
+
+(function () {
+  var clamp = function (v, lo, hi) { return Math.min(hi, Math.max(lo, v)); };
+  var tip = null;
+  var tipText = null;
+  var current = null;
+  var showTimer = 0;
+  var uid = 0;
+
+  function ensureTip() {
+    if (tip) return tip;
+    tip = document.createElement('div');
+    tip.className = 'kit-tooltip';
+    tip.setAttribute('role', 'tooltip');
+    tip.id = 'kit-tooltip';
+    tipText = document.createElement('span');
+    tipText.className = 'kit-tooltip__text';
+    tip.appendChild(tipText);
+    document.body.appendChild(tip);
+    return tip;
+  }
+
+  function place(target, placement) {
+    var gap = 6;
+    var r = target.getBoundingClientRect();
+    var t = tip.getBoundingClientRect();
+    var vw = document.documentElement.clientWidth;
+    var vh = document.documentElement.clientHeight;
+    var fits = {
+      top: r.top - t.height - gap >= 4,
+      bottom: r.bottom + t.height + gap <= vh - 4,
+      left: r.left - t.width - gap >= 4,
+      right: r.right + t.width + gap <= vw - 4,
+    };
+    var opposite = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
+    var p = fits[placement] ? placement : (fits[opposite[placement]] ? opposite[placement] : placement);
+    var x, y;
+    if (p === 'top' || p === 'bottom') {
+      x = r.left + r.width / 2 - t.width / 2;
+      y = p === 'top' ? r.top - t.height - gap : r.bottom + gap;
+    } else {
+      x = p === 'left' ? r.left - t.width - gap : r.right + gap;
+      y = r.top + r.height / 2 - t.height / 2;
+    }
+    var cx = clamp(x, 4, vw - t.width - 4);
+    var cy = clamp(y, 4, vh - t.height - 4);
+    tip.style.left = Math.round(cx) + 'px';
+    tip.style.top = Math.round(cy) + 'px';
+    tip.dataset.placement = p;
+    // keep the arrow pointing at the target when the bubble was clamped
+    if (p === 'top' || p === 'bottom') tip.style.setProperty('--kit-tooltip-arrow', Math.round(r.left + r.width / 2 - cx) + 'px');
+    else tip.style.setProperty('--kit-tooltip-arrow', Math.round(r.top + r.height / 2 - cy) + 'px');
+  }
+
+  function show(target) {
+    var text = target.getAttribute('data-tooltip');
+    if (!text) return;
+    ensureTip();
+    clearTimeout(showTimer);
+    current = target;
+    tipText.textContent = text;
+    tip.classList.add('is-open');
+    if (!target.id) target.id = 'kit-tooltip-target-' + (++uid);
+    target.setAttribute('aria-describedby', tip.id);
+    place(target, target.getAttribute('data-tooltip-placement') || 'top');
+  }
+
+  function hide() {
+    clearTimeout(showTimer);
+    if (!tip) return;
+    tip.classList.remove('is-open');
+    if (current) current.removeAttribute('aria-describedby');
+    current = null;
+  }
+
+  window.initTooltip = function initTooltip(root, options) {
+    options = options || {};
+    root = root || document;
+    var delay = options.delay != null ? options.delay : 400;
+    var scope = root === document ? document.documentElement : root;
+    if (scope.__kitTooltip) return scope.__kitTooltip;
+
+    function targetOf(event) {
+      var el = event.target.closest && event.target.closest('[data-tooltip]');
+      return el && scope.contains(el) ? el : null;
+    }
+
+    scope.addEventListener('pointerover', function (event) {
+      var el = targetOf(event);
+      if (!el || el === current) return;
+      clearTimeout(showTimer);
+      // Moving between tooltip targets swaps instantly; the first one waits.
+      if (current) show(el);
+      else showTimer = setTimeout(function () { show(el); }, delay);
+    });
+    scope.addEventListener('pointerout', function (event) {
+      var el = targetOf(event);
+      if (!el) return;
+      if (event.relatedTarget && el.contains(event.relatedTarget)) return;
+      hide();
+    });
+    scope.addEventListener('focusin', function (event) {
+      var el = targetOf(event);
+      if (el && el.matches(':focus-visible')) show(el);
+    });
+    scope.addEventListener('focusout', function (event) { if (targetOf(event)) hide(); });
+    scope.addEventListener('pointerdown', function () { hide(); });
+    document.addEventListener('keydown', function (event) { if (event.key === 'Escape') hide(); });
+    window.addEventListener('scroll', hide, true);
+
+    var controller = {
+      element: scope,
+      attach: function (el, text, placement) {
+        el.setAttribute('data-tooltip', text);
+        if (placement) el.setAttribute('data-tooltip-placement', placement);
+        return el;
+      },
+      show: function (el) { show(el); },
+      hide: hide,
+    };
+    scope.__kitTooltip = controller;
+    return controller;
+  };
+})();
 
 window.initCubicBezierInput = function initCubicBezierInput(root, options = {}) {
   const utils = window.ComponentUtils;
@@ -8694,11 +10039,11 @@ window.initHoverButtonExperiment = function initHoverButtonExperiment() {
     },
   });
 
-  const bgColor = window.initColorInput(document.getElementById('bg-color-root'), {
+  const bgColor = window.initColorSelector(document.getElementById('bg-color-root'), {
     onChange: applyAll,
   });
 
-  const borderColor = window.initColorInput(document.getElementById('border-color-root'), {
+  const borderColor = window.initColorSelector(document.getElementById('border-color-root'), {
     onChange: applyAll,
   });
 
@@ -8728,8 +10073,6 @@ window.initHoverButtonExperiment = function initHoverButtonExperiment() {
     utils.bindNumericArrowKey(input, applyAll);
   });
 
-  utils.bindNumericArrowKey(bgColor.opacityInput, applyAll, { isOpacity: true });
-  utils.bindNumericArrowKey(borderColor.opacityInput, applyAll, { isOpacity: true });
 
   function collectSettings() {
     return {
@@ -9034,6 +10377,7 @@ window.initHoverButtonExperiment = function initHoverButtonExperiment() {
 };
 
 if (!document.getElementById('experiment-selector-root')) {
+  window.initTooltip?.(document);
   window.initHoverButtonExperiment();
 }
 
@@ -9083,11 +10427,11 @@ window.initRotateXButtonExperiment = function initRotateXButtonExperiment() {
     },
   });
 
-  const bgColor = window.initColorInput(document.getElementById('exp-button-rotate-x-bg-color-root'), {
+  const bgColor = window.initColorSelector(document.getElementById('exp-button-rotate-x-bg-color-root'), {
     onChange: applyAll,
   });
 
-  const borderColor = window.initColorInput(document.getElementById('exp-button-rotate-x-border-color-root'), {
+  const borderColor = window.initColorSelector(document.getElementById('exp-button-rotate-x-border-color-root'), {
     onChange: applyAll,
   });
 
@@ -9128,8 +10472,6 @@ window.initRotateXButtonExperiment = function initRotateXButtonExperiment() {
     utils.bindNumericArrowKey(input, applyAll);
   });
 
-  utils.bindNumericArrowKey(bgColor.opacityInput, applyAll, { isOpacity: true });
-  utils.bindNumericArrowKey(borderColor.opacityInput, applyAll, { isOpacity: true });
 
   function collectSettings() {
     return {
@@ -9516,21 +10858,12 @@ window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
     onChange: applyAll,
   });
 
-  const dimensions = window.initDimensionControlGroup(panelRoot, {
-    width: {
-      initialMode: 'fixed',
-      measure: () => 400,
-      onChange: applyAll,
-    },
-    height: {
-      initialMode: 'fixed',
-      measure: () => 500,
-      onChange: applyAll,
-    },
+  const size = window.initSizeControl(document.getElementById('exp-carousel-rotate-size-root'), {
+    onChange: applyAll,
   });
 
   const colorInputs = [1, 2, 3, 4, 5].map((index) => (
-    window.initColorInput(document.getElementById(`exp-carousel-rotate-color-${index}-root`), {
+    window.initColorSelector(document.getElementById(`exp-carousel-rotate-color-${index}-root`), {
       onChange: applyAll,
     })
   ));
@@ -9559,9 +10892,6 @@ window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
     utils.bindNumericArrowKey(input, applyAll);
   });
 
-  colorInputs.forEach((colorInput) => {
-    utils.bindNumericArrowKey(colorInput.opacityInput, applyAll, { isOpacity: true });
-  });
 
   function clampCount(value) {
     return Math.min(12, Math.max(2, Math.round(utils.parsePx(value, 5))));
@@ -9598,8 +10928,8 @@ window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
   function getConfig() {
     return {
       count: getCount(),
-      width: utils.parsePx(dimensions.width.getValue(), 400),
-      height: utils.parsePx(dimensions.height.getValue(), 500),
+      width: size.getValue().width,
+      height: size.getValue().height,
       radius: utils.parsePx(controls.radius.value, 0),
       colors: getColors(),
       colorHexes: colorInputs.map((colorInput) => colorInput.getHex()),
@@ -9621,15 +10951,22 @@ window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
       duration: controls.duration.value,
       velocity: controls.velocity.value,
       easing: easing.getRaw(),
-      widthMode: dimensions.width.getMode(),
-      widthValue: dimensions.width.getValue(),
-      heightMode: dimensions.height.getMode(),
-      heightValue: dimensions.height.getValue(),
+      widthValue: size.getValue().width,
+      heightValue: size.getValue().height,
+      sizeLocked: size.getLocked(),
       colors: colorInputs.map((colorInput) => ({
         hex: colorInput.hexInput.value,
         opacity: colorInput.opacityInput.value,
       })),
     };
+  }
+
+  // Saved defaults may hold '400px' strings from the old DimensionControl.
+  function applySizeSetting(control, width, height, locked) {
+    const w = parseFloat(width);
+    const h = parseFloat(height);
+    control.setValue(Number.isFinite(w) ? w : null, Number.isFinite(h) ? h : null, false);
+    if (locked != null) control.setLocked(Boolean(locked), false);
   }
 
   function applySettings(data) {
@@ -9643,21 +10980,7 @@ window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
     if (data.velocity != null) controls.velocity.value = data.velocity;
     if (data.easing != null) easing.setRaw(data.easing, false);
 
-    if (data.widthMode) {
-      dimensions.width.setMode(data.widthMode, false);
-      if (data.widthMode === 'fixed' && data.widthValue != null) {
-        dimensions.width.element.querySelector('.dimension-fixed-input').value =
-          String(data.widthValue).replace(/px$/i, '');
-      }
-    }
-
-    if (data.heightMode) {
-      dimensions.height.setMode(data.heightMode, false);
-      if (data.heightMode === 'fixed' && data.heightValue != null) {
-        dimensions.height.element.querySelector('.dimension-fixed-input').value =
-          String(data.heightValue).replace(/px$/i, '');
-      }
-    }
+    applySizeSetting(size, data.widthValue, data.heightValue, data.sizeLocked);
 
     if (Array.isArray(data.colors)) {
       data.colors.forEach((color, index) => {
@@ -9695,8 +11018,6 @@ window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
       easingRaw: config.easingRaw,
     });
 
-    dimensions.width.updateLabel();
-    dimensions.height.updateLabel();
     snippet.update();
   }
 
@@ -10232,21 +11553,12 @@ window.initRotateXCarouselExperiment = function initRotateXCarouselExperiment() 
     onChange: applyAll,
   });
 
-  const dimensions = window.initDimensionControlGroup(panelRoot, {
-    width: {
-      initialMode: 'fixed',
-      measure: () => 600,
-      onChange: applyAll,
-    },
-    height: {
-      initialMode: 'fixed',
-      measure: () => 400,
-      onChange: applyAll,
-    },
+  const size = window.initSizeControl(document.getElementById('exp-carousel-rotate-x-size-root'), {
+    onChange: applyAll,
   });
 
   const colorInputs = [1, 2, 3, 4, 5].map((index) => (
-    window.initColorInput(document.getElementById(`exp-carousel-rotate-x-color-${index}-root`), {
+    window.initColorSelector(document.getElementById(`exp-carousel-rotate-x-color-${index}-root`), {
       onChange: applyAll,
     })
   ));
@@ -10277,9 +11589,6 @@ window.initRotateXCarouselExperiment = function initRotateXCarouselExperiment() 
     utils.bindNumericArrowKey(input, applyAll);
   });
 
-  colorInputs.forEach((colorInput) => {
-    utils.bindNumericArrowKey(colorInput.opacityInput, applyAll, { isOpacity: true });
-  });
 
   function clampCount(value) {
     return Math.min(12, Math.max(2, Math.round(utils.parsePx(value, 5))));
@@ -10341,8 +11650,8 @@ window.initRotateXCarouselExperiment = function initRotateXCarouselExperiment() 
   function getConfig() {
     return {
       count: getCount(),
-      width: utils.parsePx(dimensions.width.getValue(), 600),
-      height: utils.parsePx(dimensions.height.getValue(), 400),
+      width: size.getValue().width,
+      height: size.getValue().height,
       radius: utils.parsePx(controls.radius.value, 0),
       colors: getColors(),
       colorHexes: colorInputs.map((colorInput) => colorInput.getHex()),
@@ -10374,15 +11683,22 @@ window.initRotateXCarouselExperiment = function initRotateXCarouselExperiment() 
       input: inputSelector.getValue(),
       reverseScroll: reverseScrollToggle.getChecked(),
       easing: easing.getRaw(),
-      widthMode: dimensions.width.getMode(),
-      widthValue: dimensions.width.getValue(),
-      heightMode: dimensions.height.getMode(),
-      heightValue: dimensions.height.getValue(),
+      widthValue: size.getValue().width,
+      heightValue: size.getValue().height,
+      sizeLocked: size.getLocked(),
       colors: colorInputs.map((colorInput) => ({
         hex: colorInput.hexInput.value,
         opacity: colorInput.opacityInput.value,
       })),
     };
+  }
+
+  // Saved defaults may hold '400px' strings from the old DimensionControl.
+  function applySizeSetting(control, width, height, locked) {
+    const w = parseFloat(width);
+    const h = parseFloat(height);
+    control.setValue(Number.isFinite(w) ? w : null, Number.isFinite(h) ? h : null, false);
+    if (locked != null) control.setLocked(Boolean(locked), false);
   }
 
   function applySettings(data) {
@@ -10401,21 +11717,7 @@ window.initRotateXCarouselExperiment = function initRotateXCarouselExperiment() 
     if (data.reverseScroll != null) reverseScrollToggle.setChecked(data.reverseScroll, false);
     if (data.easing != null) easing.setRaw(data.easing, false);
 
-    if (data.widthMode) {
-      dimensions.width.setMode(data.widthMode, false);
-      if (data.widthMode === 'fixed' && data.widthValue != null) {
-        dimensions.width.element.querySelector('.dimension-fixed-input').value =
-          String(data.widthValue).replace(/px$/i, '');
-      }
-    }
-
-    if (data.heightMode) {
-      dimensions.height.setMode(data.heightMode, false);
-      if (data.heightMode === 'fixed' && data.heightValue != null) {
-        dimensions.height.element.querySelector('.dimension-fixed-input').value =
-          String(data.heightValue).replace(/px$/i, '');
-      }
-    }
+    applySizeSetting(size, data.widthValue, data.heightValue, data.sizeLocked);
 
     if (Array.isArray(data.colors)) {
       data.colors.forEach((color, index) => {
@@ -10459,8 +11761,6 @@ window.initRotateXCarouselExperiment = function initRotateXCarouselExperiment() 
     });
 
     syncReverseScrollVisibility();
-    dimensions.width.updateLabel();
-    dimensions.height.updateLabel();
     snippet.update();
   }
 
@@ -11180,40 +12480,16 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
     onChange: applyAll,
   });
 
-  const fanDimensions = window.initDimensionControlGroup(
-    document.getElementById('exp-carousel-flip-fan-section'),
-    {
-      'fan-width': {
-        initialMode: 'fixed',
-        measure: () => 400,
-        onChange: applyAll,
-      },
-      'fan-height': {
-        initialMode: 'fixed',
-        measure: () => 500,
-        onChange: applyAll,
-      },
-    },
-  );
+  const fanSize = window.initSizeControl(document.getElementById('exp-carousel-flip-fan-size-root'), {
+    onChange: applyAll,
+  });
 
-  const horizDimensions = window.initDimensionControlGroup(
-    document.getElementById('exp-carousel-flip-horiz-section'),
-    {
-      'horiz-width': {
-        initialMode: 'fixed',
-        measure: () => 600,
-        onChange: applyAll,
-      },
-      'horiz-height': {
-        initialMode: 'fixed',
-        measure: () => 400,
-        onChange: applyAll,
-      },
-    },
-  );
+  const horizSize = window.initSizeControl(document.getElementById('exp-carousel-flip-horiz-size-root'), {
+    onChange: applyAll,
+  });
 
   const colorInputs = [1, 2, 3, 4, 5].map((index) => (
-    window.initColorInput(document.getElementById(`exp-carousel-flip-color-${index}-root`), {
+    window.initColorSelector(document.getElementById(`exp-carousel-flip-color-${index}-root`), {
       onChange: applyAll,
     })
   ));
@@ -11250,9 +12526,6 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
     utils.bindNumericArrowKey(input, applyAll);
   });
 
-  colorInputs.forEach((colorInput) => {
-    utils.bindNumericArrowKey(colorInput.opacityInput, applyAll, { isOpacity: true });
-  });
 
   function clampCount(value) {
     return Math.min(12, Math.max(2, Math.round(utils.parsePx(value, 5))));
@@ -11275,16 +12548,16 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
     return {
       count: getCount(),
       colors: getColors(),
-      fanWidth: utils.parsePx(fanDimensions['fan-width'].getValue(), 400),
-      fanHeight: utils.parsePx(fanDimensions['fan-height'].getValue(), 500),
+      fanWidth: fanSize.getValue().width,
+      fanHeight: fanSize.getValue().height,
       fanRadius: utils.parsePx(controls.fanRadius.value, 0),
       fanOriginY: utils.parsePx(controls.fanOriginY.value, 2000),
       fanStepDeg: utils.parsePx(controls.fanRotate.value, 12),
       fanDuration: utils.parseMs(controls.fanDuration.value, 350),
       fanEasingRaw: fanEasing.getRaw() || '0.7, 0, 0.25, 1',
       fanVelocityIntensity: Math.max(0, utils.parsePx(controls.fanVelocity.value, 1)),
-      horizWidth: utils.parsePx(horizDimensions['horiz-width'].getValue(), 600),
-      horizHeight: utils.parsePx(horizDimensions['horiz-height'].getValue(), 400),
+      horizWidth: horizSize.getValue().width,
+      horizHeight: horizSize.getValue().height,
       horizRadius: utils.parsePx(controls.horizRadius.value, 0),
       horizOrbit: utils.parsePx(controls.horizOrbit.value, 600),
       horizPerspective: utils.parsePx(controls.horizPerspective.value, 1200),
@@ -11298,13 +12571,6 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
       transitionDuration: utils.parseMs(controls.transitionDuration.value, 600),
       transitionEasingRaw: transitionEasing.getRaw() || '0.7, 0, 0.25, 1',
     };
-  }
-
-  function updateDimensionLabels() {
-    fanDimensions['fan-width'].updateLabel();
-    fanDimensions['fan-height'].updateLabel();
-    horizDimensions['horiz-width'].updateLabel();
-    horizDimensions['horiz-height'].updateLabel();
   }
 
   function getMode() {
@@ -11324,7 +12590,6 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
 
     if (targetMode === carousel.getMode()) {
       updateModeButtons();
-      updateDimensionLabels();
       snippet.update();
       return;
     }
@@ -11334,7 +12599,6 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
       transitionEasingRaw: config.transitionEasingRaw,
     }).then(() => {
       updateModeButtons();
-      updateDimensionLabels();
       snippet.update();
     });
   }
@@ -11348,7 +12612,6 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
   function applyAll() {
     carousel.apply(getCarouselConfig());
     updateModeButtons();
-    updateDimensionLabels();
     snippet.update();
   }
 
@@ -11362,10 +12625,9 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
       fanDuration: controls.fanDuration.value,
       fanVelocity: controls.fanVelocity.value,
       fanEasing: fanEasing.getRaw(),
-      fanWidthMode: fanDimensions['fan-width'].getMode(),
-      fanWidthValue: fanDimensions['fan-width'].getValue(),
-      fanHeightMode: fanDimensions['fan-height'].getMode(),
-      fanHeightValue: fanDimensions['fan-height'].getValue(),
+      fanWidthValue: fanSize.getValue().width,
+      fanHeightValue: fanSize.getValue().height,
+      fanSizeLocked: fanSize.getLocked(),
       horizRadius: controls.horizRadius.value,
       horizRotate: controls.horizRotate.value,
       horizOrbit: controls.horizOrbit.value,
@@ -11376,10 +12638,9 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
       horizEasing: horizEasing.getRaw(),
       variant: variantSelector.getValue(),
       input: inputSelector.getValue(),
-      horizWidthMode: horizDimensions['horiz-width'].getMode(),
-      horizWidthValue: horizDimensions['horiz-width'].getValue(),
-      horizHeightMode: horizDimensions['horiz-height'].getMode(),
-      horizHeightValue: horizDimensions['horiz-height'].getValue(),
+      horizWidthValue: horizSize.getValue().width,
+      horizHeightValue: horizSize.getValue().height,
+      horizSizeLocked: horizSize.getLocked(),
       transitionDuration: controls.transitionDuration.value,
       transitionEasing: transitionEasing.getRaw(),
       colors: colorInputs.map((colorInput) => ({
@@ -11389,15 +12650,12 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
     };
   }
 
-  function applyDimensionSetting(dimension, dataModeKey, dataValueKey, data) {
-    if (!dimension) return;
-    if (data[dataModeKey]) {
-      dimension.setMode(data[dataModeKey], false);
-      if (data[dataModeKey] === 'fixed' && data[dataValueKey] != null) {
-        dimension.element.querySelector('.dimension-fixed-input').value =
-          String(data[dataValueKey]).replace(/px$/i, '');
-      }
-    }
+  // Saved defaults may hold '400px' strings from the old DimensionControl.
+  function applySizeSetting(control, width, height, locked) {
+    const w = parseFloat(width);
+    const h = parseFloat(height);
+    control.setValue(Number.isFinite(w) ? w : null, Number.isFinite(h) ? h : null, false);
+    if (locked != null) control.setLocked(Boolean(locked), false);
   }
 
   function applySettings(data) {
@@ -11428,10 +12686,8 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
     }
     if (data.transitionEasing != null) transitionEasing.setRaw(data.transitionEasing, false);
 
-    applyDimensionSetting(fanDimensions['fan-width'], 'fanWidthMode', 'fanWidthValue', data);
-    applyDimensionSetting(fanDimensions['fan-height'], 'fanHeightMode', 'fanHeightValue', data);
-    applyDimensionSetting(horizDimensions['horiz-width'], 'horizWidthMode', 'horizWidthValue', data);
-    applyDimensionSetting(horizDimensions['horiz-height'], 'horizHeightMode', 'horizHeightValue', data);
+    applySizeSetting(fanSize, data.fanWidthValue, data.fanHeightValue, data.fanSizeLocked);
+    applySizeSetting(horizSize, data.horizWidthValue, data.horizHeightValue, data.horizSizeLocked);
 
     if (Array.isArray(data.colors)) {
       data.colors.forEach((color, index) => {
@@ -11451,7 +12707,6 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
           transitionEasingRaw: transitionEasing.getRaw() || '0.7, 0, 0.25, 1',
         }).then(() => {
           updateModeButtons();
-          updateDimensionLabels();
           snippet.update();
         });
         return;
@@ -12115,7 +13370,7 @@ window.initArcScrollTransitionExperiment = function initArcScrollTransitionExper
 
   const arcScroll = window.initArcScrollTransition(preview, {});
 
-  const solidColor = window.initColorInput(document.getElementById('exp-transition-arc-scroll-solid-color-root'), {
+  const solidColor = window.initColorSelector(document.getElementById('exp-transition-arc-scroll-solid-color-root'), {
     onChange: applyAll,
   });
 
@@ -12131,7 +13386,6 @@ window.initArcScrollTransitionExperiment = function initArcScrollTransitionExper
     input.addEventListener('input', applyAll);
     utils.bindNumericArrowKey(input, applyAll);
   });
-  utils.bindNumericArrowKey(solidColor.opacityInput, applyAll, { isOpacity: true });
 
   function getConfig() {
     return {
@@ -13105,25 +14359,22 @@ window.initHorizontalParallaxExperiment = function initHorizontalParallaxExperim
   }
 
   const controls = {
-    cardWidth: document.getElementById('exp-parallax-horizontal-width'),
-    cardHeight: document.getElementById('exp-parallax-horizontal-height'),
     gap: document.getElementById('exp-parallax-horizontal-gap'),
     duration: document.getElementById('exp-parallax-horizontal-duration'),
     velocity: document.getElementById('exp-parallax-horizontal-velocity'),
   };
 
-  const uploadSlots = [1, 2, 3, 4, 5].map((slot) => ({
-    index: slot - 1,
-    fileInput: document.getElementById(`exp-parallax-horizontal-image-${slot}-file`),
-    button: document.getElementById(`exp-parallax-horizontal-image-${slot}-btn`),
-    nameLabel: document.getElementById(`exp-parallax-horizontal-image-${slot}-name`),
-  }));
+  const CARD_COUNT = 5;
+  const uploadRoot = document.getElementById('exp-parallax-horizontal-images-root');
+  // Uploaded images as { src (data URL), name }; empty means every card uses the default.
+  if (!Array.isArray(preview.__expHorizontalParallaxImages)) preview.__expHorizontalParallaxImages = [];
 
   let parallax = preview.__horizontalParallax;
   let easing = preview.__expHorizontalParallaxEasing;
   let snippet = preview.__expHorizontalParallaxSnippet;
   let layoutSelector = preview.__expHorizontalParallaxLayout;
   let imageScaleSlider = preview.__expHorizontalParallaxImageScale;
+  let cardSize = preview.__expHorizontalParallaxSize;
 
   function controlValue(input, fallback) {
     if (!(input instanceof HTMLInputElement)) return String(fallback);
@@ -13148,30 +14399,29 @@ window.initHorizontalParallaxExperiment = function initHorizontalParallaxExperim
       );
   }
 
-  async function ensureImageSrcs() {
-    if (Array.isArray(preview.__expHorizontalParallaxImageSrcs) && preview.__expHorizontalParallaxImageSrcs.length === 5) {
-      return preview.__expHorizontalParallaxImageSrcs;
-    }
-
+  async function ensureDefaultSrc() {
+    if (preview.__expHorizontalParallaxDefaultSrc) return;
     try {
-      const dataUrl = await loadImageAsDataUrl(DEFAULT_IMAGE);
-      preview.__expHorizontalParallaxImageSrcs = Array.from({ length: 5 }, () => dataUrl);
+      preview.__expHorizontalParallaxDefaultSrc = await loadImageAsDataUrl(DEFAULT_IMAGE);
     } catch {
-      preview.__expHorizontalParallaxImageSrcs = Array.from({ length: 5 }, () => DEFAULT_IMAGE);
+      preview.__expHorizontalParallaxDefaultSrc = DEFAULT_IMAGE;
     }
-
-    return preview.__expHorizontalParallaxImageSrcs;
   }
 
+  // Cards take the uploaded images in order, repeating when there are fewer than 5.
   function getImageSrcs() {
-    return Array.isArray(preview.__expHorizontalParallaxImageSrcs) && preview.__expHorizontalParallaxImageSrcs.length === 5
-      ? [...preview.__expHorizontalParallaxImageSrcs]
-      : Array.from({ length: 5 }, () => DEFAULT_IMAGE);
+    const images = preview.__expHorizontalParallaxImages;
+    const fallback = preview.__expHorizontalParallaxDefaultSrc || DEFAULT_IMAGE;
+    return Array.from({ length: CARD_COUNT }, (_, i) => (images.length ? images[i % images.length].src : fallback));
   }
 
-  function setUploadLabel(index, label) {
-    const slot = uploadSlots[index];
-    if (slot?.nameLabel) slot.nameLabel.textContent = label;
+  function setImages(images) {
+    preview.__expHorizontalParallaxImages = images.slice(0, CARD_COUNT);
+    const upload = preview.__expHorizontalParallaxUpload;
+    if (upload) {
+      upload.clear(false);
+      upload.add(preview.__expHorizontalParallaxImages.map(({ src, name }) => ({ url: src, name })), false);
+    }
   }
 
   function getImageScale() {
@@ -13181,8 +14431,8 @@ window.initHorizontalParallaxExperiment = function initHorizontalParallaxExperim
 
   function getConfig() {
     return {
-      cardWidth: Math.max(1, utils.parsePx(controlValue(controls.cardWidth, 393), 393)),
-      cardHeight: Math.max(1, utils.parsePx(controlValue(controls.cardHeight, 263), 263)),
+      cardWidth: cardSize?.getValue().width ?? 393,
+      cardHeight: cardSize?.getValue().height ?? 263,
       gap: Math.max(0, utils.parsePx(controlValue(controls.gap, 16), 16)),
       duration: Math.max(80, utils.parseMs(controlValue(controls.duration, 450), 450)),
       velocityIntensity: Math.max(0, utils.parsePx(controlValue(controls.velocity, 1), 1)),
@@ -13199,34 +14449,29 @@ window.initHorizontalParallaxExperiment = function initHorizontalParallaxExperim
   }
 
   function collectSettings() {
-    const srcs = getImageSrcs();
     return {
-      cardWidth: controlValue(controls.cardWidth, 393),
-      cardHeight: controlValue(controls.cardHeight, 263),
+      cardWidth: String(cardSize?.getValue().width ?? 393),
+      cardHeight: String(cardSize?.getValue().height ?? 263),
+      cardSizeLocked: cardSize?.getLocked() ?? false,
       gap: controlValue(controls.gap, 16),
       duration: controlValue(controls.duration, 450),
       velocity: controlValue(controls.velocity, 1),
       easing: easing?.getRaw(),
       layout: layoutSelector?.getValue() || 'horizontal',
       imageScalePercent: String(imageScaleSlider?.getValue() ?? 120),
-      image1: srcs[0],
-      image2: srcs[1],
-      image3: srcs[2],
-      image4: srcs[3],
-      image5: srcs[4],
-      imageName1: uploadSlots[0]?.nameLabel?.textContent || 'Default',
-      imageName2: uploadSlots[1]?.nameLabel?.textContent || 'Default',
-      imageName3: uploadSlots[2]?.nameLabel?.textContent || 'Default',
-      imageName4: uploadSlots[3]?.nameLabel?.textContent || 'Default',
-      imageName5: uploadSlots[4]?.nameLabel?.textContent || 'Default',
+      images: preview.__expHorizontalParallaxImages.map(({ src, name }) => ({ src, name })),
     };
   }
 
   async function applySettings(data) {
     if (!data) return;
 
-    if (data.cardWidth != null && controls.cardWidth) controls.cardWidth.value = data.cardWidth;
-    if (data.cardHeight != null && controls.cardHeight) controls.cardHeight.value = data.cardHeight;
+    if (cardSize) {
+      const w = parseFloat(data.cardWidth);
+      const h = parseFloat(data.cardHeight);
+      cardSize.setValue(Number.isFinite(w) ? w : null, Number.isFinite(h) ? h : null, false);
+      if (data.cardSizeLocked != null) cardSize.setLocked(Boolean(data.cardSizeLocked), false);
+    }
     if (data.gap != null && controls.gap) controls.gap.value = data.gap;
     if (data.duration != null && controls.duration) controls.duration.value = data.duration;
     if (data.velocity != null && controls.velocity) controls.velocity.value = data.velocity;
@@ -13234,27 +14479,16 @@ window.initHorizontalParallaxExperiment = function initHorizontalParallaxExperim
     if (data.layout != null) layoutSelector?.setValue(data.layout, false);
     if (data.imageScalePercent != null) imageScaleSlider?.setValue(data.imageScalePercent, false);
 
-    await ensureImageSrcs();
+    await ensureDefaultSrc();
 
-    const savedImages = [data.image1, data.image2, data.image3, data.image4, data.image5];
-    const savedNames = [data.imageName1, data.imageName2, data.imageName3, data.imageName4, data.imageName5];
-
-    for (let i = 0; i < 5; i += 1) {
-      const saved = savedImages[i];
-      if (!saved) continue;
-
-      if (String(saved).startsWith('data:')) {
-        preview.__expHorizontalParallaxImageSrcs[i] = saved;
-        setUploadLabel(i, savedNames[i] || 'Uploaded');
-        continue;
-      }
-
-      try {
-        preview.__expHorizontalParallaxImageSrcs[i] = await loadImageAsDataUrl(saved);
-        setUploadLabel(i, savedNames[i] || 'Uploaded');
-      } catch {
-        // keep existing slot
-      }
+    if (Array.isArray(data.images)) {
+      setImages(data.images.filter((image) => image?.src));
+    } else {
+      // Legacy per-card defaults (image1..5): keep only the cards that were uploaded.
+      const legacy = [1, 2, 3, 4, 5]
+        .map((n) => ({ src: data[`image${n}`], name: data[`imageName${n}`] }))
+        .filter((image) => image.src && String(image.src).startsWith('data:') && image.name && image.name !== 'Default');
+      if (legacy.length) setImages(legacy);
     }
 
     applyAll();
@@ -13301,30 +14535,29 @@ window.initHorizontalParallaxExperiment = function initHorizontalParallaxExperim
 </html>`;
   }
 
+  function readAsDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
   function wireUploads() {
-    uploadSlots.forEach((slot) => {
-      if (!slot.fileInput || !slot.button) return;
-      if (slot.fileInput.dataset.expHorizontalParallaxWired === '1') return;
-
-      slot.button.addEventListener('click', () => slot.fileInput.click());
-      slot.fileInput.addEventListener('change', () => {
-        const file = slot.fileInput.files?.[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (!Array.isArray(preview.__expHorizontalParallaxImageSrcs)) {
-            preview.__expHorizontalParallaxImageSrcs = Array.from({ length: 5 }, () => DEFAULT_IMAGE);
-          }
-          preview.__expHorizontalParallaxImageSrcs[slot.index] = String(reader.result);
-          setUploadLabel(slot.index, file.name);
-          applyAll();
-        };
-        reader.readAsDataURL(file);
-        slot.fileInput.value = '';
-      });
-
-      slot.fileInput.dataset.expHorizontalParallaxWired = '1';
+    if (!uploadRoot) return;
+    preview.__expHorizontalParallaxUpload = window.initMultiImageUpload(uploadRoot, {
+      max: CARD_COUNT,
+      value: preview.__expHorizontalParallaxImages.map(({ src, name }) => ({ url: src, name })),
+      onChange: async (files, items) => {
+        // Data URLs (not object URLs) so the snippet export and saved defaults stay self-contained.
+        const images = await Promise.all(items.map(async (item) => ({
+          src: item.file ? await readAsDataUrl(item.file) : item.url,
+          name: item.name,
+        })));
+        preview.__expHorizontalParallaxImages = images;
+        applyAll();
+      },
     });
   }
 
@@ -13335,7 +14568,7 @@ window.initHorizontalParallaxExperiment = function initHorizontalParallaxExperim
   };
 
   void (async () => {
-    await ensureImageSrcs();
+    await ensureDefaultSrc();
 
     if (!parallax || preview.dataset.parallaxVersion !== PARALLAX_VERSION) {
       parallax = window.initHorizontalParallax(preview, {
@@ -13417,6 +14650,14 @@ window.initHorizontalParallaxExperiment = function initHorizontalParallaxExperim
         updateOnInit: true,
       });
       preview.__expHorizontalParallaxSnippet = snippet;
+    }
+
+    if (!cardSize) {
+      cardSize = window.initSizeControl(document.getElementById('exp-parallax-horizontal-size-root'), {
+        min: 1,
+        onChange: applyAll,
+      });
+      preview.__expHorizontalParallaxSize = cardSize;
     }
 
     if (preview.dataset.experimentReady !== '1') {
@@ -13840,11 +15081,11 @@ window.initStaggerTextButtonExperiment = function initStaggerTextButtonExperimen
     },
   });
 
-  const bgColor = window.initColorInput(document.getElementById('exp-button-stagger-text-bg-color-root'), {
+  const bgColor = window.initColorSelector(document.getElementById('exp-button-stagger-text-bg-color-root'), {
     onChange: applyAll,
   });
 
-  const borderColor = window.initColorInput(document.getElementById('exp-button-stagger-text-border-color-root'), {
+  const borderColor = window.initColorSelector(document.getElementById('exp-button-stagger-text-border-color-root'), {
     onChange: applyAll,
   });
 
@@ -13874,8 +15115,6 @@ window.initStaggerTextButtonExperiment = function initStaggerTextButtonExperimen
     utils.bindNumericArrowKey(input, applyAll);
   });
 
-  utils.bindNumericArrowKey(bgColor.opacityInput, applyAll, { isOpacity: true });
-  utils.bindNumericArrowKey(borderColor.opacityInput, applyAll, { isOpacity: true });
 
   function collectSettings() {
     return {
@@ -14565,6 +15804,7 @@ ${window.HeadingEntranceSnippet?.js || ''}
     experiments[id]?.init();
   }
 
+  window.initTooltip?.(document);
   selector.setValue(startExperiment);
   switchExperiment(startExperiment);
 })();

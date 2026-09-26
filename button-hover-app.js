@@ -42,11 +42,11 @@ window.initHoverButtonExperiment = function initHoverButtonExperiment() {
     },
   });
 
-  const bgColor = window.initColorInput(document.getElementById('bg-color-root'), {
+  const bgColor = window.initColorSelector(document.getElementById('bg-color-root'), {
     onChange: applyAll,
   });
 
-  const borderColor = window.initColorInput(document.getElementById('border-color-root'), {
+  const borderColor = window.initColorSelector(document.getElementById('border-color-root'), {
     onChange: applyAll,
   });
 
@@ -76,8 +76,6 @@ window.initHoverButtonExperiment = function initHoverButtonExperiment() {
     utils.bindNumericArrowKey(input, applyAll);
   });
 
-  utils.bindNumericArrowKey(bgColor.opacityInput, applyAll, { isOpacity: true });
-  utils.bindNumericArrowKey(borderColor.opacityInput, applyAll, { isOpacity: true });
 
   function collectSettings() {
     return {
@@ -382,5 +380,6 @@ window.initHoverButtonExperiment = function initHoverButtonExperiment() {
 };
 
 if (!document.getElementById('experiment-selector-root')) {
+  window.initTooltip?.(document);
   window.initHoverButtonExperiment();
 }

@@ -44,11 +44,11 @@ window.initRotateXButtonExperiment = function initRotateXButtonExperiment() {
     },
   });
 
-  const bgColor = window.initColorInput(document.getElementById('exp-button-rotate-x-bg-color-root'), {
+  const bgColor = window.initColorSelector(document.getElementById('exp-button-rotate-x-bg-color-root'), {
     onChange: applyAll,
   });
 
-  const borderColor = window.initColorInput(document.getElementById('exp-button-rotate-x-border-color-root'), {
+  const borderColor = window.initColorSelector(document.getElementById('exp-button-rotate-x-border-color-root'), {
     onChange: applyAll,
   });
 
@@ -89,8 +89,6 @@ window.initRotateXButtonExperiment = function initRotateXButtonExperiment() {
     utils.bindNumericArrowKey(input, applyAll);
   });
 
-  utils.bindNumericArrowKey(bgColor.opacityInput, applyAll, { isOpacity: true });
-  utils.bindNumericArrowKey(borderColor.opacityInput, applyAll, { isOpacity: true });
 
   function collectSettings() {
     return {

@@ -326,6 +326,11 @@
         if (opacity != null) a = clamp(utils.parseOpacity(opacity, a), 0, 1);
         if (!setHex(value, notify === true)) render();
       },
+      /** Re-reads the hex and opacity inputs (ColorInput-compatible). */
+      updateUI: function (notify) {
+        if (opacityInput) a = clamp(utils.parseOpacity(opacityInput.value, a), 0, 1);
+        if (!setHex(hexInput.value, notify !== false)) commit(notify);
+      },
       open: open,
       close: function () { close(); },
       /** Ends any eyedropper pick and removes document listeners. Call before removing the element. */

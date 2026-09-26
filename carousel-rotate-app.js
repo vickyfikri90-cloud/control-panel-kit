@@ -39,21 +39,12 @@ window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
     onChange: applyAll,
   });
 
-  const dimensions = window.initDimensionControlGroup(panelRoot, {
-    width: {
-      initialMode: 'fixed',
-      measure: () => 400,
-      onChange: applyAll,
-    },
-    height: {
-      initialMode: 'fixed',
-      measure: () => 500,
-      onChange: applyAll,
-    },
+  const size = window.initSizeControl(document.getElementById('exp-carousel-rotate-size-root'), {
+    onChange: applyAll,
   });
 
   const colorInputs = [1, 2, 3, 4, 5].map((index) => (
-    window.initColorInput(document.getElementById(`exp-carousel-rotate-color-${index}-root`), {
+    window.initColorSelector(document.getElementById(`exp-carousel-rotate-color-${index}-root`), {
       onChange: applyAll,
     })
   ));
@@ -82,9 +73,6 @@ window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
     utils.bindNumericArrowKey(input, applyAll);
   });
 
-  colorInputs.forEach((colorInput) => {
-    utils.bindNumericArrowKey(colorInput.opacityInput, applyAll, { isOpacity: true });
-  });
 
   function clampCount(value) {
     return Math.min(12, Math.max(2, Math.round(utils.parsePx(value, 5))));
@@ -121,8 +109,8 @@ window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
   function getConfig() {
     return {
       count: getCount(),
-      width: utils.parsePx(dimensions.width.getValue(), 400),
-      height: utils.parsePx(dimensions.height.getValue(), 500),
+      width: size.getValue().width,
+      height: size.getValue().height,
       radius: utils.parsePx(controls.radius.value, 0),
       colors: getColors(),
       colorHexes: colorInputs.map((colorInput) => colorInput.getHex()),
@@ -144,15 +132,22 @@ window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
       duration: controls.duration.value,
       velocity: controls.velocity.value,
       easing: easing.getRaw(),
-      widthMode: dimensions.width.getMode(),
-      widthValue: dimensions.width.getValue(),
-      heightMode: dimensions.height.getMode(),
-      heightValue: dimensions.height.getValue(),
+      widthValue: size.getValue().width,
+      heightValue: size.getValue().height,
+      sizeLocked: size.getLocked(),
       colors: colorInputs.map((colorInput) => ({
         hex: colorInput.hexInput.value,
         opacity: colorInput.opacityInput.value,
       })),
     };
+  }
+
+  // Saved defaults may hold '400px' strings from the old DimensionControl.
+  function applySizeSetting(control, width, height, locked) {
+    const w = parseFloat(width);
+    const h = parseFloat(height);
+    control.setValue(Number.isFinite(w) ? w : null, Number.isFinite(h) ? h : null, false);
+    if (locked != null) control.setLocked(Boolean(locked), false);
   }
 
   function applySettings(data) {
@@ -166,21 +161,7 @@ window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
     if (data.velocity != null) controls.velocity.value = data.velocity;
     if (data.easing != null) easing.setRaw(data.easing, false);
 
-    if (data.widthMode) {
-      dimensions.width.setMode(data.widthMode, false);
-      if (data.widthMode === 'fixed' && data.widthValue != null) {
-        dimensions.width.element.querySelector('.dimension-fixed-input').value =
-          String(data.widthValue).replace(/px$/i, '');
-      }
-    }
-
-    if (data.heightMode) {
-      dimensions.height.setMode(data.heightMode, false);
-      if (data.heightMode === 'fixed' && data.heightValue != null) {
-        dimensions.height.element.querySelector('.dimension-fixed-input').value =
-          String(data.heightValue).replace(/px$/i, '');
-      }
-    }
+    applySizeSetting(size, data.widthValue, data.heightValue, data.sizeLocked);
 
     if (Array.isArray(data.colors)) {
       data.colors.forEach((color, index) => {
@@ -218,8 +199,6 @@ window.initRotateCarouselExperiment = function initRotateCarouselExperiment() {
       easingRaw: config.easingRaw,
     });
 
-    dimensions.width.updateLabel();
-    dimensions.height.updateLabel();
     snippet.update();
   }
 

@@ -54,11 +54,11 @@ window.initStaggerTextButtonExperiment = function initStaggerTextButtonExperimen
     },
   });
 
-  const bgColor = window.initColorInput(document.getElementById('exp-button-stagger-text-bg-color-root'), {
+  const bgColor = window.initColorSelector(document.getElementById('exp-button-stagger-text-bg-color-root'), {
     onChange: applyAll,
   });
 
-  const borderColor = window.initColorInput(document.getElementById('exp-button-stagger-text-border-color-root'), {
+  const borderColor = window.initColorSelector(document.getElementById('exp-button-stagger-text-border-color-root'), {
     onChange: applyAll,
   });
 
@@ -88,8 +88,6 @@ window.initStaggerTextButtonExperiment = function initStaggerTextButtonExperimen
     utils.bindNumericArrowKey(input, applyAll);
   });
 
-  utils.bindNumericArrowKey(bgColor.opacityInput, applyAll, { isOpacity: true });
-  utils.bindNumericArrowKey(borderColor.opacityInput, applyAll, { isOpacity: true });
 
   function collectSettings() {
     return {

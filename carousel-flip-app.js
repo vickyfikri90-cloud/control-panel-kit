@@ -91,40 +91,16 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
     onChange: applyAll,
   });
 
-  const fanDimensions = window.initDimensionControlGroup(
-    document.getElementById('exp-carousel-flip-fan-section'),
-    {
-      'fan-width': {
-        initialMode: 'fixed',
-        measure: () => 400,
-        onChange: applyAll,
-      },
-      'fan-height': {
-        initialMode: 'fixed',
-        measure: () => 500,
-        onChange: applyAll,
-      },
-    },
-  );
+  const fanSize = window.initSizeControl(document.getElementById('exp-carousel-flip-fan-size-root'), {
+    onChange: applyAll,
+  });
 
-  const horizDimensions = window.initDimensionControlGroup(
-    document.getElementById('exp-carousel-flip-horiz-section'),
-    {
-      'horiz-width': {
-        initialMode: 'fixed',
-        measure: () => 600,
-        onChange: applyAll,
-      },
-      'horiz-height': {
-        initialMode: 'fixed',
-        measure: () => 400,
-        onChange: applyAll,
-      },
-    },
-  );
+  const horizSize = window.initSizeControl(document.getElementById('exp-carousel-flip-horiz-size-root'), {
+    onChange: applyAll,
+  });
 
   const colorInputs = [1, 2, 3, 4, 5].map((index) => (
-    window.initColorInput(document.getElementById(`exp-carousel-flip-color-${index}-root`), {
+    window.initColorSelector(document.getElementById(`exp-carousel-flip-color-${index}-root`), {
       onChange: applyAll,
     })
   ));
@@ -161,9 +137,6 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
     utils.bindNumericArrowKey(input, applyAll);
   });
 
-  colorInputs.forEach((colorInput) => {
-    utils.bindNumericArrowKey(colorInput.opacityInput, applyAll, { isOpacity: true });
-  });
 
   function clampCount(value) {
     return Math.min(12, Math.max(2, Math.round(utils.parsePx(value, 5))));
@@ -186,16 +159,16 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
     return {
       count: getCount(),
       colors: getColors(),
-      fanWidth: utils.parsePx(fanDimensions['fan-width'].getValue(), 400),
-      fanHeight: utils.parsePx(fanDimensions['fan-height'].getValue(), 500),
+      fanWidth: fanSize.getValue().width,
+      fanHeight: fanSize.getValue().height,
       fanRadius: utils.parsePx(controls.fanRadius.value, 0),
       fanOriginY: utils.parsePx(controls.fanOriginY.value, 2000),
       fanStepDeg: utils.parsePx(controls.fanRotate.value, 12),
       fanDuration: utils.parseMs(controls.fanDuration.value, 350),
       fanEasingRaw: fanEasing.getRaw() || '0.7, 0, 0.25, 1',
       fanVelocityIntensity: Math.max(0, utils.parsePx(controls.fanVelocity.value, 1)),
-      horizWidth: utils.parsePx(horizDimensions['horiz-width'].getValue(), 600),
-      horizHeight: utils.parsePx(horizDimensions['horiz-height'].getValue(), 400),
+      horizWidth: horizSize.getValue().width,
+      horizHeight: horizSize.getValue().height,
       horizRadius: utils.parsePx(controls.horizRadius.value, 0),
       horizOrbit: utils.parsePx(controls.horizOrbit.value, 600),
       horizPerspective: utils.parsePx(controls.horizPerspective.value, 1200),
@@ -209,13 +182,6 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
       transitionDuration: utils.parseMs(controls.transitionDuration.value, 600),
       transitionEasingRaw: transitionEasing.getRaw() || '0.7, 0, 0.25, 1',
     };
-  }
-
-  function updateDimensionLabels() {
-    fanDimensions['fan-width'].updateLabel();
-    fanDimensions['fan-height'].updateLabel();
-    horizDimensions['horiz-width'].updateLabel();
-    horizDimensions['horiz-height'].updateLabel();
   }
 
   function getMode() {
@@ -235,7 +201,6 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
 
     if (targetMode === carousel.getMode()) {
       updateModeButtons();
-      updateDimensionLabels();
       snippet.update();
       return;
     }
@@ -245,7 +210,6 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
       transitionEasingRaw: config.transitionEasingRaw,
     }).then(() => {
       updateModeButtons();
-      updateDimensionLabels();
       snippet.update();
     });
   }
@@ -259,7 +223,6 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
   function applyAll() {
     carousel.apply(getCarouselConfig());
     updateModeButtons();
-    updateDimensionLabels();
     snippet.update();
   }
 
@@ -273,10 +236,9 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
       fanDuration: controls.fanDuration.value,
       fanVelocity: controls.fanVelocity.value,
       fanEasing: fanEasing.getRaw(),
-      fanWidthMode: fanDimensions['fan-width'].getMode(),
-      fanWidthValue: fanDimensions['fan-width'].getValue(),
-      fanHeightMode: fanDimensions['fan-height'].getMode(),
-      fanHeightValue: fanDimensions['fan-height'].getValue(),
+      fanWidthValue: fanSize.getValue().width,
+      fanHeightValue: fanSize.getValue().height,
+      fanSizeLocked: fanSize.getLocked(),
       horizRadius: controls.horizRadius.value,
       horizRotate: controls.horizRotate.value,
       horizOrbit: controls.horizOrbit.value,
@@ -287,10 +249,9 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
       horizEasing: horizEasing.getRaw(),
       variant: variantSelector.getValue(),
       input: inputSelector.getValue(),
-      horizWidthMode: horizDimensions['horiz-width'].getMode(),
-      horizWidthValue: horizDimensions['horiz-width'].getValue(),
-      horizHeightMode: horizDimensions['horiz-height'].getMode(),
-      horizHeightValue: horizDimensions['horiz-height'].getValue(),
+      horizWidthValue: horizSize.getValue().width,
+      horizHeightValue: horizSize.getValue().height,
+      horizSizeLocked: horizSize.getLocked(),
       transitionDuration: controls.transitionDuration.value,
       transitionEasing: transitionEasing.getRaw(),
       colors: colorInputs.map((colorInput) => ({
@@ -300,15 +261,12 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
     };
   }
 
-  function applyDimensionSetting(dimension, dataModeKey, dataValueKey, data) {
-    if (!dimension) return;
-    if (data[dataModeKey]) {
-      dimension.setMode(data[dataModeKey], false);
-      if (data[dataModeKey] === 'fixed' && data[dataValueKey] != null) {
-        dimension.element.querySelector('.dimension-fixed-input').value =
-          String(data[dataValueKey]).replace(/px$/i, '');
-      }
-    }
+  // Saved defaults may hold '400px' strings from the old DimensionControl.
+  function applySizeSetting(control, width, height, locked) {
+    const w = parseFloat(width);
+    const h = parseFloat(height);
+    control.setValue(Number.isFinite(w) ? w : null, Number.isFinite(h) ? h : null, false);
+    if (locked != null) control.setLocked(Boolean(locked), false);
   }
 
   function applySettings(data) {
@@ -339,10 +297,8 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
     }
     if (data.transitionEasing != null) transitionEasing.setRaw(data.transitionEasing, false);
 
-    applyDimensionSetting(fanDimensions['fan-width'], 'fanWidthMode', 'fanWidthValue', data);
-    applyDimensionSetting(fanDimensions['fan-height'], 'fanHeightMode', 'fanHeightValue', data);
-    applyDimensionSetting(horizDimensions['horiz-width'], 'horizWidthMode', 'horizWidthValue', data);
-    applyDimensionSetting(horizDimensions['horiz-height'], 'horizHeightMode', 'horizHeightValue', data);
+    applySizeSetting(fanSize, data.fanWidthValue, data.fanHeightValue, data.fanSizeLocked);
+    applySizeSetting(horizSize, data.horizWidthValue, data.horizHeightValue, data.horizSizeLocked);
 
     if (Array.isArray(data.colors)) {
       data.colors.forEach((color, index) => {
@@ -362,7 +318,6 @@ window.initFlipCarouselExperiment = function initFlipCarouselExperiment() {
           transitionEasingRaw: transitionEasing.getRaw() || '0.7, 0, 0.25, 1',
         }).then(() => {
           updateModeButtons();
-          updateDimensionLabels();
           snippet.update();
         });
         return;
